@@ -30,6 +30,7 @@
     "devexpress-diagram": "^2.1.57",
     "devextreme": "23.1.2-beta",
     "devextreme-angular": "23.1.2-beta",
+    "moment": "^2.29.4",
     "ng-apexcharts": "1.7.6",
     "ngx-pagination": "^6.0.1",
     "ngx-permissions": "^13.0.1",

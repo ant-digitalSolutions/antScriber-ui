@@ -84,6 +84,11 @@ const routes: Routes = [
             (m) => m.LandingPageModule
           ),
       },
+      {
+        path: 'auth',
+        loadChildren: () =>
+          import('./auth/auth.module').then((m) => m.AuthModule),
+      },
     ],
   },
   {
