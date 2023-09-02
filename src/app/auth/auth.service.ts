@@ -17,16 +17,16 @@ export class AuthService {
   login(userLogin: UserLogin): Observable<any> {
     const result = this.http.post<UserLogin>(this.baseUrl + 'auth/signin', userLogin)
       .pipe(
-        tap(res => this.setSession),
+        tap(res => this.setSession(res)),
         shareReplay()
       );
     return result;
   }
 
   private setSession(authResult: any) {
-    const expiresAt = moment().add(authResult.expiresIn, 'second');
+    const expiresAt = moment(authResult.expiresAt);
 
-    localStorage.setItem('id_token', authResult.idToken);
+    localStorage.setItem('id_token', authResult.access_token);
     localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
   }
 
@@ -36,7 +36,8 @@ export class AuthService {
   }
 
   public isLoggedIn() {
-    return moment().isBefore(this.getExpiration());
+    const result = moment().isBefore(this.getExpiration());
+    return result;
   }
 
   isLoggedOut() {
@@ -49,5 +50,7 @@ export class AuthService {
       const expiresAt = JSON.parse(expiration);
       return moment(expiresAt);
     }
+
+    return moment().subtract(1, 'days');
   }
 }
