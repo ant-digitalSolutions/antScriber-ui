@@ -10,6 +10,7 @@ import { ContentCreationRoutes } from './content.routing';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import * as TablerIcons from 'angular-tabler-icons/icons';
 import { ArticleFromIdeaComponent } from './article-from-idea/article-from-idea.component';
+import { ArticleModule } from './article/article.module';
 
 
 
@@ -26,6 +27,7 @@ import { ArticleFromIdeaComponent } from './article-from-idea/article-from-idea.
     NgScrollbarModule,
     TablerIconsModule.pick(TablerIcons),
     ReactiveFormsModule,
+    ArticleModule
   ],
   providers: [ContentCreationService]
 })
