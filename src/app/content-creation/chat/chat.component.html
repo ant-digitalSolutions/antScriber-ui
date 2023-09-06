@@ -183,7 +183,7 @@
           matSuffix
           color="primary"
           (click)="OnAddMsg()"
-          [disabled]="!msg"
+          [disabled]="!msg || isLoading"
         >
           <mat-icon>send</mat-icon>
         </button>
