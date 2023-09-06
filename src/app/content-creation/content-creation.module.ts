@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatComponent } from './chat/chat.component';
 import { ContentCreationService } from './content-creation.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { RouterModule } from '@angular/router';
@@ -25,6 +25,7 @@ import { ArticleFromIdeaComponent } from './article-from-idea/article-from-idea.
     FormsModule,
     NgScrollbarModule,
     TablerIconsModule.pick(TablerIcons),
+    ReactiveFormsModule,
   ],
   providers: [ContentCreationService]
 })

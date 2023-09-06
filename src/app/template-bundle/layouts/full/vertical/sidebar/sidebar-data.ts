@@ -10,6 +10,11 @@ export const navItems: NavItem[] = [
     route: '/content/chat',
   },
   {
+    displayName: 'Article from Idea',
+    iconName: 'coffee',
+    route: '/content/article-from-idea',
+  },
+  {
     navCap: 'Home',
   },
   {
