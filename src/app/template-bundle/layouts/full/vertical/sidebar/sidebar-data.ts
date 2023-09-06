@@ -2,6 +2,14 @@ import { NavItem } from './nav-item/nav-item';
 
 export const navItems: NavItem[] = [
   {
+    navCap: 'Scriber',
+  },
+  {
+    displayName: 'Chat',
+    iconName: 'message',
+    route: '/content/chat',
+  },
+  {
     navCap: 'Home',
   },
   {
