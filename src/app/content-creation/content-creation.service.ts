@@ -5,7 +5,7 @@ import { ICompletionText } from './dto/ICompletionText.dto';
 import { Observable } from 'rxjs';
 import { IOpenAiMessage } from './dto/openAi-choice.dto';
 import { ArticleGenerationParamsDto } from './dto/generate-article.dto';
-import { IArticleFromAiResponseDto } from './dto/article-from-ai.dto';
+import { IArticleFromAiResponseDto } from './article/dtos/article-from-ai.dto';
 
 @Injectable()
 export class ContentCreationService {

@@ -23,6 +23,7 @@
     "@kolkov/angular-editor": "^2.1.0",
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
+    "@types/marked": "^5.0.1",
     "angular-calendar": "^0.31.0",
     "angular-tabler-icons": "^2.7.0",
     "apexcharts": "^3.35.3",

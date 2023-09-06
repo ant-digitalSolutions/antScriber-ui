@@ -1,1 +1,33 @@
-<p>article-editor works!</p>
+<mat-card
+  class="cardWithShadow theme-card"
+  *ngIf="articleToEdit && editor && form"
+>
+  <mat-card-header>
+    <mat-card-title class="m-b-0">{{ articleToEdit.title }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="b-t-1">
+      <form [formGroup]="form">
+        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Article Title</mat-label
+        >
+        <mat-form-field appearance="outline" class="w-100" color="primary">
+          <input matInput type="text" formControlName="title" />
+        </mat-form-field>
+        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Article Body</mat-label
+        >
+        <div class="editor">
+          <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
+          </ngx-editor-menu>
+          <ngx-editor [editor]="editor" formControlName="articleBody">
+          </ngx-editor>
+        </div>
+      </form>
+  </mat-card-content>
+   <mat-divider></mat-divider>
+
+  <mat-card-actions align="end">
+    <button mat-button color="primary" (click)="save()">Save</button>
+    <button mat-button color="danger">Discard</button>
+  </mat-card-actions>
+</mat-card>

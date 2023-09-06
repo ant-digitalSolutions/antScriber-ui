@@ -3,16 +3,31 @@ import { CommonModule } from '@angular/common';
 import { ArticleRenderComponent } from './article-render/article-render.component';
 import { ArticleEditorComponent } from './article-editor/article-editor.component';
 import { ArticleService } from './article.service';
+import { GenerateArticleFromUserParamsComponent } from './generate-article-from-user-params/generate-article-from-user-params.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TablerIconsModule } from 'angular-tabler-icons';
+import { NgScrollbarModule } from 'ngx-scrollbar';
+import { MaterialModule } from 'src/app/material.module';
+import * as TablerIcons from 'angular-tabler-icons/icons';
+import { NgxEditorModule } from 'ngx-editor';
+
 
 
 
 @NgModule({
   declarations: [
     ArticleRenderComponent,
-    ArticleEditorComponent
+    ArticleEditorComponent,
+    GenerateArticleFromUserParamsComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MaterialModule,
+    FormsModule,
+    NgScrollbarModule,
+    TablerIconsModule.pick(TablerIcons),
+    ReactiveFormsModule,
+    NgxEditorModule,
   ],
   providers: [ArticleService]
 })

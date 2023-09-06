@@ -1,1 +1,15 @@
-<p>article-render works!</p>
+<mat-card class="cardWithShadow theme-card" *ngIf="articleToRender && !inEditionMode">
+  <mat-card-header>
+    <mat-card-title class="m-b-0">{{ articleToRender.title }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="b-t-1" [innerHTML]="articleToRender.body">
+  </mat-card-content>
+  <mat-divider></mat-divider>
+
+  <mat-card-actions align="end">
+    <button mat-button color="primary" (click)="editArticle()">Edit</button>
+    <button mat-button color="accent">Save</button>
+  </mat-card-actions>
+</mat-card>
+
+<app-article-editor *ngIf="inEditionMode" [articleToEdit]="articleToRender" (emitter)="saveArticleChanges($event)"></app-article-editor>

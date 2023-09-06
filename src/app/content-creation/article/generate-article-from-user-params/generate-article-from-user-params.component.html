@@ -1,0 +1,61 @@
+<mat-card class="cardWithShadow theme-card">
+  <mat-card-header>
+    <mat-card-title class="m-b-0">Generate Article from Idea</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="b-t-1">
+    <form [formGroup]="articleCreationForm" (ngSubmit)="generateArticle()">
+      <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >Business or Blog Name</mat-label
+      >
+      <mat-form-field appearance="outline" class="w-100" color="primary">
+        <input matInput type="text" formControlName="blogName" />
+      </mat-form-field>
+      <!-- input -->
+      <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >Main Idea for Article</mat-label
+      >
+      <mat-form-field appearance="outline" class="w-100" color="primary">
+        <textarea matInput rows="5" formControlName="articleIdea"></textarea>
+      </mat-form-field>
+      <div>
+        <label id="example-name-label" class="f-w-600 mat-body-1"
+          >Amount Of Words:__
+        </label>
+        <label class="f-w-500 mat-body-1">{{
+          articleCreationForm.value.amountOfWords
+        }}</label>
+      </div>
+      <mat-slider class="example-margin" [max]="1200" [min]="400" [step]="10">
+        <input matSliderThumb formControlName="amountOfWords" />
+      </mat-slider>
+
+      <div class="row">
+        <!-- checkbox -->
+        <div class="col-sm-6 col-lg-4">
+          <mat-checkbox color="primary" formControlName="addCTA"
+            >Generate CTA at the end</mat-checkbox
+          >
+        </div>
+      </div>
+      <div class="m-t-12">
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          [disabled]="!articleCreationForm.valid || isLoading"
+        >
+          Generate Now
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+  <mat-card-footer *ngIf="isLoading">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </mat-card-footer>
+</mat-card>
+
+<div class="article-render-container" *ngIf="generatedArticleResponse">
+  <app-article-render
+    [articleToRender]="generatedArticleResponse"
+  ></app-article-render>
+</div>
