@@ -1,1 +1,64 @@
-<p>generate-article-ideas works!</p>
+<mat-card class="cardWithShadow theme-card">
+  <mat-card-header>
+    <mat-card-title class="m-b-0">Generate Article from Idea</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="b-t-1">
+    <form [formGroup]="articleCreationForm" (ngSubmit)="generateArticleIdeas()">
+      <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >Business or Blog Name</mat-label
+      >
+      <mat-form-field appearance="outline" class="w-100" color="primary">
+        <input matInput type="text" formControlName="blogName" />
+      </mat-form-field>
+      <!-- input -->
+      <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >Main Idea for Article</mat-label
+      >
+      <mat-form-field appearance="outline" class="w-100" color="primary">
+        <textarea matInput rows="5" formControlName="shortDescription"></textarea>
+      </mat-form-field>
+      <div>
+        <label id="example-name-label" class="f-w-600 mat-body-1"
+          >Amount Of Ideas:
+        </label>
+      </div>
+      <mat-form-field appearance="outline" class="w-40" color="primary">
+        <mat-select formControlName="amountOfIdeas">
+          <mat-option
+            value="{{index}}"
+            *ngFor="let index of keysForSelectorElement"
+            >{{ index }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+
+      <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >Primary Keyword</mat-label
+      >
+      <mat-form-field appearance="outline" class="w-100" color="primary">
+        <input matInput type="text" formControlName="primaryKeyword" />
+      </mat-form-field>
+
+      <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >Secondary Keywords - separated by comma</mat-label
+      >
+      <mat-form-field appearance="outline" class="w-100" color="primary">
+        <input matInput type="text" formControlName="secondaryKeywords" />
+      </mat-form-field>
+
+      <div class="m-t-12">
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          [disabled]="!articleCreationForm.valid || isLoading"
+        >
+          Generate Now
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+  <mat-card-footer *ngIf="isLoading">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </mat-card-footer>
+</mat-card>

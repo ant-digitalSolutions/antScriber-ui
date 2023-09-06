@@ -11,8 +11,13 @@ export const navItems: NavItem[] = [
   },
   {
     displayName: 'Article from Idea',
-    iconName: 'coffee',
+    iconName: 'file-invoice',
     route: '/content/generate-article-from-params',
+  },
+  {
+    displayName: 'Ideas for Articles',
+    iconName: 'note',
+    route: '/content/generate-ideas-for-articles',
   },
   {
     navCap: 'Home',
