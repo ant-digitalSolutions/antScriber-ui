@@ -1,3 +1,4 @@
+import { ContentCreationModule } from './content-creation/content-creation.module';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BlankComponent } from './template-bundle/layouts/blank/blank.component';
@@ -9,6 +10,11 @@ const routes: Routes = [
     path: '',
     component: FullComponent,
     children: [
+      {
+        path: 'content',
+        loadChildren: () =>
+          import('./content-creation/content-creation.module').then((m) => m.ContentCreationModule),
+      },
       {
         path: '',
         redirectTo: '/dashboards/dashboard1',
