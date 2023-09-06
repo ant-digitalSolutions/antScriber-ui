@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { ChatComponent } from './chat/chat.component';
-import { ArticleFromIdeaComponent } from './article-from-idea/article-from-idea.component';
+import { GenerateArticleFromUserParamsComponent } from './article/generate-article-from-user-params/generate-article-from-user-params.component';
 
 export const ContentCreationRoutes: Routes = [
     {
@@ -11,8 +11,8 @@ export const ContentCreationRoutes: Routes = [
                 component: ChatComponent,
             },
             {
-                path: 'article-from-idea',
-                component: ArticleFromIdeaComponent
+                path: 'generate-article-from-params',
+                component: GenerateArticleFromUserParamsComponent
             }
            
         ],

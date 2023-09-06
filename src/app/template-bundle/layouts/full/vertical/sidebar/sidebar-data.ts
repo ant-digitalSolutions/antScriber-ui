@@ -12,7 +12,7 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Article from Idea',
     iconName: 'coffee',
-    route: '/content/article-from-idea',
+    route: '/content/generate-article-from-params',
   },
   {
     navCap: 'Home',
