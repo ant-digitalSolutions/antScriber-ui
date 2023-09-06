@@ -9,12 +9,14 @@ import { RouterModule } from '@angular/router';
 import { ContentCreationRoutes } from './content.routing';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import * as TablerIcons from 'angular-tabler-icons/icons';
+import { ArticleFromIdeaComponent } from './article-from-idea/article-from-idea.component';
 
 
 
 @NgModule({
   declarations: [
-    ChatComponent
+    ChatComponent,
+    ArticleFromIdeaComponent
   ],
   imports: [
     CommonModule,
