@@ -10,6 +10,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 import { MaterialModule } from 'src/app/material.module';
 import * as TablerIcons from 'angular-tabler-icons/icons';
 import { NgxEditorModule } from 'ngx-editor';
+import { GenerateArticleIdeasComponent } from './generate-article-ideas/generate-article-ideas.component';
 
 
 
@@ -18,7 +19,8 @@ import { NgxEditorModule } from 'ngx-editor';
   declarations: [
     ArticleRenderComponent,
     ArticleEditorComponent,
-    GenerateArticleFromUserParamsComponent
+    GenerateArticleFromUserParamsComponent,
+    GenerateArticleIdeasComponent
   ],
   imports: [
     CommonModule,
