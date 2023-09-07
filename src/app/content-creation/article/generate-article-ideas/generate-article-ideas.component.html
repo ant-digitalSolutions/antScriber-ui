@@ -25,9 +25,9 @@
       <mat-form-field appearance="outline" class="w-40" color="primary">
         <mat-select formControlName="amountOfIdeas">
           <mat-option
-            value="{{index}}"
+            [value]="index + 1"
             *ngFor="let index of keysForSelectorElement"
-            >{{ index }}</mat-option
+            >{{ index + 1 }}</mat-option
           >
         </mat-select>
       </mat-form-field>
@@ -62,3 +62,12 @@
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
   </mat-card-footer>
 </mat-card>
+
+<mat-card *ngIf="articleIdeas">
+    <mat-card-header>Article Ideas</mat-card-header>
+    <mat-card-content>
+        <app-article-idea-card [articleIdea]="articleIdea" *ngFor="let articleIdea of articleIdeas.ideas" class="w-40"></app-article-idea-card>
+    </mat-card-content>
+</mat-card>
+
+

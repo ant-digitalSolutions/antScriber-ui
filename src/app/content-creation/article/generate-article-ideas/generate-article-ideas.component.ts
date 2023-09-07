@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ArticleGenerationParamsDto } from '../../dto/generate-article.dto';
@@ -41,7 +42,7 @@ export class GenerateArticleIdeasComponent {
 
     this.articleService.generateArticleIdeas(articleCreationParams).subscribe(result => {
       this.isLoading = false;
-      this.articleIdeas = result;
+      this.articleIdeas = new ArticleIdeasResponse(result);
       console.log(result);
     })
   }
