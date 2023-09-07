@@ -20,6 +20,28 @@ export const navItems: NavItem[] = [
     route: '/content/generate-ideas-for-articles',
   },
   {
+    navCap: 'Blog',
+  },
+  {
+    displayName: 'Blog',
+    iconName: 'layout',
+    route: 'tables',
+    children: [
+      {
+        displayName: 'Create Blog Project',
+        iconName: 'point',
+        route: 'blogger/projects/create',
+      },
+      {
+        displayName: 'See All Projects',
+        iconName: 'point',
+        route: 'blogger/projects/list',
+      },
+    ]
+    },
+
+
+  {
     navCap: 'Home',
   },
   {

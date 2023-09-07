@@ -16,6 +16,12 @@ const routes: Routes = [
           import('./content-creation/content-creation.module').then((m) => m.ContentCreationModule),
       },
       {
+        path: 'blogger',
+        loadChildren: () =>
+          import('./blogger/blogger.module').then((m) => m.BloggerModule),
+      },
+      //template routes
+      {
         path: '',
         redirectTo: '/dashboards/dashboard1',
         pathMatch: 'full',

@@ -1,0 +1,62 @@
+<mat-card class="cardWithShadow theme-card">
+  <mat-card-header>
+    <mat-card-title class="m-b-0">Generate Article from Idea</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="b-t-1">
+    <form [formGroup]="form" (ngSubmit)="createBlogProject()">
+      <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >Blog Name</mat-label
+      >
+      <mat-form-field appearance="outline" class="w-100" color="primary">
+        <input matInput type="text" formControlName="title" />
+      </mat-form-field>
+
+      <!-- input -->
+      <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >Blog Short Description</mat-label
+      >
+      <mat-form-field appearance="outline" class="w-100" color="primary">
+        <textarea matInput rows="5" formControlName="description"></textarea>
+      </mat-form-field>
+
+
+      <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >Blog Url</mat-label
+      >
+      <mat-form-field appearance="outline" class="w-100" color="primary">
+        <input matInput type="text" formControlName="url" />
+      </mat-form-field>
+
+         <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >UserName</mat-label
+      >
+      <mat-form-field appearance="outline" class="w-100" color="primary">
+        <input matInput type="text" formControlName="userName" />
+      </mat-form-field>
+
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >Application Password</mat-label
+      >
+      <mat-form-field appearance="outline" class="w-100" color="primary">
+        <input matInput type="text" formControlName="applicationPassword" />
+      </mat-form-field>
+
+      <div class="m-t-12">
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          [disabled]="!form.valid || isLoading"
+        >
+          Generate Now
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+  <mat-card-footer *ngIf="isLoading">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </mat-card-footer>
+</mat-card>
+
+
+
