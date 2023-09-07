@@ -1,4 +1,9 @@
-export interface ArticleIdea {
+export class ArticleIdea {
+
+    constructor(init: Partial<ArticleIdea>) {
+        Object.assign(this, init);
+    }
+
     primaryKeyword: string;
     secondaryKeywords: string[];
     summary: string;
@@ -6,6 +11,15 @@ export interface ArticleIdea {
     toneForArticle: string;
 }
 
-export interface ArticleIdeasResponse {
+export class ArticleIdeasResponse {
+
+    constructor(init: Partial<ArticleIdeasResponse>) {
+        this.ideas = [];
+
+        init.ideas!.forEach(idea => {
+            this.ideas.push(new ArticleIdea(idea))
+        });
+    }
+
     ideas: ArticleIdea[];
 }
