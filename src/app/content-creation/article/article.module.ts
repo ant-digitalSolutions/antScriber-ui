@@ -10,8 +10,9 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 import { MaterialModule } from 'src/app/material.module';
 import * as TablerIcons from 'angular-tabler-icons/icons';
 import { NgxEditorModule } from 'ngx-editor';
-import { GenerateArticleIdeasComponent } from './generate-article-ideas/generate-article-ideas.component';
-import { ArticleIdeaCardComponent } from './article-idea-card/article-idea-card.component';
+import { GenerateArticleIdeasComponent } from './article-ideas/generate-article-ideas/generate-article-ideas.component';
+import { ArticleIdeaCardComponent } from './article-ideas/article-idea-card/article-idea-card.component';
+import { ListArticleIdeasComponent } from './article-ideas/list-article-ideas/list-article-ideas.component';
 
 
 
@@ -22,7 +23,8 @@ import { ArticleIdeaCardComponent } from './article-idea-card/article-idea-card.
     ArticleEditorComponent,
     GenerateArticleFromUserParamsComponent,
     GenerateArticleIdeasComponent,
-    ArticleIdeaCardComponent
+    ArticleIdeaCardComponent,
+    ListArticleIdeasComponent
   ],
   imports: [
     CommonModule,
