@@ -2,6 +2,7 @@ export class ArticleIdea {
 
     constructor(init: Partial<ArticleIdea>) {
         Object.assign(this, init);
+        this.secondaryKeywords = (init.secondaryKeywords as any).split(',');
     }
 
     primaryKeyword: string;
