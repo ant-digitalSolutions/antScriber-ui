@@ -14,11 +14,30 @@ export const navItems: NavItem[] = [
     iconName: 'file-invoice',
     route: '/content/generate-article-from-params',
   },
+  // article ideas STARTS
   {
-    displayName: 'Ideas for Articles',
-    iconName: 'note',
-    route: '/content/generate-ideas-for-articles',
+    navCap: 'Article Ideas',
   },
+  {
+    displayName: 'Article Ideas',
+    iconName: 'layout',
+    route: '/content/article-ideas',
+    children: [
+      {
+        displayName: 'Create',
+        iconName: 'note',
+        route: '/create',
+      },
+      {
+        displayName: 'List',
+        iconName: 'note',
+        route: '/list',
+      },
+    ]
+  },
+  
+  // article ideas ENDS
+
   {
     navCap: 'Blog',
   },
