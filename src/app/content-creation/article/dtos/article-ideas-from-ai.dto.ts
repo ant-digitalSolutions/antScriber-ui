@@ -2,14 +2,17 @@ export class ArticleIdea {
 
     constructor(init: Partial<ArticleIdea>) {
         Object.assign(this, init);
-        this.secondaryKeywords = (init.secondaryKeywords as any).split(',');
     }
 
     primaryKeyword: string;
-    secondaryKeywords: string[];
+    secondaryKeywords: string;
     summary: string;
     title: string;
     toneForArticle: string;
+
+    public get secondaryKeywordsList(): string[] {
+        return this.secondaryKeywords.split(',')
+    }
 }
 
 export class ArticleIdeasResponse {

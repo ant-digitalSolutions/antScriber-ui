@@ -1,6 +1,6 @@
 <mat-card class="cardWithShadow card2 position-relative card-hover w-50">
-  <mat-card-header>
-    <mat-card-title>{{ articleIdea.title }}</mat-card-title>
+  <mat-card-header  class="course-header bg-primary d-flex justify-content-between p-12">
+    <mat-card-title class="text-white">{{ articleIdea.title }}</mat-card-title>
     <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
   </mat-card-header>
 
@@ -17,7 +17,7 @@
 
       <mat-chip
         class="f-s-12 m-y-16 f-w-600 bg-light-accent"
-        *ngFor="let secondaryKey of articleIdea.secondaryKeywords"
+        *ngFor="let secondaryKey of articleIdea.secondaryKeywordsList"
         >{{ secondaryKey }}</mat-chip
       >
     </div>

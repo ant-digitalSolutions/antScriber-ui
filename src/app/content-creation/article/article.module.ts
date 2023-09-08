@@ -13,6 +13,7 @@ import { NgxEditorModule } from 'ngx-editor';
 import { GenerateArticleIdeasComponent } from './article-ideas/generate-article-ideas/generate-article-ideas.component';
 import { ArticleIdeaCardComponent } from './article-ideas/article-idea-card/article-idea-card.component';
 import { ListArticleIdeasComponent } from './article-ideas/list-article-ideas/list-article-ideas.component';
+import { ArticleIdeasModule } from './article-ideas/article-ideas.module';
 
 
 
@@ -21,10 +22,7 @@ import { ListArticleIdeasComponent } from './article-ideas/list-article-ideas/li
   declarations: [
     ArticleRenderComponent,
     ArticleEditorComponent,
-    GenerateArticleFromUserParamsComponent,
-    GenerateArticleIdeasComponent,
-    ArticleIdeaCardComponent,
-    ListArticleIdeasComponent
+    GenerateArticleFromUserParamsComponent
   ],
   imports: [
     CommonModule,
@@ -34,6 +32,7 @@ import { ListArticleIdeasComponent } from './article-ideas/list-article-ideas/li
     TablerIconsModule.pick(TablerIcons),
     ReactiveFormsModule,
     NgxEditorModule,
+    ArticleIdeasModule
   ],
   providers: [ArticleService]
 })

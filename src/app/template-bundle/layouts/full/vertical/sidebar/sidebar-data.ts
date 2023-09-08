@@ -26,12 +26,12 @@ export const navItems: NavItem[] = [
       {
         displayName: 'Create',
         iconName: 'note',
-        route: '/create',
+        route: '/content/article-ideas/create',
       },
       {
         displayName: 'List',
         iconName: 'note',
-        route: '/list',
+        route: '/content/article-ideas/list',
       },
     ]
   },

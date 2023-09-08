@@ -88,11 +88,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   showFiller = false;
 
   selectedLanguage: any = {
-      language: 'English',
-      code: 'en',
-      type: 'US',
-      icon: '/assets/images/flag/icon-flag-en.svg',
-    };
+    language: 'English',
+    code: 'en',
+    type: 'US',
+    icon: '/assets/images/flag/icon-flag-en.svg',
+  };
 
   public languages: any[] = [
     {
@@ -132,7 +132,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.blogProjectService.blogProjects$.pipe(takeUntil(this.componentDestroyed$)).subscribe(projects => {
       this.blogProjects = projects;
-      this.selectedBlogProjectId = this.blogProjects.filter(p => p.isDefaultProject)[0].id
+      if (!this.selectedBlogProjectId && projects.length > 0) {
+        this.selectedBlogProjectId = this.blogProjects.filter(p => p.isDefaultProject)[0].id;
+        this.blogProjectService.selectedProjectId = this.selectedBlogProjectId;
+      }
     });
   }
 
@@ -160,7 +163,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   selectCurrentProject(selectedProject: number) {
-    this.blogProjectService.selectedProject = selectedProject;
+    this.blogProjectService.selectedProjectId = selectedProject;
   }
 
   notifications: notifications[] = [

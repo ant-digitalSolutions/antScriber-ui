@@ -23,7 +23,7 @@ export class BlogProjectsService {
     return this._selectedProjectId.value;
   }
 
-  public set selectedProject(v: number) {
+  public set selectedProjectId(v: number) {
     this._selectedProjectId.next(v);
   }
 
