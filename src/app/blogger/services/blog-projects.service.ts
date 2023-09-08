@@ -16,7 +16,7 @@ export class BlogProjectsService {
   private _blogProjects = new BehaviorSubject<BlogProjectDetailsDto[]>([]);
   blogProjects$ = this._blogProjects.asObservable();
 
-  _selectedProjectId = new  BehaviorSubject<number>(-1);
+  private _selectedProjectId = new  BehaviorSubject<number>(-1);
   selectedProjectId$ = this._selectedProjectId.asObservable();
 
   public get selectedProjectId(): number {
@@ -40,6 +40,10 @@ export class BlogProjectsService {
       this.http.get<BlogProjectDetailsDto[]>(this.baseUrl + 'blogger/blog-projects')
         .pipe(tap(result => {
           this._blogProjects.next(result);
+          if (this._selectedProjectId.getValue() === -1 ) {
+            const defaultProjectId = result.filter(p => p.isDefaultProject)[0].id;
+            this._selectedProjectId.next(defaultProjectId)
+          }
         }))
         .subscribe({
           next: (projects) => {
