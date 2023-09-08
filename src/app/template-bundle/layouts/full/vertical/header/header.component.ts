@@ -4,18 +4,24 @@ import {
   EventEmitter,
   Input,
   ViewEncapsulation,
+  OnInit,
+  OnDestroy,
 } from '@angular/core';
 import { CoreService } from 'src/app/services/core.service';
 import { MatDialog } from '@angular/material/dialog';
 import { navItems } from '../sidebar/sidebar-data';
 import { TranslateService } from '@ngx-translate/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { FormsModule } from '@angular/forms';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { BrandingComponent, } from '../sidebar/branding.component';
 import { NgFor, NgForOf, NgIf } from '@angular/common';
+import { AuthService } from 'src/app/auth/auth.service';
+import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
+import { BlogProjectDetailsDto } from 'src/app/blogger/dto/blog-project-details.dto';
+import { Subject, takeUntil } from 'rxjs';
 
 interface notifications {
   id: number;
@@ -61,25 +67,32 @@ export class AppSearchDialogComponent {
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterModule, NgScrollbarModule, TablerIconsModule, MaterialModule, BrandingComponent, NgFor, NgIf, AppSearchDialogComponent ],
+  imports: [RouterModule, NgScrollbarModule, TablerIconsModule, MaterialModule, BrandingComponent, NgFor, NgIf, AppSearchDialogComponent],
   templateUrl: './header.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
+
   @Input() showToggle = true;
   @Input() toggleChecked = false;
   @Output() toggleMobileNav = new EventEmitter<void>();
   @Output() toggleMobileFilterNav = new EventEmitter<void>();
   @Output() toggleCollapsed = new EventEmitter<void>();
 
+  componentDestroyed$: Subject<boolean> = new Subject()
+
+  blogProjects: BlogProjectDetailsDto[] = [];
+
+  selectedBlogProjectId: number;
+
   showFiller = false;
 
-  public selectedLanguage: any = {
-    language: 'English',
-    code: 'en',
-    type: 'US',
-    icon: '/assets/images/flag/icon-flag-en.svg',
-  };
+  selectedLanguage: any = {
+      language: 'English',
+      code: 'en',
+      type: 'US',
+      icon: '/assets/images/flag/icon-flag-en.svg',
+    };
 
   public languages: any[] = [
     {
@@ -108,9 +121,24 @@ export class HeaderComponent {
   constructor(
     private vsidenav: CoreService,
     public dialog: MatDialog,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private authService: AuthService,
+    private router: Router,
+    private blogProjectService: BlogProjectsService,
   ) {
     translate.setDefaultLang('en');
+  }
+
+  ngOnInit(): void {
+    this.blogProjectService.blogProjects$.pipe(takeUntil(this.componentDestroyed$)).subscribe(projects => {
+      this.blogProjects = projects;
+      this.selectedBlogProjectId = this.blogProjects.filter(p => p.isDefaultProject)[0].id
+    });
+  }
+
+  ngOnDestroy() {
+    this.componentDestroyed$.next(true)
+    this.componentDestroyed$.complete()
   }
 
   openDialog() {
@@ -124,6 +152,15 @@ export class HeaderComponent {
   changeLanguage(lang: any): void {
     this.translate.use(lang.code);
     this.selectedLanguage = lang;
+  }
+
+  signOut() {
+    this.authService.logout();
+    this.router.navigate(['/auth/login'])
+  }
+
+  selectCurrentProject(selectedProject: number) {
+    this.blogProjectService.selectedProject = selectedProject;
   }
 
   notifications: notifications[] = [

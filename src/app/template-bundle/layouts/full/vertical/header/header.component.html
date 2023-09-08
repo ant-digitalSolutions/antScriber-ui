@@ -55,6 +55,19 @@
     </button>
   </mat-menu>
 
+    <!-- --------------------------------------------------------------- -->
+  <!-- Project Selector -->
+  <!-- --------------------------------------------------------------- -->
+  <mat-form-field class="w-40" color="primary" *ngIf="selectedBlogProjectId">
+        <mat-select formControlName="amountOfIdeas" [(value)]="selectedBlogProjectId" (selectionChange)="selectCurrentProject($event.value)">
+          <mat-option
+            [value]="p.id"
+            *ngFor="let p of blogProjects"
+            >{{ p.title }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+
   <!-- --------------------------------------------------------------- -->
   <!-- Notification Dropdown -->
   <!-- --------------------------------------------------------------- -->
@@ -229,10 +242,10 @@
 
       <div class="p-y-12 p-x-32">
         <a
-          [routerLink]="['/authentication/side-login']"
           mat-stroked-button
           color="primary"
           class="w-100"
+          (click)="signOut()"
           >Logout</a
         >
       </div>

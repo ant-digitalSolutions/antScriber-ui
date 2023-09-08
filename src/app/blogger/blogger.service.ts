@@ -19,10 +19,4 @@ export class BloggerService {
   createBlogProject(blogProject: BlogProjectCreateDto) {
     return this.http.post<BlogProjectCreateDto>(this.baseUrl + 'blogger/blog-projects', blogProject);
   }
-
-  listBlogProjects() {
-    return this.http.get<BlogProjectDetailsDto[]>(this.baseUrl + 'blogger/blog-projects').pipe(tap(result => {
-      this.blogProjects = result;
-    }));
-  }
 }

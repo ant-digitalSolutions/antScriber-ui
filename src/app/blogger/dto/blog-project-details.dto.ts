@@ -9,5 +9,7 @@ export class BlogProjectDetailsDto {
 
     url: string;
 
-    readonly id: number;
+    id: number;
+
+    isDefaultProject: boolean;
 }
