@@ -1,11 +1,8 @@
-import { map } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ArticleGenerationParamsDto } from '../../dto/generate-article.dto';
-import { ArticleService } from '../article.service';
-import { IArticleFromAiResponseDto } from '../dtos/article-from-ai.dto';
-import { ArticleIdeasParamsDto } from '../../dto/generate-articles-ideas-params.dto';
-import { ArticleIdeasResponse } from '../dtos/article-ideas-from-ai.dto';
+import { ArticleService } from '../../article.service';
+import { ArticleIdeasParamsDto } from '../../../dto/generate-articles-ideas-params.dto';
+import { ArticleIdeasResponse } from '../../dtos/article-ideas-from-ai.dto';
 
 @Component({
   selector: 'app-generate-article-ideas',
@@ -25,11 +22,11 @@ export class GenerateArticleIdeasComponent {
   keysForSelectorElement = [...Array(this.maxAmountOfIdeas).keys()];
 
   articleCreationForm = new FormGroup({
-    shortDescription: new FormControl('Comienzo de la ley de ajuste Cubano. Una historia detallada', [Validators.required, Validators.minLength(50)]),
+    shortDescription: new FormControl('How to offer WebDesign services to local business and how this can be of great value for them', [Validators.required, Validators.minLength(50)]),
     amountOfIdeas: new FormControl(3),
-    blogName: new FormControl('Cubano Legal'),
-    primaryKeyword: new FormControl('ley de ajuste cubano'),
-    secondaryKeywords: new FormControl('emigracion, cubanos, leyes'),
+    blogName: new FormControl('ANT - Creative Solutions'),
+    primaryKeyword: new FormControl('web design'),
+    secondaryKeywords: new FormControl('marketing, business, solutions'),
   })
 
 

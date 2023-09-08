@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ArticleIdea } from '../dtos/article-ideas-from-ai.dto';
+import { ArticleIdea } from '../../dtos/article-ideas-from-ai.dto';
 
 @Component({
   selector: 'app-article-idea-card',
