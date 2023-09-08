@@ -7,6 +7,7 @@ import { Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ArticleIdeasParamsDto } from '../dto/generate-articles-ideas-params.dto';
 import { ArticleIdeasResponse } from './dtos/article-ideas-from-ai.dto';
+import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 
 @Injectable()
 export class ArticleService {
@@ -14,7 +15,13 @@ export class ArticleService {
 
   baseUrl: string = environment.apiUrl;
 
-  constructor(private http: HttpClient) { }
+  selectedProjectId: number;
+
+  constructor(private http: HttpClient, private blogProjectService: BlogProjectsService) { 
+    this.blogProjectService.selectedProjectId$.subscribe(r => {
+      this.selectedProjectId = r;
+    })
+  }
 
   /**
    * Generate an article using params form the user.
@@ -30,6 +37,7 @@ export class ArticleService {
   }
 
   generateArticleIdeas(params: ArticleIdeasParamsDto): Observable<ArticleIdeasResponse> {
+    params.blogProjectId = this.selectedProjectId;
     return this.http.post<ArticleIdeasResponse>(this.baseUrl + 'blogger/article-ideas', params);
   }
 

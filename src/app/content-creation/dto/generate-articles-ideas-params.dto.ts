@@ -15,4 +15,6 @@ export class ArticleIdeasParamsDto {
     shortDescription: string;
 
     blogUrl: string;
+
+    blogProjectId: number;
 }
