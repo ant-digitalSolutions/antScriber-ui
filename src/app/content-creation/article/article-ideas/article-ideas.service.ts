@@ -10,12 +10,16 @@ import { BehaviorSubject, tap } from 'rxjs';
 })
 export class ArticleIdeasService {
 
+
   baseUrl = environment.apiUrl;
 
   selectedProjectId: number;
 
   private _articleIdeas = new BehaviorSubject<ArticleIdea[]>([]);
   articleIdeas$ = this._articleIdeas.asObservable();
+
+  private _articleIdeasPrimaryKeywords = new BehaviorSubject<string[]>([]);
+  articleIdeasPrimaryKeywords$ = this._articleIdeasPrimaryKeywords.asObservable();
 
   constructor(private blogProjectService: BlogProjectsService, private http: HttpClient) {
     this.blogProjectService.selectedProjectId$.subscribe(r => {
@@ -25,10 +29,25 @@ export class ArticleIdeasService {
 
   listArticleIdeasForCurrentProject(projectId: number) {
     let params = new HttpParams().set("blogProjectId", projectId)
-    return this.http.get<ArticleIdeasResponse>(this.baseUrl + 'blogger/article-ideas', {params: params}).pipe(tap(r => {
+    return this.http.get<ArticleIdeasResponse>(this.baseUrl + 'blogger/article-ideas', { params: params }).pipe(tap(r => {
       const articleIdeas = new ArticleIdeasResponse(r);
       this._articleIdeas.next(articleIdeas.ideas);
+      this.setPrimaryKeywordsList();
     }));
   }
+
+  getArticleIdeasByPrimaryKeyword(primaryKeyword: string): ArticleIdea[] {
+    return this._articleIdeas.value.filter(idea => (primaryKeyword === 'all' || idea.primaryKeyword == primaryKeyword));
+  }
+
+  filterArticleIdeasBySearch(searchTerm: string): ArticleIdea[] {
+    console.log(searchTerm);
+    return this._articleIdeas.value.filter(idea => idea.containsSearchTerm(searchTerm));
+  }
+
+  private setPrimaryKeywordsList(): void {
+    const primaryKeywords = ['all']
+    primaryKeywords.push(...this._articleIdeas.value.map(idea => idea.primaryKeyword));
+    this._articleIdeasPrimaryKeywords.next([...new Set(primaryKeywords)]);
+  }
 }
- 

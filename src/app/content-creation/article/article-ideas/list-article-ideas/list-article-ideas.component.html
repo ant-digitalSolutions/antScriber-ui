@@ -1,10 +1,10 @@
-<!-- <mat-card class="course-app cardWithShadow">
+<mat-card class="course-app cardWithShadow">
   <mat-card-content class="p-24">
     <div class="row justify-content-between">
       <div class="col-lg-4">
         <mat-form-field appearance="outline" class="w-100 hide-hint">
           <mat-label>Search</mat-label>
-          <input matInput (keyup)="applyFilter($event)" />
+          <input matInput (keyup)="applySearchFilter($event)" [(ngModel)]="searchTerm" />
           <mat-icon matSuffix>
             <i-tabler name="search" class="icon-20"></i-tabler>
           </mat-icon>
@@ -12,23 +12,20 @@
       </div>
       <div class="col-lg-3">
         <mat-form-field appearance="outline" class="w-100 hide-hint">
-          <mat-label>Category</mat-label>
+          <mat-label>Primary Keyword</mat-label>
           <mat-select
             required
-            [value]="selectedCategory"
-            (selectionChange)="ddlChange($event)"
+            [value]="primaryKeywordsList[0]"
+            (selectionChange)="changePrimaryKeySelection($event)"
           >
-            <mat-option value="All" selected>All</mat-option>
-            <mat-option value="Web">Web</mat-option>
-            <mat-option value="Android">Android</mat-option>
-            <mat-option value="Angular">Angular</mat-option>
-            <mat-option value="Design">Design</mat-option>
+            <mat-option [value]="pKey" *ngFor="let pKey of primaryKeywordsList">{{pKey}}</mat-option>
+            
           </mat-select>
         </mat-form-field>
       </div>
     </div>
   </mat-card-content>
-</mat-card> -->
+</mat-card>
 
 <div class="row" *ngIf="articleIdeas">
     <div class="col-sm-6 col-lg-4"  *ngFor="let articleIdea of articleIdeas">

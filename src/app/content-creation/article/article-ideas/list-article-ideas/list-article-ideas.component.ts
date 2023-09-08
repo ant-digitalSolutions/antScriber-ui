@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { ArticleIdeasService } from '../article-ideas.service';
 import { Subject, takeUntil } from 'rxjs';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-list-article-ideas',
@@ -10,9 +11,14 @@ import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.serv
   styleUrls: ['./list-article-ideas.component.scss']
 })
 export class ListArticleIdeasComponent {
+
   componentDestroyed$: Subject<boolean> = new Subject();
 
   articleIdeas: ArticleIdea[];
+
+  primaryKeywordsList: string[];
+
+  searchTerm: string;
 
   constructor(private articleIdeasService: ArticleIdeasService, private blogProjectService: BlogProjectsService) {
 
@@ -26,10 +32,20 @@ export class ListArticleIdeasComponent {
       if (projectId && projectId !== -1)
         this.getAllArticleIdeasForCurrentProject(projectId);
     })
+    this.articleIdeasService.articleIdeasPrimaryKeywords$.pipe(takeUntil(this.componentDestroyed$)).subscribe(r => {
+      this.primaryKeywordsList = r;
+    })
   }
 
   getAllArticleIdeasForCurrentProject(projectId: number) {
    this.articleIdeasService.listArticleIdeasForCurrentProject(projectId).subscribe();
+  }
+
+  applySearchFilter($event: KeyboardEvent) {
+    this.articleIdeas = this.articleIdeasService.filterArticleIdeasBySearch(this.searchTerm);
+  }
+  changePrimaryKeySelection($event: MatSelectChange) {
+   this.articleIdeas = this.articleIdeasService.getArticleIdeasByPrimaryKeyword($event.value)
   }
 
   ngOnDestroy() {

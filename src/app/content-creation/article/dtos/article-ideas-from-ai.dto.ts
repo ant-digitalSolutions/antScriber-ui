@@ -13,6 +13,13 @@ export class ArticleIdea {
     public get secondaryKeywordsList(): string[] {
         return this.secondaryKeywords.split(',')
     }
+
+    containsSearchTerm(searchTerm: string): boolean {
+        return (this.primaryKeyword?.includes(searchTerm) ?? false) ||
+            (this.secondaryKeywords?.includes(searchTerm) ?? false) ||
+            (this.summary?.includes(searchTerm) ?? false) ||
+            (this.title?.includes(searchTerm) ?? false);
+    }
 }
 
 export class ArticleIdeasResponse {
