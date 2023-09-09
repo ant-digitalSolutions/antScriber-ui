@@ -3,7 +3,7 @@
     <mat-card-title class="m-b-0">Generate Article from Idea</mat-card-title>
   </mat-card-header>
   <mat-card-content class="b-t-1">
-    <form [formGroup]="articleCreationForm" (ngSubmit)="generateArticle()">
+    <form [formGroup]="articleCreationForm" (ngSubmit)="generateArticleBody()">
       <!-- ------------------------------------------------------------------------- -->
       <!-- Article TItle -->
       <!-- ------------------------------------------------------------------------- -->
@@ -118,8 +118,18 @@
           color="primary"
           type="submit"
           [disabled]="!articleCreationForm.valid || isLoading"
+          *ngIf="!generatedArticleResponse"
         >
           Generate Now
+        </button>
+          <button
+          mat-flat-button
+          color="primary"
+          [disabled]="!articleCreationForm.valid || isLoading"
+          *ngIf="generatedArticleResponse"
+          (click)="generateArticleMetadata()"
+        >
+          Generate Article Metadata
         </button>
       </div>
     </form>
@@ -132,5 +142,6 @@
 <div class="article-render-container" *ngIf="generatedArticleResponse">
   <app-article-render
     [articleToRender]="generatedArticleResponse"
+
   ></app-article-render>
 </div>

@@ -20,4 +20,6 @@ export class ArticleGenerationParamsDto {
     amountOfWords: number;
 
     addCTA: boolean;
+
+    blogProjectId: number;
 }

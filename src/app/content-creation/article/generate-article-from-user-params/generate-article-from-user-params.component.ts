@@ -11,6 +11,7 @@ import { ArticleIdeasService } from '../article-ideas/article-ideas.service';
 import { Subject, takeUntil } from 'rxjs';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 import { BlogProjectDetailsDto } from 'src/app/blogger/dto/blog-project-details.dto';
+import { IArticleDetailsDto } from 'src/app/blogger/dto/article-details.dto';
 
 @Component({
   selector: 'app-generate-article-from-user-params',
@@ -28,7 +29,7 @@ export class GenerateArticleFromUserParamsComponent implements OnInit, OnDestroy
 
   isLoading = false;
 
-  generatedArticleResponse: IArticleFromAiResponseDto;
+  generatedArticleResponse: IArticleDetailsDto;
 
   primaryKeywords: string[] = [];
 
@@ -92,7 +93,7 @@ export class GenerateArticleFromUserParamsComponent implements OnInit, OnDestroy
     }
   }
 
-  generateArticle() {
+  generateArticleBody() {
     this.isLoading = true;
     console.log(this.articleCreationForm.value);
 
@@ -103,6 +104,10 @@ export class GenerateArticleFromUserParamsComponent implements OnInit, OnDestroy
       this.generatedArticleResponse = result;
       console.log(result);
     })
+  }
+
+  generateArticleMetadata() {
+    this.articleService.navigateToGenerateFullArticle(this.generatedArticleResponse);
   }
 
   addNewPrimaryKeyword() {

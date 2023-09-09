@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { IArticleFromAiResponseDto } from '../dtos/article-from-ai.dto';
 import { Editor, Toolbar, Validators } from 'ngx-editor';
 import { FormGroup, FormControl } from '@angular/forms';
+import { IArticleDetailsDto } from 'src/app/blogger/dto/article-details.dto';
 
 @Component({
   selector: 'app-article-editor',
@@ -23,12 +24,12 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
   form: FormGroup;
 
   @Output()
-  emitter = new EventEmitter<IArticleFromAiResponseDto>();
+  emitter = new EventEmitter<IArticleDetailsDto>();
 
 
 
   @Input()
-  articleToEdit: IArticleFromAiResponseDto;
+  articleToEdit: IArticleDetailsDto;
 
   ngOnInit(): void {
     this.form = new FormGroup({

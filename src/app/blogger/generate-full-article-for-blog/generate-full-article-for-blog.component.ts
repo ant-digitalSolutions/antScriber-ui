@@ -1,8 +1,9 @@
+import { ArticleService } from './../services/article.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IArticleDetailsDto } from '../dto/article-details.dto';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from 'ngx-editor';
 
@@ -25,7 +26,7 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
    * @type {{[fieldName: string]: boolean;}}
    * @memberof GenerateFullArticleForBlogComponent
    */
-  fieldEditionStatus: {[fieldName: string]: boolean;} = {};
+  fieldEditionStatus: { [fieldName: string]: boolean; } = {};
 
   articleForm: FormGroup = new FormGroup({
     id: new FormControl(),
@@ -55,7 +56,7 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
     tags: ['tag1', 'tag2', 'tag3']
   };
 
-  constructor() {
+  constructor(private articlesService: ArticleService) {
 
   }
 
@@ -67,6 +68,13 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.setForm();
     this.initializeFieldState();
+
+    this.articlesService.articleToEdit$.pipe(takeUntil(this.componentDestroyed$)).subscribe(article => {
+      if (article) {
+        this.article = article!;
+        this.setForm();
+      }
+    })
   }
 
 
@@ -111,7 +119,7 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
     });
   }
 
-   getFieldEditionStatus(fieldName: string): boolean {
+  getFieldEditionStatus(fieldName: string): boolean {
     return this.fieldEditionStatus[fieldName];
   }
 

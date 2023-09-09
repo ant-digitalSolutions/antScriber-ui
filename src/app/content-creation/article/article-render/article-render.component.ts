@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { IArticleFromAiResponseDto } from '../dtos/article-from-ai.dto';
+import { IArticleDetailsDto } from 'src/app/blogger/dto/article-details.dto';
 
 @Component({
   selector: 'app-article-render',
@@ -17,13 +18,13 @@ export class ArticleRenderComponent {
   inEditionMode = false;
 
   @Input()
-  articleToRender: IArticleFromAiResponseDto;
+  articleToRender: IArticleDetailsDto;
 
   editArticle() {
     this.inEditionMode = true;
   }
 
-  saveArticleChanges(article: IArticleFromAiResponseDto) {
+  saveArticleChanges(article: IArticleDetailsDto) {
     this.articleToRender = article;
     this.inEditionMode = false;
   }
