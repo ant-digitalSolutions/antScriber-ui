@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { CreateBlogProjectComponent } from './create-blog-project/create-blog-project.component';
 import { ListBlogProjectsComponent } from './list-blog-projects/list-blog-projects.component';
+import { GenerateFullArticleForBlogComponent } from './generate-full-article-for-blog/generate-full-article-for-blog.component';
 
 export const BloggerRouting: Routes = [
     {
@@ -15,6 +16,16 @@ export const BloggerRouting: Routes = [
                 component: ListBlogProjectsComponent,
             }
            
+        ],
+    },
+    {
+        path: 'articles',
+        children: [
+            {
+                path: 'create-full',
+                component: GenerateFullArticleForBlogComponent,
+            }
+
         ],
     },
 ];

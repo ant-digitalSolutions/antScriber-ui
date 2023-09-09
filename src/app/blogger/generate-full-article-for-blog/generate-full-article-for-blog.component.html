@@ -1,0 +1,253 @@
+<mat-card class="cardWithShadow theme-card">
+  <mat-card-header>
+    <mat-card-title class="m-b-0">Generate Article Full Data</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="b-t-1">
+    <!-- ------------------------------------------------------------------------- -->
+    <!-- Title -->
+    <!-- ------------------------------------------------------------------------- -->
+
+    <div class="title">
+      <h3>Title</h3>
+
+      <h4>{{ article.title }}</h4>
+
+      <button
+        mat-button
+        class="button bg-warning rounded f-s-12 p-x-8 p-y-4 text-white f-w-500"
+      >
+        Edit
+      </button>
+    </div>
+    <mat-divider class="m-t-30 m-b-30"></mat-divider>
+
+    <!-- ------------------------------------------------------------------------- -->
+    <!-- Body -->
+    <!-- ------------------------------------------------------------------------- -->
+
+    <div class="body">
+      <h3>Body</h3>
+
+      <p>{{ article.body | slice : 0 : 300 }}</p>
+
+      <div class="d-flex">
+        <button
+          mat-button
+          class="bg-warning rounded f-s-12 p-x-8 p-y-4 text-decoration-none text-white f-w-500 m-r-4"
+        >
+          Edit
+        </button>
+        <button
+          mat-button
+          class="bg-primary rounded f-s-12 p-x-8 p-y-4 text-decoration-none text-white f-w-500"
+        >
+          See All
+        </button>
+      </div>
+    </div>
+    <mat-divider class="m-t-30 m-b-30"></mat-divider>
+
+    <!-- ------------------------------------------------------------------------- -->
+    <!-- Primary Keyword -->
+    <!-- ------------------------------------------------------------------------- -->
+
+    <div class="p-keyword">
+      <h3>Primary Keyword</h3>
+      <mat-chip class="f-s-12 f-w-600 m-y-16 m-r-16 bg-accent">{{
+        article.primaryKeyword
+      }}</mat-chip>
+    </div>
+
+    <mat-divider class="m-t-30 m-b-30"></mat-divider>
+
+    <!-- ------------------------------------------------------------------------- -->
+    <!-- Secondary Keywords -->
+    <!-- ------------------------------------------------------------------------- -->
+
+    <div class="s-keyword">
+      <h3>Secondary Keywords</h3>
+      <mat-chip
+        class="f-s-12 f-w-600 m-y-16 m-r-16 bg-accent"
+        *ngFor="let sKey of secondaryKeywords"
+        >{{ sKey }}</mat-chip
+      >
+    </div>
+    <mat-divider class="m-t-30 m-b-30"></mat-divider>
+
+    <!-- ------------------------------------------------------------------------- -->
+    <!-- SEO MetaDescription -->
+    <!-- ------------------------------------------------------------------------- -->
+
+    <div class="title">
+      <h3>SEO Meta Description</h3>
+
+      <p>
+        {{ article.seoMetaDescription }}
+      </p>
+
+      <div class="d-flex">
+        <button
+          mat-button
+          class="bg-warning rounded f-s-12 p-x-8 p-y-4 text-decoration-none text-white f-w-500 m-r-4"
+          *ngIf="
+            article.seoMetaDescription && article.seoMetaDescription.length > 0
+          "
+        >
+          Edit
+        </button>
+        <button
+          mat-button
+          class="bg-primary rounded f-s-12 p-x-8 p-y-4 text-decoration-none text-white f-w-500"
+          *ngIf="
+            !article.seoMetaDescription ||
+            article.seoMetaDescription.length == 0
+          "
+        >
+          Generate
+        </button>
+      </div>
+    </div>
+    <mat-divider class="m-t-30 m-b-30"></mat-divider>
+
+    <!-- ------------------------------------------------------------------------- -->
+    <!-- SEO MetaDescription -->
+    <!-- ------------------------------------------------------------------------- -->
+
+    <div class="title">
+      <h3>Excerpt</h3>
+
+      <p>
+        {{ article.excerpt }}
+      </p>
+
+      <div class="d-flex">
+        <button
+          mat-button
+          class="bg-warning rounded f-s-12 p-x-8 p-y-4 text-decoration-none text-white f-w-500 m-r-4"
+          *ngIf="article.excerpt && article.excerpt.length > 0"
+        >
+          Edit
+        </button>
+        <button
+          mat-button
+          class="bg-primary rounded f-s-12 p-x-8 p-y-4 text-decoration-none text-white f-w-500"
+          *ngIf="!article.excerpt || article.excerpt.length == 0"
+        >
+          Generate
+        </button>
+      </div>
+    </div>
+    <mat-divider class="m-t-30 m-b-30"></mat-divider>
+
+    <!-- ------------------------------------------------------------------------- -->
+    <!-- Categories -->
+    <!-- ------------------------------------------------------------------------- -->
+
+    <div class="categories">
+      <h3>Categories</h3>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Categories</mat-label>
+        <mat-chip-grid #chipGridCategories aria-label="Enter category">
+          <mat-chip-row
+            *ngFor="let category of article.categories"
+            (removed)="removeCategory(category)"
+            [editable]="true"
+            (edited)="editCategory(category, $event)"
+            [aria-description]="'press enter to edit ' + category"
+            class="f-s-14"
+          >
+            {{ category }}
+            <button
+              matChipRemove
+              [attr.aria-label]="'remove ' + category"
+            >
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+          <input
+            placeholder="New category..."
+            [matChipInputFor]="chipGridCategories"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="addCategory($event)"
+          />
+        </mat-chip-grid>
+      </mat-form-field>
+    </div>
+
+    <!-- ------------------------------------------------------------------------- -->
+    <!-- Tags -->
+    <!-- ------------------------------------------------------------------------- -->
+     <div class="tags">
+      <h3>Tags</h3>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Tags</mat-label>
+        <mat-chip-grid #chipGridTags aria-label="Enter a tag">
+          <mat-chip-row
+            *ngFor="let tag of article.tags"
+            (removed)="removeTag(tag)"
+            [editable]="true"
+            (edited)="editTag(tag, $event)"
+            [aria-description]="'press enter to edit ' + tag"
+            class="f-s-14"
+          >
+            {{ tag }}
+            <button
+              matChipRemove
+              [attr.aria-label]="'remove ' + tag"
+            >
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+          <input
+            placeholder="New tag..."
+            [matChipInputFor]="chipGridTags"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="addTag($event)"
+          />
+        </mat-chip-grid>
+      </mat-form-field>
+    </div>
+
+        <!-- ------------------------------------------------------------------------- -->
+    <!-- FAQ Script -->
+    <!-- ------------------------------------------------------------------------- -->
+
+    <div class="faq">
+      <h3>FAQ Script</h3>
+
+      <p>
+        {{ article.faqScript }}
+      </p>
+
+      <div class="d-flex">
+        <button
+          mat-button
+          class="bg-warning rounded f-s-12 p-x-8 p-y-4 text-decoration-none text-white f-w-500 m-r-4"
+          *ngIf="
+            article.faqScript && article.faqScript.length > 0
+          "
+        >
+          Edit
+        </button>
+        <button
+          mat-button
+          class="bg-primary rounded f-s-12 p-x-8 p-y-4 text-decoration-none text-white f-w-500"
+          *ngIf="
+            !article.faqScript ||
+            article.faqScript.length == 0
+          "
+        >
+          Generate
+        </button>
+      </div>
+    </div>
+    <mat-divider class="m-t-30 m-b-30"></mat-divider>
+
+
+  </mat-card-content>
+  <mat-card-footer *ngIf="isLoading">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </mat-card-footer>
+</mat-card>

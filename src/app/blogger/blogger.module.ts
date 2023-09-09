@@ -7,13 +7,15 @@ import { MaterialModule } from '../material.module';
 import { RouterModule } from '@angular/router';
 import { BloggerRouting } from './blogger.routing';
 import { ListBlogProjectsComponent } from './list-blog-projects/list-blog-projects.component';
+import { GenerateFullArticleForBlogComponent } from './generate-full-article-for-blog/generate-full-article-for-blog.component';
 
 
 
 @NgModule({
   declarations: [
     CreateBlogProjectComponent,
-    ListBlogProjectsComponent
+    ListBlogProjectsComponent,
+    GenerateFullArticleForBlogComponent
   ],
   imports: [
     CommonModule,
