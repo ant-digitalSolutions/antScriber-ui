@@ -3,21 +3,44 @@ import { IArticleDetailsDto } from '../dto/article-details.dto';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { Subject } from 'rxjs';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Validators } from 'ngx-editor';
 
 @Component({
   selector: 'app-generate-full-article-for-blog',
   templateUrl: './generate-full-article-for-blog.component.html',
   styleUrls: ['./generate-full-article-for-blog.component.scss']
 })
-export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy{
+export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
 
 
   componentDestroyed$: Subject<boolean> = new Subject();
 
+  /**
+   * Indicate if a field is being edited.
+   * 
+   * if this.fieldEditionStatus['fieldName'] === true, then the field
+   * 'title' is in edition mode. Otherwise, is not being edited.
+   *
+   * @type {{[fieldName: string]: boolean;}}
+   * @memberof GenerateFullArticleForBlogComponent
+   */
+  fieldEditionStatus: {[fieldName: string]: boolean;} = {};
+
+  articleForm: FormGroup = new FormGroup({
+    id: new FormControl(),
+    title: new FormControl(),
+    body: new FormControl(),
+    primaryKeyword: new FormControl(),
+    secondaryKeywords: new FormControl(),
+    categories: new FormControl(),
+    tags: new FormControl(),
+  });
+
 
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  
+
 
 
   isLoading = false;
@@ -32,7 +55,7 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy{
     tags: ['tag1', 'tag2', 'tag3']
   };
 
-  constructor(){
+  constructor() {
 
   }
 
@@ -42,11 +65,58 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
+    this.setForm();
+    this.initializeFieldState();
   }
 
-  
-  public get secondaryKeywords() : string[] {
+
+  public get secondaryKeywords(): string[] {
     return this.article.secondaryKeywords ? this.article.secondaryKeywords.split(',') : [];
+  }
+
+  setForm(): void {
+    if (this.article) {
+      this.articleForm = new FormGroup({
+        id: new FormControl(this.article.id),
+        title: new FormControl(this.article.title, [Validators.required()]),
+        body: new FormControl(this.article.body, [Validators.required()]),
+        primaryKeyword: new FormControl(this.article.primaryKeyword),
+        secondaryKeywords: new FormControl(this.article.secondaryKeywords),
+        categories: new FormControl(this.article.categories),
+        tags: new FormControl(this.article.tags),
+      })
+    } else {
+      this.articleForm = new FormGroup({
+        id: new FormControl(),
+        title: new FormControl(),
+        body: new FormControl(),
+        primaryKeyword: new FormControl(),
+        secondaryKeywords: new FormControl(),
+        categories: new FormControl(),
+        tags: new FormControl(),
+      })
+    }
+  }
+
+  /**
+   * Initialize the status of the fields that are shown
+   * in the view.
+   *
+   * @memberof GenerateFullArticleForBlogComponent
+   */
+  initializeFieldState(): void {
+    const fieldKeys = Object.keys(IArticleDetailsDto);
+    fieldKeys.forEach(field => {
+      this.fieldEditionStatus[field] = false;
+    });
+  }
+
+   getFieldEditionStatus(fieldName: string): boolean {
+    return this.fieldEditionStatus[fieldName];
+  }
+
+  toggleFieldEditionStatus(fieldName: string): void {
+    this.fieldEditionStatus[fieldName] = !this.fieldEditionStatus[fieldName];
   }
 
   addCategory(event: MatChipInputEvent) {
