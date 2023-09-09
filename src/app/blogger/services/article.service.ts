@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { marked } from 'marked';
-import { ArticleGenerationParamsDto } from '../dto/generate-article.dto';
+import { ArticleGenerationParamsDto } from '../../content-creation/dto/generate-article.dto';
 import { HttpClient } from '@angular/common/http';
-import { IArticleFromAiResponseDto } from './dtos/article-from-ai.dto';
+import { IArticleFromAiResponseDto } from '../../content-creation/article/dtos/article-from-ai.dto';
 import { Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { ArticleIdeasParamsDto } from '../dto/generate-articles-ideas-params.dto';
-import { ArticleIdeasResponse } from './dtos/article-ideas-from-ai.dto';
+import { ArticleIdeasParamsDto } from '../../content-creation/dto/generate-articles-ideas-params.dto';
+import { ArticleIdeasResponse } from '../../content-creation/article/dtos/article-ideas-from-ai.dto';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ArticleService {
 
 

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ArticleRenderComponent } from './article-render/article-render.component';
 import { ArticleEditorComponent } from './article-editor/article-editor.component';
-import { ArticleService } from './article.service';
+import { ArticleService } from '../../blogger/services/article.service';
 import { GenerateArticleFromUserParamsComponent } from './generate-article-from-user-params/generate-article-from-user-params.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TablerIconsModule } from 'angular-tabler-icons';
@@ -33,7 +33,6 @@ import { ArticleIdeasModule } from './article-ideas/article-ideas.module';
     ReactiveFormsModule,
     NgxEditorModule,
     ArticleIdeasModule
-  ],
-  providers: [ArticleService]
+  ]
 })
 export class ArticleModule { }

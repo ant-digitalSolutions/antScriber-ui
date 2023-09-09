@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ContentCreationService } from '../../content-creation.service';
 import { IArticleFromAiResponseDto } from '../dtos/article-from-ai.dto';
 import { ArticleGenerationParamsDto } from '../../dto/generate-article.dto';
-import { ArticleService } from '../article.service';
+import { ArticleService } from '../../../blogger/services/article.service';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { ArticleIdea } from '../dtos/article-ideas-from-ai.dto';

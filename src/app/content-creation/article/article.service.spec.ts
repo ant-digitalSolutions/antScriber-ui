@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ArticleService } from './article.service';
+import { ArticleService } from '../../blogger/services/article.service';
 
 describe('ArticleService', () => {
   let service: ArticleService;

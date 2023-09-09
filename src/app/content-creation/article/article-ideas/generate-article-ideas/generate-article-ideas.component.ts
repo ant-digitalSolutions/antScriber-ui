@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ArticleService } from '../../article.service';
+import { ArticleService } from '../../../../blogger/services/article.service';
 import { ArticleIdeasParamsDto } from '../../../dto/generate-articles-ideas-params.dto';
 import { ArticleIdeasResponse } from '../../dtos/article-ideas-from-ai.dto';
 
