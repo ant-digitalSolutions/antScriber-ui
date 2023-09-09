@@ -21,6 +21,9 @@ export class ArticleIdeasService {
   private _articleIdeasPrimaryKeywords = new BehaviorSubject<string[]>([]);
   articleIdeasPrimaryKeywords$ = this._articleIdeasPrimaryKeywords.asObservable();
 
+  private _ideaToGenerateArticle = new BehaviorSubject<ArticleIdea>(null as any);
+  ideaToGenerateArticle$ = this._ideaToGenerateArticle.asObservable();
+
   constructor(private blogProjectService: BlogProjectsService, private http: HttpClient) {
     this.blogProjectService.selectedProjectId$.subscribe(r => {
       this.selectedProjectId = r;
@@ -43,6 +46,10 @@ export class ArticleIdeasService {
   filterArticleIdeasBySearch(searchTerm: string): ArticleIdea[] {
     console.log(searchTerm);
     return this._articleIdeas.value.filter(idea => idea.containsSearchTerm(searchTerm));
+  }
+
+  setArticleIdeaToGenerateArticle(articleIdea: ArticleIdea) {
+    this._ideaToGenerateArticle.next(articleIdea);
   }
 
   private setPrimaryKeywordsList(): void {

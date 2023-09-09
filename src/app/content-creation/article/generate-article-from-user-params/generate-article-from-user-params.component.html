@@ -4,38 +4,113 @@
   </mat-card-header>
   <mat-card-content class="b-t-1">
     <form [formGroup]="articleCreationForm" (ngSubmit)="generateArticle()">
-      <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
-        >Business or Blog Name</mat-label
-      >
+      <!-- ------------------------------------------------------------------------- -->
+      <!-- Article TItle -->
+      <!-- ------------------------------------------------------------------------- -->
+
       <mat-form-field appearance="outline" class="w-100" color="primary">
-        <input matInput type="text" formControlName="blogName" />
+        <mat-label>Article Title</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="title"
+          placeholder="Article Title"
+        />
       </mat-form-field>
-      <!-- input -->
-      <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
-        >Main Idea for Article</mat-label
-      >
+
+      <!-- ------------------------------------------------------------------------- -->
+      <!-- Article TItle -->
+      <!-- ------------------------------------------------------------------------- -->
+
       <mat-form-field appearance="outline" class="w-100" color="primary">
-        <textarea matInput rows="5" formControlName="articleIdea"></textarea>
+        <mat-label>Main Idea for Article</mat-label>
+        <textarea
+          matInput
+          rows="5"
+          formControlName="articleIdea"
+          placeholder="Main idea to generate the article"
+        ></textarea>
       </mat-form-field>
-      <div>
-        <label id="example-name-label" class="f-w-600 mat-body-1"
-          >Amount Of Words:__
+
+      <!-- ------------------------------------------------------------------------- -->
+      <!-- Primary Keyword -->
+      <!-- ------------------------------------------------------------------------- -->
+
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Primary Keyword</mat-label>
+        <input
+          type="text"
+          placeholder="Select the Primary Keyword"
+          aria-label="Number"
+          matInput
+          formControlName="primaryKeyword"
+          [matAutocomplete]="auto"
+          (keyup.enter)="addNewPrimaryKeyword()"
+        />
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option *ngFor="let pKey of primaryKeywords" [value]="pKey">
+            {{ pKey }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <!-- ------------------------------------------------------------------------- -->
+      <!-- SEcondary Keywords -->
+      <!-- ------------------------------------------------------------------------- -->
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Secondary Keywords</mat-label>
+        <mat-chip-grid #chipGrid aria-label="Enter fruits">
+          <mat-chip-row
+            *ngFor="let secondaryKeyword of secondaryKeywords"
+            (removed)="removeSecondaryKey(secondaryKeyword)"
+            [editable]="true"
+            (edited)="editSecondaryKeyword(secondaryKeyword, $event)"
+            [aria-description]="'press enter to edit ' + secondaryKeyword"
+            class="f-s-14"
+          >
+            {{ secondaryKeyword }}
+            <button
+              matChipRemove
+              [attr.aria-label]="'remove ' + secondaryKeyword"
+            >
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+          <input
+            placeholder="New secondary keyword..."
+            [matChipInputFor]="chipGrid"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="addSecondaryKeyword($event)"
+          />
+        </mat-chip-grid>
+      </mat-form-field>
+
+      <!-- ------------------------------------------------------------------------- -->
+      <!-- Amount of Words -->
+      <!-- ------------------------------------------------------------------------- -->
+
+    
+        <label id="example-name-label" class="f-w-600 mat-body-1 p-r-10"
+          >Amount Of Words:
         </label>
         <label class="f-w-500 mat-body-1">{{
           articleCreationForm.value.amountOfWords
         }}</label>
-      </div>
-      <mat-slider class="example-margin" [max]="1200" [min]="400" [step]="10">
-        <input matSliderThumb formControlName="amountOfWords" />
-      </mat-slider>
 
-      <div class="row">
-        <!-- checkbox -->
-        <div class="col-sm-6 col-lg-4">
-          <mat-checkbox color="primary" formControlName="addCTA"
-            >Generate CTA at the end</mat-checkbox
-          >
-        </div>
+        <mat-slider class="example-margin" [max]="1200" [min]="400" [step]="10">
+          <input matSliderThumb formControlName="amountOfWords" />
+        </mat-slider>
+
+      <!-- ------------------------------------------------------------------------- -->
+      <!-- Generate CTA -->
+      <!-- ------------------------------------------------------------------------- -->
+      <!-- checkbox -->
+      <div class="col-sm-6 col-lg-4">
+        <mat-checkbox color="primary" formControlName="addCTA"
+          >Generate CTA at the end</mat-checkbox
+        >
       </div>
       <div class="m-t-12">
         <button

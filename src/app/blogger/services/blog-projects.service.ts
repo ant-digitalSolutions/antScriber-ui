@@ -55,4 +55,18 @@ export class BlogProjectsService {
         });
     });
   }
+
+  /**
+   * Returns the blog project data with the given ID.
+   *
+   * @param {number} blogProjectId
+   * @return {*}  {(BlogProjectDetailsDto | undefined)}
+   * @memberof BlogProjectsService
+   */
+  getBlogProjectById(blogProjectId: number): BlogProjectDetailsDto | undefined {
+    const blogProject = this._blogProjects.value.filter(p => p.id === blogProjectId);
+    if (blogProject && blogProject.length === 1)
+      return blogProject[0];
+    return undefined;
+  }
 }
