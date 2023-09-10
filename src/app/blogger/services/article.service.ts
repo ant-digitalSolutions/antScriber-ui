@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { marked } from 'marked';
 import { ArticleGenerationParamsDto } from '../../content-creation/dto/generate-article.dto';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { IArticleFromAiResponseDto } from '../../content-creation/article/dtos/article-from-ai.dto';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
 export class ArticleService {
 
 
+
   baseUrl: string = environment.apiUrl;
 
   selectedProjectId: number;
@@ -29,6 +30,8 @@ export class ArticleService {
       this.selectedProjectId = r;
     })
   }
+
+  //#region Generator methods
 
   /**
    * Generate an article using params form the user.
@@ -48,9 +51,23 @@ export class ArticleService {
     return this.http.post<ArticleIdeasResponse>(this.baseUrl + 'blogger/article-ideas', params);
   }
 
+  generateArticleExcerpt(articleId: number): Observable<string> {
+    return this.http.post<string>(this.baseUrl + 'articles/generate-excerpt', {articleId: articleId});
+  }
+
+  //#endregion
+
+  getArticleById(articleId: number): Observable<IArticleDetailsDto> {
+    let params = new HttpParams().set("id", articleId);
+    return this.http.get<IArticleDetailsDto>(this.baseUrl + 'articles', { params: params }).pipe(tap(r => {
+      this._articleToEdit.next(r);
+    }));
+
+  }
+
   navigateToGenerateFullArticle(articleToEdit: IArticleDetailsDto): void {
     this._articleToEdit.next(articleToEdit);
-    this.router.navigate(['/blogger/articles/create-full'])
+    this.router.navigate(['/blogger/articles/create-full', {id: articleToEdit.id}])
 
   }
 

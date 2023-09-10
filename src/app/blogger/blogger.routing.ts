@@ -22,7 +22,7 @@ export const BloggerRouting: Routes = [
         path: 'articles',
         children: [
             {
-                path: 'create-full',
+                path: 'create-full/:id',
                 component: GenerateFullArticleForBlogComponent,
             }
 

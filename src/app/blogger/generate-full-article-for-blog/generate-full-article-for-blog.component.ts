@@ -6,6 +6,7 @@ import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { Subject, takeUntil } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from 'ngx-editor';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-generate-full-article-for-blog',
@@ -16,6 +17,14 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
 
 
   componentDestroyed$: Subject<boolean> = new Subject();
+
+  /**
+   * Contains the ID of the article that the user is editing.
+   *
+   * @type {number}
+   * @memberof GenerateFullArticleForBlogComponent
+   */
+  articleId: number;
 
   /**
    * Indicate if a field is being edited.
@@ -56,7 +65,7 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
     tags: ['tag1', 'tag2', 'tag3']
   };
 
-  constructor(private articlesService: ArticleService) {
+  constructor(private articlesService: ArticleService, private route: ActivatedRoute) {
 
   }
 
@@ -66,6 +75,13 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.articleId = Number(this.route.snapshot.paramMap.get('id'));
+    const availableData = Boolean(this.route.snapshot.paramMap.get('withData'));
+
+      this.articlesService.getArticleById(this.articleId).subscribe(article => {
+        console.log(article)
+      });
+
     this.setForm();
     this.initializeFieldState();
 
@@ -105,6 +121,14 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
       })
     }
   }
+
+  //#region Generator methods
+  generateArticleExcerpt(): void {
+    this.articlesService.generateArticleExcerpt(this.articleId).subscribe(r => {
+      this.article.excerpt = r;
+    })
+  }
+  //#endregion
 
   /**
    * Initialize the status of the fields that are shown
