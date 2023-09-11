@@ -1,5 +1,5 @@
 import { ArticleService } from './../services/article.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { IArticleDetailsDto } from '../dto/article-details.dto';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
@@ -7,6 +7,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from 'ngx-editor';
 import { ActivatedRoute } from '@angular/router';
+import { ChangeDetectionStrategy } from '@angular/compiler';
 
 @Component({
   selector: 'app-generate-full-article-for-blog',
@@ -37,6 +38,14 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
    */
   fieldEditionStatus: { [fieldName: string]: boolean; } = {};
 
+  /**
+   * Indicates if the fields is being loading.
+   *
+   * @type {{ [fieldName: string]: boolean; }}
+   * @memberof GenerateFullArticleForBlogComponent
+   */
+  fieldIsLoading: { [fieldName: string]: boolean; } = {};
+
   articleForm: FormGroup = new FormGroup({
     id: new FormControl(),
     title: new FormControl(),
@@ -55,17 +64,9 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
 
   isLoading = false;
 
-  article: IArticleDetailsDto = {
-    id: -1,
-    title: 'THis is the title of the article',
-    body: `On this page we will provide Angular slice pipe example. The SlicePipe is Angular CommonModule API. Slice pipe slices a given array or string into subsets. We need to provide start and end index. The SlicePipe uses slice keyword with pipe operator. The SlicePipe uses JavaScript API Array.prototype.slice() and String.prototype.slice() to perform its task. On this page we will provide slice pipe example using array and string expression separately. We will discuss start and end index taking positive and negative values both. Now find the complete example step-by-step.`,
-    primaryKeyword: 'web design',
-    secondaryKeywords: 'web development, business, marketing',
-    categories: ['web', 'design', 'implementation'],
-    tags: ['tag1', 'tag2', 'tag3']
-  };
+  article: IArticleDetailsDto;
 
-  constructor(private articlesService: ArticleService, private route: ActivatedRoute) {
+  constructor(private articlesService: ArticleService, private route: ActivatedRoute, private changeDetector: ChangeDetectorRef) {
 
   }
 
@@ -78,24 +79,12 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
     this.articleId = Number(this.route.snapshot.paramMap.get('id'));
     const availableData = Boolean(this.route.snapshot.paramMap.get('withData'));
 
-      this.articlesService.getArticleById(this.articleId).subscribe(article => {
-        console.log(article)
-      });
+    this.articlesService.getArticleById(this.articleId).subscribe(article => {
+      this.article = article;
+    });
 
     this.setForm();
     this.initializeFieldState();
-
-    this.articlesService.articleToEdit$.pipe(takeUntil(this.componentDestroyed$)).subscribe(article => {
-      if (article) {
-        this.article = article!;
-        this.setForm();
-      }
-    })
-  }
-
-
-  public get secondaryKeywords(): string[] {
-    return this.article.secondaryKeywords ? this.article.secondaryKeywords.split(',') : [];
   }
 
   setForm(): void {
@@ -126,6 +115,19 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
   generateArticleExcerpt(): void {
     this.articlesService.generateArticleExcerpt(this.articleId).subscribe(r => {
       this.article.excerpt = r;
+      this.changeDetector.detectChanges();
+
+    })
+  }
+
+  generateArticleSEoMetaDescription(): void {
+    this.fieldIsLoading['seoMetaDescription'] = true;
+    this.articlesService.generateArticleSeoMetaDescription(this.articleId).subscribe(r => {
+      this.article.seoMetaDescription = r.resultText;
+      console.log('result from server:' + r);
+      this.fieldIsLoading['seoMetaDescription'] = false;
+      this.changeDetector.detectChanges();
+
     })
   }
   //#endregion
@@ -140,6 +142,7 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
     const fieldKeys = Object.keys(IArticleDetailsDto);
     fieldKeys.forEach(field => {
       this.fieldEditionStatus[field] = false;
+      this.fieldIsLoading[field] = false;
     });
   }
 
@@ -206,4 +209,11 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
     if (indexOfKey >= 0)
       this.article.categories!.splice(indexOfKey, 1);
   }
+
+  //#region properties
+public get secondaryKeywords(): string[] {
+  console.log(this.article.secondaryKeywords?.split(','))
+  return this.article.secondaryKeywords ? this.article.secondaryKeywords?.split(',') : [];
+}
+  //#endregion
 }

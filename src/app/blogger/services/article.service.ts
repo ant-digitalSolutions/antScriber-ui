@@ -10,6 +10,7 @@ import { ArticleIdeasResponse } from '../../content-creation/article/dtos/articl
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 import { IArticleDetailsDto } from '../dto/article-details.dto';
 import { Router } from '@angular/router';
+import { ISimpleGeneratorResultDto } from 'src/app/common/dto/simple-generator-response.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,10 @@ export class ArticleService {
 
   generateArticleExcerpt(articleId: number): Observable<string> {
     return this.http.post<string>(this.baseUrl + 'articles/generate-excerpt', {articleId: articleId});
+  }
+
+  generateArticleSeoMetaDescription(articleId: number): Observable<ISimpleGeneratorResultDto> {
+    return this.http.post<ISimpleGeneratorResultDto>(this.baseUrl + 'articles/generate-seo-meta-description', { articleId: articleId });
   }
 
   //#endregion

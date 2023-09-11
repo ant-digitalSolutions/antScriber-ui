@@ -2,7 +2,7 @@
   <mat-card-header>
     <mat-card-title class="m-b-0">Generate Article Full Data</mat-card-title>
   </mat-card-header>
-  <mat-card-content class="b-t-1">
+  <mat-card-content class="b-t-1" *ngIf="article">
     <!-- ------------------------------------------------------------------------- -->
     <!-- Title -->
     <!-- ------------------------------------------------------------------------- -->
@@ -11,11 +11,16 @@
       <h3>Title</h3>
 
       <h4 *ngIf="!getFieldEditionStatus('title')">{{ article.title }}</h4>
-    
-      <mat-form-field appearance="outline" class="w-100" color="primary" *ngIf="getFieldEditionStatus('title')">
-          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
-        >Title</mat-label
+
+      <mat-form-field
+        appearance="outline"
+        class="w-100"
+        color="primary"
+        *ngIf="getFieldEditionStatus('title')"
       >
+        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Title</mat-label
+        >
         <input matInput type="text" [(ngModel)]="article.title" />
       </mat-form-field>
 
@@ -27,14 +32,14 @@
       >
         Edit
       </button>
-       <button
-          mat-button
-          class="bg-primary rounded f-s-12 p-x-8 p-y-4 text-decoration-none text-white f-w-500"
-          (click)="toggleFieldEditionStatus('title')"
-          *ngIf="getFieldEditionStatus('title')"
-        >
-          Save
-        </button>
+      <button
+        mat-button
+        class="bg-primary rounded f-s-12 p-x-8 p-y-4 text-decoration-none text-white f-w-500"
+        (click)="toggleFieldEditionStatus('title')"
+        *ngIf="getFieldEditionStatus('title')"
+      >
+        Save
+      </button>
     </div>
     <mat-divider class="m-t-30 m-b-30"></mat-divider>
 
@@ -70,9 +75,9 @@
 
     <div class="p-keyword">
       <h3>Primary Keyword</h3>
-      <mat-chip class="f-s-12 f-w-600 m-y-16 m-r-16 bg-accent">{{
-        article.primaryKeyword
-      }}</mat-chip>
+      <mat-chip-listbox>
+        <mat-chip class="bg-accent">{{ article.primaryKeyword }}</mat-chip>
+      </mat-chip-listbox>
     </div>
 
     <mat-divider class="m-t-30 m-b-30"></mat-divider>
@@ -83,34 +88,70 @@
 
     <div class="s-keyword">
       <h3>Secondary Keywords</h3>
-      <mat-chip
-        class="f-s-12 f-w-600 m-y-16 m-r-16 bg-accent"
-        *ngFor="let sKey of secondaryKeywords"
-        >{{ sKey }}</mat-chip
-      >
+      <mat-chip-listbox>
+        <mat-chip
+          class="bg-accent text-white"
+          *ngFor="let sKey of secondaryKeywords"
+          >{{ sKey }}</mat-chip
+        >
+      </mat-chip-listbox>
+      <mat-divider class="m-t-30 m-b-30"></mat-divider>
     </div>
-    <mat-divider class="m-t-30 m-b-30"></mat-divider>
 
     <!-- ------------------------------------------------------------------------- -->
     <!-- SEO MetaDescription -->
     <!-- ------------------------------------------------------------------------- -->
 
-    <div class="title">
+    <div class="seo-meta-description">
       <h3>SEO Meta Description</h3>
 
-      <p>
+      <p *ngIf="!getFieldEditionStatus('seoMetaDescription')">
         {{ article.seoMetaDescription }}
       </p>
+
+      <mat-form-field
+        appearance="outline"
+        class="w-100"
+        color="primary"
+        *ngIf="getFieldEditionStatus('seoMetaDescription')"
+      >
+        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >SEO Meta Description</mat-label
+        >
+        <textarea
+          matInput
+          rows="5"
+          [(ngModel)]="article.seoMetaDescription"
+        ></textarea>
+      </mat-form-field>
+      <!-- Show spinner when generating the field content -->
+      <mat-spinner
+        diameter="50"
+        *ngIf="fieldIsLoading['seoMetaDescription']"
+        class="m-b-40"
+      >
+      </mat-spinner>
 
       <div class="d-flex">
         <button
           mat-button
           class="bg-warning rounded f-s-12 p-x-8 p-y-4 text-decoration-none text-white f-w-500 m-r-4"
           *ngIf="
-            article.seoMetaDescription && article.seoMetaDescription.length > 0
+            article.seoMetaDescription &&
+            article.seoMetaDescription.length > 0 &&
+            !getFieldEditionStatus('seoMetaDescription')
           "
+          (click)="toggleFieldEditionStatus('seoMetaDescription')"
         >
           Edit
+        </button>
+        <button
+          mat-button
+          class="bg-primary rounded f-s-12 p-x-8 p-y-4 text-decoration-none text-white f-w-500"
+          (click)="toggleFieldEditionStatus('seoMetaDescription')"
+          *ngIf="getFieldEditionStatus('seoMetaDescription')"
+        >
+          Save
         </button>
         <button
           mat-button
@@ -119,6 +160,8 @@
             !article.seoMetaDescription ||
             article.seoMetaDescription.length == 0
           "
+          (click)="generateArticleSEoMetaDescription()"
+          [disabled]="fieldIsLoading['seoMetaDescription']"
         >
           Generate
         </button>
@@ -130,17 +173,22 @@
     <!-- Excerpt -->
     <!-- ------------------------------------------------------------------------- -->
 
-    <div class="title">
+    <div class="exceprt">
       <h3>Excerpt</h3>
 
       <p *ngIf="!getFieldEditionStatus('excerpt')">
         {{ article.excerpt }}
       </p>
-     
-      <mat-form-field appearance="outline" class="w-100" color="primary" *ngIf="getFieldEditionStatus('excerpt')">
-          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
-        >Excerpt</mat-label
+
+      <mat-form-field
+        appearance="outline"
+        class="w-100"
+        color="primary"
+        *ngIf="getFieldEditionStatus('excerpt')"
       >
+        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Excerpt</mat-label
+        >
         <textarea matInput rows="5" [(ngModel)]="article.excerpt"></textarea>
       </mat-form-field>
 
@@ -148,13 +196,16 @@
         <button
           mat-button
           class="bg-warning rounded f-s-12 p-x-8 p-y-4 text-decoration-none text-white f-w-500 m-r-4"
-          *ngIf="article.excerpt && article.excerpt.length > 0 && !getFieldEditionStatus('excerpt')"
+          *ngIf="
+            article.excerpt &&
+            article.excerpt.length > 0 &&
+            !getFieldEditionStatus('excerpt')
+          "
           (click)="toggleFieldEditionStatus('excerpt')"
-
         >
           Edit
         </button>
-          <button
+        <button
           mat-button
           class="bg-primary rounded f-s-12 p-x-8 p-y-4 text-decoration-none text-white f-w-500"
           (click)="toggleFieldEditionStatus('excerpt')"
