@@ -1,0 +1,42 @@
+<mat-form-field appearance="outline" class="w-100">
+        <mat-label>Secondary Keywords</mat-label>
+        <mat-chip-grid #chipGrid aria-label="Enter keywords">
+          <mat-chip-row
+            *ngFor="let keyword of keywords"
+            (removed)="removeKey(keyword)"
+            [editable]="true"
+            (edited)="editKeyword(keyword, $event)"
+            [aria-description]="'press enter to edit ' + keyword"
+            class="f-s-14"
+          >
+            {{ keyword.name }}
+            <button
+              matChipRemove
+              [attr.aria-label]="'remove ' + keyword"
+            >
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+          <input
+          #keywordInput
+            placeholder="New secondary keyword..."
+            [matChipInputFor]="chipGrid"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="addKeyword($event)"
+            [formControl]="sKeywordCtrl"
+            [matAutocomplete]="matAutocomplete"
+          />
+        </mat-chip-grid>
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          (optionSelected)="keywordSelected($event)"
+        >
+          <mat-option
+            *ngFor="let sKey of secondaryKeywordsSearchResult"
+            [value]="sKey.id"
+          >
+            {{ sKey.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>

@@ -10,6 +10,7 @@ import { ListBlogProjectsComponent } from './list-blog-projects/list-blog-projec
 import { GenerateFullArticleForBlogComponent } from './generate-full-article-for-blog/generate-full-article-for-blog.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { GenerateFullArticleForBlogTextFieldComponent } from './generate-full-article-for-blog-text-field/generate-full-article-for-blog-text-field.component';
+import { SecondaryKeywordsSelectorComponent } from './articles/keywords-selector/secondary-keywords-selector.component';
 
 
 
@@ -18,7 +19,8 @@ import { GenerateFullArticleForBlogTextFieldComponent } from './generate-full-ar
     CreateBlogProjectComponent,
     ListBlogProjectsComponent,
     GenerateFullArticleForBlogComponent,
-    GenerateFullArticleForBlogTextFieldComponent
+    GenerateFullArticleForBlogTextFieldComponent,
+    SecondaryKeywordsSelectorComponent
   ],
   imports: [
     CommonModule,
@@ -28,6 +30,9 @@ import { GenerateFullArticleForBlogTextFieldComponent } from './generate-full-ar
     ReactiveFormsModule,
     RouterModule.forChild(BloggerRouting),
     MatChipsModule,
+  ],
+  exports: [
+    SecondaryKeywordsSelectorComponent
   ]
 })
 export class BloggerModule { }
