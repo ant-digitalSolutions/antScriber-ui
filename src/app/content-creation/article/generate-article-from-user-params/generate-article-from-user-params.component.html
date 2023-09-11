@@ -58,50 +58,22 @@
       <!-- SEcondary Keywords -->
       <!-- ------------------------------------------------------------------------- -->
 
-      <mat-form-field appearance="outline" class="w-100">
-        <mat-label>Secondary Keywords</mat-label>
-        <mat-chip-grid #chipGrid aria-label="Enter fruits">
-          <mat-chip-row
-            *ngFor="let secondaryKeyword of secondaryKeywords"
-            (removed)="removeSecondaryKey(secondaryKeyword)"
-            [editable]="true"
-            (edited)="editSecondaryKeyword(secondaryKeyword, $event)"
-            [aria-description]="'press enter to edit ' + secondaryKeyword"
-            class="f-s-14"
-          >
-            {{ secondaryKeyword }}
-            <button
-              matChipRemove
-              [attr.aria-label]="'remove ' + secondaryKeyword"
-            >
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </mat-chip-row>
-          <input
-            placeholder="New secondary keyword..."
-            [matChipInputFor]="chipGrid"
-            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            [matChipInputAddOnBlur]="addOnBlur"
-            (matChipInputTokenEnd)="addSecondaryKeyword($event)"
-          />
-        </mat-chip-grid>
-      </mat-form-field>
+      <app-secondary-keywords-selector></app-secondary-keywords-selector>
 
       <!-- ------------------------------------------------------------------------- -->
       <!-- Amount of Words -->
       <!-- ------------------------------------------------------------------------- -->
 
-    
-        <label id="example-name-label" class="f-w-600 mat-body-1 p-r-10"
-          >Amount Of Words:
-        </label>
-        <label class="f-w-500 mat-body-1">{{
-          articleCreationForm.value.amountOfWords
-        }}</label>
+      <label id="example-name-label" class="f-w-600 mat-body-1 p-r-10"
+        >Amount Of Words:
+      </label>
+      <label class="f-w-500 mat-body-1">{{
+        articleCreationForm.value.amountOfWords
+      }}</label>
 
-        <mat-slider class="example-margin" [max]="1200" [min]="400" [step]="10">
-          <input matSliderThumb formControlName="amountOfWords" />
-        </mat-slider>
+      <mat-slider class="example-margin" [max]="1200" [min]="400" [step]="10">
+        <input matSliderThumb formControlName="amountOfWords" />
+      </mat-slider>
 
       <!-- ------------------------------------------------------------------------- -->
       <!-- Generate CTA -->
@@ -122,7 +94,7 @@
         >
           Generate Now
         </button>
-          <button
+        <button
           mat-flat-button
           color="primary"
           [disabled]="!articleCreationForm.valid || isLoading"
@@ -142,6 +114,5 @@
 <div class="article-render-container" *ngIf="generatedArticleResponse">
   <app-article-render
     [articleToRender]="generatedArticleResponse"
-
   ></app-article-render>
 </div>

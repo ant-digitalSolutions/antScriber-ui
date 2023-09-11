@@ -1,17 +1,16 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ContentCreationService } from '../../content-creation.service';
-import { IArticleFromAiResponseDto } from '../dtos/article-from-ai.dto';
 import { ArticleGenerationParamsDto } from '../../dto/generate-article.dto';
 import { ArticleService } from '../../../blogger/services/article.service';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { ArticleIdea } from '../dtos/article-ideas-from-ai.dto';
 import { ArticleIdeasService } from '../article-ideas/article-ideas.service';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, debounceTime, distinctUntilChanged, switchMap, takeUntil, Observable } from 'rxjs';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 import { BlogProjectDetailsDto } from 'src/app/blogger/dto/blog-project-details.dto';
 import { IArticleDetailsDto } from 'src/app/blogger/dto/article-details.dto';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-generate-article-from-user-params',
@@ -19,6 +18,7 @@ import { IArticleDetailsDto } from 'src/app/blogger/dto/article-details.dto';
   styleUrls: ['./generate-article-from-user-params.component.scss']
 })
 export class GenerateArticleFromUserParamsComponent implements OnInit, OnDestroy {
+
 
   componentDestroyed$: Subject<boolean> = new Subject();
 
@@ -102,7 +102,6 @@ export class GenerateArticleFromUserParamsComponent implements OnInit, OnDestroy
     this.articleService.generateArticleFromParams(articleCreationParams).subscribe(result => {
       this.isLoading = false;
       this.generatedArticleResponse = result;
-      console.log(result);
     })
   }
 

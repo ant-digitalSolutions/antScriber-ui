@@ -14,6 +14,7 @@ import { GenerateArticleIdeasComponent } from './article-ideas/generate-article-
 import { ArticleIdeaCardComponent } from './article-ideas/article-idea-card/article-idea-card.component';
 import { ListArticleIdeasComponent } from './article-ideas/list-article-ideas/list-article-ideas.component';
 import { ArticleIdeasModule } from './article-ideas/article-ideas.module';
+import { BloggerModule } from 'src/app/blogger/blogger.module';
 
 
 
@@ -32,7 +33,8 @@ import { ArticleIdeasModule } from './article-ideas/article-ideas.module';
     TablerIconsModule.pick(TablerIcons),
     ReactiveFormsModule,
     NgxEditorModule,
-    ArticleIdeasModule
+    ArticleIdeasModule,
+    BloggerModule,
   ]
 })
 export class ArticleModule { }
