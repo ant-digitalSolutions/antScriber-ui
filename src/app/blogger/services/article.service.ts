@@ -52,8 +52,8 @@ export class ArticleService {
     return this.http.post<ArticleIdeasResponse>(this.baseUrl + 'blogger/article-ideas', params);
   }
 
-  generateArticleExcerpt(articleId: number): Observable<string> {
-    return this.http.post<string>(this.baseUrl + 'articles/generate-excerpt', {articleId: articleId});
+  generateArticleExcerpt(articleId: number): Observable<ISimpleGeneratorResultDto> {
+    return this.http.post<ISimpleGeneratorResultDto>(this.baseUrl + 'articles/generate-excerpt', {articleId: articleId});
   }
 
   generateArticleSeoMetaDescription(articleId: number): Observable<ISimpleGeneratorResultDto> {

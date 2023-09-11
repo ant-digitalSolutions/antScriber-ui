@@ -15,8 +15,6 @@ import { ChangeDetectionStrategy } from '@angular/compiler';
   styleUrls: ['./generate-full-article-for-blog.component.scss']
 })
 export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
-
-
   componentDestroyed$: Subject<boolean> = new Subject();
 
   /**
@@ -114,23 +112,25 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
   //#region Generator methods
   generateArticleExcerpt(): void {
     this.articlesService.generateArticleExcerpt(this.articleId).subscribe(r => {
-      this.article.excerpt = r;
-      this.changeDetector.detectChanges();
+      this.article.excerpt = r.resultText;
 
     })
   }
 
   generateArticleSEoMetaDescription(): void {
-    this.fieldIsLoading['seoMetaDescription'] = true;
     this.articlesService.generateArticleSeoMetaDescription(this.articleId).subscribe(r => {
       this.article.seoMetaDescription = r.resultText;
-      console.log('result from server:' + r);
-      this.fieldIsLoading['seoMetaDescription'] = false;
-      this.changeDetector.detectChanges();
-
     })
   }
   //#endregion
+
+  updateArticleSeoMetaDescription(value: string) {
+    this.article.seoMetaDescription = value;
+  }
+
+  updateArticleExcerpt(value: string) {
+    this.article.seoMetaDescription = value;
+  }
 
   /**
    * Initialize the status of the fields that are shown

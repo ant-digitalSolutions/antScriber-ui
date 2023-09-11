@@ -8,6 +8,8 @@ import { RouterModule } from '@angular/router';
 import { BloggerRouting } from './blogger.routing';
 import { ListBlogProjectsComponent } from './list-blog-projects/list-blog-projects.component';
 import { GenerateFullArticleForBlogComponent } from './generate-full-article-for-blog/generate-full-article-for-blog.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { GenerateFullArticleForBlogTextFieldComponent } from './generate-full-article-for-blog-text-field/generate-full-article-for-blog-text-field.component';
 
 
 
@@ -15,7 +17,8 @@ import { GenerateFullArticleForBlogComponent } from './generate-full-article-for
   declarations: [
     CreateBlogProjectComponent,
     ListBlogProjectsComponent,
-    GenerateFullArticleForBlogComponent
+    GenerateFullArticleForBlogComponent,
+    GenerateFullArticleForBlogTextFieldComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +26,8 @@ import { GenerateFullArticleForBlogComponent } from './generate-full-article-for
     FormsModule,
     NgScrollbarModule,
     ReactiveFormsModule,
-    RouterModule.forChild(BloggerRouting)
+    RouterModule.forChild(BloggerRouting),
+    MatChipsModule,
   ]
 })
 export class BloggerModule { }
