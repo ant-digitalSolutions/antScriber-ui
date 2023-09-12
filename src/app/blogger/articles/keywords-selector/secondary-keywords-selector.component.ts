@@ -1,11 +1,12 @@
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, Subject, debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs';
 import { KeywordDetailsDto } from '../../dto/keywords/keyword-details.dto';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent, MatChipEditedEvent } from '@angular/material/chips';
 import { KeywordsService } from '../../services/keywords.service';
+import { KeywordTypeEnum } from '../../enums/keyword-type.enum';
 
 @Component({
   selector: 'app-secondary-keywords-selector',
@@ -22,6 +23,13 @@ export class SecondaryKeywordsSelectorComponent implements OnInit, OnDestroy {
 
   @Input()
   keywords: KeywordDetailsDto[] = [];
+
+  /**
+   * Contain the list of keyword that match the user's term
+   *
+   * @type {KeywordDetailsDto[]}
+   * @memberof SecondaryKeywordsSelectorComponent
+   */
   secondaryKeywordsSearchResult: KeywordDetailsDto[] = [];
   sKeywordCtrl = new FormControl();
 
@@ -58,8 +66,12 @@ export class SecondaryKeywordsSelectorComponent implements OnInit, OnDestroy {
 
       // Add our fruit
       if ((value || '').trim()) {
-        const keyword = this.secondaryKeywordsSearchResult.filter(k => k.name === value)[0];
-        this.keywords.push(keyword);
+        const newKeyword: KeywordDetailsDto = {
+          name: value,
+          id: -1
+        }
+        this.keywords.push(newKeyword);
+        this.keywordsService.addSecondaryKeywordForArticleEdition(newKeyword);
       }
 
       // Reset the input value
@@ -72,10 +84,11 @@ export class SecondaryKeywordsSelectorComponent implements OnInit, OnDestroy {
   }
 
   keywordSelected($event: MatAutocompleteSelectedEvent) {
-   const keyword = this.secondaryKeywordsSearchResult.filter(k => k.id === $event.option.value)[0];
-   this.keywords.push(keyword);
-   this.sKeywordCtrl.setValue('');
-   this.keywordInput.nativeElement.value = '';
+    const keyword = this.secondaryKeywordsSearchResult.filter(k => k.id === $event.option.value)[0];
+    this.keywords.push(keyword);
+    this.keywordsService.addSecondaryKeywordForArticleEdition(keyword);
+    this.sKeywordCtrl.setValue('');
+    this.keywordInput.nativeElement.value = '';
   }
 
   editKeyword(sKey: KeywordDetailsDto, event: MatChipEditedEvent) {
@@ -87,16 +100,27 @@ export class SecondaryKeywordsSelectorComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if (event.value === sKey.name) {
+      return;
+    }
+
     const index = this.keywords.indexOf(sKey);
     if (index >= 0) {
-      // this.secondaryKeywords[index] = value;
+      this.keywords.splice(index, 1);
+      this.keywordsService.removeSecondaryKeywordForArticleEdition(sKey);
+      this.keywordsService.addSecondaryKeywordForArticleEdition({
+        name: event.value,
+        id: -1
+      })
     }
   }
 
   removeKey(sKey: KeywordDetailsDto) {
-    const indexOfKey = this.keywords.indexOf(sKey);
-    if (indexOfKey >= 0)
+    const indexOfKey = this.keywords.findIndex(k => k.name === sKey.name);
+    if (indexOfKey >= 0) {
       this.keywords.splice(indexOfKey, 1);
+      this.keywordsService.removeSecondaryKeywordForArticleEdition(sKey);
+    }
   }
 
   private filterResultList(result: KeywordDetailsDto[]): KeywordDetailsDto[] {

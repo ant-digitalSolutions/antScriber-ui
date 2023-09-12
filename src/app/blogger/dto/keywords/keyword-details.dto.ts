@@ -5,13 +5,11 @@ export class KeywordDetailsDto {
 
     name: string;
 
-    keywordType: KeywordTypeEnum;
+    googleRanking?: number;
 
-    googleRanking: number;
+    googleImpressions?: number;
 
-    googleImpressions: number;
+    googleCTR?: number;
 
-    googleCTR: number;
-
-    blogProjectId: number;
+    blogProjectId?: number;
 }

@@ -11,6 +11,7 @@ import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.serv
 import { BlogProjectDetailsDto } from 'src/app/blogger/dto/blog-project-details.dto';
 import { IArticleDetailsDto } from 'src/app/blogger/dto/article-details.dto';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { KeywordsService } from 'src/app/blogger/services/keywords.service';
 
 @Component({
   selector: 'app-generate-article-from-user-params',
@@ -41,7 +42,8 @@ export class GenerateArticleFromUserParamsComponent implements OnInit, OnDestroy
   /**
    *
    */
-  constructor(private articleService: ArticleService, private articleIdeaService: ArticleIdeasService, private blogProjectService: BlogProjectsService) {
+  constructor(private articleService: ArticleService, private articleIdeaService: ArticleIdeasService, private blogProjectService: BlogProjectsService,
+    private keywordService: KeywordsService) {
 
 
   }
@@ -63,6 +65,12 @@ export class GenerateArticleFromUserParamsComponent implements OnInit, OnDestroy
         this.articleCreationForm.addControl('blogProjectId', new FormControl(this.currentBlogProject!.id, [Validators.required]))
 
       }
+    })
+    this.keywordService.primaryKeywordSelection$.pipe(takeUntil(this.componentDestroyed$)).subscribe(k => {
+      this.articleCreationForm.get('primaryKeyword')?.setValue(k);
+    })
+    this.keywordService.secondaryKeywordSelection$.pipe(takeUntil(this.componentDestroyed$)).subscribe(sKeywords => {
+      this.articleCreationForm.get('secondaryKeywords')?.setValue(sKeywords);
     })
   }
 
