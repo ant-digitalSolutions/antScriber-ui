@@ -36,6 +36,13 @@ export class KeywordsService {
     return this.http.get<KeywordDetailsDto[]>(this.baseUrl + 'list-by-term', { params: params })
       .pipe(tap(r => this._keywordSearchResult.next(r)));
   }
+
+  setPrimaryKeywordForArticleEdition(keyword: KeywordDetailsDto) {
+    if (!keyword.blogProjectId) {
+      keyword.blogProjectId = this.selectedProjectId
+    }
+    this._primaryKeywordForArticleEdition.next(keyword);
+  }
   
   addSecondaryKeywordForArticleEdition(keyword: KeywordDetailsDto) {
     if (!keyword.blogProjectId) {

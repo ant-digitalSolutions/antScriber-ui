@@ -36,24 +36,7 @@
       <!-- Primary Keyword -->
       <!-- ------------------------------------------------------------------------- -->
 
-      <mat-form-field class="w-100" appearance="outline">
-        <mat-label>Primary Keyword</mat-label>
-        <input
-          type="text"
-          placeholder="Select the Primary Keyword"
-          aria-label="Number"
-          matInput
-          formControlName="primaryKeyword"
-          [matAutocomplete]="auto"
-          (keyup.enter)="addNewPrimaryKeyword()"
-        />
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-          <mat-option *ngFor="let pKey of primaryKeywords" [value]="pKey">
-            {{ pKey }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-
+      <app-primary-keyword-selector></app-primary-keyword-selector>
       <!-- ------------------------------------------------------------------------- -->
       <!-- SEcondary Keywords -->
       <!-- ------------------------------------------------------------------------- -->

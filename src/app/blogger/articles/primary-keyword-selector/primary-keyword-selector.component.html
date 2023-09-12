@@ -1,0 +1,19 @@
+<mat-form-field class="w-100" appearance="outline">
+        <mat-label>Primary Keyword</mat-label>
+        <input
+          type="text"
+          placeholder="Select the Primary Keyword"
+          aria-label="Number"
+          matInput
+          [formControl]="inputCtrl"
+          [matAutocomplete]="auto"
+          (keyup.enter)="addNewPrimaryKeyword()"
+          (blur)="addNewPrimaryKeyword()"
+          #keywordInput
+        />
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="keywordSelected($event)">
+          <mat-option *ngFor="let pKey of primaryKeywordsSearchResult" [value]="pKey.name">
+            {{ pKey.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>

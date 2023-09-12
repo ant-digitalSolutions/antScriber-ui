@@ -11,6 +11,7 @@ import { GenerateFullArticleForBlogComponent } from './generate-full-article-for
 import { MatChipsModule } from '@angular/material/chips';
 import { GenerateFullArticleForBlogTextFieldComponent } from './generate-full-article-for-blog-text-field/generate-full-article-for-blog-text-field.component';
 import { SecondaryKeywordsSelectorComponent } from './articles/keywords-selector/secondary-keywords-selector.component';
+import { PrimaryKeywordSelectorComponent } from './articles/primary-keyword-selector/primary-keyword-selector.component';
 
 
 
@@ -20,7 +21,8 @@ import { SecondaryKeywordsSelectorComponent } from './articles/keywords-selector
     ListBlogProjectsComponent,
     GenerateFullArticleForBlogComponent,
     GenerateFullArticleForBlogTextFieldComponent,
-    SecondaryKeywordsSelectorComponent
+    SecondaryKeywordsSelectorComponent,
+    PrimaryKeywordSelectorComponent,
   ],
   imports: [
     CommonModule,
@@ -32,7 +34,8 @@ import { SecondaryKeywordsSelectorComponent } from './articles/keywords-selector
     MatChipsModule,
   ],
   exports: [
-    SecondaryKeywordsSelectorComponent
+    SecondaryKeywordsSelectorComponent,
+    PrimaryKeywordSelectorComponent
   ]
 })
 export class BloggerModule { }

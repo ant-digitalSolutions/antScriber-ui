@@ -50,6 +50,37 @@ export class GenerateArticleFromUserParamsComponent implements OnInit, OnDestroy
 
   ngOnInit(): void {
     this.setForm();
+    this.setListeners();
+  }
+
+  ngOnDestroy() {
+    this.componentDestroyed$.next(true)
+    this.componentDestroyed$.complete()
+  }
+
+  setForm(): void {
+    if (this.articleIdeaToGenerate) {
+      this.articleCreationForm = new FormGroup({
+        title: new FormControl(this.articleIdeaToGenerate.title),
+        articleIdea: new FormControl(this.articleIdeaToGenerate.summary, [Validators.required, Validators.minLength(50)]),
+        primaryKeyword: new FormControl(this.articleIdeaToGenerate.primaryKeyword),
+        secondaryKeywords: new FormControl(this.articleIdeaToGenerate.secondaryKeywordsList),
+        amountOfWords: new FormControl(800),
+        addCTA: new FormControl(false),
+      })
+    } else {
+      this.articleCreationForm = new FormGroup({
+        title: new FormControl('', [Validators.required]),
+        articleIdea: new FormControl('', [Validators.required, Validators.minLength(50)]),
+        primaryKeyword: new FormControl('', [Validators.required]),
+        secondaryKeywords: new FormControl(''),
+        amountOfWords: new FormControl(800),
+        addCTA: new FormControl(false),
+      });
+    }
+  }
+
+  setListeners() {
     this.articleIdeaService.ideaToGenerateArticle$.pipe(takeUntil(this.componentDestroyed$)).subscribe(idea => {
       if (idea) {
         this.articleIdeaToGenerate = idea;
@@ -74,33 +105,6 @@ export class GenerateArticleFromUserParamsComponent implements OnInit, OnDestroy
     })
   }
 
-  ngOnDestroy() {
-    this.componentDestroyed$.next(true)
-    this.componentDestroyed$.complete()
-  }
-
-  setForm(): void {
-    if (this.articleIdeaToGenerate) {
-      this.articleCreationForm = new FormGroup({
-        title: new FormControl(this.articleIdeaToGenerate.title),
-        articleIdea: new FormControl(this.articleIdeaToGenerate.summary, [Validators.required, Validators.minLength(50)]),
-        primaryKeyword: new FormControl(this.articleIdeaToGenerate.primaryKeyword),
-        secondaryKeywords: new FormControl(this.articleIdeaToGenerate.secondaryKeywordsList),
-        amountOfWords: new FormControl(800),
-        addCTA: new FormControl(false),
-      })
-    } else {
-      this.articleCreationForm = new FormGroup({
-        title: new FormControl('', [Validators.required]),
-        articleIdea: new FormControl('Comienzo de la ley de ajuste Cubano. Una historia detallada', [Validators.required, Validators.minLength(50)]),
-        primaryKeyword: new FormControl('', [Validators.required]),
-        secondaryKeywords: new FormControl(''),
-        amountOfWords: new FormControl(800),
-        addCTA: new FormControl(false),
-      });
-    }
-  }
-
   generateArticleBody() {
     this.isLoading = true;
     console.log(this.articleCreationForm.value);
@@ -115,37 +119,5 @@ export class GenerateArticleFromUserParamsComponent implements OnInit, OnDestroy
 
   generateArticleMetadata() {
     this.articleService.navigateToGenerateFullArticle(this.generatedArticleResponse);
-  }
-
-  addNewPrimaryKeyword() {
-    this.primaryKeywords.push(this.articleCreationForm.get('primaryKeyword')?.value)
-  }
-
-  addSecondaryKeyword(event: MatChipInputEvent) {
-    const value = (event.value || '').trim();
-    if (event.value.length > 3)
-      this.secondaryKeywords.push(value);
-    event.chipInput!.clear();
-  }
-
-  editSecondaryKeyword(sKey: string, event: MatChipEditedEvent) {
-    const value = event.value.trim();
-
-    // Remove secondary keyword if it no longer has a name
-    if (!value) {
-      this.removeSecondaryKey(sKey);
-      return;
-    }
-
-    const index = this.secondaryKeywords.indexOf(sKey);
-    if (index >= 0) {
-      this.secondaryKeywords[index] = value;
-    }
-  }
-
-  removeSecondaryKey(sKey: string) {
-    const indexOfKey = this.secondaryKeywords.indexOf(sKey);
-    if (indexOfKey >= 0)
-      this.secondaryKeywords.splice(indexOfKey, 1);
   }
 }
