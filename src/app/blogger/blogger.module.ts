@@ -12,6 +12,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { GenerateFullArticleForBlogTextFieldComponent } from './generate-full-article-for-blog-text-field/generate-full-article-for-blog-text-field.component';
 import { SecondaryKeywordsSelectorComponent } from './articles/keywords-selector/secondary-keywords-selector.component';
 import { PrimaryKeywordSelectorComponent } from './articles/primary-keyword-selector/primary-keyword-selector.component';
+import { ListArticlesInTableComponent } from './articles/list-articles-in-table/list-articles-in-table.component';
 
 
 
@@ -23,6 +24,7 @@ import { PrimaryKeywordSelectorComponent } from './articles/primary-keyword-sele
     GenerateFullArticleForBlogTextFieldComponent,
     SecondaryKeywordsSelectorComponent,
     PrimaryKeywordSelectorComponent,
+    ListArticlesInTableComponent,
   ],
   imports: [
     CommonModule,
