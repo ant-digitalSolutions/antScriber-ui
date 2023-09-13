@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IArticleFromAiResponseDto } from '../dtos/article-from-ai.dto';
+import { IArticleFromAiResponseDto } from '../../../content-creation/article/dtos/article-from-ai.dto';
 import { IArticleDetailsDto } from 'src/app/blogger/dto/article-details.dto';
 
 @Component({

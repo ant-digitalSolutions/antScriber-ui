@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { IArticleFromAiResponseDto } from '../dtos/article-from-ai.dto';
+import { IArticleFromAiResponseDto } from '../../../content-creation/article/dtos/article-from-ai.dto';
 import { Editor, Toolbar, Validators } from 'ngx-editor';
 import { FormGroup, FormControl } from '@angular/forms';
 import { IArticleDetailsDto } from 'src/app/blogger/dto/article-details.dto';

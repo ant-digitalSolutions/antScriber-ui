@@ -13,6 +13,9 @@ import { GenerateFullArticleForBlogTextFieldComponent } from './generate-full-ar
 import { SecondaryKeywordsSelectorComponent } from './articles/keywords-selector/secondary-keywords-selector.component';
 import { PrimaryKeywordSelectorComponent } from './articles/primary-keyword-selector/primary-keyword-selector.component';
 import { ListArticlesInTableComponent } from './articles/list-articles-in-table/list-articles-in-table.component';
+import { ArticleEditorComponent } from './articles/article-editor/article-editor.component';
+import { ArticleRenderComponent } from './articles/article-render/article-render.component';
+import { NgxEditorModule } from 'ngx-editor';
 
 
 
@@ -25,6 +28,8 @@ import { ListArticlesInTableComponent } from './articles/list-articles-in-table/
     SecondaryKeywordsSelectorComponent,
     PrimaryKeywordSelectorComponent,
     ListArticlesInTableComponent,
+    ArticleRenderComponent,
+    ArticleEditorComponent,
   ],
   imports: [
     CommonModule,
@@ -34,10 +39,13 @@ import { ListArticlesInTableComponent } from './articles/list-articles-in-table/
     ReactiveFormsModule,
     RouterModule.forChild(BloggerRouting),
     MatChipsModule,
+    NgxEditorModule,
   ],
   exports: [
     SecondaryKeywordsSelectorComponent,
-    PrimaryKeywordSelectorComponent
+    PrimaryKeywordSelectorComponent,
+    ArticleRenderComponent,
+    ArticleEditorComponent,
   ]
 })
 export class BloggerModule { }
