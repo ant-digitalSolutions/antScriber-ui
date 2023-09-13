@@ -59,11 +59,11 @@ export class ArticleService {
   }
 
   generateArticleExcerpt(articleId: number): Observable<ISimpleGeneratorResultDto> {
-    return this.http.post<ISimpleGeneratorResultDto>(this.baseUrl + 'articles/generate-excerpt', { articleId: articleId });
+    return this.http.post<ISimpleGeneratorResultDto>(this.baseUrl + 'generate-excerpt', { articleId: articleId });
   }
 
   generateArticleSeoMetaDescription(articleId: number): Observable<ISimpleGeneratorResultDto> {
-    return this.http.post<ISimpleGeneratorResultDto>(this.baseUrl + 'articles/generate-seo-meta-description', { articleId: articleId });
+    return this.http.post<ISimpleGeneratorResultDto>(this.baseUrl + 'generate-seo-meta-description', { articleId: articleId });
   }
 
   //#endregion
