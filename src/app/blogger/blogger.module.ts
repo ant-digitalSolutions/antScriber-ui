@@ -17,6 +17,7 @@ import { ArticleEditorComponent } from './articles/article-editor/article-editor
 import { ArticleRenderComponent } from './articles/article-render/article-render.component';
 import { NgxEditorModule } from 'ngx-editor';
 import { ArticleFaqScriptRenderComponent } from './articles/article-faq-script-render/article-faq-script-render.component';
+import { ArticleUploadFeatureImageComponent } from './articles/article-upload-feature-image/article-upload-feature-image.component';
 
 
 
@@ -32,6 +33,7 @@ import { ArticleFaqScriptRenderComponent } from './articles/article-faq-script-r
     ArticleRenderComponent,
     ArticleEditorComponent,
     ArticleFaqScriptRenderComponent,
+    ArticleUploadFeatureImageComponent,
   ],
   imports: [
     CommonModule,

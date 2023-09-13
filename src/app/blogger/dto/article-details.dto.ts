@@ -1,3 +1,4 @@
+import { environment } from "src/environments/environment";
 import { KeywordDetailsDto } from "./keywords/keyword-details.dto";
 
 export class IArticleDetailsDto {
@@ -24,4 +25,6 @@ export class IArticleDetailsDto {
     categories?: string[];
 
     faqScript?: string;
+
+    featureImagePath?: string;
 }

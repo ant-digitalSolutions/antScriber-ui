@@ -1,0 +1,53 @@
+<mat-card class="cardWithShadow theme-card">
+  <mat-card-header>
+    <mat-card-title class="m-b-0">Feature Image</mat-card-title>
+  </mat-card-header>
+  <img
+    *ngIf="featureImagePath"
+    mat-card-image
+    src="{{ imagePath }}"
+    style="min-height: 221px"
+    alt="Article Feature Image"
+  />
+  <mat-card-content class="b-t-1">
+    <div>
+      <mat-toolbar *ngIf="isLoading" class="progress-bar">
+        <mat-progress-bar color="accent" [value]="progress"></mat-progress-bar>
+        <span class="progress">{{ progress }}%</span>
+      </mat-toolbar>
+
+      <mat-form-field>
+        <div>
+          <mat-toolbar>
+            <input matInput [value]="fileName" />
+           
+          </mat-toolbar>
+
+          <input
+            type="file"
+            id="fileInput"
+            (change)="selectFile($event)"
+            name="fileInput"
+          />
+        </div>
+      </mat-form-field>
+       <button
+              mat-flat-button
+              color="primary"
+              (click)="upload()"
+              *ngIf="currentFile"
+            >
+              Upload
+            </button>
+    </div>
+  </mat-card-content>
+  <mat-divider></mat-divider>
+
+  <mat-card-actions align="end" *ngIf="featureImagePath">
+    <button mat-button color="primary">Edit</button>
+  </mat-card-actions>
+</mat-card>
+
+<div *ngIf="message" class="message">
+  {{ message }}
+</div>

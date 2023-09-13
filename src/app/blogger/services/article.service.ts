@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { marked } from 'marked';
 import { ArticleGenerationParamsDto } from '../../content-creation/dto/generate-article.dto';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpParams, HttpRequest } from '@angular/common/http';
 import { IArticleFromAiResponseDto } from '../../content-creation/article/dtos/article-from-ai.dto';
 import { BehaviorSubject, Observable, ReplaySubject, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -31,6 +31,9 @@ export class ArticleService {
 
   private _articlesCountSubject = new ReplaySubject<number>();
   articlesCount$ = this._articlesCountSubject.asObservable();
+
+  private _articleFeatureImageSubject = new ReplaySubject<string>();
+  articleFeatureImage$ = this._articleFeatureImageSubject.asObservable();
 
   constructor(private http: HttpClient, private blogProjectService: BlogProjectsService, private router: Router) {
     this.blogProjectService.selectedProjectId$.subscribe(r => {
@@ -106,6 +109,17 @@ export class ArticleService {
   navigateToGenerateFullArticle(articleToEdit: IArticleDetailsDto): void {
     this._articleToEdit.next(articleToEdit);
     this.router.navigate([`/blogger/articles/create-full/${articleToEdit.id}`])
+  }
+
+  uploadFeaturedImage(file: File, articleId: number): Observable<any> {
+    const formData: FormData = new FormData();
+
+    formData.append('file', file);
+    formData.append('articleId', articleId.toString())
+
+    return this.http.post<{ filePath: string }>(this.baseUrl + 'upload-article-featured-image', formData).pipe(tap(r => {
+      this._articleFeatureImageSubject.next(r.filePath);
+    }));
   }
 
   private markdownToHtml(markdownContent: string): string {
