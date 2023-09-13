@@ -212,8 +212,8 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
 
   //#region properties
 public get secondaryKeywords(): string[] {
-  console.log(this.article.secondaryKeywords?.split(','))
-  return this.article.secondaryKeywords ? this.article.secondaryKeywords?.split(',') : [];
+  console.log(this.article.secondaryKeywords)
+  return this.article.secondaryKeywords ? this.article.secondaryKeywords!.map(k => k.name) : [];
 }
   //#endregion
 }

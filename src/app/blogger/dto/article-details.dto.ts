@@ -1,3 +1,5 @@
+import { KeywordDetailsDto } from "./keywords/keyword-details.dto";
+
 export class IArticleDetailsDto {
     id: number;
 
@@ -5,9 +7,9 @@ export class IArticleDetailsDto {
     
     body: string;
 
-    primaryKeyword?: string;
+    primaryKeyword?: KeywordDetailsDto;
 
-    secondaryKeywords?: string;
+    secondaryKeywords?: KeywordDetailsDto[];
 
     seoTitle?: string;
 
