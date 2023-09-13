@@ -71,6 +71,7 @@ export class ArticleService {
   getArticleById(articleId: number): Observable<IArticleDetailsDto> {
     let params = new HttpParams().set("id", articleId);
     return this.http.get<IArticleDetailsDto>(this.baseUrl, { params: params }).pipe(tap(r => {
+      r.body = this.markdownToHtml(r.body);
       this._articleToEdit.next(r);
     }));
   }
@@ -94,10 +95,13 @@ export class ArticleService {
       }))
   }
 
+  updateArticle(article: IArticleDetailsDto) {
+    return this.http.put(this.baseUrl + article.id, article);
+  }
+
   navigateToGenerateFullArticle(articleToEdit: IArticleDetailsDto): void {
     this._articleToEdit.next(articleToEdit);
     this.router.navigate([`/blogger/articles/create-full/${articleToEdit.id}`])
-
   }
 
   private markdownToHtml(markdownContent: string): string {
