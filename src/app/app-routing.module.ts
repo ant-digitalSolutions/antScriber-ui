@@ -105,10 +105,10 @@ const routes: Routes = [
       },
     ],
   },
-  {
-    path: '**',
-    redirectTo: 'authentication/error',
-  },
+  // {
+  //   path: '**',
+  //   redirectTo: 'authentication/error',
+  // },
 ];
 
 @NgModule({

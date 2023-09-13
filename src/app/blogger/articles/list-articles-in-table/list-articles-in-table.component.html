@@ -2,7 +2,8 @@
   <mat-card-header>
     <mat-card-title>Your Articles</mat-card-title>
     <mat-card-subtitle class="mat-body-1"
-      >You can publish your articles, edit them or see details</mat-card-subtitle
+      >You can publish your articles, edit them or see
+      details</mat-card-subtitle
     >
   </mat-card-header>
   <mat-card-content *ngIf="articlesToRender && articlesToRender.length > 0">
@@ -14,10 +15,10 @@
             *matHeaderCellDef
             class="f-w-600 mat-subtitle-1 f-s-14"
           >
-            title
+            Title
           </mat-header-cell>
           <mat-cell class="p-16" *matCellDef="let element" class="mat-body-1">
-            {{ element.title }}</mat-cell
+            {{ element.title | slice:0:20 }}...</mat-cell
           >
         </ng-container>
 
@@ -57,7 +58,7 @@
           >
         </ng-container> -->
 
-         <!--StatusColumn -->
+        <!--StatusColumn -->
         <ng-container matColumnDef="status">
           <mat-header-cell
             *matHeaderCellDef
@@ -66,15 +67,44 @@
             Status
           </mat-header-cell>
           <mat-cell class="p-16" *matCellDef="let article" class="mat-body-1">
-              <span
-                class="rounded f-w-600 p-6 p-y-4 f-s-12"
-                [ngClass]="{'text-warning bg-light-warning': article.status === 'draft', 'bg-light-accent text-accent': article.status === 'publish' }"
-                >
-                {{ article.status }}
-                </span
-              >
-              </mat-cell
+            <span
+              class="rounded f-w-600 p-6 p-y-4 f-s-12"
+              [ngClass]="{
+                'text-warning bg-light-warning': article.status === 'draft',
+                'bg-light-accent text-accent': article.status === 'publish'
+              }"
+            >
+              {{ article.status }}
+            </span>
+          </mat-cell>
+        </ng-container>
+
+        <!--CreatedAt Column -->
+        <ng-container matColumnDef="createdAt">
+          <mat-header-cell
+            *matHeaderCellDef
+            class="f-w-600 mat-subtitle-1 f-s-14"
           >
+            Created At
+          </mat-header-cell>
+          <mat-cell class="p-16" *matCellDef="let article" class="mat-body-1">
+            <span class="rounded f-w-600 p-6 p-y-4 f-s-12">
+              {{ article.createdAt | date : "MMMM d, y" }}
+            </span>
+          </mat-cell>
+        </ng-container>
+
+        <!--Actions Column -->
+        <ng-container matColumnDef="actions">
+          <mat-header-cell
+            *matHeaderCellDef
+            class="f-w-600 mat-subtitle-1 f-s-14"
+          >
+            Actions
+          </mat-header-cell>
+          <mat-cell class="p-16" *matCellDef="let article" class="mat-body-1">
+           <button mat-raised-button (click)="publishArticle(article)" color="primary">Publish</button>
+          </mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

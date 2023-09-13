@@ -19,7 +19,7 @@ export class ListArticlesInTableComponent implements OnInit, OnDestroy, AfterVie
 
   articlesCount: number;
 
-  displayedColumns = ['title', 'primary-keyword', 'status'];
+  displayedColumns = ['title', 'primary-keyword', 'status', 'createdAt', 'actions'];
   dataSource = new MatTableDataSource<IArticleDetailsDto>(this.articlesToRender);
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator = Object.create(null);
@@ -44,7 +44,7 @@ export class ListArticlesInTableComponent implements OnInit, OnDestroy, AfterVie
     this.blogProjectService.selectedProjectId$.subscribe(blogProjectId => {
       if (blogProjectId !== -1) {
         this.currentBlogProject = blogProjectId;
-        this.articles.listArticlesForTable(blogProjectId).subscribe();
+        this.articles.listArticlesForTable(blogProjectId, this.pageIndex, this.pageSize).subscribe();
         this.articles.articlesCountByProject(blogProjectId).subscribe();
       }
     });
@@ -71,5 +71,9 @@ export class ListArticlesInTableComponent implements OnInit, OnDestroy, AfterVie
     this.articles.listArticlesForTable(this.currentBlogProject, e.pageIndex, e.pageSize).subscribe();
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
+  }
+
+  publishArticle(article: IArticleDetailsDto) {
+    this.articles.navigateToGenerateFullArticle(article);
   }
 }

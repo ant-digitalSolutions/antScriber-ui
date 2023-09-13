@@ -96,7 +96,7 @@ export class ArticleService {
 
   navigateToGenerateFullArticle(articleToEdit: IArticleDetailsDto): void {
     this._articleToEdit.next(articleToEdit);
-    this.router.navigate(['/blogger/articles/create-full', { id: articleToEdit.id }])
+    this.router.navigate([`/blogger/articles/create-full/${articleToEdit.id}`])
 
   }
 
