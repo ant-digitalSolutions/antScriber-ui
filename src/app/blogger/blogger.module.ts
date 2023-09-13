@@ -16,6 +16,7 @@ import { ListArticlesInTableComponent } from './articles/list-articles-in-table/
 import { ArticleEditorComponent } from './articles/article-editor/article-editor.component';
 import { ArticleRenderComponent } from './articles/article-render/article-render.component';
 import { NgxEditorModule } from 'ngx-editor';
+import { ArticleFaqScriptRenderComponent } from './articles/article-faq-script-render/article-faq-script-render.component';
 
 
 
@@ -30,6 +31,7 @@ import { NgxEditorModule } from 'ngx-editor';
     ListArticlesInTableComponent,
     ArticleRenderComponent,
     ArticleEditorComponent,
+    ArticleFaqScriptRenderComponent,
   ],
   imports: [
     CommonModule,

@@ -15,6 +15,7 @@ import { ChangeDetectionStrategy } from '@angular/compiler';
   styleUrls: ['./generate-full-article-for-blog.component.scss']
 })
 export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
+
   componentDestroyed$: Subject<boolean> = new Subject();
 
   /**
@@ -138,6 +139,10 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
     this.article.seoMetaDescription = value;
   }
 
+  updateArticleFaqScript(value: string) {
+    this.article.faqScript = value;
+  }
+
   /**
    * Initialize the status of the fields that are shown
    * in the view.
@@ -217,9 +222,9 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
   }
 
   //#region properties
-public get secondaryKeywords(): string[] {
-  console.log(this.article.secondaryKeywords)
-  return this.article.secondaryKeywords ? this.article.secondaryKeywords!.map(k => k.name) : [];
-}
+  public get secondaryKeywords(): string[] {
+    console.log(this.article.secondaryKeywords)
+    return this.article.secondaryKeywords ? this.article.secondaryKeywords!.map(k => k.name) : [];
+  }
   //#endregion
 }
