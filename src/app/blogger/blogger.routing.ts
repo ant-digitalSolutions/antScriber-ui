@@ -2,7 +2,8 @@ import { Routes } from '@angular/router';
 import { CreateBlogProjectComponent } from './create-blog-project/create-blog-project.component';
 import { ListBlogProjectsComponent } from './list-blog-projects/list-blog-projects.component';
 import { GenerateFullArticleForBlogComponent } from './generate-full-article-for-blog/generate-full-article-for-blog.component';
-import { ListArticlesInTableComponent } from './articles/list-articles-in-table/list-articles-in-table.component';
+import { ListArticlesInTableComponent } from './articles/articles-list/list-articles-in-table/list-articles-in-table.component';
+import { ListArticlesComponent } from './articles/articles-list/list-articles/list-articles.component';
 
 export const BloggerRouting: Routes = [
     {
@@ -25,7 +26,7 @@ export const BloggerRouting: Routes = [
             {
 
                 path: 'list',
-                component: ListArticlesInTableComponent
+                component: ListArticlesComponent
             },
             {
                 path: 'create-full/:id',

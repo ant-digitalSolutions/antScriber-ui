@@ -1,28 +1,27 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ArticleService } from '../../services/article.service';
-import { BlogProjectsService } from '../../services/blog-projects.service';
-import { IArticleDetailsDto } from '../../dto/article-details.dto';
-import { Subject, takeUntil } from 'rxjs';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subject, takeUntil } from 'rxjs';
+import { IArticleDetailsDto } from 'src/app/blogger/dto/article-details.dto';
+import { ArticleService } from 'src/app/blogger/services/article.service';
+import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 
 @Component({
-  selector: 'app-list-articles-in-table',
-  templateUrl: './list-articles-in-table.component.html',
-  styleUrls: ['./list-articles-in-table.component.scss']
+  selector: 'app-list-articles',
+  templateUrl: './list-articles.component.html',
+  styleUrls: ['./list-articles.component.scss']
 })
-export class ListArticlesInTableComponent implements OnInit, OnDestroy, AfterViewInit {
-
+export class ListArticlesComponent {
   componentDestroyed$: Subject<boolean> = new Subject();
 
   articlesToRender: IArticleDetailsDto[] = [];
 
   articlesCount: number;
 
-  displayedColumns = ['title', 'primary-keyword', 'status', 'createdAt', 'actions'];
-  dataSource = new MatTableDataSource<IArticleDetailsDto>(this.articlesToRender);
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator = Object.create(null);
+  dataSource = new MatTableDataSource<IArticleDetailsDto>(this.articlesToRender);
+
 
   currentBlogProject: number;
 

@@ -2,21 +2,17 @@ import { NavItem } from './nav-item/nav-item';
 
 export const navItems: NavItem[] = [
   {
-    navCap: 'Scriber',
+    navCap: 'Articles',
   },
   {
-    displayName: 'Chat',
-    iconName: 'message',
-    route: '/content/chat',
-  },
-  {
-    displayName: 'Article from Idea',
+    displayName: 'Generate Content',
     iconName: 'file-invoice',
     route: '/content/generate-article-from-params',
   },
-  // article ideas STARTS
   {
-    navCap: 'Article Ideas',
+    displayName: 'List All',
+    iconName: 'file-invoice',
+    route: 'blogger/articles/list',
   },
   {
     displayName: 'Article Ideas',
@@ -35,9 +31,6 @@ export const navItems: NavItem[] = [
       },
     ]
   },
-  
-  // article ideas ENDS
-
   {
     navCap: 'Blog',
   },
@@ -57,7 +50,17 @@ export const navItems: NavItem[] = [
         route: 'blogger/projects/list',
       },
     ]
-    },
+  },
+  {
+    displayName: 'Chat',
+    iconName: 'message',
+    route: '/content/chat',
+  },
+
+
+  // article ideas ENDS
+
+
 
 
   {

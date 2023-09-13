@@ -1,0 +1,13 @@
+  <div id="list-articles-outer-container">
+    <app-list-articles-cards
+      [articlesToRender]="articlesToRender"
+    ></app-list-articles-cards>
+    <mat-paginator
+      #paginator
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      [length]="articlesCount"
+      (page)="handlePageEvent($event)"
+    >
+    </mat-paginator>
+  </div>

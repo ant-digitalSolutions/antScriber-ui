@@ -12,12 +12,17 @@ import { MatChipsModule } from '@angular/material/chips';
 import { GenerateFullArticleForBlogTextFieldComponent } from './generate-full-article-for-blog-text-field/generate-full-article-for-blog-text-field.component';
 import { SecondaryKeywordsSelectorComponent } from './articles/keywords-selector/secondary-keywords-selector.component';
 import { PrimaryKeywordSelectorComponent } from './articles/primary-keyword-selector/primary-keyword-selector.component';
-import { ListArticlesInTableComponent } from './articles/list-articles-in-table/list-articles-in-table.component';
+import { ListArticlesInTableComponent } from './articles/articles-list/list-articles-in-table/list-articles-in-table.component';
 import { ArticleEditorComponent } from './articles/article-editor/article-editor.component';
 import { ArticleRenderComponent } from './articles/article-render/article-render.component';
 import { NgxEditorModule } from 'ngx-editor';
 import { ArticleFaqScriptRenderComponent } from './articles/article-faq-script-render/article-faq-script-render.component';
 import { ArticleUploadFeatureImageComponent } from './articles/article-upload-feature-image/article-upload-feature-image.component';
+import { ListArticlesCardsComponent } from './articles/articles-list/list-articles-cards/list-articles-cards.component';
+import { ListArticlesComponent } from './articles/articles-list/list-articles/list-articles.component';
+// icons
+import { TablerIconsModule } from 'angular-tabler-icons';
+import * as TablerIcons from 'angular-tabler-icons/icons';
 
 
 
@@ -34,6 +39,8 @@ import { ArticleUploadFeatureImageComponent } from './articles/article-upload-fe
     ArticleEditorComponent,
     ArticleFaqScriptRenderComponent,
     ArticleUploadFeatureImageComponent,
+    ListArticlesCardsComponent,
+    ListArticlesComponent,
   ],
   imports: [
     CommonModule,
@@ -44,6 +51,8 @@ import { ArticleUploadFeatureImageComponent } from './articles/article-upload-fe
     RouterModule.forChild(BloggerRouting),
     MatChipsModule,
     NgxEditorModule,
+    TablerIconsModule.pick(TablerIcons),
+    TablerIconsModule,
   ],
   exports: [
     SecondaryKeywordsSelectorComponent,

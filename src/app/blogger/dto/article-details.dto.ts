@@ -27,4 +27,6 @@ export class IArticleDetailsDto {
     faqScript?: string;
 
     featureImagePath?: string;
+
+    createdAt?: Date;
 }
