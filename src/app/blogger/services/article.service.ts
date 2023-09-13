@@ -48,7 +48,7 @@ export class ArticleService {
    * @memberof ArticleService
    */
   generateArticleFromParams(articleCreationParams: ArticleGenerationParamsDto): Observable<IArticleDetailsDto> {
-    return this.http.post<IArticleDetailsDto>(this.baseUrl + 'blogger/article-from-params', articleCreationParams).pipe(tap(article => {
+    return this.http.post<IArticleDetailsDto>(this.baseUrl + 'generate-body', articleCreationParams).pipe(tap(article => {
       article.body = this.markdownToHtml(article.body)
     }));
   }

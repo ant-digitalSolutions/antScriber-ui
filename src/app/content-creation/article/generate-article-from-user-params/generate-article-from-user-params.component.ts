@@ -63,8 +63,7 @@ export class GenerateArticleFromUserParamsComponent implements OnInit, OnDestroy
       this.articleCreationForm = new FormGroup({
         title: new FormControl(this.articleIdeaToGenerate.title),
         articleIdea: new FormControl(this.articleIdeaToGenerate.summary, [Validators.required, Validators.minLength(50)]),
-        primaryKeyword: new FormControl(this.articleIdeaToGenerate.primaryKeyword),
-        secondaryKeywords: new FormControl(this.articleIdeaToGenerate.secondaryKeywordsList),
+        // primaryKeyword: new FormControl(this.articleIdeaToGenerate.primaryKeyword),
         amountOfWords: new FormControl(800),
         addCTA: new FormControl(false),
       })
@@ -72,8 +71,7 @@ export class GenerateArticleFromUserParamsComponent implements OnInit, OnDestroy
       this.articleCreationForm = new FormGroup({
         title: new FormControl('', [Validators.required]),
         articleIdea: new FormControl('', [Validators.required, Validators.minLength(50)]),
-        primaryKeyword: new FormControl('', [Validators.required]),
-        secondaryKeywords: new FormControl(''),
+        // primaryKeyword: new FormControl('', [Validators.required]),
         amountOfWords: new FormControl(800),
         addCTA: new FormControl(false),
       });

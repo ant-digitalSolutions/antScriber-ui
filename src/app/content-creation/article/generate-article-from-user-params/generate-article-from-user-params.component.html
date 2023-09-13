@@ -1,101 +1,118 @@
-<mat-card class="cardWithShadow theme-card">
-  <mat-card-header>
-    <mat-card-title class="m-b-0">Generate Article from Idea</mat-card-title>
-  </mat-card-header>
-  <mat-card-content class="b-t-1">
-    <form [formGroup]="articleCreationForm" (ngSubmit)="generateArticleBody()">
-      <!-- ------------------------------------------------------------------------- -->
-      <!-- Article TItle -->
-      <!-- ------------------------------------------------------------------------- -->
-
-      <mat-form-field appearance="outline" class="w-100" color="primary">
-        <mat-label>Article Title</mat-label>
-        <input
-          matInput
-          type="text"
-          formControlName="title"
-          placeholder="Article Title"
-        />
-      </mat-form-field>
-
-      <!-- ------------------------------------------------------------------------- -->
-      <!-- Article TItle -->
-      <!-- ------------------------------------------------------------------------- -->
-
-      <mat-form-field appearance="outline" class="w-100" color="primary">
-        <mat-label>Main Idea for Article</mat-label>
-        <textarea
-          matInput
-          rows="5"
-          formControlName="articleIdea"
-          placeholder="Main idea to generate the article"
-        ></textarea>
-      </mat-form-field>
-
-      <!-- ------------------------------------------------------------------------- -->
-      <!-- Primary Keyword -->
-      <!-- ------------------------------------------------------------------------- -->
-
-      <app-primary-keyword-selector></app-primary-keyword-selector>
-      <!-- ------------------------------------------------------------------------- -->
-      <!-- SEcondary Keywords -->
-      <!-- ------------------------------------------------------------------------- -->
-
-      <app-secondary-keywords-selector></app-secondary-keywords-selector>
-
-      <!-- ------------------------------------------------------------------------- -->
-      <!-- Amount of Words -->
-      <!-- ------------------------------------------------------------------------- -->
-
-      <label id="example-name-label" class="f-w-600 mat-body-1 p-r-10"
-        >Amount Of Words:
-      </label>
-      <label class="f-w-500 mat-body-1">{{
-        articleCreationForm.value.amountOfWords
-      }}</label>
-
-      <mat-slider class="example-margin" [max]="1200" [min]="400" [step]="10">
-        <input matSliderThumb formControlName="amountOfWords" />
-      </mat-slider>
-
-      <!-- ------------------------------------------------------------------------- -->
-      <!-- Generate CTA -->
-      <!-- ------------------------------------------------------------------------- -->
-      <!-- checkbox -->
-      <div class="col-sm-6 col-lg-4">
-        <mat-checkbox color="primary" formControlName="addCTA"
-          >Generate CTA at the end</mat-checkbox
+<div class="row">
+  <div [ngClass]="{'col-12': !generatedArticleResponse, 'col-lg-4': generatedArticleResponse}">
+    <mat-card class="cardWithShadow theme-card">
+      <mat-card-header>
+        <mat-card-title class="m-b-0"
+          >Generate Article from Idea</mat-card-title
         >
-      </div>
-      <div class="m-t-12">
-        <button
-          mat-flat-button
-          color="primary"
-          type="submit"
-          [disabled]="!articleCreationForm.valid || isLoading"
-          *ngIf="!generatedArticleResponse"
+      </mat-card-header>
+      <mat-card-content class="b-t-1">
+        <form
+          [formGroup]="articleCreationForm"
+          (ngSubmit)="generateArticleBody()"
         >
-          Generate Now
-        </button>
-        <button
-          mat-flat-button
-          color="primary"
-          [disabled]="!articleCreationForm.valid || isLoading"
-          *ngIf="generatedArticleResponse"
-          (click)="generateArticleMetadata()"
-        >
-          Generate Article Metadata
-        </button>
-      </div>
-    </form>
-  </mat-card-content>
-  <mat-card-footer *ngIf="isLoading">
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-  </mat-card-footer>
-</mat-card>
+          <!-- ------------------------------------------------------------------------- -->
+          <!-- Article TItle -->
+          <!-- ------------------------------------------------------------------------- -->
 
-<div class="article-render-container" *ngIf="generatedArticleResponse">
-  <app-article-render
-    [articleToRender]="generatedArticleResponse"
-  ></app-article-render>
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+            <mat-label>Article Title</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="title"
+              placeholder="Article Title"
+            />
+          </mat-form-field>
+
+          <!-- ------------------------------------------------------------------------- -->
+          <!-- Article TItle -->
+          <!-- ------------------------------------------------------------------------- -->
+
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+            <mat-label>Main Idea for Article</mat-label>
+            <textarea
+              matInput
+              rows="5"
+              formControlName="articleIdea"
+              placeholder="Main idea to generate the article"
+            ></textarea>
+          </mat-form-field>
+
+          <!-- ------------------------------------------------------------------------- -->
+          <!-- Primary Keyword -->
+          <!-- ------------------------------------------------------------------------- -->
+
+          <!-- <app-primary-keyword-selector></app-primary-keyword-selector> -->
+          <!-- ------------------------------------------------------------------------- -->
+          <!-- SEcondary Keywords -->
+          <!-- ------------------------------------------------------------------------- -->
+
+          <!-- <app-secondary-keywords-selector></app-secondary-keywords-selector> -->
+
+          <!-- ------------------------------------------------------------------------- -->
+          <!-- Amount of Words -->
+          <!-- ------------------------------------------------------------------------- -->
+
+          <label id="example-name-label" class="f-w-600 mat-body-1 p-r-10"
+            >Amount Of Words:
+          </label>
+          <label class="f-w-500 mat-body-1">{{
+            articleCreationForm.value.amountOfWords
+          }}</label>
+
+          <mat-slider
+            class="example-margin"
+            [max]="1200"
+            [min]="400"
+            [step]="10"
+          >
+            <input matSliderThumb formControlName="amountOfWords" />
+          </mat-slider>
+
+          <!-- ------------------------------------------------------------------------- -->
+          <!-- Generate CTA -->
+          <!-- ------------------------------------------------------------------------- -->
+          <!-- checkbox -->
+          <div>
+            <mat-checkbox color="primary" formControlName="addCTA"
+              >Generate CTA at the end</mat-checkbox
+            >
+          </div>
+          <div class="m-t-12">
+            <button
+              mat-flat-button
+              color="primary"
+              type="submit"
+              [disabled]="!articleCreationForm.valid || isLoading"
+              *ngIf="!generatedArticleResponse"
+            >
+              Generate Now
+            </button>
+            <button
+              mat-flat-button
+              color="primary"
+              [disabled]="!articleCreationForm.valid || isLoading"
+              *ngIf="generatedArticleResponse"
+              (click)="generateArticleMetadata()"
+            >
+              Generate Article Metadata
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+      <mat-card-footer *ngIf="isLoading">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+
+  <div
+    class="article-render-container col-lg-8"
+    *ngIf="generatedArticleResponse"
+  >
+    <app-article-render
+      [articleToRender]="generatedArticleResponse"
+    ></app-article-render>
+  </div>
 </div>
