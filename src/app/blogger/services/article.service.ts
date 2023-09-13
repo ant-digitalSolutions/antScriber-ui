@@ -66,6 +66,10 @@ export class ArticleService {
     return this.http.post<ISimpleGeneratorResultDto>(this.baseUrl + 'generate-seo-meta-description', { articleId: articleId });
   }
 
+  generateArticleFaqScript(articleId: number): Observable<ISimpleGeneratorResultDto> {
+    return this.http.post<ISimpleGeneratorResultDto>(this.baseUrl + `generate-faq-script`, { articleId: articleId });
+  }
+
   //#endregion
 
   getArticleById(articleId: number): Observable<IArticleDetailsDto> {

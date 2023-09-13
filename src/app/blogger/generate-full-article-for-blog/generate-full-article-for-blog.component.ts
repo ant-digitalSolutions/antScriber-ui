@@ -122,6 +122,12 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
       this.article.seoMetaDescription = r.resultText;
     })
   }
+
+  generateArticleFaqScript(): void {
+    this.articlesService.generateArticleFaqScript(this.articleId).subscribe(r => {
+      this.article.faqScript = r.resultText
+    })
+  }
   //#endregion
 
   updateArticleSeoMetaDescription(value: string) {
