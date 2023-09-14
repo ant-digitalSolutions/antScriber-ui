@@ -1,3 +1,14 @@
+.card-image-container-selected {
+   height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  .card-image {
+    height: 100%;
+    width: 400px;
+  }
+}
+
 .card-image-container {
     height: 225px;
     display: flex;
@@ -9,6 +20,7 @@
     width: 100%;
 
 }
+
 .card-overlay {
   position: absolute;
   top: 0;
