@@ -5,9 +5,9 @@ export const navItems: NavItem[] = [
     navCap: 'Articles',
   },
   {
-    displayName: 'Generate Content',
+    displayName: 'Generate',
     iconName: 'file-invoice',
-    route: '/content/generate-article-from-params',
+    route: 'blogger/articles/generate',
   },
   {
     displayName: 'List All',

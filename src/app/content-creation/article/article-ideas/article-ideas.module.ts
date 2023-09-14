@@ -9,6 +9,7 @@ import { NgxEditorModule } from 'ngx-editor';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { MaterialModule } from 'src/app/material.module';
 import * as TablerIcons from 'angular-tabler-icons/icons';
+import { BloggerModule } from 'src/app/blogger/blogger.module';
 
 
 
@@ -27,6 +28,7 @@ import * as TablerIcons from 'angular-tabler-icons/icons';
     TablerIconsModule.pick(TablerIcons),
     ReactiveFormsModule,
     NgxEditorModule,
+    BloggerModule
   ]
 })
 export class ArticleIdeasModule { }

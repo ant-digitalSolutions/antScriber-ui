@@ -19,7 +19,7 @@ export class ArticleIdeaCardComponent {
 
   generateFullArticle() {
     this.articleIdeaService.setArticleIdeaToGenerateArticle(this.articleIdea);
-    this.router.navigate(['/content/generate-article-from-params'])
+    this.router.navigate(['/blogger/articles/generate'])
 
   }
   details() {

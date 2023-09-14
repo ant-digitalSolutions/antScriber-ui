@@ -1,6 +1,6 @@
 <mat-card class="cardWithShadow theme-card">
   <mat-card-header>
-    <mat-card-title class="m-b-0">Generate Article from Idea</mat-card-title>
+    <mat-card-title class="m-b-0">Generate Ideas for Articles</mat-card-title>
   </mat-card-header>
   <mat-card-content class="b-t-1">
     <form [formGroup]="articleCreationForm" (ngSubmit)="generateArticleIdeas()">
@@ -15,7 +15,11 @@
         >Main Idea for Article</mat-label
       >
       <mat-form-field appearance="outline" class="w-100" color="primary">
-        <textarea matInput rows="5" formControlName="shortDescription"></textarea>
+        <textarea
+          matInput
+          rows="5"
+          formControlName="shortDescription"
+        ></textarea>
       </mat-form-field>
       <div>
         <label id="example-name-label" class="f-w-600 mat-body-1"
@@ -32,19 +36,7 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
-        >Primary Keyword</mat-label
-      >
-      <mat-form-field appearance="outline" class="w-100" color="primary">
-        <input matInput type="text" formControlName="primaryKeyword" />
-      </mat-form-field>
-
-      <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
-        >Secondary Keywords - separated by comma</mat-label
-      >
-      <mat-form-field appearance="outline" class="w-100" color="primary">
-        <input matInput type="text" formControlName="secondaryKeywords" />
-      </mat-form-field>
+      <app-primary-keyword-selector></app-primary-keyword-selector>
 
       <div class="m-t-12">
         <button
@@ -64,10 +56,11 @@
 </mat-card>
 
 <mat-card *ngIf="articleIdeas">
-    <mat-card-header>Article Ideas</mat-card-header>
-    <mat-card-content>
-        <app-article-idea-card [articleIdea]="articleIdea" *ngFor="let articleIdea of articleIdeas.ideas" class="w-40"></app-article-idea-card>
-    </mat-card-content>
+  <mat-card-content>
+    <app-article-idea-card
+      [articleIdea]="articleIdea"
+      *ngFor="let articleIdea of articleIdeas.ideas"
+      class="col-md-4 col-lg-3"
+    ></app-article-idea-card>
+  </mat-card-content>
 </mat-card>
-
-

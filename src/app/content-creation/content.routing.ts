@@ -11,11 +11,8 @@ export const ContentCreationRoutes: Routes = [
             {
                 path: 'chat',
                 component: ChatComponent,
-            },
-            {
-                path: 'generate-article-from-params',
-                component: GenerateArticleFromUserParamsComponent
-            },
+            }
+            
         ],
     },
     {

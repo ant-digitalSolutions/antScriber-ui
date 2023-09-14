@@ -32,7 +32,7 @@ export class ArticleIdeasService {
 
   listArticleIdeasForCurrentProject(projectId: number) {
     let params = new HttpParams().set("blogProjectId", projectId)
-    return this.http.get<ArticleIdeasResponse>(this.baseUrl + 'blogger/article-ideas', { params: params }).pipe(tap(r => {
+    return this.http.get<ArticleIdeasResponse>(this.baseUrl + 'articles/list-ideas', { params: params }).pipe(tap(r => {
       const articleIdeas = new ArticleIdeasResponse(r);
       this._articleIdeas.next(articleIdeas.ideas);
       this.setPrimaryKeywordsList();

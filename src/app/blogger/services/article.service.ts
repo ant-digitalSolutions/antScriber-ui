@@ -58,7 +58,7 @@ export class ArticleService {
 
   generateArticleIdeas(params: ArticleIdeasParamsDto): Observable<ArticleIdeasResponse> {
     params.blogProjectId = this.selectedProjectId;
-    return this.http.post<ArticleIdeasResponse>(this.baseUrl + 'blogger/article-ideas', params);
+    return this.http.post<ArticleIdeasResponse>(this.baseUrl + 'generate-ideas', params);
   }
 
   generateArticleExcerpt(articleId: number): Observable<ISimpleGeneratorResultDto> {

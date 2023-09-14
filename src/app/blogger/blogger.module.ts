@@ -59,6 +59,7 @@ import * as TablerIcons from 'angular-tabler-icons/icons';
     PrimaryKeywordSelectorComponent,
     ArticleRenderComponent,
     ArticleEditorComponent,
+    PrimaryKeywordSelectorComponent
   ]
 })
 export class BloggerModule { }

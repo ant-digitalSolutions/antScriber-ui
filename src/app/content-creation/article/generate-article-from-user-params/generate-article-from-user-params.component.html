@@ -1,10 +1,13 @@
 <div class="row">
-  <div [ngClass]="{'col-12': !generatedArticleResponse, 'col-lg-4': generatedArticleResponse}">
+  <div
+    [ngClass]="{
+      'col-12': !generatedArticleResponse,
+      'col-lg-4': generatedArticleResponse
+    }"
+  >
     <mat-card class="cardWithShadow theme-card">
       <mat-card-header>
-        <mat-card-title class="m-b-0"
-          >Generate Article from Idea</mat-card-title
-        >
+        <mat-card-title class="m-b-0">Generate Article Content</mat-card-title>
       </mat-card-header>
       <mat-card-content class="b-t-1">
         <form
@@ -43,12 +46,14 @@
           <!-- Primary Keyword -->
           <!-- ------------------------------------------------------------------------- -->
 
-          <!-- <app-primary-keyword-selector></app-primary-keyword-selector> -->
-          <!-- ------------------------------------------------------------------------- -->
-          <!-- SEcondary Keywords -->
-          <!-- ------------------------------------------------------------------------- -->
+          <div class="d-flex align-items-center">
+            <app-primary-keyword-selector class="col-md-6 col-12"></app-primary-keyword-selector>
+            <!-- ------------------------------------------------------------------------- -->
+            <!-- SEcondary Keywords -->
+            <!-- ------------------------------------------------------------------------- -->
 
-          <!-- <app-secondary-keywords-selector></app-secondary-keywords-selector> -->
+            <app-secondary-keywords-selector class="col-md-6 col-12"></app-secondary-keywords-selector>
+          </div>
 
           <!-- ------------------------------------------------------------------------- -->
           <!-- Amount of Words -->

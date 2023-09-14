@@ -4,6 +4,7 @@ import { ListBlogProjectsComponent } from './list-blog-projects/list-blog-projec
 import { GenerateFullArticleForBlogComponent } from './generate-full-article-for-blog/generate-full-article-for-blog.component';
 import { ListArticlesInTableComponent } from './articles/articles-list/list-articles-in-table/list-articles-in-table.component';
 import { ListArticlesComponent } from './articles/articles-list/list-articles/list-articles.component';
+import { GenerateArticleFromUserParamsComponent } from '../content-creation/article/generate-article-from-user-params/generate-article-from-user-params.component';
 
 export const BloggerRouting: Routes = [
     {
@@ -23,6 +24,10 @@ export const BloggerRouting: Routes = [
     {
         path: 'articles',
         children: [
+            {
+                path: 'generate',
+                component: GenerateArticleFromUserParamsComponent
+            },
             {
 
                 path: 'list',
