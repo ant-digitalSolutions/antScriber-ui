@@ -189,6 +189,15 @@
     </div>
     <mat-divider class="m-t-30 m-b-30"></mat-divider>
   </mat-card-content>
+    <mat-divider></mat-divider>
+
+
+
+  <mat-card-actions align="end">
+    <button mat-button color="danger" (click)="publishArticle()">
+     Publish Now
+    </button>
+  </mat-card-actions>
   <mat-card-footer *ngIf="isLoading">
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
   </mat-card-footer>

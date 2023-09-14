@@ -19,4 +19,8 @@ export class BloggerService {
   createBlogProject(blogProject: BlogProjectCreateDto) {
     return this.http.post<BlogProjectCreateDto>(this.baseUrl + 'blogger/blog-projects', blogProject);
   }
+
+  publishArticle(articleId: number) {
+    return this.http.post(this.baseUrl + 'blogger/publish-article', {articleId});
+  }
 }

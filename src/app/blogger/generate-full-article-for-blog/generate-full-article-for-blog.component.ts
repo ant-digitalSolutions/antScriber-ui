@@ -8,6 +8,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from 'ngx-editor';
 import { ActivatedRoute } from '@angular/router';
 import { ChangeDetectionStrategy } from '@angular/compiler';
+import { BloggerService } from '../blogger.service';
 
 @Component({
   selector: 'app-generate-full-article-for-blog',
@@ -65,7 +66,7 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
 
   article: IArticleDetailsDto;
 
-  constructor(private articlesService: ArticleService, private route: ActivatedRoute, private changeDetector: ChangeDetectorRef) {
+  constructor(private articlesService: ArticleService, private route: ActivatedRoute, private changeDetector: ChangeDetectorRef, private bloggerService: BloggerService) {
 
   }
 
@@ -108,6 +109,12 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
         tags: new FormControl(),
       })
     }
+  }
+
+  publishArticle() {
+    this.bloggerService.publishArticle(this.article.id).subscribe(r => {
+      console.log(r);
+    })
   }
 
   //#region Generator methods
