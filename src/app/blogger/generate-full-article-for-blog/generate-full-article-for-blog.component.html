@@ -194,7 +194,7 @@
 
 
   <mat-card-actions align="end">
-    <button mat-button color="danger" (click)="publishArticle()">
+    <button mat-button color="danger" (click)="publishArticle()" [disabled]="isLoading === true" *ngIf="article.status !== 'publish'">
      Publish Now
     </button>
   </mat-card-actions>

@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { ArticleService } from './../services/article.service';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { IArticleDetailsDto } from '../dto/article-details.dto';
@@ -66,7 +67,12 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
 
   article: IArticleDetailsDto;
 
-  constructor(private articlesService: ArticleService, private route: ActivatedRoute, private changeDetector: ChangeDetectorRef, private bloggerService: BloggerService) {
+  constructor(
+    private articlesService: ArticleService, 
+    private route: ActivatedRoute, 
+    private changeDetector: ChangeDetectorRef, 
+    private bloggerService: BloggerService
+    ) {
 
   }
 
@@ -112,8 +118,10 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
   }
 
   publishArticle() {
+    this.isLoading = true;
     this.bloggerService.publishArticle(this.article.id).subscribe(r => {
       console.log(r);
+      this.isLoading = false;
     })
   }
 
@@ -230,7 +238,6 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
 
   //#region properties
   public get secondaryKeywords(): string[] {
-    console.log(this.article.secondaryKeywords)
     return this.article.secondaryKeywords ? this.article.secondaryKeywords!.map(k => k.name) : [];
   }
   //#endregion

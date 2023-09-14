@@ -66,6 +66,8 @@ export class GenerateArticleFromUserParamsComponent implements OnInit, OnDestroy
         // primaryKeyword: new FormControl(this.articleIdeaToGenerate.primaryKeyword),
         amountOfWords: new FormControl(800),
         addCTA: new FormControl(false),
+        primaryKeyword: new FormControl(null, [Validators.required]),
+        secondaryKeywords: new FormControl()
       })
     } else {
       this.articleCreationForm = new FormGroup({
@@ -74,6 +76,8 @@ export class GenerateArticleFromUserParamsComponent implements OnInit, OnDestroy
         // primaryKeyword: new FormControl('', [Validators.required]),
         amountOfWords: new FormControl(800),
         addCTA: new FormControl(false),
+        primaryKeyword: new FormControl(null, [Validators.required]),
+        secondaryKeywords: new FormControl()
       });
     }
   }
