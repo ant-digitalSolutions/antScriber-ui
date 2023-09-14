@@ -1,14 +1,69 @@
-<mat-card class="cardWithShadow theme-card" *ngIf="articleToRender && !inEditionMode">
-  <mat-card-header>
-    <mat-card-title class="m-b-0">{{ articleToRender.title }}</mat-card-title>
-  </mat-card-header>
-  <mat-card-content class="b-t-1" [innerHTML]="articleToRender.body">
-  </mat-card-content>
-  <mat-divider></mat-divider>
+<mat-card  class="cardWithShadow card2 position-relative card-hover cursor-pointer" *ngIf="articleToRender && !inEditionMode">
+ 
+            <div class="card-image-container-selected">
+              <img
+                mat-card-image
+                src="{{ imageFullPath() }}"
+                alt="Article Feature Image"
+                class="card-image"
+              />
+            </div>
+            <div
+              class="card-overlay h-100 d-flex p-16 p-y-0 align-items-end justify-content-between"
+            >
+              <mat-chip class="f-s-12 m-y-16 f-w-600 bg-accent">{{
+                articleToRender.primaryKeyword
+                  ? articleToRender.primaryKeyword.name
+                  : "primary keyword"
+              }}</mat-chip>
+              <mat-chip class="f-s-12 f-w-600 m-y-16 bg-white"
+                >2 mins read</mat-chip
+              >
+            </div>
 
-  <mat-card-actions align="end">
-    <button mat-button color="primary" (click)="editArticle()">Edit</button>
-  </mat-card-actions>
+            <mat-card-content class="p-y-24">
+              <!-- <div class="user-category">
+              <div>
+                <img
+                  src="{{ articleToRender.user }}"
+                  class="rounded-circle"
+                  width="40"
+                />
+              </div>
+            </div> -->
+              <mat-card-title class="mat-headline-6 m-t-15">{{
+                articleToRender.title
+              }}</mat-card-title>
+              <div class="article-body">
+                <p [innerHTML]="articleToRender.body"></p>
+              </div>
+              <div
+                class="d-flex align-items-center justify-content-center m-t-24"
+              >
+                <div class="d-flex align-items-center">
+                  <!-- <span
+                  class="m-r-12 f-s-14 mat-subtitle-2 d-flex align-items-center"
+                  ><i-tabler name="eye" class="icon-18 m-r-4"></i-tabler
+                  >{{ articleToRender.views }}</span
+                >
+                <span class="f-s-14 mat-subtitle-2 d-flex align-items-center"
+                  ><i-tabler name="message-2" class="icon-18 m-r-4"></i-tabler
+                  >{{ articleToRender.comments }}</span
+                > -->
+                </div>
+                <span
+                  class="m-l-auto f-s-14 mat-subtitle-2 d-flex align-items-center"
+                >
+                  <i-tabler name="point" class="icon-14 m-r-4"></i-tabler>
+                  {{ articleToRender.createdAt | date : "MMM d, y" }}
+                </span>
+              </div>
+            </mat-card-content>
+            <mat-card-actions align="end">
+              <button mat-button color="warning" (click)="editArticle()">
+                Edit
+              </button>
+            </mat-card-actions>
 </mat-card>
 
 <app-article-editor *ngIf="inEditionMode" [articleToEdit]="articleToRender" (emitter)="saveArticleChanges($event)"></app-article-editor>
