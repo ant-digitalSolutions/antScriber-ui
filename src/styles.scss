@@ -3,6 +3,10 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.w-50 {
-    width: 50% !important;
+#toast-container > div {
+    opacity:1;
 }
+
+// regular style toast
+@import 'ngx-toastr/toastr';
+
