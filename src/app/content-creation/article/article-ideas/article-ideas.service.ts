@@ -54,7 +54,7 @@ export class ArticleIdeasService {
 
   private setPrimaryKeywordsList(): void {
     const primaryKeywords = ['all']
-    primaryKeywords.push(...this._articleIdeas.value.map(idea => idea.primaryKeyword));
+    // primaryKeywords.push(...this._articleIdeas.value.map(idea => idea.primaryKeyword));
     this._articleIdeasPrimaryKeywords.next([...new Set(primaryKeywords)]);
   }
 }

@@ -1,36 +1,44 @@
 <mat-card class="cardWithShadow card2 position-relative card-hover w-50">
-  <mat-card-header  class="course-header bg-primary d-flex justify-content-between p-12">
+  <mat-card-header
+    class="course-header bg-primary d-flex justify-content-between p-12"
+  >
     <mat-card-title class="text-white">{{ articleIdea.title }}</mat-card-title>
     <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
   </mat-card-header>
 
   <mat-card-content class="p-y-24">
-    <div class="d-flex align-items-start ">
+    <div class="d-flex align-items-start" *ngIf="articleIdea.primaryKeyword">
       <h5 class="p-r-15">Primary Keyword:</h5>
       <mat-chip class="f-s-12 f-w-600 m-y-16 m-r-16 bg-accent">{{
         articleIdea.primaryKeyword
       }}</mat-chip>
     </div>
-
-    <div class="d-flex align-items-start">
-      <h5 class="p-r-15">Secondary Keywords:</h5>
-
-      <mat-chip
-        class="f-s-12 m-y-16 f-w-600 bg-light-accent"
-        *ngFor="let secondaryKey of articleIdea.secondaryKeywordsList"
-        >{{ secondaryKey }}</mat-chip
-      >
-    </div>
     <div class="d-flex align-items-center justify-content-center m-t-24">
       <p>{{ articleIdea.summary }}</p>
     </div>
   </mat-card-content>
+    <div class="d-flex align-items-center justify-content-center m-15">
+    <span
+      class="rounded f-w-600 p-6 p-y-4 f-s-12"
+      [ngClass]="{
+        'text-warning bg-light-warning': articleIdea.status === 'draft',
+        'bg-light-accent text-accent': articleIdea.status === 'publish'
+      }"
+    >
+      {{ articleIdea.status }}
+    </span>
+    <span class="m-l-auto f-s-14 mat-subtitle-2 d-flex align-items-center">
+      <i-tabler name="point" class="icon-14 m-r-4"></i-tabler>
+      {{ articleIdea.createdAt | date : "MMM d, y" }}
+    </span>
+  </div>
   <mat-divider></mat-divider>
 
+
+
   <mat-card-actions align="end">
-    <button mat-button color="primary" (click)="details()">View</button>
     <button mat-button color="danger" (click)="generateFullArticle()">
-      Edit
+      Generate Article
     </button>
   </mat-card-actions>
 </mat-card>

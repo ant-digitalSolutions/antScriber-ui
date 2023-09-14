@@ -82,8 +82,9 @@ export class GenerateArticleFromUserParamsComponent implements OnInit, OnDestroy
     this.articleIdeaService.ideaToGenerateArticle$.pipe(takeUntil(this.componentDestroyed$)).subscribe(idea => {
       if (idea) {
         this.articleIdeaToGenerate = idea;
-        this.secondaryKeywords = idea.secondaryKeywordsList;
-        this.primaryKeywords = [idea.primaryKeyword];
+        if (idea.primaryKeyword)
+          this.primaryKeywords = [idea.primaryKeyword];
+        
         this.setForm();
       }
     });

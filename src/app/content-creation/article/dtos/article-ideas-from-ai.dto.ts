@@ -4,19 +4,17 @@ export class ArticleIdea {
         Object.assign(this, init);
     }
 
-    primaryKeyword: string;
-    secondaryKeywords: string;
+    primaryKeyword?: string;
     summary: string;
     title: string;
     toneForArticle: string;
 
-    public get secondaryKeywordsList(): string[] {
-        return this.secondaryKeywords.split(',')
-    }
+    status: string;
+
+    createdAt: Date;
 
     containsSearchTerm(searchTerm: string): boolean {
         return (this.primaryKeyword?.includes(searchTerm) ?? false) ||
-            (this.secondaryKeywords?.includes(searchTerm) ?? false) ||
             (this.summary?.includes(searchTerm) ?? false) ||
             (this.title?.includes(searchTerm) ?? false);
     }
