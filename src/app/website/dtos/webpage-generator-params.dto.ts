@@ -9,7 +9,7 @@ export class WebpageGenerateParams {
  
     shortDescription: string;
     
-    pageTitle: string;
+    title: string;
 
     secondaryKeywords?: KeywordDetailsDto[];
 
@@ -17,7 +17,7 @@ export class WebpageGenerateParams {
 
     webpageType: WebpageType;
 
-    websiteId: number;
+    blogProjectId: number;
 
-    whatToPromote: string;
+    audienceInterest: string;
 }

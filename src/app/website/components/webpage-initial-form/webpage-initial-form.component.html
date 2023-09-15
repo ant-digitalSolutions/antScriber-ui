@@ -1,1 +1,98 @@
-<p>webpage-initial-form works!</p>
+    <mat-card class="cardWithShadow theme-card">
+      <mat-card-header>
+        <mat-card-title class="m-b-0">Generate Webpage Content</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="b-t-1">
+        <form
+          [formGroup]="webpageGeneratorForm"
+          (ngSubmit)="generateWebpageContent()"
+        >
+          <!-- ------------------------------------------------------------------------- -->
+          <!-- Webpage TItle -->
+          <!-- ------------------------------------------------------------------------- -->
+
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+            <mat-label>Page Title</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="title"
+              placeholder="Title for the page. This can be About Us, Home Page, Our Services..."
+            />
+          </mat-form-field>
+
+          <!-- ------------------------------------------------------------------------- -->
+          <!-- Webpage TItle -->
+          <!-- ------------------------------------------------------------------------- -->
+
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+            <mat-label>Main Idea for page</mat-label>
+            <textarea
+              matInput
+              rows="5"
+              formControlName="shortDescription"
+              placeholder="Home page of the website. Contains information about my business, our services and other elements to convince the audience to contact us"
+            ></textarea>
+          </mat-form-field>
+
+          <!-- --------------------------------------------------------------- -->
+          <!-- Project Selector -->
+          <!-- --------------------------------------------------------------- -->
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+             <mat-label>Select the type of page you intent to create</mat-label>
+            <mat-select formControlName="webpageType">
+              <mat-option [value]="p" *ngFor="let p of webpageTypeOptions">{{
+                p
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- ------------------------------------------------------------------------- -->
+          <!-- Primary Keyword -->
+          <!-- ------------------------------------------------------------------------- -->
+
+          <div class="d-flex align-items-center flex-column">
+            <app-primary-keyword-selector
+              class="col-12"
+            ></app-primary-keyword-selector>
+
+            <!-- ------------------------------------------------------------------------- -->
+            <!-- SEcondary Keywords -->
+            <!-- ------------------------------------------------------------------------- -->
+
+            <app-secondary-keywords-selector
+              class="col-12"
+            ></app-secondary-keywords-selector>
+          </div>
+
+          <!-- ------------------------------------------------------------------------- -->
+          <!-- Generate CTA -->
+          <!-- ------------------------------------------------------------------------- -->
+          <!-- checkbox -->
+          <div>
+            <mat-checkbox color="primary" formControlName="addCTA"
+              >Generate CTA at the end</mat-checkbox
+            >
+          </div>
+
+          <!-- ------------------------------------------------------------------------- -->
+          <!-- Action Buttons -->
+          <!-- ------------------------------------------------------------------------- -->
+
+          <div class="m-t-12">
+            <button
+              mat-flat-button
+              color="primary"
+              type="submit"
+              [disabled]="!webpageGeneratorForm.valid || isLoading"
+              *ngIf="!webpageData"
+            >
+              Generate Now
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+      <mat-card-footer *ngIf="isLoading">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </mat-card-footer>
+    </mat-card>
