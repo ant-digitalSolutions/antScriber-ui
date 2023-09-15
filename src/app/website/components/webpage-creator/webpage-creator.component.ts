@@ -6,6 +6,7 @@ import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.serv
 import { KeywordsService } from 'src/app/blogger/services/keywords.service';
 import { WebpageService } from '../../services/webpage.service';
 import { getWebpageTypeStrings } from '../../enums/webpage-type.enum';
+import { WebpageGenerateParams } from '../../dtos/webpage-generator-params.dto';
 
 @Component({
   selector: 'app-webpage-creator',
@@ -25,10 +26,12 @@ export class WebpageCreatorComponent implements OnInit, OnDestroy {
 
   webpageData: any;
 
-webpageTypeOptions: string[];
+  webpageTypeOptions: string[];
 
-  constructor(private _blogProjectService: BlogProjectsService,
-    private _keywordService: KeywordsService, private _webpageService: WebpageService) { }
+  constructor
+    (private _blogProjectService: BlogProjectsService,
+      private _keywordService: KeywordsService,
+      private _webpageService: WebpageService) { }
 
 
   ngOnInit(): void {
@@ -48,7 +51,9 @@ webpageTypeOptions: string[];
       pageTitle: new FormControl('Home Page'),
       primaryKeyword: new FormControl(null, [Validators.required]),
       secondaryKeywords: new FormControl(),
-      webpageType: new FormControl()
+      webpageType: new FormControl(),
+      addCTA: new FormControl(),
+      whatToPromote: new FormControl(''),
     })
   }
 
@@ -68,7 +73,8 @@ webpageTypeOptions: string[];
   }
 
   generateWebpageContent() {
-
+    const params = new WebpageGenerateParams(this.webpageGeneratorForm.value);
+    this._webpageService.createWebpageOutline(params).subscribe(r => console.log(r.data))
   }
 
 }
