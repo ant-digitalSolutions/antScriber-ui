@@ -8,6 +8,7 @@ import { MaterialModule } from 'src/app/material.module';
 import * as TablerIcons from 'angular-tabler-icons/icons';
 import { ArticleIdeasModule } from './article-ideas/article-ideas.module';
 import { BloggerModule } from 'src/app/blogger/blogger.module';
+import { KeywordsModule } from 'src/app/keywords/keywords.module';
 
 
 
@@ -25,6 +26,7 @@ import { BloggerModule } from 'src/app/blogger/blogger.module';
     ReactiveFormsModule,
     ArticleIdeasModule,
     BloggerModule,
+    KeywordsModule
   ]
 })
 export class ArticleModule { }

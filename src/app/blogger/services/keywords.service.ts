@@ -5,9 +5,7 @@ import { Observable, ReplaySubject, Subject, tap } from 'rxjs';
 import { KeywordDetailsDto } from '../dto/keywords/keyword-details.dto';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class KeywordsService {
 
   baseUrl = environment.apiUrl + 'keywords/';

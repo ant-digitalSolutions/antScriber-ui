@@ -2,11 +2,11 @@ import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, Subject, debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs';
-import { KeywordDetailsDto } from '../../dto/keywords/keyword-details.dto';
+import { KeywordDetailsDto } from '../../../blogger/dto/keywords/keyword-details.dto';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent, MatChipEditedEvent } from '@angular/material/chips';
-import { KeywordsService } from '../../services/keywords.service';
-import { KeywordTypeEnum } from '../../enums/keyword-type.enum';
+import { KeywordsService } from '../../../blogger/services/keywords.service';
+import { KeywordTypeEnum } from '../../../blogger/enums/keyword-type.enum';
 
 @Component({
   selector: 'app-secondary-keywords-selector',
