@@ -59,7 +59,7 @@
   <!-- Project Selector -->
   <!-- --------------------------------------------------------------- -->
   <mat-form-field class="w-40" color="primary" *ngIf="selectedBlogProjectId">
-        <mat-select formControlName="amountOfIdeas" [(value)]="selectedBlogProjectId" (selectionChange)="selectCurrentProject($event.value)">
+        <mat-select [(value)]="selectedBlogProjectId" (selectionChange)="selectCurrentProject($event.value)">
           <mat-option
             [value]="p.id"
             *ngFor="let p of blogProjects"

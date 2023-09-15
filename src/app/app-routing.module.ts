@@ -20,6 +20,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./blogger/blogger.module').then((m) => m.BloggerModule),
       },
+      {
+        path: 'websites',
+        loadChildren: () =>
+          import('./website/website.module').then((m) => m.WebsiteModule),
+      },
       //template routes
       {
         path: '',
