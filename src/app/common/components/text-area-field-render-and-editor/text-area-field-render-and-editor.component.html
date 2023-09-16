@@ -1,0 +1,47 @@
+<h5>{{ fieldHumanName }}</h5>
+
+<p *ngIf="!inEdition">
+  {{ fieldValue }}
+</p>
+
+<mat-form-field
+  appearance="outline"
+  class="w-100"
+  color="primary"
+  *ngIf="inEdition"
+>
+  <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block">{{
+    fieldHumanName
+  }}</mat-label>
+  <textarea matInput rows="5" [(ngModel)]="fieldValue"></textarea>
+</mat-form-field>
+<!-- Show spinner when generating the field content -->
+<mat-spinner diameter="50" *ngIf="isLoading" class="m-b-40"> </mat-spinner>
+
+<div class="d-flex">
+  <button
+    mat-button
+    class="f-s-12 p-x-8 p-y-4 text-decoration-none f-w-500 m-r-4"
+    *ngIf="fieldValue && fieldValue.length > 0 && !inEdition"
+    (click)="toggleFieldEditionStatus()"
+  >
+    Edit
+  </button>
+  <button
+    mat-button
+    class="bg-primary rounded f-s-12 p-x-8 p-y-4 text-decoration-none text-white f-w-500"
+    (click)="toggleFieldEditionStatus()"
+    *ngIf="inEdition"
+  >
+    Save
+  </button>
+  <button
+    mat-button
+    class="bg-primary rounded f-s-12 p-x-8 p-y-4 text-decoration-none text-white f-w-500"
+    *ngIf="showGenerateButton"
+    (click)="generateArticleSEoMetaDescription()"
+    [disabled]="isLoading"
+  >
+    Generate
+  </button>
+</div>
