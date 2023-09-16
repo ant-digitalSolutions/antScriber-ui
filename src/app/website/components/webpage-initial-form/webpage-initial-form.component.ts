@@ -7,6 +7,7 @@ import { KeywordsService } from 'src/app/blogger/services/keywords.service';
 import { WebpageService } from '../../services/webpage.service';
 import { getWebpageTypeStrings } from '../../enums/webpage-type.enum';
 import { WebpageGenerateParams } from '../../dtos/webpage-generator-params.dto';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-webpage-initial-form',
@@ -27,10 +28,12 @@ export class WebpageInitialFormComponent {
 
   webpageTypeOptions: string[];
 
+  currentProjectId: number;
+
   constructor
-    (private _blogProjectService: BlogProjectsService,
-      private _keywordService: KeywordsService,
-      private _webpageService: WebpageService) { }
+    (private _keywordService: KeywordsService,
+      private _webpageService: WebpageService,
+      private router: Router) { }
 
 
   ngOnInit(): void {
@@ -57,12 +60,6 @@ export class WebpageInitialFormComponent {
   }
 
   setListeners() {
-    this._blogProjectService.selectedProjectId$.pipe(takeUntil(this.componentDestroyed$)).subscribe(projectId => {
-      if (projectId && projectId !== -1) {
-        this.webpageGeneratorForm.addControl('blogProjectId', new FormControl(projectId, [Validators.required]))
-
-      }
-    })
     this._keywordService.primaryKeywordSelection$.pipe(takeUntil(this.componentDestroyed$)).subscribe(k => {
       this.webpageGeneratorForm.get('primaryKeyword')?.setValue(k);
     })
@@ -73,6 +70,9 @@ export class WebpageInitialFormComponent {
 
   generateWebpageContent() {
     const params = new WebpageGenerateParams(this.webpageGeneratorForm.value);
-    this._webpageService.createWebpageOutline(params).subscribe(r => console.log(r.data))
+    params.blogProjectId = this.currentProjectId;
+    this._webpageService.createWebpageOutline(params).subscribe(r => {
+      this.router.navigate(['/websites/editor'])
+    })
   }
 }

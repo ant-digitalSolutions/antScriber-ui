@@ -41,8 +41,9 @@ export class BlogProjectsService {
         .pipe(tap(result => {
           this._blogProjects.next(result);
           if (this._selectedProjectId.getValue() === -1 ) {
-            const defaultProjectId = result.filter(p => p.isDefaultProject)[0].id;
-            this._selectedProjectId.next(defaultProjectId)
+            // const defaultProjectId = result.filter(p => p.isDefaultProject)[0].id;
+
+            this._selectedProjectId.next(result[0].id)
           }
         }))
         .subscribe({
