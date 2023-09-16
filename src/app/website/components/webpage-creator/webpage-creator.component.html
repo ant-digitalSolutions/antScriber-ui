@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row align-items-start justify-content-between">
   <mat-card class="cardWithShadow col-md-4 col-lg-5">
     <mat-card-content>
       <mat-vertical-stepper #stepper>
@@ -23,6 +23,13 @@
           </div> -->
         </mat-step>
       </mat-vertical-stepper>
+    </mat-card-content>
+  </mat-card>
+
+    <mat-card class="cardWithShadow col-md-7 col-lg-6" *ngIf="webpageData">
+      <mat-card-title>Page Final Content</mat-card-title>
+    <mat-card-content>
+       <app-webpage-render></app-webpage-render>
     </mat-card-content>
   </mat-card>
 </div>

@@ -56,7 +56,7 @@ export class WebpageCreatorComponent implements OnInit, OnDestroy {
   }
   
   public get sections() : WebpageSectionDto[] {
-    return this.webpageData?.webpageSections ? this.webpageData.webpageSections : [];
+    return this.webpageData?.webpageSections ? this.webpageData.webpageSections.sort((a, b) => a.sectionIndex > b.sectionIndex ? 1 : -1) : [];
   }
   
 }

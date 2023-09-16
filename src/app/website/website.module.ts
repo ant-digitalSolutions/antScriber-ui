@@ -18,6 +18,7 @@ import { MaterialModule } from '../material.module';
 import * as TablerIcons from 'angular-tabler-icons/icons';
 import { WebsiteRouting } from './website.routing';
 import { SharedModule } from '../common/shared.module';
+import { WebpageRenderComponent } from './components/webpage-render/webpage-render.component';
 
 
 
@@ -26,7 +27,8 @@ import { SharedModule } from '../common/shared.module';
   declarations: [
     WebpageCreatorComponent,
     WebpageInitialFormComponent,
-    WebpageSectionEditorComponent
+    WebpageSectionEditorComponent,
+    WebpageRenderComponent
   ],
   imports: [
     CommonModule,

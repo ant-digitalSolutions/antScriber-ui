@@ -16,4 +16,6 @@ export class WebpageSectionDto {
     status?: string;
 
     webpageId: string;
+
+    sectionIndex: number;
 }
