@@ -17,6 +17,7 @@ import { KeywordsModule } from '../keywords/keywords.module';
 import { MaterialModule } from '../material.module';
 import * as TablerIcons from 'angular-tabler-icons/icons';
 import { WebsiteRouting } from './website.routing';
+import { SharedModule } from '../common/shared.module';
 
 
 
@@ -39,7 +40,8 @@ import { WebsiteRouting } from './website.routing';
     NgxEditorModule,
     TablerIconsModule.pick(TablerIcons),
     TablerIconsModule,
-    KeywordsModule
+    KeywordsModule,
+    SharedModule
   ],
   providers: [
     WebsiteService,

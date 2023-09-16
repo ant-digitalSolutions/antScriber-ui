@@ -3,6 +3,8 @@ export class WebpageSectionDto {
         Object.assign(this, init);
     }
 
+    id: number;
+
     title: string;
 
     content?: string;
@@ -12,4 +14,6 @@ export class WebpageSectionDto {
     seoTitle?: string;
 
     status?: string;
+
+    webpageId: string;
 }
