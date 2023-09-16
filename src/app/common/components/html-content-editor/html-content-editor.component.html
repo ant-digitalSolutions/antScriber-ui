@@ -1,0 +1,31 @@
+<div class="content-editor-outer-container" *ngIf="editedContent">
+  <div class="renderer" *ngIf="!editionMode" [innerHTML]="editedContent"></div>
+  <div class="editor" *ngIf="editionMode">
+    <!-- Content Editor -->
+    <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
+    <ngx-editor [editor]="editor" [(ngModel)]="editedContent"> </ngx-editor>
+
+    <!-- Magic Actions for the content-->
+    <div class="magic-actions-container m-t-5">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header class="bg-accent">
+          <mat-panel-title> Magic Tools </mat-panel-title>
+          <mat-panel-description> </mat-panel-description>
+        </mat-expansion-panel-header>
+        <app-content-edition-magic-actions [contentToEdit]="editedContent" (contentEditedEmitter)="editContentWithMagic($event)"></app-content-edition-magic-actions>
+      </mat-expansion-panel>
+    </div>
+  </div>
+
+  <!-- Edit NOW btn -->
+  <button
+    mat-mini-fab
+    color="primary"
+    aria-label="Example icon button with a menu icon"
+    class="editor-button"
+    *ngIf="!editionMode"
+    (click)="toggleEdition()"
+  >
+    <mat-icon>edit</mat-icon>
+  </button>
+</div>

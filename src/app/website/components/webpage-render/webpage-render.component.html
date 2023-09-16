@@ -1,3 +1,4 @@
 <div class="section-content-container" *ngFor="let section of pageSections">
-    <div class="section-content" [innerHTML]="section.content"></div>
+    <app-html-content-editor [contentToEdit]="section.content" (contentEditedEmitter)="updateEditedContent($event, section)"></app-html-content-editor>
+    <!-- <div class="section-content" [innerHTML]="section.content"></div> -->
 </div>

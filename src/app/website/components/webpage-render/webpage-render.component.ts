@@ -11,6 +11,7 @@ import { WebpageService } from '../../services/webpage.service';
 })
 export class WebpageRenderComponent implements OnInit, OnDestroy {
 
+
   componentDestroyed$: Subject<boolean> = new Subject();
 
   isLoading = false;
@@ -40,5 +41,9 @@ export class WebpageRenderComponent implements OnInit, OnDestroy {
       const index = this.pageSections.findIndex(s => s.id === editedS.id)!;
       this.pageSections[index] = editedS;
     })
+  }
+
+  updateEditedContent(editedContent: string, section: WebpageSectionDto) {
+    section.content = editedContent;
   }
 }

@@ -1,25 +1,35 @@
 <div class="section-form-container">
   <h3>Personalize the Content Generation</h3>
-  <app-text-area-field-render-and-editor 
-  [fieldHumanName]="'Section Summary'"
-  [fieldValue]="webSection.summary"
-  [isGenerator]="true"
-  (valueEditedEvent)="setSummaryText($event)"
-  ></app-text-area-field-render-and-editor>
 
-  <app-option-field-render-and-editor 
-  [options]="contentToneOptions"
-  [fieldHumanName]="'Select the tone to use'"
-  (selectionChangeEvent)="changeContentTone($event)"
-  ></app-option-field-render-and-editor>
+  <div class="field-editor-container">
+    <app-text-area-field-render-and-editor
+      [fieldHumanName]="'Section Summary'"
+      [fieldValue]="webSection.summary"
+      [isGenerator]="true"
+      (valueEditedEvent)="setSummaryText($event)"
+    ></app-text-area-field-render-and-editor>
+  </div>
+  <mat-divider></mat-divider>
 
-    <app-option-field-render-and-editor 
-  [options]="contentTypeOptions"
-  [fieldHumanName]="'Select the type of Content'"
-  (selectionChangeEvent)="changeContentType($event)"
-  ></app-option-field-render-and-editor>
+  <div class="field-editor-container">
+    <app-option-field-render-and-editor
+      [options]="contentToneOptions"
+      [fieldHumanName]="'Select the tone to use'"
+      (selectionChangeEvent)="changeContentTone($event)"
+    ></app-option-field-render-and-editor>
+  </div>
+  <div class="field-editor-container">
+    <app-option-field-render-and-editor
+      [options]="contentTypeOptions"
+      [fieldHumanName]="'Select the type of Content'"
+      (selectionChangeEvent)="changeContentType($event)"
+      class="m-t-3"
+    ></app-option-field-render-and-editor>
+  </div>
 
   <div class="actions-container">
-     <button mat-stroked-button color="primary" (click)="generateContent()">Generate Content</button>
+    <button mat-stroked-button color="primary" (click)="generateContent()">
+      Generate Content
+    </button>
   </div>
 </div>

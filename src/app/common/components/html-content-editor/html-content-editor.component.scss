@@ -1,0 +1,16 @@
+.content-editor-outer-container {
+    position: relative;
+    padding: 40px 0;
+
+    .editor-button {
+        position: absolute;
+        top: 20px;
+        bottom: auto;
+        left: auto;
+        right: 5px;
+    }
+
+    .magic-actions-container {
+        margin-top: 10px;
+    }
+}
