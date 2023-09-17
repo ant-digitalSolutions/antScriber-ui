@@ -1,5 +1,9 @@
 <div class="content-editor-outer-container" *ngIf="editedContent">
+
+    <!-- Render Content -->
   <div class="renderer" *ngIf="!editionMode" [innerHTML]="editedContent"></div>
+ 
+ 
   <div class="editor" *ngIf="editionMode">
     <!-- Content Editor -->
     <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
@@ -10,12 +14,12 @@
     >
     </ngx-editor>
 
-    <div class="save-discard-btns-container">
+    <div class="save-discard-btns-container m-b-24 m-t-10">
       <button
-        mat-button
+        mat-stroked-button
         color="primary"
         aria-label="Save changes"
-        class="save-button"
+        class="save-button m-r-10"
         (click)="save()"
         [disabled]="isLoading"
       >

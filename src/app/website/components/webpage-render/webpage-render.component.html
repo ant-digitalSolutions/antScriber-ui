@@ -1,6 +1,30 @@
-<div class="section-content-container" *ngFor="let section of pageSections; let i = index">
-    <app-html-content-editor [isLoading]="pageSectionIsSaving[i].isSaving" [contentToEdit]="section.content" (contentEditedEmitter)="updateEditedContent($event, section)"></app-html-content-editor>
+<div
+  class="section-content-container"
+  *ngFor="let section of pageSections; let i = index"
+>
+  <!-- Section with no content STARTS-->
+<div class="section-creator" *ngIf="!section.content || section.content.length === 0">
+  <h2>{{ section.title }}</h2>
+  <app-webpage-section-editor
+    [webSection]="section"
+    [sectionIndex]="i"
+    [totalSectionsAmount]="pageSections.length"
+  ></app-webpage-section-editor>
+  </div>
+
+  <!-- SEction With no Content ENDS-->
+
+  <div
+    class="section-content-container"
+    *ngIf="section.content && section.content.length > 0"
+  >
+    <app-html-content-editor
+      [isLoading]="pageSectionIsSaving[i].isSaving"
+      [contentToEdit]="section.content"
+      (contentEditedEmitter)="updateEditedContent($event, section)"
+    ></app-html-content-editor>
     <!-- <div class="section-content" [innerHTML]="section.content"></div> -->
 
     <mat-divider></mat-divider>
+  </div>
 </div>

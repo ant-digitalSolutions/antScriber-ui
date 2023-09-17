@@ -3,12 +3,12 @@
     <div class="edited-text" [innerHTML]="editedContent"></div>
     <div class="actions-on-edited-content" *ngIf="!isLoading">
       <button
-        mat-button
+        mat-stroked-button
         color="primary"
         class="btn-for-edited-content"
         (click)="saveEditedContent()"
       >
-        Save
+        Insert
       </button>
       <button
         mat-button
