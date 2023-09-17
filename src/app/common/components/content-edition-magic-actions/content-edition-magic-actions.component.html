@@ -1,4 +1,26 @@
 <div class="magic-actions-btns-outer-container p-20">
+  <div class="edited-content-container" *ngIf="editedContent">
+    <div class="edited-text" [innerHTML]="editedContent"></div>
+    <div class="actions-on-edited-content" *ngIf="!isLoading">
+      <button
+        mat-button
+        color="primary"
+        class="btn-for-edited-content"
+        (click)="saveEditedContent()"
+      >
+        Save
+      </button>
+      <button
+        mat-button
+        color="primary"
+        class="btn-for-edited-content"
+        (click)="discardEditedContent()"
+      >
+        Discard
+      </button>
+    </div>
+  </div>
+
   <div class="magic-actions-inner-container" *ngIf="!isLoading">
     <!-- SHOW MORE IMPORTANT BUTTONS -->
     <div class="rewrite-action btns-container" *ngIf="!showAllButtons">
@@ -7,7 +29,7 @@
         mat-stroked-button
         color="primary"
         class="magic-action-button"
-        (click)="improveIt()"
+        (click)="applyMagicAction(MagicActions.improve)"
       >
         <mat-icon>edit</mat-icon>Improve it
       </button>
@@ -16,7 +38,7 @@
         mat-stroked-button
         color="primary"
         class="magic-action-button"
-        (click)="shortenIt()"
+        (click)="applyMagicAction(MagicActions.shorten)"
       >
         <mat-icon>edit</mat-icon>Shorten It
       </button>
@@ -25,9 +47,27 @@
         mat-stroked-button
         color="primary"
         class="magic-action-button"
-        (click)="moreDescriptive()"
+        (click)="applyMagicAction(MagicActions.moreDescriptive)"
       >
         <mat-icon>edit</mat-icon>Make it more descriptive
+      </button>
+
+      <button
+        mat-stroked-button
+        color="primary"
+        class="magic-action-button"
+        (click)="applyMagicAction(MagicActions.moreDetail)"
+      >
+        <mat-icon>edit</mat-icon>Make it more detailed
+      </button>
+
+      <button
+        mat-stroked-button
+        color="primary"
+        class="magic-action-button"
+        (click)="applyMagicAction(MagicActions.simplify)"
+      >
+        <mat-icon>edit</mat-icon>Simplify it
       </button>
 
       <button
@@ -47,7 +87,7 @@
         mat-stroked-button
         color="primary"
         class="magic-action-button"
-        (click)="improveIt()"
+        (click)="applyMagicAction(MagicActions.improve)"
       >
         <mat-icon>edit</mat-icon>Improve it
       </button>
@@ -56,7 +96,7 @@
         mat-stroked-button
         color="primary"
         class="magic-action-button"
-        (click)="shortenIt()"
+        (click)="applyMagicAction(MagicActions.shorten)"
       >
         <mat-icon>edit</mat-icon>Shorten It
       </button>
@@ -65,7 +105,7 @@
         mat-stroked-button
         color="primary"
         class="magic-action-button"
-        (click)="moreDescriptive()"
+        (click)="applyMagicAction(MagicActions.moreDescriptive)"
       >
         <mat-icon>edit</mat-icon>Make it more descriptive
       </button>
@@ -74,7 +114,7 @@
         mat-stroked-button
         color="primary"
         class="magic-action-button"
-        (click)="moreDetailed()"
+        (click)="applyMagicAction(MagicActions.moreDetail)"
       >
         <mat-icon>edit</mat-icon>Make it more detailed
       </button>
@@ -83,7 +123,7 @@
         mat-stroked-button
         color="primary"
         class="magic-action-button"
-        (click)="simplifyIt()"
+        (click)="applyMagicAction(MagicActions.simplify)"
       >
         <mat-icon>edit</mat-icon>Simplify it
       </button>
@@ -92,7 +132,7 @@
         mat-stroked-button
         color="primary"
         class="magic-action-button"
-        (click)="moreInformative()"
+        (click)="applyMagicAction(MagicActions.moreInformative)"
       >
         <mat-icon>edit</mat-icon>More Informative
       </button>
@@ -101,7 +141,7 @@
         mat-stroked-button
         color="primary"
         class="magic-action-button"
-        (click)="fixMistakes()"
+        (click)="applyMagicAction(MagicActions.fixMistakes)"
       >
         <mat-icon>edit</mat-icon>Fix Mistakes
       </button>
@@ -110,7 +150,7 @@
         mat-stroked-button
         color="primary"
         class="magic-action-button"
-        (click)="paraphraseIt()"
+        (click)="applyMagicAction(MagicActions.paraphraseIt)"
       >
         <mat-icon>edit</mat-icon>Paraphrase It
       </button>
@@ -119,7 +159,7 @@
         mat-stroked-button
         color="primary"
         class="magic-action-button"
-        (click)="soundFluent()"
+        (click)="applyMagicAction(MagicActions.soundFluent)"
       >
         <mat-icon>edit</mat-icon>Sound Fluent
       </button>
@@ -128,7 +168,7 @@
         mat-stroked-button
         color="primary"
         class="magic-action-button"
-        (click)="makeItObjective()"
+        (click)="applyMagicAction(MagicActions.moreObjective)"
       >
         <mat-icon>edit</mat-icon>Make it Objective
       </button>
@@ -137,22 +177,22 @@
     <!--  TONE BUTTONS -->
 
     <div class="rewrite-action btns-container" *ngIf="showAllButtons">
-      <h5 class="btns-container-title"></h5>
+      <h5 class="btns-container-title">Adjust Tone</h5>
 
       <button
         mat-stroked-button
         color="primary"
         class="magic-action-button"
-        (click)="makeItEngaging()"
+        (click)="applyMagicAction(MagicActions.makeItOptimistic)"
       >
-        <mat-icon>edit</mat-icon>Adjust Tone
+        <mat-icon>edit</mat-icon>
       </button>
 
       <button
         mat-stroked-button
         color="primary"
         class="magic-action-button"
-        (click)="makeItPersuasive()"
+        (click)="applyMagicAction(MagicActions.makeItPersuasive)"
       >
         <mat-icon>edit</mat-icon>make it persuasive
       </button>
@@ -161,15 +201,25 @@
         mat-stroked-button
         color="primary"
         class="magic-action-button"
-        (click)="makeItAssertive()"
+        (click)="applyMagicAction(MagicActions.makeItAssertive)"
       >
         <mat-icon>edit</mat-icon>Make it Assertive
       </button>
     </div>
   </div>
 
-  <div class="loading-container d-flex justify-content-start align-items-center" *ngIf="isLoading">
-    <mat-progress-spinner class="example-margin" [diameter]="20" [color]="'primary'" [mode]="'indeterminate'"></mat-progress-spinner>
-    <span class="f-s-12 f-w-400 m-l-10 text-gray-100">Applying the magic...</span>
+  <div
+    class="loading-container d-flex justify-content-start align-items-center"
+    *ngIf="isLoading"
+  >
+    <mat-progress-spinner
+      class="example-margin"
+      [diameter]="20"
+      [color]="'primary'"
+      [mode]="'indeterminate'"
+    ></mat-progress-spinner>
+    <span class="f-s-12 f-w-400 m-l-10 text-gray-100"
+      >Applying the magic...</span
+    >
   </div>
 </div>

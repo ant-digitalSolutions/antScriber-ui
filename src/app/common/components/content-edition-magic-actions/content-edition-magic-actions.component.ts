@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MagicEditionService } from '../../services/content-magic-edition.service';
 import { IRequestResponse } from '../../dto/request-response.dto';
+import { MagicActionEnum } from '../../enum/content generation/magic-action.enum';
 
 @Component({
   selector: 'app-content-edition-magic-actions',
@@ -8,6 +9,7 @@ import { IRequestResponse } from '../../dto/request-response.dto';
   styleUrls: ['./content-edition-magic-actions.component.scss']
 })
 export class ContentEditionMagicActionsComponent {
+
 
   showAllButtons = false;
 
@@ -22,6 +24,8 @@ export class ContentEditionMagicActionsComponent {
   @Input()
   contentToEdit: string | undefined;
 
+  editedContent: string | undefined;
+
   constructor(private magicEditionService: MagicEditionService) {
 
   }
@@ -30,49 +34,14 @@ export class ContentEditionMagicActionsComponent {
   toggleShowAllButtons() {
     this.showAllButtons = !this.showAllButtons
   }
-  shortenIt() {
-    throw new Error('Method not implemented.');
-  }
-  makeItAssertive() {
-    throw new Error('Method not implemented.');
-  }
-  makeItPersuasive() {
-    throw new Error('Method not implemented.');
-  }
-  makeItEngaging() {
-    throw new Error('Method not implemented.');
-  }
-  makeItObjective() {
-    throw new Error('Method not implemented.');
-  }
-  soundFluent() {
-    throw new Error('Method not implemented.');
-  }
-  paraphraseIt() {
-    throw new Error('Method not implemented.');
-  }
-  fixMistakes() {
-    throw new Error('Method not implemented.');
-  }
-  moreInformative() {
-    throw new Error('Method not implemented.');
-  }
-  simplifyIt() {
-    throw new Error('Method not implemented.');
-  }
-  moreDetailed() {
-    throw new Error('Method not implemented.');
-  }
-  moreDescriptive() {
-    throw new Error('Method not implemented.');
-  }
-  improveIt() {
-    if (this.contentToEdit)
-      {
-        this.isLoading = true;
-        this.applyingMagic.emit(true);
-        this.magicEditionService.improveText(this.contentToEdit).subscribe(r => this.processMagicEditionResult(r))
-      }
+
+  applyMagicAction(action: MagicActionEnum): void {
+    if (this.contentToEdit) {
+      this.isLoading = true;
+      this.applyingMagic.emit(true);
+      const textToApplyMagic = this.editedContent ? this.editedContent : this.contentToEdit;
+      this.magicEditionService.applyMagic(this.contentToEdit, action).subscribe(r => this.processMagicEditionResult(r))
+    }
   }
 
   processMagicEditionResult(r: IRequestResponse<string>): void {
@@ -80,10 +49,24 @@ export class ContentEditionMagicActionsComponent {
     this.applyingMagic.emit(false);
 
     if (r.success) {
-      this.contentToEdit = r.data;
-      this.contentEditedEmitter.emit(this.contentToEdit);
+      this.editedContent = r.data;
     }
   }
+
+  discardEditedContent() {
+    this.editedContent = undefined;
+  }
+  saveEditedContent() {
+    this.contentToEdit = this.editedContent;
+    this.contentEditedEmitter.emit(this.contentToEdit);
+    this.editedContent = undefined;
+  }
+
+  
+  public get MagicActions() : typeof MagicActionEnum {
+    return MagicActionEnum;
+  }
+  
 
 
 }
