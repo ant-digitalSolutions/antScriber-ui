@@ -1,4 +1,6 @@
-<div class="section-content-container" *ngFor="let section of pageSections">
-    <app-html-content-editor [contentToEdit]="section.content" (contentEditedEmitter)="updateEditedContent($event, section)"></app-html-content-editor>
+<div class="section-content-container" *ngFor="let section of pageSections; let i = index">
+    <app-html-content-editor [isLoading]="pageSectionIsSaving[i].isSaving" [contentToEdit]="section.content" (contentEditedEmitter)="updateEditedContent($event, section)"></app-html-content-editor>
     <!-- <div class="section-content" [innerHTML]="section.content"></div> -->
+
+    <mat-divider></mat-divider>
 </div>

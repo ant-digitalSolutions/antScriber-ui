@@ -3,7 +3,35 @@
   <div class="editor" *ngIf="editionMode">
     <!-- Content Editor -->
     <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
-    <ngx-editor [editor]="editor" [(ngModel)]="editedContent" [disabled]="isLoading"> </ngx-editor>
+    <ngx-editor
+      [editor]="editor"
+      [(ngModel)]="editedContent"
+      [disabled]="isLoading"
+    >
+    </ngx-editor>
+
+    <div class="save-discard-btns-container">
+      <button
+        mat-button
+        color="primary"
+        aria-label="Save changes"
+        class="save-button"
+        (click)="save()"
+        [disabled]="isLoading"
+      >
+        Save
+      </button>
+      <button
+        mat-button
+        color="primary"
+        aria-label="Save changes"
+        class="save-button"
+        (click)="discard()"
+        [disabled]="isLoading"
+      >
+        Discard
+      </button>
+    </div>
 
     <!-- Magic Actions for the content-->
     <div class="magic-actions-container m-t-5">
@@ -13,9 +41,9 @@
           <mat-panel-description> </mat-panel-description>
         </mat-expansion-panel-header>
         <app-content-edition-magic-actions
-         [contentToEdit]="editedContent" 
-        (contentEditedEmitter)="editContentWithMagic($event)"
-        (applyingMagic)="changeLoadingState($event)"
+          [contentToEdit]="editedContent"
+          (contentEditedEmitter)="editContentWithMagic($event)"
+          (applyingMagic)="changeLoadingState($event)"
         ></app-content-edition-magic-actions>
       </mat-expansion-panel>
     </div>

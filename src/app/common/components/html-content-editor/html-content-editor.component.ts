@@ -13,6 +13,7 @@ export class HtmlContentEditorComponent implements OnInit, OnDestroy, OnChanges 
 
 
 
+
   editor: Editor;
   toolbar: Toolbar = [
     ['bold', 'italic'],
@@ -33,10 +34,11 @@ export class HtmlContentEditorComponent implements OnInit, OnDestroy, OnChanges 
   @Input()
   contentToEdit: string | undefined;
 
-  editedContent: string;
+  editedContent: string | undefined;
 
   editionMode = false;
 
+  @Input()
   isLoading = false;
 
   constructor() { }
@@ -44,6 +46,10 @@ export class HtmlContentEditorComponent implements OnInit, OnDestroy, OnChanges 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['contentToEdit'] && this.contentToEdit) {
       this.editedContent = this.contentToEdit;
+    }
+    if (changes['isLoading']) {
+      if (!this.isLoading)
+       this.editionMode = false;
     }
   }
 
@@ -62,7 +68,14 @@ export class HtmlContentEditorComponent implements OnInit, OnDestroy, OnChanges 
 
 
   save() {
+    this.isLoading = true;
+    this.contentToEdit = this.editedContent;
     this.contentEditedEmitter.emit(this.contentToEdit);
+  }
+
+  discard() {
+    this.editedContent = this.contentToEdit;
+    this.toggleEdition()
   }
 
   editContentWithMagic(editedContent: string) {
