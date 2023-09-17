@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MagicEditionService } from '../../services/content-magic-edition.service';
+import { IRequestResponse } from '../../dto/request-response.dto';
 
 @Component({
   selector: 'app-content-edition-magic-actions',
@@ -8,6 +10,22 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class ContentEditionMagicActionsComponent {
 
   showAllButtons = false;
+
+  isLoading = false;
+
+  @Output()
+  contentEditedEmitter = new EventEmitter<string>();
+
+  @Output()
+  applyingMagic = new EventEmitter<boolean>();
+
+  @Input()
+  contentToEdit: string | undefined;
+
+  constructor(private magicEditionService: MagicEditionService) {
+
+  }
+
 
   toggleShowAllButtons() {
     this.showAllButtons = !this.showAllButtons
@@ -49,12 +67,23 @@ export class ContentEditionMagicActionsComponent {
     throw new Error('Method not implemented.');
   }
   improveIt() {
-    throw new Error('Method not implemented.');
+    if (this.contentToEdit)
+      {
+        this.isLoading = true;
+        this.applyingMagic.emit(true);
+        this.magicEditionService.improveText(this.contentToEdit).subscribe(r => this.processMagicEditionResult(r))
+      }
   }
 
-  @Output()
-  contentEditedEmitter = new EventEmitter<string>();
+  processMagicEditionResult(r: IRequestResponse<string>): void {
+    this.isLoading = false;
+    this.applyingMagic.emit(false);
 
-  @Input()
-  contentToEdit: string | undefined;
+    if (r.success) {
+      this.contentToEdit = r.data;
+      this.contentEditedEmitter.emit(this.contentToEdit);
+    }
+  }
+
+
 }

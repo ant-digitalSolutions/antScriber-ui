@@ -12,6 +12,7 @@ import { ArticleService } from 'src/app/blogger/services/article.service';
 export class HtmlContentEditorComponent implements OnInit, OnDestroy, OnChanges {
 
 
+
   editor: Editor;
   toolbar: Toolbar = [
     ['bold', 'italic'],
@@ -35,6 +36,8 @@ export class HtmlContentEditorComponent implements OnInit, OnDestroy, OnChanges 
   editedContent: string;
 
   editionMode = false;
+
+  isLoading = false;
 
   constructor() { }
 
@@ -64,6 +67,10 @@ export class HtmlContentEditorComponent implements OnInit, OnDestroy, OnChanges 
 
   editContentWithMagic(editedContent: string) {
     this.editedContent = editedContent;
+  }
+
+  changeLoadingState(magicIsLoading: boolean) {
+   this.isLoading = magicIsLoading;
   }
 
 }

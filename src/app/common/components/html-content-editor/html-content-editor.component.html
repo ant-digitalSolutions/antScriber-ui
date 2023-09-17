@@ -3,7 +3,7 @@
   <div class="editor" *ngIf="editionMode">
     <!-- Content Editor -->
     <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
-    <ngx-editor [editor]="editor" [(ngModel)]="editedContent"> </ngx-editor>
+    <ngx-editor [editor]="editor" [(ngModel)]="editedContent" [disabled]="isLoading"> </ngx-editor>
 
     <!-- Magic Actions for the content-->
     <div class="magic-actions-container m-t-5">
@@ -12,7 +12,11 @@
           <mat-panel-title> Magic Tools </mat-panel-title>
           <mat-panel-description> </mat-panel-description>
         </mat-expansion-panel-header>
-        <app-content-edition-magic-actions [contentToEdit]="editedContent" (contentEditedEmitter)="editContentWithMagic($event)"></app-content-edition-magic-actions>
+        <app-content-edition-magic-actions
+         [contentToEdit]="editedContent" 
+        (contentEditedEmitter)="editContentWithMagic($event)"
+        (applyingMagic)="changeLoadingState($event)"
+        ></app-content-edition-magic-actions>
       </mat-expansion-panel>
     </div>
   </div>

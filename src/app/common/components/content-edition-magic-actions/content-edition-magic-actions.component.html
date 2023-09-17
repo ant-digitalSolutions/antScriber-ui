@@ -1,170 +1,175 @@
-<div class="magic-actions-btns-outer-container">
-
+<div class="magic-actions-btns-outer-container p-20">
+  <div class="magic-actions-inner-container" *ngIf="!isLoading">
     <!-- SHOW MORE IMPORTANT BUTTONS -->
-  <div class="rewrite-action btns-container" *ngIf="!showAllButtons">
-    <h5 class="btns-container-title">Rewrite Content</h5>
-    <button
-      mat-stroked-button
-      color="primary"
-      class="magic-action-button"
-      (click)="improveIt()"
-    >
-      <mat-icon>edit</mat-icon>Improve it
-    </button>
+    <div class="rewrite-action btns-container" *ngIf="!showAllButtons">
+      <h5 class="btns-container-title">Rewrite Content</h5>
+      <button
+        mat-stroked-button
+        color="primary"
+        class="magic-action-button"
+        (click)="improveIt()"
+      >
+        <mat-icon>edit</mat-icon>Improve it
+      </button>
 
-    <button
-      mat-stroked-button
-      color="primary"
-      class="magic-action-button"
-      (click)="shortenIt()"
-    >
-      <mat-icon>edit</mat-icon>Shorten It
-    </button>
+      <button
+        mat-stroked-button
+        color="primary"
+        class="magic-action-button"
+        (click)="shortenIt()"
+      >
+        <mat-icon>edit</mat-icon>Shorten It
+      </button>
 
-    <button
-      mat-stroked-button
-      color="primary"
-      class="magic-action-button"
-      (click)="moreDescriptive()"
-    >
-      <mat-icon>edit</mat-icon>Make it more descriptive
-    </button>
+      <button
+        mat-stroked-button
+        color="primary"
+        class="magic-action-button"
+        (click)="moreDescriptive()"
+      >
+        <mat-icon>edit</mat-icon>Make it more descriptive
+      </button>
 
-    <button
-      mat-stroked-button
-      color="primary"
-      class="magic-action-button"
-      (click)="toggleShowAllButtons()"
-    >
-      <mat-icon>edit</mat-icon>Show more
-    </button>
+      <button
+        mat-stroked-button
+        color="primary"
+        class="magic-action-button"
+        (click)="toggleShowAllButtons()"
+      >
+        <mat-icon>edit</mat-icon>Show more
+      </button>
+    </div>
+
+    <!-- SHOW ALL BUTTONS -->
+    <div class="rewrite-action btns-container" *ngIf="showAllButtons">
+      <h5 class="btns-container-title">Rewrite Content</h5>
+      <button
+        mat-stroked-button
+        color="primary"
+        class="magic-action-button"
+        (click)="improveIt()"
+      >
+        <mat-icon>edit</mat-icon>Improve it
+      </button>
+
+      <button
+        mat-stroked-button
+        color="primary"
+        class="magic-action-button"
+        (click)="shortenIt()"
+      >
+        <mat-icon>edit</mat-icon>Shorten It
+      </button>
+
+      <button
+        mat-stroked-button
+        color="primary"
+        class="magic-action-button"
+        (click)="moreDescriptive()"
+      >
+        <mat-icon>edit</mat-icon>Make it more descriptive
+      </button>
+
+      <button
+        mat-stroked-button
+        color="primary"
+        class="magic-action-button"
+        (click)="moreDetailed()"
+      >
+        <mat-icon>edit</mat-icon>Make it more detailed
+      </button>
+
+      <button
+        mat-stroked-button
+        color="primary"
+        class="magic-action-button"
+        (click)="simplifyIt()"
+      >
+        <mat-icon>edit</mat-icon>Simplify it
+      </button>
+
+      <button
+        mat-stroked-button
+        color="primary"
+        class="magic-action-button"
+        (click)="moreInformative()"
+      >
+        <mat-icon>edit</mat-icon>More Informative
+      </button>
+
+      <button
+        mat-stroked-button
+        color="primary"
+        class="magic-action-button"
+        (click)="fixMistakes()"
+      >
+        <mat-icon>edit</mat-icon>Fix Mistakes
+      </button>
+
+      <button
+        mat-stroked-button
+        color="primary"
+        class="magic-action-button"
+        (click)="paraphraseIt()"
+      >
+        <mat-icon>edit</mat-icon>Paraphrase It
+      </button>
+
+      <button
+        mat-stroked-button
+        color="primary"
+        class="magic-action-button"
+        (click)="soundFluent()"
+      >
+        <mat-icon>edit</mat-icon>Sound Fluent
+      </button>
+
+      <button
+        mat-stroked-button
+        color="primary"
+        class="magic-action-button"
+        (click)="makeItObjective()"
+      >
+        <mat-icon>edit</mat-icon>Make it Objective
+      </button>
+    </div>
+
+    <!--  TONE BUTTONS -->
+
+    <div class="rewrite-action btns-container" *ngIf="showAllButtons">
+      <h5 class="btns-container-title"></h5>
+
+      <button
+        mat-stroked-button
+        color="primary"
+        class="magic-action-button"
+        (click)="makeItEngaging()"
+      >
+        <mat-icon>edit</mat-icon>Adjust Tone
+      </button>
+
+      <button
+        mat-stroked-button
+        color="primary"
+        class="magic-action-button"
+        (click)="makeItPersuasive()"
+      >
+        <mat-icon>edit</mat-icon>make it persuasive
+      </button>
+
+      <button
+        mat-stroked-button
+        color="primary"
+        class="magic-action-button"
+        (click)="makeItAssertive()"
+      >
+        <mat-icon>edit</mat-icon>Make it Assertive
+      </button>
+    </div>
   </div>
 
-
-  <!-- SHOW ALL BUTTONS -->
-  <div class="rewrite-action btns-container" *ngIf="showAllButtons">
-    <h5 class="btns-container-title">Rewrite Content</h5>
-    <button
-      mat-stroked-button
-      color="primary"
-      class="magic-action-button"
-      (click)="improveIt()"
-    >
-      <mat-icon>edit</mat-icon>Improve it
-    </button>
-
-    <button
-      mat-stroked-button
-      color="primary"
-      class="magic-action-button"
-      (click)="shortenIt()"
-    >
-      <mat-icon>edit</mat-icon>Shorten It
-    </button>
-
-    <button
-      mat-stroked-button
-      color="primary"
-      class="magic-action-button"
-      (click)="moreDescriptive()"
-    >
-      <mat-icon>edit</mat-icon>Make it more descriptive
-    </button>
-
-    <button
-      mat-stroked-button
-      color="primary"
-      class="magic-action-button"
-      (click)="moreDetailed()"
-    >
-      <mat-icon>edit</mat-icon>Make it more detailed
-    </button>
-
-    <button
-      mat-stroked-button
-      color="primary"
-      class="magic-action-button"
-      (click)="simplifyIt()"
-    >
-      <mat-icon>edit</mat-icon>Simplify it
-    </button>
-
-    <button
-      mat-stroked-button
-      color="primary"
-      class="magic-action-button"
-      (click)="moreInformative()"
-    >
-      <mat-icon>edit</mat-icon>More Informative
-    </button>
-
-    <button
-      mat-stroked-button
-      color="primary"
-      class="magic-action-button"
-      (click)="fixMistakes()"
-    >
-      <mat-icon>edit</mat-icon>Fix Mistakes
-    </button>
-
-    <button
-      mat-stroked-button
-      color="primary"
-      class="magic-action-button"
-      (click)="paraphraseIt()"
-    >
-      <mat-icon>edit</mat-icon>Paraphrase It
-    </button>
-
-    <button
-      mat-stroked-button
-      color="primary"
-      class="magic-action-button"
-      (click)="soundFluent()"
-    >
-      <mat-icon>edit</mat-icon>Sound Fluent
-    </button>
-
-    <button
-      mat-stroked-button
-      color="primary"
-      class="magic-action-button"
-      (click)="makeItObjective()"
-    >
-      <mat-icon>edit</mat-icon>Make it Objective
-    </button>
-  </div>
-
-  <!--  TONE BUTTONS -->
-
-  <div class="rewrite-action btns-container" *ngIf="showAllButtons">
-    <h5 class="btns-container-title"></h5>
-
-    <button
-      mat-stroked-button
-      color="primary"
-      class="magic-action-button"
-      (click)="makeItEngaging()"
-    >
-      <mat-icon>edit</mat-icon>Adjust Tone
-    </button>
-
-    <button
-      mat-stroked-button
-      color="primary"
-      class="magic-action-button"
-      (click)="makeItPersuasive()"
-    >
-      <mat-icon>edit</mat-icon>make it persuasive
-    </button>
-
-    <button
-      mat-stroked-button
-      color="primary"
-      class="magic-action-button"
-      (click)="makeItAssertive()"
-    >
-      <mat-icon>edit</mat-icon>Make it Assertive
-    </button>
+  <div class="loading-container d-flex justify-content-start align-items-center" *ngIf="isLoading">
+    <mat-progress-spinner class="example-margin" [diameter]="20" [color]="'primary'" [mode]="'indeterminate'"></mat-progress-spinner>
+    <span class="f-s-12 f-w-400 m-l-10 text-gray-100">Applying the magic...</span>
   </div>
 </div>

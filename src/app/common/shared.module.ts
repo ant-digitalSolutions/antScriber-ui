@@ -9,6 +9,7 @@ import { TablerIconsModule } from 'angular-tabler-icons';
 import { NgxEditorModule } from 'ngx-editor';
 import * as TablerIcons from 'angular-tabler-icons/icons';
 import { ContentEditionMagicActionsComponent } from './components/content-edition-magic-actions/content-edition-magic-actions.component';
+import { MagicEditionService } from './services/content-magic-edition.service';
 
 
 
@@ -28,6 +29,7 @@ import { ContentEditionMagicActionsComponent } from './components/content-editio
     TablerIconsModule.pick(TablerIcons),
     TablerIconsModule,
   ],
+  providers: [MagicEditionService],
   exports: [TextAreaFieldRenderAndEditorComponent, OptionFieldRenderAndEditorComponent, HtmlContentEditorComponent]
 })
 export class SharedModule { }
