@@ -41,8 +41,9 @@ export class TextAreaFieldRenderAndEditorComponent implements OnChanges {
     this.generateValueEvent.emit();
   }
 
-  editValue() {
+  saveEdition() {
     this.valueEditedEvent.emit(this.fieldValue);
+    this.toggleFieldEditionStatus();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
