@@ -3,7 +3,7 @@
   *ngFor="let section of pageSections; let i = index"
 >
   <!-- Section with no content STARTS-->
-<div class="section-creator" *ngIf="!section.content || section.content.length === 0">
+<div class="section-creator" *ngIf="!section.content || section.content.length === 0;else sectionContentContainer">
   <h2>{{ section.title }}</h2>
   <app-webpage-section-editor
     [webSection]="section"
@@ -14,9 +14,9 @@
 
   <!-- SEction With no Content ENDS-->
 
+  <ng-template #sectionContentContainer>
   <div
     class="section-content-container"
-    *ngIf="section.content && section.content.length > 0"
   >
     <app-html-content-editor
       [isLoading]="pageSectionIsSaving[i].isSaving"
@@ -27,4 +27,5 @@
 
     <mat-divider></mat-divider>
   </div>
+  </ng-template>
 </div>

@@ -71,7 +71,9 @@ export class WebpageInitialFormComponent {
   generateWebpageContent() {
     const params = new WebpageGenerateParams(this.webpageGeneratorForm.value);
     params.blogProjectId = this.currentProjectId;
+    this.isLoading = true;
     this._webpageService.createWebpageOutline(params).subscribe(r => {
+      this.isLoading = false;
       this.router.navigate(['/websites/editor'])
     })
   }

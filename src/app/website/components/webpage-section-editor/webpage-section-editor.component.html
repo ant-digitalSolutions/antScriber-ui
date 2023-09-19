@@ -11,6 +11,7 @@
   </div>
   <mat-divider></mat-divider>
 
+  <h5>Adjust params</h5>
   <div class="field-editor-container">
     <app-option-field-render-and-editor
       [options]="contentToneOptions"
@@ -28,8 +29,11 @@
   </div>
 
   <div class="actions-container">
-    <button mat-stroked-button color="primary" (click)="generateContent()">
+    <button mat-stroked-button color="primary" (click)="generateContent()" [disabled]="isLoading">
       Generate Content
     </button>
+  </div>
+  <div class="loading-container" *ngIf="isLoading">
+     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
   </div>
 </div>

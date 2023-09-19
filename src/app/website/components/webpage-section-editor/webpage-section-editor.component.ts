@@ -69,7 +69,7 @@ export class WebpageSectionEditorComponent implements OnInit, OnDestroy {
     this._webpageService.editedWebpageSection$.pipe(takeUntil(this.componentDestroyed$)).subscribe(section => {
       if (this.webSection.id === section.id) {
         this.webSection = section;
-        console.log(`Websection updated: ${this.webSection}`)
+        this.isLoading = false;
       }
     })
   }
@@ -94,6 +94,7 @@ export class WebpageSectionEditorComponent implements OnInit, OnDestroy {
   }
 
   generateContent() {
+    this.isLoading = true;
     if (this.sectionGeneratorForm.valid)
       this._webpageService.generateWebpageSection(this.sectionGeneratorForm.value).subscribe();
   }
