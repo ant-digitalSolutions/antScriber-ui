@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { WebpageDetailsDto } from '../../dtos/webpage-details.dto';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -13,7 +13,7 @@ import { WebpageService } from '../../services/webpage.service';
   templateUrl: './list-webpages.component.html',
   styleUrls: ['./list-webpages.component.scss']
 })
-export class ListWebpagesComponent {
+export class ListWebpagesComponent implements OnDestroy, OnInit {
   componentDestroyed$: Subject<boolean> = new Subject();
 
   webpagesToRender: WebpageDetailsDto[] = [];

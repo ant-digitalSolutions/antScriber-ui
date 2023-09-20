@@ -30,6 +30,12 @@ import { MagicEditionService } from './services/content-magic-edition.service';
     TablerIconsModule,
   ],
   providers: [MagicEditionService],
-  exports: [TextAreaFieldRenderAndEditorComponent, OptionFieldRenderAndEditorComponent, HtmlContentEditorComponent]
+  exports: [
+    TextAreaFieldRenderAndEditorComponent,
+    OptionFieldRenderAndEditorComponent,
+    HtmlContentEditorComponent,
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule]
 })
 export class SharedModule { }

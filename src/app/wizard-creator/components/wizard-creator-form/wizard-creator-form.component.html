@@ -1,1 +1,109 @@
-<p>wizard-creator-form works!</p>
+<mat-card class="cardWithShadow theme-card">
+  <mat-card-header>
+    <mat-card-title class="m-b-0"></mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="b-t-1" *ngIf="wizardCreatorForm">
+    <form [formGroup]="wizardCreatorForm" (ngSubmit)="generateContent()">
+      <!-- ------------------------------------------------------------------------- -->
+      <!-- Lang and Tone Selector -->
+      <!-- ------------------------------------------------------------------------- -->
+
+      <div
+        class="field-container lang-and-tone-container d-flex justify-content-between align-items-center"
+      >
+        <!-- ------------------------------------------------------------------------- -->
+        <!-- Lang Selector -->
+        <!-- ------------------------------------------------------------------------- -->
+        <app-option-field-render-and-editor
+         [fieldHumanName]="'Select Language'"
+        [options]="langEnumOptions"
+        (selectionChangeEvent)="setLang($event)"
+        >
+        </app-option-field-render-and-editor>
+
+        <!-- ------------------------------------------------------------------------- -->
+        <!-- Tone Selector -->
+        <!-- ------------------------------------------------------------------------- -->
+        <app-option-field-render-and-editor
+        [fieldHumanName]="'Select Tone'"
+        [options]="contentToneOptions"
+        (selectionChangeEvent)="setContentTone($event)"
+        >
+        </app-option-field-render-and-editor>
+      </div>
+
+      <div class="use-case-selector-container field-container">
+        <!-- ------------------------------------------------------------------------- -->
+        <!-- Use Case Selector -->
+        <!-- ------------------------------------------------------------------------- -->
+        <app-option-field-render-and-editor
+         [fieldHumanName]="'Select Use Case'"
+        [options]="wizardUseCaseOptions"
+        (selectionChangeEvent)="setWizardUseCase($event)"
+        >
+        </app-option-field-render-and-editor>
+      </div>
+
+      <!-- ------------------------------------------------------------------------- -->
+      <!-- Variable Input Container -->
+      <!-- ------------------------------------------------------------------------- -->
+      <div class="variable-input-container">
+        <mat-form-field appearance="outline" class="w-100" color="primary">
+          <mat-label>Page Title</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="title"
+            placeholder="Title for the page. This can be About Us, Home Page, Our Services..."
+          />
+        </mat-form-field>
+      </div>
+
+      <!-- ------------------------------------------------------------------------- -->
+      <!-- Variants and Creativity Level SElectors -->
+      <!-- ------------------------------------------------------------------------- -->
+
+      <div
+        class="field-container lang-and-tone-container d-flex justify-content-between align-items-center"
+      >
+        <!-- ------------------------------------------------------------------------- -->
+        <!-- Variants Selector -->
+        <!-- ------------------------------------------------------------------------- -->
+        <app-option-field-render-and-editor
+        [fieldHumanName]="'Variants to Generate'"
+        [options]="variantsOptions"
+        (selectionChangeEvent)="setVariants($event)"
+        >
+        </app-option-field-render-and-editor>
+
+        <!-- ------------------------------------------------------------------------- -->
+        <!-- Creativity Level Selector -->
+        <!-- ------------------------------------------------------------------------- -->
+        <app-option-field-render-and-editor
+         [fieldHumanName]="'Creative Intensity'"
+        [options]="creativityLevelOptions"
+        (selectionChangeEvent)="setCreativityLevel($event)"
+        >
+        </app-option-field-render-and-editor>
+      </div>
+
+      <!-- ------------------------------------------------------------------------- -->
+      <!-- Action Buttons -->
+      <!-- ------------------------------------------------------------------------- -->
+
+      <div class="m-t-12">
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          [disabled]="!wizardCreatorForm.valid || isLoading"
+        >
+          Unleash the Magic
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+  <mat-card-footer *ngIf="isLoading">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </mat-card-footer>
+</mat-card>

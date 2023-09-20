@@ -111,7 +111,6 @@ export class WebpageSectionEditorComponent implements OnInit, OnDestroy {
 
   setContentOptions() {
     this.contentToneOptions = contentToneOptionFields();
-    this.contentTypeOptions = contentTypeOptionFields();
   }
 
   changeContentType(contentType: string) {
