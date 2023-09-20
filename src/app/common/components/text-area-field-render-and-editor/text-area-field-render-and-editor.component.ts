@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 })
 export class TextAreaFieldRenderAndEditorComponent implements OnChanges {
   @Input()
-  fieldValue?: string;
+  fieldValue?: string | undefined;
 
   @Input()
   fieldHumanName: string;
@@ -34,11 +34,6 @@ export class TextAreaFieldRenderAndEditorComponent implements OnChanges {
 
   toggleFieldEditionStatus() {
     this.inEdition = !this.inEdition;
-  }
-
-  generateArticleSEoMetaDescription() {
-    this.isLoading = true;
-    this.generateValueEvent.emit();
   }
 
   saveEdition() {
