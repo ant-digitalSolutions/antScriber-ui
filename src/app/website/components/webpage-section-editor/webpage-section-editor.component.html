@@ -7,6 +7,9 @@
       [fieldValue]="webSection ? webSection.summary : ''"
       [isGenerator]="true"
       (valueEditedEvent)="setSummaryText($event)"
+      [inEdition]="summaryInEdition"
+      [placeholder]="'Short description about the section. Ex: This section contains the description of the Custom Development Service. I want to highlight why this service is a great option for business that need a custom solution'"
+      [validators]="summaryFieldValidators"
     ></app-text-area-field-render-and-editor>
   </div>
   <mat-divider></mat-divider>

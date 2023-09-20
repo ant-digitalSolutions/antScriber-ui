@@ -1,3 +1,10 @@
 .section-content-container {
-    margin-bottom: 50px;
+  margin-bottom: 50px;
+}
+
+.new-section-container {
+  .btn-container {
+    display: flex;
+    justify-content: center;
+  }
 }

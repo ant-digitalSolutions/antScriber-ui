@@ -1,11 +1,16 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { contentToneOptionFields } from 'src/app/common/enum/content generation/content-tone.enum';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+import { FloatLabelType } from '@angular/material/form-field';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-text-area-field-render-and-editor',
   templateUrl: './text-area-field-render-and-editor.component.html',
   styleUrls: ['./text-area-field-render-and-editor.component.scss']
 })
-export class TextAreaFieldRenderAndEditorComponent implements OnChanges {
+export class TextAreaFieldRenderAndEditorComponent implements OnChanges, OnInit {
+
   @Input()
   fieldValue?: string | undefined;
 
@@ -28,17 +33,40 @@ export class TextAreaFieldRenderAndEditorComponent implements OnChanges {
   @Input()
   isGenerator = false;
 
+  @Input()
   inEdition = false;
+
+  @Input()
+  placeholder: string;
+
+  /**
+   * List of validation function to apply to the field.
+   * 
+   * This can be something like: [Validators.required, Validators.email()...]
+   *
+   * @type {any[]}
+   * @memberof TextAreaFieldRenderAndEditorComponent
+   */
+  @Input()
+  validators: any[] = [];
 
   isLoading = false;
 
-  toggleFieldEditionStatus() {
-    this.inEdition = !this.inEdition;
+  labelType: FloatLabelType = 'always';
+
+  fieldForm: FormControl;
+
+
+  /**
+   *
+   */
+  constructor(private toastr: ToastrService) {
+
+
   }
 
-  saveEdition() {
-    this.valueEditedEvent.emit(this.fieldValue);
-    this.toggleFieldEditionStatus();
+  ngOnInit(): void {
+    this.fieldForm = new FormControl(this.fieldValue, this.validators)
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -46,6 +74,38 @@ export class TextAreaFieldRenderAndEditorComponent implements OnChanges {
       this.isLoading = false;
     }
   }
+
+  toggleFieldEditionStatus() {
+    this.inEdition = !this.inEdition;
+  }
+
+  saveEdition() {
+    if (this.fieldForm.valid) {
+      this.valueEditedEvent.emit(this.fieldForm.value);
+      this.toggleFieldEditionStatus();
+    } else {
+      this.toastr.error('Please fix the errors')
+    }
+  }
+
+  getErrorMessage() {
+    if (this.fieldForm.hasError('required')) {
+      return 'You must enter a value';
+    }
+    if (this.fieldForm.hasError('min')) {
+      return 'The value is too short.';
+    }
+    if (this.fieldForm.hasError('minlength')) {
+      return   `Please, provide more context. The min length is: ${this.fieldForm.getError('minlength').requiredLength}`
+    }
+    if (this.fieldForm.hasError('maxlength')) {
+      return `Your context is too long. The max length is: ${this.fieldForm.getError('maxlength').requiredLength}`
+      
+    }
+
+    return 'There is an error in your input'
+  }
+
 
 
   get showGenerateButton(): boolean {

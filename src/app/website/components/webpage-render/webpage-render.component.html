@@ -34,7 +34,9 @@
 <!-- Add NEWW SECTION -->
 
 <div class="new-section-container">
-  <button mat-stroked-button (click)="showSectionCreator = true" *ngIf="!showSectionCreator">Add new Section</button>
+  <div class="btn-container">
+  <button mat-raised-button (click)="showSectionCreator = true" *ngIf="!showSectionCreator" color="primary">Add new Section</button>
+  </div>
 
   <div class="section-creator" *ngIf="showSectionCreator">
   <app-webpage-section-editor

@@ -40,6 +40,8 @@ export class WebpageSectionEditorComponent implements OnInit, OnDestroy {
   @Input()
   webpageId: number;
 
+  summaryInEdition: boolean;
+
   constructor
     (private _webpageService: WebpageService,
       private _webpageSectionService: WebpageSectionService) { }
@@ -68,7 +70,8 @@ export class WebpageSectionEditorComponent implements OnInit, OnDestroy {
         voiceTone: new FormControl(ContentTone.Informative, [Validators.required()]),
         contentType: new FormControl(ContentType.ShortParagraph, [Validators.required()]),
         CTA: new FormControl(false)
-      })
+      });
+      this.summaryInEdition = false;
     } else {
       this.sectionGeneratorForm = new FormGroup({
         webpageId: new FormControl(this.webpageId),
@@ -78,6 +81,7 @@ export class WebpageSectionEditorComponent implements OnInit, OnDestroy {
         contentType: new FormControl(ContentType.ShortParagraph, [Validators.required()]),
         CTA: new FormControl(false)
       });
+      this.summaryInEdition = true;
     }
   }
 
@@ -126,4 +130,10 @@ export class WebpageSectionEditorComponent implements OnInit, OnDestroy {
 
       }
   }
+
+  
+  public get summaryFieldValidators() : any {
+    return [Validators.required, Validators.minLength(20), Validators.maxLength(100)]
+  }
+  
 }
