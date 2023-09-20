@@ -36,4 +36,6 @@ export class WebpageDetailsDto {
     blogProjectId: number;
 
     audienceInterest?: string;
+
+    createdAt?: Date;
 }

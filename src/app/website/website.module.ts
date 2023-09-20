@@ -19,6 +19,8 @@ import * as TablerIcons from 'angular-tabler-icons/icons';
 import { WebsiteRouting } from './website.routing';
 import { SharedModule } from '../common/shared.module';
 import { WebpageRenderComponent } from './components/webpage-render/webpage-render.component';
+import { ListWebpagesComponent } from './components/list-webpages/list-webpages.component';
+import { ListWebpagesCardsComponent } from './components/list-webpages-cards/list-webpages-cards.component';
 
 
 
@@ -28,7 +30,9 @@ import { WebpageRenderComponent } from './components/webpage-render/webpage-rend
     WebpageCreatorComponent,
     WebpageInitialFormComponent,
     WebpageSectionEditorComponent,
-    WebpageRenderComponent
+    WebpageRenderComponent,
+    ListWebpagesComponent,
+    ListWebpagesCardsComponent
   ],
   imports: [
     CommonModule,

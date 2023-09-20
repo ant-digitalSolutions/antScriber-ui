@@ -40,6 +40,11 @@ export const navItems: NavItem[] = [
     route: 'websites/create-page',
   },
   {
+    displayName: 'List Webpages',
+    iconName: 'file-invoice',
+    route: 'websites/list',
+  },
+  {
     navCap: 'Blog',
   },
   {

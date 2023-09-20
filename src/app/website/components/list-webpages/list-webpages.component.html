@@ -1,0 +1,13 @@
+  <div id="list-articles-outer-container">
+    <app-list-webpages-cards [webpagesToRender]="webpagesToRender">
+
+    </app-list-webpages-cards>
+    <mat-paginator
+      #paginator
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      [length]="webpagesCount"
+      (page)="handlePageEvent($event)"
+    >
+    </mat-paginator>
+  </div>
