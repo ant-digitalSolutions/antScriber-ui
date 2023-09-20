@@ -13,6 +13,7 @@ import { WebpageSectionService } from '../../services/webpage-section.service';
 export class WebpageRenderComponent implements OnInit, OnDestroy {
 
 
+
   componentDestroyed$: Subject<boolean> = new Subject();
 
   isLoading = false;
@@ -22,6 +23,8 @@ export class WebpageRenderComponent implements OnInit, OnDestroy {
   pageSections: WebpageSectionDto[];
 
   pageSectionIsSaving: {sectionId: number, isSaving: boolean}[] = [];
+
+  showSectionCreator = false;
 
   constructor
     ( private _webpageService: WebpageService,
@@ -47,10 +50,19 @@ export class WebpageRenderComponent implements OnInit, OnDestroy {
         })
       });
     })
-    this._webpageService.editedWebpageSection$.pipe(takeUntil(this.componentDestroyed$)).subscribe(editedS => {
+    this._webpageSectionService.editedWebpageSection$.pipe(takeUntil(this.componentDestroyed$)).subscribe(editedS => {
       const index = this.pageSections.findIndex(s => s.id === editedS.id)!;
       this.pageSections[index] = editedS;
-    })
+      this.pageSectionIsSaving.push({
+        isSaving: false,
+        sectionId: editedS.id
+      })
+    });
+
+    this._webpageSectionService.newWebpageSection$.pipe(takeUntil(this.componentDestroyed$)).subscribe(newS => {
+      this.pageSections.push(newS);
+      this.showSectionCreator = false;
+    });
   }
 
   updateEditedContent(editedContent: string, section: WebpageSectionDto) {
@@ -61,4 +73,10 @@ export class WebpageRenderComponent implements OnInit, OnDestroy {
       this.pageSectionIsSaving[sectionIndex].isSaving = false;
     })
   }
+
+  
+  public get webpageId() : number {
+    return this.webpageData.id!;
+  }
+  
 }

@@ -1,7 +1,6 @@
+import { WebpageCreatorComponent } from './../webpage-creator/webpage-creator.component';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
-import { WebpageDetailsDto } from '../../dtos/webpage-details.dto';
 import { WebpageService } from '../../services/webpage.service';
 import { WebpageSectionDto } from '../../dtos/webpage-section.dto';
 import { OptionField } from 'src/app/common/dto/option-field.dto';
@@ -9,6 +8,8 @@ import { ContentTone, contentToneOptionFields } from 'src/app/common/enum/conten
 import { ContentType, contentTypeOptionFields } from 'src/app/common/enum/content generation/content-type.enum';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from 'ngx-editor';
+import { WebpageSectionService } from '../../services/webpage-section.service';
+import { WebpageSectionCreateDto } from '../../dtos/create-webpage-section-request.dto';
 
 @Component({
   selector: 'app-webpage-section-editor',
@@ -24,7 +25,7 @@ export class WebpageSectionEditorComponent implements OnInit, OnDestroy {
   isLoading = false;
 
   @Input()
-  webSection: WebpageSectionDto;
+  webSection?: WebpageSectionDto;
 
   @Input() sectionIndex: number;
 
@@ -36,8 +37,12 @@ export class WebpageSectionEditorComponent implements OnInit, OnDestroy {
 
   sectionGeneratorForm: FormGroup;
 
+  @Input()
+  webpageId: number;
+
   constructor
-    (private _webpageService: WebpageService) { }
+    (private _webpageService: WebpageService,
+      private _webpageSectionService: WebpageSectionService) { }
 
 
   ngOnInit(): void {
@@ -54,28 +59,48 @@ export class WebpageSectionEditorComponent implements OnInit, OnDestroy {
   }
 
   setForm() {
-    this.sectionGeneratorForm = new FormGroup({
-      webpageId: new FormControl(this.webSection.webpageId),
-      webpageSectionId: new FormControl(this.webSection.id),
-      summary: new FormControl(this.webSection.summary, [Validators.required(), Validators.minLength(50)]),
-      title: new FormControl(this.webSection.title, [Validators.required(), Validators.minLength(3)]),
-      voiceTone: new FormControl(ContentTone.Informative, [Validators.required()]),
-      contentType: new FormControl(ContentType.ShortParagraph, [Validators.required()]),
-      CTA: new FormControl(false)
-    })
+    if (this.webSection) {
+      this.sectionGeneratorForm = new FormGroup({
+        webpageId: new FormControl(this.webSection.webpageId),
+        webpageSectionId: new FormControl(this.webSection.id),
+        summary: new FormControl(this.webSection.summary, [Validators.required(), Validators.minLength(50)]),
+        title: new FormControl(this.webSection.title, [Validators.required(), Validators.minLength(3)]),
+        voiceTone: new FormControl(ContentTone.Informative, [Validators.required()]),
+        contentType: new FormControl(ContentType.ShortParagraph, [Validators.required()]),
+        CTA: new FormControl(false)
+      })
+    } else {
+      this.sectionGeneratorForm = new FormGroup({
+        webpageId: new FormControl(this.webpageId),
+        summary: new FormControl('', [Validators.required(), Validators.minLength(50)]),
+        // title: new FormControl(this.webSection.title, [Validators.required(), Validators.minLength(3)]),
+        voiceTone: new FormControl(ContentTone.Informative, [Validators.required()]),
+        contentType: new FormControl(ContentType.ShortParagraph, [Validators.required()]),
+        CTA: new FormControl(false)
+      });
+    }
   }
 
   setListeners() {
-    this._webpageService.editedWebpageSection$.pipe(takeUntil(this.componentDestroyed$)).subscribe(section => {
-      if (this.webSection.id === section.id) {
-        this.webSection = section;
-        this.isLoading = false;
-      }
-    })
+    if (this.webSection) {
+      this._webpageSectionService.editedWebpageSection$.pipe(takeUntil(this.componentDestroyed$)).subscribe(section => {
+        if (this.webSection!.id === section.id) {
+          this.webSection = section;
+          this.isLoading = false;
+        }
+      })
+    }
+    else {
+      this._webpageSectionService.newWebpageSection$.pipe(takeUntil(this.componentDestroyed$)).subscribe(section => {
+          this.webSection = section;
+          this.isLoading = false;
+      })
+    }
   }
 
   setSummaryText(summary: string) {
-    this.webSection.summary = summary;
+    if (this.webSection)
+      this.webSection.summary = summary;
     this.sectionGeneratorForm.get('summary')?.setValue(summary);
   }
 
@@ -94,21 +119,11 @@ export class WebpageSectionEditorComponent implements OnInit, OnDestroy {
   }
 
   generateContent() {
-    this.isLoading = true;
     if (this.sectionGeneratorForm.valid)
-      this._webpageService.generateWebpageSection(this.sectionGeneratorForm.value).subscribe();
-  }
+     {
+       this._webpageSectionService.generateWebpageSection(this.sectionGeneratorForm.value).subscribe();
+      this.isLoading = true;
 
-
-  
-  public get showNext() : boolean {
-    return this.sectionIndex < this.totalSectionsAmount;
+      }
   }
-
-  
-  public get showPrevious() : boolean {
-    return this.sectionIndex > 0;
-  }
-  
-  
 }

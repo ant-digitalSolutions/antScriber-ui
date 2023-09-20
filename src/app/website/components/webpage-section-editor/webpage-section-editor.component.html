@@ -4,7 +4,7 @@
   <div class="field-editor-container">
     <app-text-area-field-render-and-editor
       [fieldHumanName]="'Section Summary'"
-      [fieldValue]="webSection.summary"
+      [fieldValue]="webSection ? webSection.summary : ''"
       [isGenerator]="true"
       (valueEditedEvent)="setSummaryText($event)"
     ></app-text-area-field-render-and-editor>

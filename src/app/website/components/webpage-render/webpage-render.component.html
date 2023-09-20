@@ -9,6 +9,7 @@
     [webSection]="section"
     [sectionIndex]="i"
     [totalSectionsAmount]="pageSections.length"
+    [webpageId]="webpageId"
   ></app-webpage-section-editor>
   </div>
 
@@ -28,4 +29,18 @@
     <mat-divider></mat-divider>
   </div>
   </ng-template>
+</div>
+
+<!-- Add NEWW SECTION -->
+
+<div class="new-section-container">
+  <button mat-stroked-button (click)="showSectionCreator = true" *ngIf="!showSectionCreator">Add new Section</button>
+
+  <div class="section-creator" *ngIf="showSectionCreator">
+  <app-webpage-section-editor
+    [sectionIndex]="pageSections.length"
+    [totalSectionsAmount]="pageSections.length"
+    [webpageId]="webpageId"
+  ></app-webpage-section-editor>
+  </div>
 </div>
