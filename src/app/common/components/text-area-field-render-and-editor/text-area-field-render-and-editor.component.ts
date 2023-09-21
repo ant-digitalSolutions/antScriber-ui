@@ -50,6 +50,24 @@ export class TextAreaFieldRenderAndEditorComponent implements OnChanges, OnInit 
   @Input()
   validators: any[] = [];
 
+  /**
+   * Indicate if the field should show the 
+   * Edit and Save buttons
+   *
+   * @memberof TextAreaFieldRenderAndEditorComponent
+   */
+  @Input()
+  showActions = true
+  
+  /**
+   * Indicate if after a blur or save event, the field should be closed
+   * and the content rendered in a <p> tag.
+   *
+   * @memberof TextAreaFieldRenderAndEditorComponent
+   */
+  @Input()
+  autoToggleEdition = false;
+
   isLoading = false;
 
   labelType: FloatLabelType = 'always';
@@ -82,7 +100,9 @@ export class TextAreaFieldRenderAndEditorComponent implements OnChanges, OnInit 
   saveEdition() {
     if (this.fieldForm.valid) {
       this.valueEditedEvent.emit(this.fieldForm.value);
-      this.toggleFieldEditionStatus();
+
+      if (this.autoToggleEdition)
+        this.toggleFieldEditionStatus();
     } else {
       this.toastr.error('Please fix the errors')
     }

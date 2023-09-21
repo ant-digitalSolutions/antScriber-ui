@@ -36,6 +36,7 @@ export class HtmlContentEditorComponent implements OnInit, OnDestroy, OnChanges 
 
   editedContent: string | undefined;
 
+  @Input()
   editionMode = false;
 
   @Input()
