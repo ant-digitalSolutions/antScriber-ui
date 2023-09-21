@@ -15,6 +15,7 @@ import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.serv
   styleUrls: ['./wizard-creator-form.component.scss']
 })
 export class WizardCreatorFormComponent implements OnDestroy, OnInit {
+
   
   MAX_AMOUNT_OPTIONS = 3;
 
@@ -36,6 +37,10 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
   variantsOptions: OptionField<number>[];
   currentProjectId: number;
 
+  wizardDescription: string;
+
+  wizardDescriptionValidators = [Validators.required, Validators.minLength(10), Validators.maxLength(500)]
+
   constructor(private _wizardCreatorService: WizardCreatorService, private projectService: BlogProjectsService) {
 
   }
@@ -47,6 +52,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
    this.initwizardUseCaseOptions()
    this.initVariantsOptions();
    this.initForm();
+   this.setListeners();
   }
   
   ngOnDestroy(): void {
@@ -129,6 +135,12 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
 
   setVariants(variants: number) {
     this.wizardCreatorForm.get('amountOfVariants')?.setValue(variants);
+  }
+
+  setWizardDescription(description: string) {
+    this.wizardDescription = description;
+    this.wizardCreatorForm.get('description')?.setValue(description);
+
   }
 
 }

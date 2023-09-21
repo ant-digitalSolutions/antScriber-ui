@@ -1,1 +1,12 @@
-<p>wizard-creator-editor works!</p>
+<div
+    class="section-content-container"
+  >
+    <app-html-content-editor
+      [contentToEdit]="docContent"
+      (contentEditedEmitter)="updateEditedContent($event)"
+      [editionMode]="true"
+    ></app-html-content-editor>
+    <!-- <div class="section-content" [innerHTML]="section.content"></div> -->
+
+    <mat-divider></mat-divider>
+  </div>

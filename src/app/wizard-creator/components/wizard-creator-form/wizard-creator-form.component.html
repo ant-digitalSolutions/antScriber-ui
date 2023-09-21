@@ -15,9 +15,9 @@
         <!-- Lang Selector -->
         <!-- ------------------------------------------------------------------------- -->
         <app-option-field-render-and-editor
-         [fieldHumanName]="'Select Language'"
-        [options]="langEnumOptions"
-        (selectionChangeEvent)="setLang($event)"
+          [fieldHumanName]="'Select Language'"
+          [options]="langEnumOptions"
+          (selectionChangeEvent)="setLang($event)"
         >
         </app-option-field-render-and-editor>
 
@@ -25,9 +25,9 @@
         <!-- Tone Selector -->
         <!-- ------------------------------------------------------------------------- -->
         <app-option-field-render-and-editor
-        [fieldHumanName]="'Select Tone'"
-        [options]="contentToneOptions"
-        (selectionChangeEvent)="setContentTone($event)"
+          [fieldHumanName]="'Select Tone'"
+          [options]="contentToneOptions"
+          (selectionChangeEvent)="setContentTone($event)"
         >
         </app-option-field-render-and-editor>
       </div>
@@ -37,9 +37,9 @@
         <!-- Use Case Selector -->
         <!-- ------------------------------------------------------------------------- -->
         <app-option-field-render-and-editor
-         [fieldHumanName]="'Select Use Case'"
-        [options]="wizardUseCaseOptions"
-        (selectionChangeEvent)="setWizardUseCase($event)"
+          [fieldHumanName]="'Select Use Case'"
+          [options]="wizardUseCaseOptions"
+          (selectionChangeEvent)="setWizardUseCase($event)"
         >
         </app-option-field-render-and-editor>
       </div>
@@ -48,15 +48,19 @@
       <!-- Variable Input Container -->
       <!-- ------------------------------------------------------------------------- -->
       <div class="variable-input-container">
-        <mat-form-field appearance="outline" class="w-100" color="primary">
-          <mat-label>Page Title</mat-label>
-          <input
-            matInput
-            type="text"
-            formControlName="title"
-            placeholder="Title for the page. This can be About Us, Home Page, Our Services..."
-          />
-        </mat-form-field>
+        <app-text-area-field-render-and-editor
+          [fieldHumanName]="'Description'"
+          [fieldValue]="wizardDescription"
+          [isGenerator]="false"
+          (valueEditedEvent)="setWizardDescription($event)"
+          [inEdition]="true"
+          [placeholder]="
+            'Short description about what you intend to generate'
+          "
+          [validators]="wizardDescriptionValidators"
+          [showActions]="false"
+          [autoToggleEdition]="false"
+        ></app-text-area-field-render-and-editor>
       </div>
 
       <!-- ------------------------------------------------------------------------- -->
@@ -70,9 +74,9 @@
         <!-- Variants Selector -->
         <!-- ------------------------------------------------------------------------- -->
         <app-option-field-render-and-editor
-        [fieldHumanName]="'Variants to Generate'"
-        [options]="variantsOptions"
-        (selectionChangeEvent)="setVariants($event)"
+          [fieldHumanName]="'Variants to Generate'"
+          [options]="variantsOptions"
+          (selectionChangeEvent)="setVariants($event)"
         >
         </app-option-field-render-and-editor>
 
@@ -80,9 +84,9 @@
         <!-- Creativity Level Selector -->
         <!-- ------------------------------------------------------------------------- -->
         <app-option-field-render-and-editor
-         [fieldHumanName]="'Creative Intensity'"
-        [options]="creativityLevelOptions"
-        (selectionChangeEvent)="setCreativityLevel($event)"
+          [fieldHumanName]="'Creative Intensity'"
+          [options]="creativityLevelOptions"
+          (selectionChangeEvent)="setCreativityLevel($event)"
         >
         </app-option-field-render-and-editor>
       </div>
