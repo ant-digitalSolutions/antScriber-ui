@@ -12,6 +12,7 @@ import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
   providedIn: 'root'
 })
 export class DocumentService {
+  
 
   baseUrl = environment.apiUrl + 'document';
   selectedProjectId: any;
@@ -38,6 +39,20 @@ export class DocumentService {
     return this.http.post<IRequestResponse<DocumentDetailsDto>>(this.baseUrl, doc).pipe(tap(r => {
       if (r.success) {
         this._newDocument.next(r.data!)
+      } else {
+        this.toastr.error(r.error);
+      }
+    }))
+  }
+
+  update(documentId: number, docContent: string): Observable<IRequestResponse<DocumentDetailsDto>> {
+    const doc = {
+      id: documentId,
+      content: docContent
+    }
+    return this.http.put<IRequestResponse<DocumentDetailsDto>>(`${this.baseUrl}/${documentId}`, doc).pipe(tap(r => {
+      if (r.success) {
+        this._editedDocument.next(r.data!)
       } else {
         this.toastr.error(r.error);
       }

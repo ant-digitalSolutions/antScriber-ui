@@ -3,6 +3,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 import { WizardCreatorService } from '../../services/wizard-creator.service';
 import { DocumentService } from 'src/app/document/services/document.service';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-wizard-creator-editor',
@@ -10,6 +11,9 @@ import { DocumentService } from 'src/app/document/services/document.service';
   styleUrls: ['./wizard-creator-editor.component.scss']
 })
 export class WizardCreatorEditorComponent implements OnDestroy, OnInit {
+
+
+  public Editor = ClassicEditor;
 
 
   componentDestroyed$: Subject<boolean> = new Subject();
@@ -52,6 +56,10 @@ export class WizardCreatorEditorComponent implements OnDestroy, OnInit {
         this.documentId = r!.id
       console.log('DocumentID: '+ this.documentId);
     });
+  }
+
+  saveEditorChanges() {
+    this._docService.update(this.documentId, this.docContent).subscribe();
   }
 
   updateEditedContent(content: string) {

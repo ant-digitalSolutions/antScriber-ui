@@ -9,6 +9,7 @@ import { WizardCreatorRoutes } from './wizard-creator.routing';
 import { RouterModule } from '@angular/router';
 import { ContentCreationModule } from '../content-creation/content-creation.module';
 import { DocumentModule } from '../document/document.module';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 
 
@@ -23,7 +24,8 @@ import { DocumentModule } from '../document/document.module';
     SharedModule,
     RouterModule.forChild(WizardCreatorRoutes),
     ContentCreationModule,
-    DocumentModule
+    DocumentModule,
+    CKEditorModule
    
   ],
   providers: [WizardCreatorService]

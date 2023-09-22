@@ -10,3 +10,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 // regular style toast
 @import 'ngx-toastr/toastr';
 
+
+
+.ck-editor__editable_inline {
+    min-height: 300px;
+}
