@@ -14,4 +14,6 @@ export class WizardCreatorCreateDto {
     amountOfVariants: number;
 
     creativityLevel: ContentCreationCreativityLevel;
+
+    documentId?: number;
 }

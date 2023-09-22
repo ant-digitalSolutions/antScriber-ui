@@ -4,7 +4,8 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { WizardCreatorCreateDto } from '../dtos/wizard-creator-create-dto';
 import { ToastrService } from 'ngx-toastr';
-import { ReplaySubject, tap } from 'rxjs';
+import { Observable, ReplaySubject, tap } from 'rxjs';
+import { DocumentService } from 'src/app/document/services/document.service';
 
 @Injectable()
 export class WizardCreatorService {
@@ -16,13 +17,15 @@ export class WizardCreatorService {
   wizardCreatedContent$ = this._wizardCreatedContent.asObservable();
 
 
-  constructor(private http: HttpClient, private toastr: ToastrService) { }
+  constructor(private http: HttpClient, private toastr: ToastrService, private _docService: DocumentService) { }
 
   generateContent(params: WizardCreatorCreateDto) {
     return this.http.post<IRequestResponse<string>>(this.baseUrl + '/generate',  params )
       .pipe(tap(r => {
         if (r.success) {
           this._wizardCreatedContent.next(r.data!);
+
+          this.handleDocument(params, r.data!);
         } else {
           this.toastr.error(r.error);
           this._wizardCreatedContent.next(null);
@@ -30,4 +33,10 @@ export class WizardCreatorService {
       }))
   }
 
+  handleDocument(wizardParams: WizardCreatorCreateDto, wizardResponseContent: string): void {
+    if (!wizardParams.documentId) {
+      const docName = wizardParams.description.substring(0, 50);
+      this._docService.create(docName, wizardResponseContent).subscribe();
+    }
+  }
 }

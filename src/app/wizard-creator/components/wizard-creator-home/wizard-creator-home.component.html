@@ -1,6 +1,14 @@
 <div class="row">
   <div class="wizard-form-container col-md-4 col-12 col-lg-5">
-    <app-wizard-creator-form></app-wizard-creator-form>
+    <mat-tab-group>
+      <mat-tab label="Creator">
+        <app-wizard-creator-form></app-wizard-creator-form>
+      </mat-tab>
+      <mat-tab label="Second">
+        <app-chat></app-chat>
+      </mat-tab>
+      <mat-tab label="Images"> Content 3 </mat-tab>
+    </mat-tab-group>
   </div>
 
   <div class="wizard-content col-md-8 col-12 col-lg-7">

@@ -7,6 +7,8 @@ import { SharedModule } from '../common/shared.module';
 import { WizardCreatorService } from './services/wizard-creator.service';
 import { WizardCreatorRoutes } from './wizard-creator.routing';
 import { RouterModule } from '@angular/router';
+import { ContentCreationModule } from '../content-creation/content-creation.module';
+import { DocumentModule } from '../document/document.module';
 
 
 
@@ -20,6 +22,9 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     SharedModule,
     RouterModule.forChild(WizardCreatorRoutes),
+    ContentCreationModule,
+    DocumentModule
+   
   ],
   providers: [WizardCreatorService]
 })

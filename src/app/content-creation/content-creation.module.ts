@@ -27,6 +27,7 @@ import { ArticleModule } from './article/article.module';
     ReactiveFormsModule,
     ArticleModule
   ],
-  providers: [ContentCreationService]
+  providers: [ContentCreationService],
+  exports: [ChatComponent]
 })
 export class ContentCreationModule { }

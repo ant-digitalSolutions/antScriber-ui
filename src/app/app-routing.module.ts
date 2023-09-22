@@ -25,11 +25,6 @@ const routes: Routes = [
         loadChildren: () =>
           import('./website/website.module').then((m) => m.WebsiteModule),
       },
-      {
-        path: 'wizard',
-        loadChildren: () =>
-          import('./wizard-creator/wizard-creator.module').then((m) => m.WizardCreatorModule),
-      },
       //template routes
       {
         path: '',
@@ -94,6 +89,14 @@ const routes: Routes = [
     path: '',
     component: BlankComponent,
     children: [
+      {
+        path: 'wizard',
+        loadChildren: () =>
+          import('./wizard-creator/wizard-creator.module').then((m) => m.WizardCreatorModule),
+      },
+
+
+      // template
       {
         path: 'authentication',
         loadChildren: () =>
