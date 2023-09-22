@@ -1,0 +1,35 @@
+.btn-table {
+  height: 25px;
+  width: 25px;
+  background-color: transparent;
+  .btn-mat-icon {
+    font-size: 20;
+    color: black;
+  }
+
+  .is-favorite {
+    color: rgb(207, 150, 60);
+  }
+}
+
+.table-cell-content,
+.mdc-data-table__cell,
+mat-header-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  border-color: currentColor;
+}
+
+.demo-row-is-clicked {
+  font-weight: bold;
+}

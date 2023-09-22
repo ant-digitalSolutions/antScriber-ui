@@ -1,3 +1,4 @@
+import { TimeagoModule } from 'ngx-timeago';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,6 +25,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { httpInterceptorProviders } from './interceptors';
 
+import { BreadcrumbModule } from 'xng-breadcrumb';
+import { RouterModule } from '@angular/router';
 
 export function HttpLoaderFactory(http: HttpClient): any {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -36,6 +39,7 @@ export function HttpLoaderFactory(http: HttpClient): any {
     FilterPipe,
   ],
   imports: [
+    RouterModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -56,6 +60,8 @@ export function HttpLoaderFactory(http: HttpClient): any {
     ToastrModule.forRoot({
       timeOut: 3500,
     }),
+    BreadcrumbModule,
+    TimeagoModule.forRoot()
   ],
   exports: [TablerIconsModule],
   bootstrap: [AppComponent],

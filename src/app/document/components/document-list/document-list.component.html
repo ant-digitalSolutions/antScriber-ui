@@ -1,1 +1,112 @@
-<p>document-list works!</p>
+<div class="docs-table-container">
+  <div class="table-responsive m-t-30">
+    <mat-table
+      #table
+      [dataSource]="dataSource"
+      *ngIf="documentsToRender"
+    >
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell
+          *matHeaderCellDef
+          class="f-w-600 mat-subtitle-1 f-s-14"
+        >
+          Name
+        </mat-header-cell>
+        <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1">
+          {{ doc.name | slice : 0 : 20 }}...</mat-cell
+        >
+      </ng-container>
+
+      <!--Primary Keyword Column -->
+      <ng-container matColumnDef="words">
+        <mat-header-cell
+          *matHeaderCellDef
+          class="f-w-600 mat-subtitle-1 f-s-14"
+        >
+          Words
+        </mat-header-cell>
+        <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1">
+          <span
+            class="bg-light-primary text-primary rounded f-w-600 p-6 p-y-4 f-s-12"
+            >{{ doc.wordsCount }}</span
+          >
+        </mat-cell>
+      </ng-container>
+
+      <!--Secondary Keyword Column -->
+      <!-- <ng-container matColumnDef="secondary-keywords">
+          <mat-header-cell
+            *matHeaderCellDef
+            class="f-w-600 mat-subtitle-1 f-s-14"
+          >
+            Secondary Keywords
+          </mat-header-cell>
+          <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1">
+            <div *ngIf="doc.secondaryKeywords">
+              <span
+                class="bg-light-accent text-accent rounded f-w-600 p-6 p-y-4 f-s-12"
+                *ngFor="let sKey of doc.secondaryKeywords"
+                >{{ sKey.name }}</span
+              >
+            </div></mat-cell
+          >
+        </ng-container> -->
+
+      <!--StatusColumn -->
+      <ng-container matColumnDef="updatedAt">
+        <mat-header-cell
+          *matHeaderCellDef
+          class="f-w-600 mat-subtitle-1 f-s-14"
+        >
+          Modified At
+        </mat-header-cell>
+        <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1">
+          {{ doc.updatedAt | timeago: 'live' }}
+        </mat-cell>
+      </ng-container>
+
+      <!--Actions Column -->
+      <ng-container matColumnDef="isFavorite">
+        <mat-header-cell
+          *matHeaderCellDef
+          class="f-w-600 mat-subtitle-1 f-s-14"
+        >
+          Favorite
+        </mat-header-cell>
+        <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1">
+          <button class="btn-table" mat-mini-fab >
+            <mat-icon class="btn-mat-icon" [ngClass]="{'is-favorite': doc.isFavorite}">star</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+            <!--StatusColumn -->
+      <ng-container matColumnDef="menuDots">
+        <mat-header-cell
+          *matHeaderCellDef
+          class="f-w-600 mat-subtitle-1 f-s-14"
+        >
+          
+        </mat-header-cell>
+        <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1">
+           <button class="btn-table" mat-mini-fab clas   s="">
+            <mat-icon class="btn-mat-icon">menu</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns" (click)="documentRowSelected(row)" ></mat-row>
+    </mat-table>
+
+    <!-- <mat-paginator
+        #paginator
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        [length]="articlesCount"
+        (page)="handlePageEvent($event)"
+      >
+      </mat-paginator> -->
+  </div>
+</div>

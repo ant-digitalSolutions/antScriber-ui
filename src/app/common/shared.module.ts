@@ -1,3 +1,4 @@
+import { TimeagoModule } from 'ngx-timeago';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TextAreaFieldRenderAndEditorComponent } from './components/text-area-field-render-and-editor/text-area-field-render-and-editor.component';
@@ -18,7 +19,8 @@ import { MagicEditionService } from './services/content-magic-edition.service';
     TextAreaFieldRenderAndEditorComponent,
     OptionFieldRenderAndEditorComponent,
     HtmlContentEditorComponent,
-    ContentEditionMagicActionsComponent
+    ContentEditionMagicActionsComponent,
+
   ],
   imports: [
     CommonModule,
@@ -28,6 +30,7 @@ import { MagicEditionService } from './services/content-magic-edition.service';
     NgxEditorModule,
     TablerIconsModule.pick(TablerIcons),
     TablerIconsModule,
+    TimeagoModule
   ],
   providers: [MagicEditionService],
   exports: [
@@ -36,6 +39,8 @@ import { MagicEditionService } from './services/content-magic-edition.service';
     HtmlContentEditorComponent,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule]
+    ReactiveFormsModule,
+    TimeagoModule
+  ]
 })
 export class SharedModule { }

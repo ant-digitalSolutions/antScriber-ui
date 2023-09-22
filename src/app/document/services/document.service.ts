@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DocumentCreateDto } from '../dtos/document-create.dto';
 import { DocumentDetailsDto } from '../dtos/document-details.dto';
@@ -22,6 +22,9 @@ export class DocumentService {
 
   private _editedDocument = new BehaviorSubject<DocumentDetailsDto | null>(null);
   editedDocument$ = this._editedDocument.asObservable();
+
+  private _docsList = new ReplaySubject<DocumentDetailsDto[]>();
+  docsList$ = this._docsList.asObservable();
 
   constructor(private http: HttpClient, private toastr: ToastrService, private blogProjectService: BlogProjectsService,) {
     this.blogProjectService.selectedProjectId$.subscribe(r => {
@@ -53,6 +56,20 @@ export class DocumentService {
     return this.http.put<IRequestResponse<DocumentDetailsDto>>(`${this.baseUrl}/${documentId}`, doc).pipe(tap(r => {
       if (r.success) {
         this._editedDocument.next(r.data!)
+      } else {
+        this.toastr.error(r.error);
+      }
+    }))
+  }
+
+  listDocsForTable(blogProjectId: number, currentPage: number = 1, pageSize: number = 10) {
+    let params = new HttpParams()
+      .set("blogProjectId", blogProjectId)
+      .set('pageSize', pageSize)
+      .set('pageIndex', currentPage);
+    return this.http.get<IRequestResponse<DocumentDetailsDto[]>>(this.baseUrl + '/list', { params }).pipe(tap(r => {
+      if (r.success) {
+        this._docsList.next(r.data!)
       } else {
         this.toastr.error(r.error);
       }

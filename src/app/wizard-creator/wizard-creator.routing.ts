@@ -8,6 +8,7 @@ export const WizardCreatorRoutes: Routes = [
             {
                 path: 'create',
                 component: WizardCreatorHomeComponent,
+                data: { breadcrumb: { skip: true } }
             }
         ],
     }
