@@ -16,7 +16,7 @@ import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.serv
 })
 export class WizardCreatorFormComponent implements OnDestroy, OnInit {
 
-  
+
   MAX_AMOUNT_OPTIONS = 3;
 
 
@@ -33,7 +33,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
   creativityLevelOptions: OptionField<string>[];
 
   wizardUseCaseOptions: OptionField<string>[];
-  
+
   variantsOptions: OptionField<number>[];
   currentProjectId: number;
 
@@ -46,26 +46,29 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-   this.initContentToneOptions();
-   this.initLangEnumOptions();
-   this.initCreativityLevelOptions();
-   this.initwizardUseCaseOptions()
-   this.initVariantsOptions();
-   this.initForm();
-   this.setListeners();
+    this.initContentToneOptions();
+    this.initLangEnumOptions();
+    this.initCreativityLevelOptions();
+    this.initwizardUseCaseOptions()
+    this.initVariantsOptions();
+    this.initForm();
+    this.setListeners();
   }
-  
+
   ngOnDestroy(): void {
     this.componentDestroyed$.next(true)
     this.componentDestroyed$.complete()
   }
 
   generateContent(): void {
-    this.isLoading = true;
-    const formValue = this.wizardCreatorForm.value;
 
-    formValue.projectId = this.currentProjectId;
-    this._wizardCreatorService.generateContent(formValue).subscribe();
+    if (this.wizardCreatorForm.valid) {
+      this.isLoading = true;
+      const formValue = this.wizardCreatorForm.value;
+
+      formValue.projectId = this.currentProjectId;
+      this._wizardCreatorService.generateContent(formValue).subscribe();
+    }
   }
 
   setListeners() {
@@ -80,7 +83,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
     })
   }
 
-  initForm(){
+  initForm() {
     this.wizardCreatorForm = new FormGroup({
       outputLang: new FormControl('', Validators.required), // Assuming it's a required field
       voiceTone: new FormControl(ContentTone.Informative, Validators.required),  // Defaulting to Informative

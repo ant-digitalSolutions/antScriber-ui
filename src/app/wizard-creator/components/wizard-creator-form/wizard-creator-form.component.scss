@@ -1,0 +1,22 @@
+.field-container {
+    margin: 30px 0;
+}
+
+.wizard-tone-selector, .wizard-lang-selector, .wizard-variants-selector, .wizard-creativity-selector {
+    width: 48%;
+}
+
+.wizard-generate-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 50px;
+
+    .wizard-generate-btn {
+          width: 250px;
+    height: 43px;
+    border-radius: 25px;
+    background-color: #008000d6;
+    }
+}

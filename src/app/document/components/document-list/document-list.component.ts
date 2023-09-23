@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { DocumentService } from '../../services/document.service';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-document-list',
@@ -12,9 +14,7 @@ import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.serv
   styleUrls: ['./document-list.component.scss']
 })
 export class DocumentListComponent implements OnInit, OnDestroy {
-documentRowSelected(doc: any) {
-console.log(doc)
-}
+
 
 
 
@@ -34,7 +34,12 @@ console.log(doc)
 
   selectedProjectId: number;
 
-  constructor(private _docService: DocumentService, private _projectService: BlogProjectsService) { }
+  constructor(
+    private _docService: DocumentService, 
+    private _projectService: BlogProjectsService, 
+    private router: Router,
+    private _location: Location,
+    private activeRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.setListeners();
@@ -72,5 +77,10 @@ console.log(doc)
 
   starDoc(_t47: any) {
     throw new Error('Method not implemented.');
+  }
+
+  documentRowSelected(doc: DocumentDetailsDto) {
+    // this._location.go(`wizard/creator?docId=${doc.uuid}`)
+    this.router.navigate([`./doc/${doc.uuid}`], {relativeTo: this.activeRoute});
   }
 }

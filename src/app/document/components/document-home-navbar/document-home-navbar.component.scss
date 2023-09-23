@@ -1,9 +1,27 @@
-.doc-navbar-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-   background-color: #eae4df;
-   width: 100%;
+@import "src/app/common/styles/colors.scss";
 
-   padding: 5px 10px;
+.doc-navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 5px 10px;
+  height: 50px;
+  border-bottom: 1px solid $border-gray;
+}
+
+.doc-navbar-actions-container {
+
+    width: 359px;
+    display: flex;
+    justify-content: space-evenly;
+
+}
+
+.doc-navbar-btn {
+  background-color: #3d333317;
+  border-radius: 23px;
+  font-weight: 500;
+  height: 30px;
+  color: #191515d4;
 }

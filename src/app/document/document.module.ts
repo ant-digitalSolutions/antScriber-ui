@@ -1,3 +1,4 @@
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { BreadcrumbModule } from 'xng-breadcrumb';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -8,6 +9,7 @@ import { DocumentListComponent } from './components/document-list/document-list.
 import { DocumentHomeNavbarComponent } from './components/document-home-navbar/document-home-navbar.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../common/shared.module';
+import { DocumentRouting } from './document.routing';
 
 
 
@@ -21,8 +23,9 @@ import { SharedModule } from '../common/shared.module';
   imports: [
     CommonModule,
     BreadcrumbModule,
-    RouterModule,
-    SharedModule
+    RouterModule.forChild(DocumentRouting),
+    SharedModule,
+    CKEditorModule
   ],
   providers: [DocumentService],
   exports: [DocumentHomeComponent]

@@ -1,19 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 #toast-container > div {
-    opacity:1;
+  opacity: 1;
 }
 
 // regular style toast
-@import 'ngx-toastr/toastr';
+@import "ngx-toastr/toastr";
 
-
+@import "src/app/common/styles/colors.scss";
 
 .ck-editor__editable_inline {
-    min-height: 300px;
+  min-height: 300px;
 }
 
 // Breadcumbs Styles
@@ -21,9 +27,65 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding: 8px 16px;
   display: inline-block;
   border-radius: 4px;
-  background-color: #e7f1f1;
+  background-color: transparent;
+  font-weight: 500;
 }
 
 .xng-breadcrumb-separator {
   padding: 0 4px;
+}
+
+.xng-breadcrumb-link {
+  background-color: transparent;
+}
+
+// MAT-FORM-FIELD STYLES
+
+.mat-mdc-form-field {
+  background-color: #fff;
+  // border-radius: 25px;
+  border: none;
+  border-color: $border-gray;
+  .mat-input-element {
+    color: slategray;
+    font-weight: 500;
+  }
+  .mat-form-field-label {
+    color: slategray;
+  }
+  .mat-form-field-underline {
+    background-color: slategray;
+  }
+  .mat-form-field-ripple {
+    background-color: slategray;
+  }
+  .mat-form-field-required-marker {
+    color: slategray;
+  }
+}
+
+.mat-mdc-form-field.mat-focused {
+  .mat-form-field-label {
+    color: #ff884d;
+  }
+  .mat-form-field-ripple {
+    background-color: #ff884d;
+  }
+  .mat-form-field-required-marker {
+    color: #ff884d;
+  }
+  .mat-input-element {
+    color: #ff884d;
+  }
+}
+
+.btn-loading-spinner {
+  height: 25px !important;
+  width: 25px !important;
+  margin-right: 25px;
+
+  circle,
+  .mat-spinner circle {
+    stroke: whitesmoke;
+  }
 }

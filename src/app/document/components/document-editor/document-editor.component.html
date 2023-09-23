@@ -1,1 +1,30 @@
-<p>document-editor works!</p>
+<div class="doc-editor-outer-container">
+
+  <div class="editor-navbar-container">
+    
+    <div class="btn-and-name-editor-container">
+      
+      <button class="mini-fab-btn" mat-mini-fab (click)="goback()">
+        <mat-icon class="btn-mat-icon">arrow_back</mat-icon>
+      </button>
+
+      <div class="name-editor-mat-field">
+        <!-- Incorporating Angular Material's mat-form-field component -->
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Enter document name" [formControl]="docNameForm" (blur)="updateDocName()">
+        </mat-form-field>
+      </div>
+
+    </div>
+
+    <div class="options-container">
+      <button class="mini-fab-btn" mat-mini-fab>
+        <mat-icon class="btn-mat-icon">more_vert</mat-icon>
+      </button>
+    </div>
+    
+  </div>
+
+  <ckeditor [editor]="Editor" [(ngModel)]="documentContent" (blur)="saveEditorChanges()"></ckeditor>
+
+</div>

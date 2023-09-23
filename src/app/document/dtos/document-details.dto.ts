@@ -1,7 +1,7 @@
 import { DocumentCreateDto } from './document-create.dto';
 
 export class DocumentDetailsDto extends DocumentCreateDto {
-  id: number;
+  uuid: string;
 
   tags?: string;
 

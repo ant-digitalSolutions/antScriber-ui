@@ -1,1 +1,9 @@
-.wizard-form-container, .wizard-content { min-height: 100vh; } 
+.wizard-form-container, .wizard-content {
+     min-height: 100vh;
+    padding: 0;
+    } 
+
+    .mat-tab-group {
+         min-height: 100vh;
+    background-color: #80808014;
+    }

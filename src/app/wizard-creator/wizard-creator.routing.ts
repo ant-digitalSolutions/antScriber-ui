@@ -6,7 +6,13 @@ export const WizardCreatorRoutes: Routes = [
         path: '',
         children: [
             {
-                path: 'create',
+                path: 'creator',
+                component: WizardCreatorHomeComponent,
+                data: { breadcrumb: { skip: true } }
+                
+            },
+            {
+                path: 'creator/doc/:docId',
                 component: WizardCreatorHomeComponent,
                 data: { breadcrumb: { skip: true } }
             }
