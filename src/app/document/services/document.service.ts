@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
 import { DocumentUpdateDto } from '../dtos/document-update.dto';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -17,14 +18,12 @@ export class DocumentService {
 
 
 
+
   baseUrl = environment.apiUrl + 'document';
   selectedProjectId: any;
 
-  private _newDocument = new BehaviorSubject<DocumentDetailsDto | null>(null);
-  newDocument$ = this._newDocument.asObservable();
-
-  private _documentResponse = new BehaviorSubject<DocumentDetailsDto | null>(null);
-  docResponse$ = this._documentResponse.asObservable();
+  private _documentResponse = new ReplaySubject<DocumentDetailsDto | null>();
+  documentInEdition$ = this._documentResponse.asObservable();
 
   private _docsList = new ReplaySubject<DocumentDetailsDto[]>();
   docsList$ = this._docsList.asObservable();
@@ -46,7 +45,13 @@ export class DocumentService {
    */
   private _documentInEditionData: DocumentDetailsDto | null;
 
-  constructor(private http: HttpClient, private toastr: ToastrService, private blogProjectService: BlogProjectsService,) {
+  constructor(
+    private http: HttpClient, 
+    private toastr: ToastrService, 
+    private blogProjectService: BlogProjectsService,
+    private _route: ActivatedRoute,
+    private _router: Router
+    ) {
     this.blogProjectService.selectedProjectId$.subscribe(r => {
       this.selectedProjectId = r;
     })
@@ -61,8 +66,12 @@ export class DocumentService {
 
     return this.http.post<IRequestResponse<DocumentDetailsDto>>(this.baseUrl, doc).pipe(tap(r => {
       if (r.success) {
-        this._newDocument.next(r.data!);
+        this._documentResponse.next(r.data!);
         this._documentInEditionData = r.data!;
+
+        // navigate to the edition view after creating a new doc
+       this.navigateToDocumentEditionView(r.data!.uuid);
+
       } else {
         this.toastr.error(r.error);
       }
@@ -70,7 +79,7 @@ export class DocumentService {
   }
 
   update(doc: DocumentUpdateDto): Observable<IRequestResponse<DocumentDetailsDto>> {
-    return this.http.put<IRequestResponse<DocumentDetailsDto>>(`${this.baseUrl}/${this.currentDocumentIdInEdition}`, doc).pipe(tap(r => {
+    return this.http.put<IRequestResponse<DocumentDetailsDto>>(`${this.baseUrl}/${this.documentInEditionId}`, doc).pipe(tap(r => {
       if (r.success) {
         // this._documentResponse.next(r.data!)
       } else {
@@ -79,7 +88,7 @@ export class DocumentService {
     }))
   }
 
- 
+
 
   listDocsForTable(blogProjectId: number, currentPage: number = 1, pageSize: number = 10) {
     let params = new HttpParams()
@@ -98,7 +107,7 @@ export class DocumentService {
   findByUuid(docId: string): Observable<IRequestResponse<DocumentDetailsDto>> {
     let params = new HttpParams()
       .set("uuid", docId)
-    return this.http.get<IRequestResponse<DocumentDetailsDto>>(`${this.baseUrl}`, {params})
+    return this.http.get<IRequestResponse<DocumentDetailsDto>>(`${this.baseUrl}`, { params })
       .pipe(tap(r => {
         if (r.success) {
           this._documentResponse.next(r.data!);
@@ -110,28 +119,54 @@ export class DocumentService {
   }
 
   handleNewContent(creatorDescription: string, newContent: string) {
-    if (!this.currentDocumentIdInEdition) {
+    if (!this.documentInEditionId) {
       this.create(creatorDescription, newContent).subscribe();
     } else {
       this._documentInEditionData!.content += newContent;
     }
   }
 
+  cleanData() {
+    this.documentInEditionId = null;
+    this._documentInEditionData = null;
+  }
+
+  private navigateToDocumentEditionView(documentId: string) {
+    this._router.navigate([], {
+      relativeTo: this._route,
+      queryParams:
+      {
+        docId: documentId
+      },
+      replaceUrl: true,
+    });
+  }
+
   // Properties
 
-  
-  public get currentDocumentIdInEdition() : string | null {
+
+  public get documentInEditionId(): string | null {
     return this._currentDocumentId;
   }
 
-  
-  public set currentDocumentIdInEdition(v : string | null) {
-    this._currentDocumentId = v;
-  }
-  
 
-  
-  public get documentInEdition() : DocumentDetailsDto | null {
+  /**
+   *
+   *
+   * @memberof DocumentService
+   */
+  public set documentInEditionId(documentId: string | null) {
+    this._currentDocumentId = documentId;
+
+    // if the documentId is not the one that we have in edition, then request it to the server.
+    if (documentId && (!this._documentInEditionData || (this._documentInEditionData && this._documentInEditionData.uuid !== documentId))) {
+      this.findByUuid(documentId).subscribe();
+    }
+  }
+
+
+
+  public get documentInEdition(): DocumentDetailsDto | null {
     return this._documentInEditionData;
   }
 }

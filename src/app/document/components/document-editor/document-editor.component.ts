@@ -41,17 +41,18 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     private _route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this._docService.findByUuid(this.documentId).subscribe();
     this.setListerners()
   }
 
   ngOnDestroy(): void {
     this.componentDestroyed$.next(true)
-    this.componentDestroyed$.complete()
+    this.componentDestroyed$.complete();
+
+    this._docService.cleanData();
   }
 
   setListerners() {
-    this._docService.docResponse$.pipe(takeUntil(this.componentDestroyed$))
+    this._docService.documentInEdition$.pipe(takeUntil(this.componentDestroyed$))
       .subscribe(doc => {
         if (doc) {
           this.docNameForm = new FormControl(doc.name, [Validators.required(), Validators.maxLength(50)])

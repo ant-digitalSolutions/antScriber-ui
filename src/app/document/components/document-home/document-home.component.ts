@@ -14,9 +14,8 @@ export class DocumentHomeComponent implements OnInit, OnDestroy {
   componentDestroyed$: Subject<boolean> = new Subject();
 
   constructor(
-    private _route: ActivatedRoute,
     private _docService: DocumentService,
-    private _router: Router) { }
+    private _route: ActivatedRoute) { }
 
   ngOnDestroy(): void {
     this.componentDestroyed$.next(true)
@@ -24,43 +23,26 @@ export class DocumentHomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
- 
-
     this.setListeners();
   }
 
   setListeners() {
-    this._docService.newDocument$.pipe(takeUntil(this.componentDestroyed$)).subscribe(d => {
-      if (d != null) {
-        this._docService.currentDocumentIdInEdition = d!.uuid;
-        this._router.navigate([], {
-          relativeTo: this._route,
-          queryParams:
-          {
-            docId: this._docService.currentDocumentIdInEdition
-          },
-          replaceUrl: true,
-        });
-      }
-    });
-
     this._route
-          .queryParams
-          .pipe(takeUntil(this.componentDestroyed$))
-          .subscribe(params => {
-            if (params['docId']) {
-              this._docService.currentDocumentIdInEdition = params['docId'];
-              this._docService.currentDocumentIdInEdition = this._docService.currentDocumentIdInEdition;
-            } else {
-              this._docService.currentDocumentIdInEdition = null;
-            }
-          });
+      .queryParams
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(params => {
+        if (params['docId']) {
+          this._docService.documentInEditionId = params['docId'];
+        } else {
+          this._docService.documentInEditionId = null;
+        }
+      });
   }
 
-  
-  public get documentId() : string | null {
-    return this._docService.currentDocumentIdInEdition;
+
+  public get documentId(): string | null {
+    return this._docService.documentInEditionId;
   }
-  
+
 
 }
