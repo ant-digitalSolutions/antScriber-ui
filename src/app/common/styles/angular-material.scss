@@ -40,7 +40,6 @@ mat-tab-group {
     border-radius: 40px;
     background-color: #fff !important;
   }
-
 }
 
 /* Border */
@@ -52,7 +51,6 @@ input.mat-input-element {
   color: white;
 }
 
-
 // BTN with loading
 .btn-loading-spinner {
   height: 25px !important;
@@ -63,4 +61,39 @@ input.mat-input-element {
   .mat-spinner circle {
     stroke: whitesmoke;
   }
+}
+
+// Wizard editor view general styles
+
+.name-editor-mat-field {
+  &:hover {
+    .mdc-line-ripple {
+      display: inline-block;
+
+      &::before {
+        border-bottom-width: 1px !important;
+      }
+    }
+  }
+  .mdc-line-ripple {
+    display: inline-block;
+
+    &::before {
+      border-bottom-width: 0;
+    }
+  }
+
+  .mdc-text-field {
+    border: none;
+    border-radius: 40px;
+    background-color: #fff !important;
+  }
+}
+
+// CK Editor Styles
+
+.ck.ck-editor__main > .ck-editor__editable {
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
 }

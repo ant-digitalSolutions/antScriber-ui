@@ -13,8 +13,7 @@ import { P } from '@angular/cdk/keycodes';
 @Component({
   selector: 'app-document-editor',
   templateUrl: './document-editor.component.html',
-  styleUrls: ['./document-editor.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./document-editor.component.scss']
 })
 export class DocumentEditorComponent implements OnInit, OnDestroy {
 
