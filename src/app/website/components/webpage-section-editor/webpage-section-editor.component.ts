@@ -52,6 +52,8 @@ export class WebpageSectionEditorComponent implements OnInit, OnDestroy {
 
     this.setContentOptions();
 
+    this.setContentType();
+
     this.setForm();
   }
 
@@ -113,6 +115,10 @@ export class WebpageSectionEditorComponent implements OnInit, OnDestroy {
     this.contentToneOptions = contentToneOptionFields();
   }
 
+  setContentType() {
+    this.contentTypeOptions = contentTypeOptionFields();
+  }
+
   changeContentType(contentType: string) {
     this.sectionGeneratorForm.get('contentType')?.setValue(contentType);
 
@@ -132,7 +138,7 @@ export class WebpageSectionEditorComponent implements OnInit, OnDestroy {
 
   
   public get summaryFieldValidators() : any {
-    return [Validators.required, Validators.minLength(20), Validators.maxLength(100)]
+    return [Validators.required, Validators.minLength(20), Validators.maxLength(500)]
   }
   
 }
