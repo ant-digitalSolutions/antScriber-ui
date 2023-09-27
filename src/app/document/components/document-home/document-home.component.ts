@@ -13,10 +13,6 @@ export class DocumentHomeComponent implements OnInit, OnDestroy {
 
   componentDestroyed$: Subject<boolean> = new Subject();
 
-  documentId: string | null;
-
-
-
   constructor(
     private _route: ActivatedRoute,
     private _docService: DocumentService,
@@ -36,40 +32,35 @@ export class DocumentHomeComponent implements OnInit, OnDestroy {
   setListeners() {
     this._docService.newDocument$.pipe(takeUntil(this.componentDestroyed$)).subscribe(d => {
       if (d != null) {
-        this.documentId = d!.uuid;
-        const currentUrlState= this._router.url;
-        // this._location.go(`${currentUrlState}/doc`, `docId=${this.documentId}`);
+        this._docService.currentDocumentIdInEdition = d!.uuid;
         this._router.navigate([], {
           relativeTo: this._route,
           queryParams:
           {
-            docId: this.documentId
+            docId: this._docService.currentDocumentIdInEdition
           },
           replaceUrl: true,
         });
       }
     });
 
-    this._route.paramMap.pipe(takeUntil(this.componentDestroyed$)).subscribe(p => {
-      if (p.has('docId')) {
-        this.documentId = p.get('docId')!;
-      } else {
-        this.documentId = null;
-      }
-    });
-
-
-
     this._route
           .queryParams
           .pipe(takeUntil(this.componentDestroyed$))
           .subscribe(params => {
             if (params['docId']) {
-              this.documentId = params['docId'];
+              this._docService.currentDocumentIdInEdition = params['docId'];
+              this._docService.currentDocumentIdInEdition = this._docService.currentDocumentIdInEdition;
             } else {
-              this.documentId = null;
+              this._docService.currentDocumentIdInEdition = null;
             }
           });
   }
+
+  
+  public get documentId() : string | null {
+    return this._docService.currentDocumentIdInEdition;
+  }
+  
 
 }

@@ -8,6 +8,7 @@ import { FormControl } from '@angular/forms';
 import { Validators } from 'ngx-editor';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { P } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-document-editor',
@@ -31,16 +32,11 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
   @Input()
   documentId: string;
 
-  document: DocumentDetailsDto | null;
-
-  documentContent = '';
-
   docNameForm: FormControl;
 
 
   constructor(
     private _docService: DocumentService,
-    private _wizardService: WizardCreatorService,
     private router: Router,
     private _route: ActivatedRoute) { }
 
@@ -58,27 +54,18 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     this._docService.docResponse$.pipe(takeUntil(this.componentDestroyed$))
       .subscribe(doc => {
         if (doc) {
-          this.document = doc;
-          this.documentContent = this.document!.content;
-          this.docNameForm = new FormControl(this.document.name, [Validators.required(), Validators.maxLength(50)])
+          this.docNameForm = new FormControl(doc.name, [Validators.required(), Validators.maxLength(50)])
         }
-      })
-
-      // TODO: Change this logic. The wizardService is the one who should push new content to the 
-      // documentService. Then we should listen to the docuemntService for new content
-    this._wizardService.wizardCreatedContent$.pipe(takeUntil(this.componentDestroyed$))
-      .subscribe(r => {
-        this.documentContent += r;
       })
   }
 
   saveEditorChanges() {
-    this._docService.update(this.documentId, { content: this.documentContent }).subscribe();
+    this._docService.update({ content: this.documentContent }).subscribe();
   }
 
   updateDocName() {
     if (this.docNameForm.valid)
-      this._docService.update(this.documentId, { name: this.docNameForm.value }).subscribe();
+      this._docService.update({ name: this.docNameForm.value }).subscribe();
     console.log('After blur')
   }
 
@@ -95,5 +82,21 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     });
     // this.router.navigate(['/wizard/creator'])
   }
+
+  
+  public get documentContent() : string {
+    if (this._docService.documentInEdition) {
+      return this._docService.documentInEdition!.content;
+    } else {
+      return '';
+    }
+  }
+
+  
+  public set documentContent(v : string) {
+    this._docService.documentInEdition!.content = v;
+  }
+  
+  
 
 }

@@ -24,12 +24,9 @@ export class WizardCreatorEditorComponent implements OnDestroy, OnInit {
 
   docContent = '';
 
-  documentId: string;
 
   constructor(
-    private _wizardCreatorService: WizardCreatorService, 
-    private projectService: BlogProjectsService,
-    private _docService: DocumentService) {
+    private _wizardCreatorService: WizardCreatorService) {
 
   }
   
@@ -50,12 +47,6 @@ export class WizardCreatorEditorComponent implements OnDestroy, OnInit {
           this.docContent += r;
         }
     })
-
-    this._docService.newDocument$.pipe(takeUntil(this.componentDestroyed$)).subscribe(r => {
-      if (r)
-        this.documentId = r!.uuid
-      console.log('DocumentID: '+ this.documentId);
-    });
   }
 
   saveEditorChanges() {

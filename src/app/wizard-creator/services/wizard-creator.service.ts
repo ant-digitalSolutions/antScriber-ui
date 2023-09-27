@@ -25,18 +25,12 @@ export class WizardCreatorService {
         if (r.success) {
           this._wizardCreatedContent.next(r.data!);
 
-          this.handleDocument(params, r.data!);
+          const creatorDescription = params.description.substring(0, 50);
+          this._docService.handleNewContent(creatorDescription, r.data!);
         } else {
           this.toastr.error(r.error);
           this._wizardCreatedContent.next(null);
         }
       }))
-  }
-
-  handleDocument(wizardParams: WizardCreatorCreateDto, wizardResponseContent: string): void {
-    if (!wizardParams.documentId) {
-      const docName = wizardParams.description.substring(0, 50);
-      this._docService.create(docName, wizardResponseContent).subscribe();
-    }
   }
 }

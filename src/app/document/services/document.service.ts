@@ -16,6 +16,7 @@ export class DocumentService {
 
 
 
+
   baseUrl = environment.apiUrl + 'document';
   selectedProjectId: any;
 
@@ -27,6 +28,23 @@ export class DocumentService {
 
   private _docsList = new ReplaySubject<DocumentDetailsDto[]>();
   docsList$ = this._docsList.asObservable();
+
+  /**
+   * UUId of the selected document. This document is in edition mode.
+   *
+   * @type {(string | null)}
+   * @memberof DocumentService
+   */
+  private _currentDocumentId: string | null;
+
+  /**
+   * Contains the data of the current document that is in edition mode.
+   *
+   * @private
+   * @type {(DocumentDetailsDto | null)}
+   * @memberof DocumentService
+   */
+  private _documentInEditionData: DocumentDetailsDto | null;
 
   constructor(private http: HttpClient, private toastr: ToastrService, private blogProjectService: BlogProjectsService,) {
     this.blogProjectService.selectedProjectId$.subscribe(r => {
@@ -43,18 +61,18 @@ export class DocumentService {
 
     return this.http.post<IRequestResponse<DocumentDetailsDto>>(this.baseUrl, doc).pipe(tap(r => {
       if (r.success) {
-        this._newDocument.next(r.data!)
+        this._newDocument.next(r.data!);
+        this._documentInEditionData = r.data!;
       } else {
         this.toastr.error(r.error);
       }
     }))
   }
 
-  update(documentId: string, doc: DocumentUpdateDto): Observable<IRequestResponse<DocumentDetailsDto>> {
-    return this.http.put<IRequestResponse<DocumentDetailsDto>>(`${this.baseUrl}/${documentId}`, doc).pipe(tap(r => {
+  update(doc: DocumentUpdateDto): Observable<IRequestResponse<DocumentDetailsDto>> {
+    return this.http.put<IRequestResponse<DocumentDetailsDto>>(`${this.baseUrl}/${this.currentDocumentIdInEdition}`, doc).pipe(tap(r => {
       if (r.success) {
         // this._documentResponse.next(r.data!)
-        console.log('Doc update affected rows: ' + r.data)
       } else {
         this.toastr.error(r.error);
       }
@@ -83,11 +101,37 @@ export class DocumentService {
     return this.http.get<IRequestResponse<DocumentDetailsDto>>(`${this.baseUrl}`, {params})
       .pipe(tap(r => {
         if (r.success) {
-          this._documentResponse.next(r.data!)
+          this._documentResponse.next(r.data!);
+          this._documentInEditionData = r.data!;
         } else {
           this.toastr.error(r.error);
         }
       }))
   }
 
+  handleNewContent(creatorDescription: string, newContent: string) {
+    if (!this.currentDocumentIdInEdition) {
+      this.create(creatorDescription, newContent).subscribe();
+    } else {
+      this._documentInEditionData!.content += newContent;
+    }
+  }
+
+  // Properties
+
+  
+  public get currentDocumentIdInEdition() : string | null {
+    return this._currentDocumentId;
+  }
+
+  
+  public set currentDocumentIdInEdition(v : string | null) {
+    this._currentDocumentId = v;
+  }
+  
+
+  
+  public get documentInEdition() : DocumentDetailsDto | null {
+    return this._documentInEditionData;
+  }
 }
