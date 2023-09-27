@@ -1,9 +1,37 @@
-.wizard-form-container, .wizard-content {
-     min-height: 100vh;
-    padding: 0;
-    } 
+@import "src/app/common/styles/colors.scss";
 
-    .mat-tab-group {
-         min-height: 100vh;
-    background-color: #80808014;
-    }
+.wizard-form-container,
+.wizard-content {
+  min-height: 100vh;
+  padding: 0;
+}
+
+.mat-tab-group {
+  min-height: 100vh;
+  background-color: #80808014;
+}
+
+.wizard-form-container {
+  // max-width: 500px !important;
+}
+
+:host ::ng-deep .mat-mdc-tab-header {
+  background-color: $gray-medium-light;
+
+  .mat-mdc-tab.mdc-tab--active .mdc-tab__ripple::before,
+  .mat-mdc-tab.mdc-tab--active .mat-ripple-element {
+    background-color: $gray-medium-dark !important;
+  }
+
+  .mat-mdc-tab .mdc-tab-indicator__content--underline {
+    border-color: $gray-medium-dark;
+  }
+
+  .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+    color: $gray-dark !important;
+  }
+
+  .mat-mdc-tab.mdc-tab--active:focus .mdc-tab-indicator__content--underline {
+   border-color: $gray-medium-dark !important;
+}
+}

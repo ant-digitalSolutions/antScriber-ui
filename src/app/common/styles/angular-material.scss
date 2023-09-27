@@ -1,0 +1,66 @@
+@import "/src/app/common/styles/colors.scss";
+
+mat-tab-group {
+  &.mat-tab-group.mat-primary .mat-ink-bar {
+    background-color: red;
+  }
+  &.mat-tab-group.mat-primary.my-tab-class .mat-ink-bar {
+    background-color: green;
+  }
+}
+
+// MAT-FORM-FIELD STYLES
+
+.mat-mdc-form-field {
+  background-color: transparent;
+
+  &.mat-form-field-invalid {
+    .mdc-text-field {
+      border: 1px solid rgb(141, 26, 26) !important;
+    }
+  }
+  .mat-input-element {
+    color: slategray;
+    font-weight: 500;
+  }
+  .mat-form-field-label {
+    color: slategray;
+  }
+
+  .mdc-line-ripple {
+    display: none;
+  }
+
+  .mat-mdc-form-field-focus-overlay {
+    background-color: #fff;
+  }
+
+  .mdc-text-field {
+    border: 2px solid $gray-medium-light;
+    border-radius: 40px;
+    background-color: #fff !important;
+  }
+
+}
+
+/* Border */
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  color: white;
+}
+/* Font color */
+input.mat-input-element {
+  color: white;
+}
+
+
+// BTN with loading
+.btn-loading-spinner {
+  height: 25px !important;
+  width: 25px !important;
+  margin-right: 25px;
+
+  circle,
+  .mat-spinner circle {
+    stroke: whitesmoke;
+  }
+}
