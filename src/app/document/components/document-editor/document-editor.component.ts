@@ -6,7 +6,8 @@ import { Subject, take, takeUntil } from 'rxjs';
 import { WizardCreatorService } from 'src/app/wizard-creator/services/wizard-creator.service';
 import { FormControl } from '@angular/forms';
 import { Validators } from 'ngx-editor';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-document-editor',
@@ -40,7 +41,8 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
   constructor(
     private _docService: DocumentService,
     private _wizardService: WizardCreatorService,
-    private router: Router) { }
+    private router: Router,
+    private _route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this._docService.findByUuid(this.documentId).subscribe();
@@ -62,6 +64,8 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
         }
       })
 
+      // TODO: Change this logic. The wizardService is the one who should push new content to the 
+      // documentService. Then we should listen to the docuemntService for new content
     this._wizardService.wizardCreatedContent$.pipe(takeUntil(this.componentDestroyed$))
       .subscribe(r => {
         this.documentContent += r;
@@ -80,7 +84,16 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
 
   goback() {
     this.saveEditorChanges();
-    this.router.navigate(['wizard/creator'])
+    // this._location.back();
+    this.router.navigate([], {
+      relativeTo: this._route,
+      queryParams:
+      {
+        docId: null
+      },
+      replaceUrl: true,
+    });
+    // this.router.navigate(['/wizard/creator'])
   }
 
 }

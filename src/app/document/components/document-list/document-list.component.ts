@@ -81,6 +81,14 @@ export class DocumentListComponent implements OnInit, OnDestroy {
 
   documentRowSelected(doc: DocumentDetailsDto) {
     // this._location.go(`wizard/creator?docId=${doc.uuid}`)
-    this.router.navigate([`./doc/${doc.uuid}`], {relativeTo: this.activeRoute});
+    // this.router.navigate([`./doc/${doc.uuid}`], {relativeTo: this.activeRoute});
+    this.router.navigate([], {
+      relativeTo: this.activeRoute,
+      queryParams:
+      {
+        docId: doc.uuid
+      },
+      replaceUrl: true,
+    });
   }
 }
