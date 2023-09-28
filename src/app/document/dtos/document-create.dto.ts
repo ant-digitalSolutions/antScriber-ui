@@ -9,5 +9,5 @@ export class DocumentCreateDto {
 
   blogProjectId: number;
 
-  wordsCount?: number;
+  folderUUId?: string;
 }

@@ -7,9 +7,9 @@ export class DocumentDetailsDto extends DocumentCreateDto {
 
   isFavorite: boolean;
 
-  folderId: number;
-
   createdAt: Date;
 
   updatedAt: Date;
+
+  wordsCount: number;
 }
