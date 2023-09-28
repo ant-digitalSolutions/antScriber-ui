@@ -8,6 +8,7 @@ import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.serv
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { WizardTableElement } from '../../dtos/wizard-table-element.dto';
+import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-document-list',
@@ -26,7 +27,7 @@ export class DocumentListComponent implements OnInit, OnDestroy {
   tableElementsToRender: WizardTableElement[] = [];
 
 
-  displayedColumns = ['name', 'words', 'updatedAt', 'isFavorite', 'menuDots'];
+  displayedColumns = ['name', 'documentsCount', 'words', 'updatedAt', 'isFavorite', 'menuDots'];
   dataSource: MatTableDataSource<WizardTableElement>;
 
   // @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator = Object.create(null);
@@ -103,5 +104,22 @@ export class DocumentListComponent implements OnInit, OnDestroy {
       replaceUrl: true,
     });
 
+  }
+
+  setAsFavorite(tableElement: WizardTableElement): void  {
+    if (tableElement.isDocument)
+    {
+      const docIsFavorite = tableElement.isFavorite!;
+
+      this._docService.setAsFavorite(tableElement.uuid, !docIsFavorite).subscribe(r => {
+        if (r.success) {
+          const item = this.tableElementsToRender.find(d => d.uuid === tableElement.uuid);
+
+          if (item) {
+            item!.isFavorite = !docIsFavorite
+          }
+        }
+      });
+    }
   }
 }

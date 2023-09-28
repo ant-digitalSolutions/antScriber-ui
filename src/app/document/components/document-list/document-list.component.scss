@@ -33,3 +33,25 @@ mat-header-cell {
 .demo-row-is-clicked {
   font-weight: bold;
 }
+
+.wizard-mat-cell-small {
+  width: 15%;
+  max-width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wizard-mat-cell-large {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.wizard-is-favorite-btn {
+  z-index: 100;
+}
+
+.folder-icon {
+  color: #deb887 !important;
+}

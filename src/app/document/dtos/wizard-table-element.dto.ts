@@ -16,4 +16,6 @@ export interface WizardTableElement {
     wordsCount?: number;
 
     uuid: string;
+
+    isFavorite?: boolean;
 }

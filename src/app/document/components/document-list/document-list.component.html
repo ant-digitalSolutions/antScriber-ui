@@ -9,16 +9,35 @@
       <ng-container matColumnDef="name">
         <mat-header-cell
           *matHeaderCellDef
-          class="f-w-600 mat-subtitle-1 f-s-14"
+          class="f-w-600 mat-subtitle-1 f-s-14 wizard-mat-cell-large"
         >
          Name
         </mat-header-cell>
-        <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1">
-          <mat-icon *ngIf="doc.isDocument;else folderIcon">description</mat-icon>  
+        <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1 wizard-mat-cell-large" (click)="documentRowSelected(doc)">
+          <mat-icon class="m-r-10 folder-icon" *ngIf="doc.isDocument;else folderIcon">description</mat-icon>  
           <ng-template #folderIcon>
-            <mat-icon>folder</mat-icon>
+            <mat-icon class="m-r-10">folder</mat-icon>
           </ng-template>
-          {{ doc.name | slice : 0 : 20 }}...
+          {{ doc.name | slice : 0 : 50 }}...
+          </mat-cell
+        >
+      </ng-container>
+
+        <!-- documentsCount Column -->
+      <ng-container matColumnDef="documentsCount">
+        <mat-header-cell
+          *matHeaderCellDef
+          class="f-w-600 mat-subtitle-1 f-s-14 wizard-mat-cell-small"
+        >
+         Documents
+        </mat-header-cell>
+        <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1 wizard-mat-cell-small">
+        <span
+            class="bg-light-accent text-primary rounded f-w-600 p-6 p-y-4 f-s-12" *ngIf="doc.documentsCount; else noWords"
+            >{{ doc.documentsCount }}</span
+          >
+
+          <ng-template #noWords>-</ng-template>
           </mat-cell
         >
       </ng-container>
@@ -27,15 +46,17 @@
       <ng-container matColumnDef="words">
         <mat-header-cell
           *matHeaderCellDef
-          class="f-w-600 mat-subtitle-1 f-s-14"
+          class="f-w-600 mat-subtitle-1 f-s-14 wizard-mat-cell-small"
         >
           Words
         </mat-header-cell>
-        <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1">
+        <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1 wizard-mat-cell-small">
           <span
-            class="bg-light-primary text-primary rounded f-w-600 p-6 p-y-4 f-s-12"
+            class="bg-light-primary text-primary rounded f-w-600 p-6 p-y-4 f-s-12" *ngIf="doc.wordsCount;else noWords"
             >{{ doc.wordsCount }}</span
           >
+
+          <ng-template #noWords>-</ng-template>
         </mat-cell>
       </ng-container>
 
@@ -43,11 +64,11 @@
       <!-- <ng-container matColumnDef="secondary-keywords">
           <mat-header-cell
             *matHeaderCellDef
-            class="f-w-600 mat-subtitle-1 f-s-14"
+            class="f-w-600 mat-subtitle-1 f-s-14 wizard-mat-cell-small"
           >
             Secondary Keywords
           </mat-header-cell>
-          <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1">
+          <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1 wizard-mat-cell-small">
             <div *ngIf="doc.secondaryKeywords">
               <span
                 class="bg-light-accent text-accent rounded f-w-600 p-6 p-y-4 f-s-12"
@@ -62,12 +83,12 @@
       <ng-container matColumnDef="updatedAt">
         <mat-header-cell
           *matHeaderCellDef
-          class="f-w-600 mat-subtitle-1 f-s-14"
+          class="f-w-600 mat-subtitle-1 f-s-14 wizard-mat-cell-small"
         >
           Modified At
         </mat-header-cell>
-        <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1">
-          {{ doc.updatedAt | timeago: 'live' }}
+        <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1 wizard-mat-cell-small">
+          {{ doc.updatedAt | timeago }}
         </mat-cell>
       </ng-container>
 
@@ -75,13 +96,13 @@
       <ng-container matColumnDef="isFavorite">
         <mat-header-cell
           *matHeaderCellDef
-          class="f-w-600 mat-subtitle-1 f-s-14"
+          class="f-w-600 mat-subtitle-1 f-s-14 wizard-mat-cell-small"
         >
           Favorite
         </mat-header-cell>
-        <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1">
-          <button class="btn-table" mat-mini-fab >
-            <mat-icon class="btn-mat-icon" [ngClass]="{'is-favorite': doc.isFavorite}">star</mat-icon>
+        <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1 wizard-mat-cell-small">
+          <button class="btn-table wizard-is-favorite-btn" mat-mini-fab (click)="setAsFavorite(doc)" >
+            <mat-icon class="btn-mat-icon" [ngClass]="" [ngClass]="{'is-favorite': doc.isFavorite}">star</mat-icon>
           </button>
         </mat-cell>
       </ng-container>
@@ -90,11 +111,11 @@
       <ng-container matColumnDef="menuDots">
         <mat-header-cell
           *matHeaderCellDef
-          class="f-w-600 mat-subtitle-1 f-s-14"
+          class="f-w-600 mat-subtitle-1 f-s-14 wizard-mat-cell-small"
         >
           
         </mat-header-cell>
-        <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1">
+        <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1 wizard-mat-cell-small">
            <button class="btn-table" mat-mini-fab>
             <mat-icon class="btn-mat-icon">menu</mat-icon>
           </button>
@@ -102,7 +123,7 @@
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns" (click)="documentRowSelected(row)" ></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns" ></mat-row>
     </mat-table>
 
     <!-- <mat-paginator

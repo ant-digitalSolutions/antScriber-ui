@@ -1,3 +1,4 @@
+import { DocumentUpdateDto } from './../dtos/document-update.dto';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, ReplaySubject, tap } from 'rxjs';
@@ -7,7 +8,6 @@ import { DocumentDetailsDto } from '../dtos/document-details.dto';
 import { ToastrService } from 'ngx-toastr';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
-import { DocumentUpdateDto } from '../dtos/document-update.dto';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WizardTableElements } from '../dtos/wizard-table-elements.dto';
 import { WizardTableElement } from '../dtos/wizard-table-element.dto';
@@ -96,6 +96,19 @@ export class DocumentService {
     return this.http.put<IRequestResponse<DocumentDetailsDto>>(`${this.baseUrl}/${this.documentInEditionId}`, doc).pipe(tap(r => {
       if (r.success) {
         // this._documentResponse.next(r.data!)
+      } else {
+        this.toastr.error(r.error);
+      }
+    }))
+  }
+
+  setAsFavorite(docUUId: string, isFavorite: boolean): Observable<IRequestResponse<DocumentDetailsDto>> {
+    const doc: DocumentUpdateDto = {
+      isFavorite
+    }
+    return this.http.put<IRequestResponse<DocumentDetailsDto>>(`${this.baseUrl}/${docUUId}`, doc).pipe(tap(r => {
+      if (r.success) {
+        // this._documentResponse.next(r.data!);
       } else {
         this.toastr.error(r.error);
       }
@@ -233,7 +246,8 @@ export class DocumentService {
         updatedAt: e.updatedAt,
         wordsCount: e.wordsCount,
         isDocument: true,
-        uuid: e.uuid
+        uuid: e.uuid,
+        isFavorite: e.isFavorite
       })
     });
 
