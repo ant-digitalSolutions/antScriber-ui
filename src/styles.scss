@@ -16,11 +16,9 @@ body {
 // regular style toast
 @import "ngx-toastr/toastr";
 
-
 @import "/src/app/common/styles/angular-material.scss";
 
-@import '/src/app/common/styles/colors.scss';
-
+@import "/src/app/common/styles/colors.scss";
 
 .ck-editor__editable_inline {
   min-height: 300px;
@@ -43,3 +41,13 @@ body {
   background-color: transparent;
 }
 
+// wizard general styles
+
+.btn-goback {
+  background-color: transparent !important; // Making the button background transparent
+
+  .btn-mat-icon {
+    color: black !important; // Setting the icon color to black
+    font-size: 25px !important; // Setting the icon size to 25px
+  }
+}
