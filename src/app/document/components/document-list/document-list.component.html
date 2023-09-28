@@ -3,7 +3,7 @@
     <mat-table
       #table
       [dataSource]="dataSource"
-      *ngIf="documentsToRender"
+      *ngIf="tableElementsToRender"
     >
       <!-- Name Column -->
       <ng-container matColumnDef="name">
@@ -11,10 +11,15 @@
           *matHeaderCellDef
           class="f-w-600 mat-subtitle-1 f-s-14"
         >
-          Name
+         Name
         </mat-header-cell>
         <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1">
-          {{ doc.name | slice : 0 : 20 }}...</mat-cell
+          <mat-icon *ngIf="doc.isDocument;else folderIcon">description</mat-icon>  
+          <ng-template #folderIcon>
+            <mat-icon>folder</mat-icon>
+          </ng-template>
+          {{ doc.name | slice : 0 : 20 }}...
+          </mat-cell
         >
       </ng-container>
 

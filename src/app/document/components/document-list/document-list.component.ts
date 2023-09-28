@@ -7,6 +7,7 @@ import { DocumentService } from '../../services/document.service';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { WizardTableElement } from '../../dtos/wizard-table-element.dto';
 
 @Component({
   selector: 'app-document-list',
@@ -22,9 +23,11 @@ export class DocumentListComponent implements OnInit, OnDestroy {
 
   documentsToRender: DocumentDetailsDto[] = [];
 
+  tableElementsToRender: WizardTableElement[] = [];
+
 
   displayedColumns = ['name', 'words', 'updatedAt', 'isFavorite', 'menuDots'];
-  dataSource: MatTableDataSource<DocumentDetailsDto>;
+  dataSource: MatTableDataSource<WizardTableElement>;
 
   // @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator = Object.create(null);
 
@@ -35,8 +38,8 @@ export class DocumentListComponent implements OnInit, OnDestroy {
   selectedProjectId: number;
 
   constructor(
-    private _docService: DocumentService, 
-    private _projectService: BlogProjectsService, 
+    private _docService: DocumentService,
+    private _projectService: BlogProjectsService,
     private router: Router,
     private _location: Location,
     private activeRoute: ActivatedRoute) { }
@@ -51,14 +54,18 @@ export class DocumentListComponent implements OnInit, OnDestroy {
   }
 
   setListeners() {
-    this._docService.docsList$.pipe(takeUntil(this.componentDestroyed$)).subscribe(docs => {
-      this.documentsToRender = docs;
-      this.dataSource = new MatTableDataSource<DocumentDetailsDto>(this.documentsToRender);
+    this._docService.wizardTableElements$.pipe(takeUntil(this.componentDestroyed$)).subscribe(elements => {
+      this.tableElementsToRender = elements;
+      this.dataSource = new MatTableDataSource<WizardTableElement>(this.tableElementsToRender);
     });
 
     this._projectService.selectedProjectId$.pipe(takeUntil(this.componentDestroyed$)).subscribe(pId => {
-      this.selectedProjectId = pId;
-      this._docService.listDocsForTable(this.selectedProjectId, this.pageIndex, this.pageSize).subscribe()
+      if (pId) {
+        this.selectedProjectId = pId;
+        // TODO: This request is being made multiple times. Remove from other areas of the app and 
+        // only request from this point.
+        this._docService.listDocsForTable(this.selectedProjectId, this.pageIndex, this.pageSize).subscribe()
+      }
     })
   }
 
@@ -79,16 +86,22 @@ export class DocumentListComponent implements OnInit, OnDestroy {
     throw new Error('Method not implemented.');
   }
 
-  documentRowSelected(doc: DocumentDetailsDto) {
-    // this._location.go(`wizard/creator?docId=${doc.uuid}`)
-    // this.router.navigate([`./doc/${doc.uuid}`], {relativeTo: this.activeRoute});
+  documentRowSelected(tableElement: WizardTableElement) {
+
+    const queryParams = tableElement.isDocument ?
+      {
+        docId: tableElement.uuid
+      }
+      :
+      {
+        folderId: tableElement.uuid
+      };
+
     this.router.navigate([], {
       relativeTo: this.activeRoute,
-      queryParams:
-      {
-        docId: doc.uuid
-      },
+      queryParams: queryParams,
       replaceUrl: true,
     });
+
   }
 }

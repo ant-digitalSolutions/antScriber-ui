@@ -33,7 +33,11 @@ export class DocumentHomeComponent implements OnInit, OnDestroy {
       .subscribe(params => {
         if (params['docId']) {
           this._docService.documentInEditionId = params['docId'];
-        } else {
+        } else if(params['folderId']) {
+          this._docService.selectedFolderId = params['folderId']
+        } 
+        
+        else {
           this._docService.documentInEditionId = null;
         }
       });

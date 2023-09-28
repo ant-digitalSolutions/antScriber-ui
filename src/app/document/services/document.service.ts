@@ -9,6 +9,9 @@ import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.serv
 import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
 import { DocumentUpdateDto } from '../dtos/document-update.dto';
 import { ActivatedRoute, Router } from '@angular/router';
+import { WizardTableElements } from '../dtos/wizard-table-elements.dto';
+import { WizardTableElement } from '../dtos/wizard-table-element.dto';
+import { FolderDetailsDto } from '../dtos/folder-details.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +31,9 @@ export class DocumentService {
   private _docsList = new ReplaySubject<DocumentDetailsDto[]>();
   docsList$ = this._docsList.asObservable();
 
+  private _wizardTableElements = new ReplaySubject<WizardTableElement[]>();
+  wizardTableElements$ = this._wizardTableElements.asObservable();
+
   /**
    * UUId of the selected document. This document is in edition mode.
    *
@@ -44,6 +50,10 @@ export class DocumentService {
    * @memberof DocumentService
    */
   private _documentInEditionData: DocumentDetailsDto | null;
+
+  private _currentFolderId?: string;
+
+  private _currentFolderData?: FolderDetailsDto;
 
   constructor(
     private http: HttpClient,
@@ -90,14 +100,39 @@ export class DocumentService {
 
 
 
-  listDocsForTable(blogProjectId: number, currentPage: number = 1, pageSize: number = 10) {
+  /**
+   * Retrieve the list of documents from the server that match
+   * the given params.
+   *
+   * @param {number} blogProjectId
+   * @param {number} [currentPage=1]
+   * @param {number} [pageSize=10]
+   * @return {*} 
+   * @memberof DocumentService
+   */
+  listDocsForTable(blogProjectId: number, currentPage: number = 0, pageSize: number = 10) {
+  
     let params = new HttpParams()
       .set("blogProjectId", blogProjectId)
       .set('pageSize', pageSize)
       .set('pageIndex', currentPage);
-    return this.http.get<IRequestResponse<DocumentDetailsDto[]>>(this.baseUrl + '/list', { params }).pipe(tap(r => {
+
+      // if the user has a selected folder, 
+      //the retrieve the documents that belongs to that folder.
+    if (this._currentFolderId) {
+     params = params.set('folderId', this._currentFolderId);
+    }
+
+    return this.http.get<IRequestResponse<WizardTableElements>>(this.baseUrl + '/list', { params }).pipe(tap(r => {
       if (r.success) {
-        this._docsList.next(r.data!)
+        this._docsList.next(r.data!.documents)
+
+        const wizardTableElements = this.convertToWizardElementList(r.data!);
+        this._wizardTableElements.next(wizardTableElements);
+
+        if (this._currentFolderId) {
+          this._currentFolderData = r.data!.folderData;
+        }
       } else {
         this.toastr.error(r.error);
       }
@@ -171,6 +206,31 @@ export class DocumentService {
     });
   }
 
+  private convertToWizardElementList(tableData: WizardTableElements): WizardTableElement[] {
+    const output: WizardTableElement[] = [];
+
+    tableData.folders.forEach(e => {
+      output.push({
+        name: e.name,
+        updatedAt: e.updatedAt,
+        documentsCount: e.documentsCount,
+        isDocument: false,
+        uuid: e.uuid
+      })
+    });
+    tableData.documents.forEach(e => {
+      output.push({
+        name: e.name,
+        updatedAt: e.updatedAt,
+        wordsCount: e.wordsCount,
+        isDocument: true,
+        uuid: e.uuid
+      })
+    });
+
+    return output;
+  }
+
   // Properties
 
 
@@ -190,7 +250,14 @@ export class DocumentService {
     // if the documentId is not the one that we have in edition, then request it to the server.
     if (documentId && (!this._documentInEditionData || (this._documentInEditionData && this._documentInEditionData.uuid !== documentId))) {
       this.findByUuid(documentId).subscribe();
+    } else if (!documentId) {
+      this._currentFolderData = undefined;
+      this._currentFolderId = undefined;
+
+      this.listDocsForTable(this.selectedProjectId).subscribe();
     }
+
+  
   }
 
 
@@ -198,4 +265,29 @@ export class DocumentService {
   public get documentInEdition(): DocumentDetailsDto | null {
     return this._documentInEditionData;
   }
+
+  /**
+   *
+   *
+   * @memberof DocumentService
+   */
+  public set selectedFolderId(folderId: string | undefined) {
+    this._currentFolderId = folderId;
+
+    // if the documentId is not the one that we have in edition, then request it to the server.
+    if (this.selectedProjectId)
+      this.listDocsForTable(this.selectedProjectId).subscribe();
+  }
+
+  
+  public get selectedFolderId() : string | undefined {
+    return this._currentFolderId;
+  }
+
+  
+  public get selectedFolderName() : string | undefined {
+    return this._currentFolderData ? this._currentFolderData.name : undefined;
+  }
+  
+  
 }
