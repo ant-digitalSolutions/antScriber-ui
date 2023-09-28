@@ -46,12 +46,12 @@ export class DocumentService {
   private _documentInEditionData: DocumentDetailsDto | null;
 
   constructor(
-    private http: HttpClient, 
-    private toastr: ToastrService, 
+    private http: HttpClient,
+    private toastr: ToastrService,
     private blogProjectService: BlogProjectsService,
     private _route: ActivatedRoute,
     private _router: Router
-    ) {
+  ) {
     this.blogProjectService.selectedProjectId$.subscribe(r => {
       this.selectedProjectId = r;
     })
@@ -70,7 +70,7 @@ export class DocumentService {
         this._documentInEditionData = r.data!;
 
         // navigate to the edition view after creating a new doc
-       this.navigateToDocumentEditionView(r.data!.uuid);
+        this.navigateToDocumentEditionView(r.data!.uuid);
 
       } else {
         this.toastr.error(r.error);
@@ -116,6 +116,35 @@ export class DocumentService {
           this.toastr.error(r.error);
         }
       }))
+  }
+
+  /**
+   * Creates a new folder on DB. THe folder is the container of 
+   * documents
+   *
+   * @param {string} folderName
+   * @return {*}  {Observable<any>}
+   * @memberof DocumentService
+   */
+  createFolder(folderName: string): Observable<any> {
+    const folder = {
+      name: folderName,
+    }
+
+    return this.http.post<IRequestResponse<DocumentDetailsDto>>(this.baseUrl + '/create-folder', folder).pipe(tap(r => {
+      if (r.success) {
+        // this._documentResponse.next(r.data!);
+        // this._documentInEditionData = r.data!;
+
+        // // navigate to the edition view after creating a new doc
+        // this.navigateToDocumentEditionView(r.data!.uuid);
+
+        console.log(`new FOlder: ${r.data}`)
+
+      } else {
+        this.toastr.error(r.error);
+      }
+    }))
   }
 
   handleNewContent(creatorDescription: string, newContent: string) {
