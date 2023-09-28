@@ -72,7 +72,11 @@ export class DocumentService {
       name: docName,
       content: docContent,
       blogProjectId: this.selectedProjectId,
-    })
+    });
+
+    if (this._currentFolderId) {
+      doc.folderUUId = this._currentFolderId;
+    }
 
     return this.http.post<IRequestResponse<DocumentDetailsDto>>(this.baseUrl, doc).pipe(tap(r => {
       if (r.success) {
@@ -168,14 +172,8 @@ export class DocumentService {
 
     return this.http.post<IRequestResponse<DocumentDetailsDto>>(this.baseUrl + '/create-folder', folder).pipe(tap(r => {
       if (r.success) {
-        // this._documentResponse.next(r.data!);
-        // this._documentInEditionData = r.data!;
-
         // // navigate to the edition view after creating a new doc
-        // this.navigateToDocumentEditionView(r.data!.uuid);
-
-        console.log(`new FOlder: ${r.data}`)
-
+        this.navigateToFolderView(r.data!.uuid);
       } else {
         this.toastr.error(r.error);
       }
@@ -201,6 +199,17 @@ export class DocumentService {
       queryParams:
       {
         docId: documentId
+      },
+      replaceUrl: true,
+    });
+  }
+
+  private navigateToFolderView(folderId: string) {
+    this._router.navigate([], {
+      relativeTo: this._route,
+      queryParams:
+      {
+        folderId: folderId
       },
       replaceUrl: true,
     });
