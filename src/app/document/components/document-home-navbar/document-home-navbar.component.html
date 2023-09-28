@@ -1,12 +1,28 @@
 <div class="doc-navbar-container">
-    <div class="folder-selector">
-        <xng-breadcrumb></xng-breadcrumb>
-    </div>
+  <div class="folder-selector">
+    <!-- <xng-breadcrumb></xng-breadcrumb> -->
 
-    <div class="doc-navbar-actions-container">
-        <button mat-button class="doc-navbar-btn">Favorites</button>
-        <button mat-button class="doc-navbar-btn" (click)="newFolder()">Add Folder</button>
-        <button mat-button class="doc-navbar-btn" (click)="newDocument()">New Document</button>
+    <ng-container *ngIf="selectedFoldername; else homeHeader">
+      <div class="folder-elements-container d-flex align-items-center justify-content-around">
+        <button class="mini-fab-btn btn-goback m-r-10" mat-mini-fab (click)="goBack()">
+          <mat-icon class="btn-mat-icon btn-goback">arrow_back</mat-icon>
+        </button>
+        <h3 class="selected-folder-name">{{ selectedFoldername }}</h3>
+      </div>
+    </ng-container>
 
-    </div>
+    <ng-template #homeHeader>
+        <h3 class="selected-folder-name">Home</h3>
+    </ng-template>
+  </div>
+
+  <div class="doc-navbar-actions-container">
+    <button mat-button class="doc-navbar-btn">Favorites</button>
+    <button mat-button class="doc-navbar-btn" (click)="newFolder()">
+      Add Folder
+    </button>
+    <button mat-button class="doc-navbar-btn" (click)="newDocument()">
+      New Document
+    </button>
+  </div>
 </div>

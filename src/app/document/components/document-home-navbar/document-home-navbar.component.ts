@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DialogService } from 'src/app/dialogs/dialog.service';
 import { DocumentService } from '../../services/document.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-document-home-navbar',
@@ -10,7 +11,11 @@ import { DocumentService } from '../../services/document.service';
 export class DocumentHomeNavbarComponent {
 
 
-  constructor(private _dialogService: DialogService, private _docService: DocumentService) {
+  constructor(
+    private _dialogService: DialogService, 
+    private _docService: DocumentService,
+    private router: Router,
+    private _route: ActivatedRoute) {
 
   }
 
@@ -28,5 +33,22 @@ export class DocumentHomeNavbarComponent {
         this._docService.createFolder(result).subscribe();
     });
   }
+
+  goBack() {
+    this.router.navigate([], {
+      relativeTo: this._route,
+      queryParams:
+      {
+        folderId: null
+      },
+      replaceUrl: true,
+    });
+  }
+
+
+  public get selectedFoldername(): string | undefined {
+    return this._docService.selectedFolderName;
+  }
+
 
 }
