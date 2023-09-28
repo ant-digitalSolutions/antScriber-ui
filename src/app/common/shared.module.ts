@@ -11,6 +11,7 @@ import { NgxEditorModule } from 'ngx-editor';
 import * as TablerIcons from 'angular-tabler-icons/icons';
 import { ContentEditionMagicActionsComponent } from './components/content-edition-magic-actions/content-edition-magic-actions.component';
 import { MagicEditionService } from './services/content-magic-edition.service';
+import { DialogsModule } from '../dialogs/dialogs.module';
 
 
 
@@ -30,7 +31,8 @@ import { MagicEditionService } from './services/content-magic-edition.service';
     NgxEditorModule,
     TablerIconsModule.pick(TablerIcons),
     TablerIconsModule,
-    TimeagoModule
+    TimeagoModule,
+    DialogsModule
   ],
   providers: [MagicEditionService],
   exports: [
