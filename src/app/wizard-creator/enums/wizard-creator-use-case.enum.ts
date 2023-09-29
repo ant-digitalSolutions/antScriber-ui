@@ -22,7 +22,8 @@ export enum WizardCreatorUseCase {
     KeywordExtractor = 'Keyword Extractor',
     LandingPageCopy = 'Landing Page Copy',
     SEOMetaTitle = 'SEO Meta Title',
-    SEOMetaDescription = 'SEO Meta Description'
+    SEOMetaDescription = 'SEO Meta Description',
+    GithubIssue = 'GitHub Issue',
 }
 
 export function wizardCreatorUseCaseList(): string[] {

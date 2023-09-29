@@ -39,7 +39,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
 
   wizardDescription: string;
 
-  wizardDescriptionValidators = [Validators.required, Validators.minLength(10), Validators.maxLength(500)]
+  wizardDescriptionValidators = [Validators.required, Validators.minLength(10), Validators.maxLength(800)]
 
   constructor(private _wizardCreatorService: WizardCreatorService, private projectService: BlogProjectsService) {
 
