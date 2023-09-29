@@ -55,6 +55,14 @@ export class DocumentService {
 
   private _currentFolderData?: FolderDetailsDto;
 
+  /**
+   * If true, the table will render the favorites elements.
+   *
+   * @private
+   * @memberof DocumentService
+   */
+  private _showFavorites = false;
+
   constructor(
     private http: HttpClient,
     private toastr: ToastrService,
@@ -132,7 +140,8 @@ export class DocumentService {
     let params = new HttpParams()
       .set("blogProjectId", blogProjectId)
       .set('pageSize', pageSize)
-      .set('pageIndex', currentPage);
+      .set('pageIndex', currentPage)
+      .set('onlyFavorites', this._showFavorites);
 
       // if the user has a selected folder, 
       //the retrieve the documents that belongs to that folder.
@@ -197,6 +206,7 @@ export class DocumentService {
     if (!this.documentInEditionId) {
       this.create(creatorDescription, newContent).subscribe();
     } else {
+      this._documentInEditionData!.content += '<p>---</p>'
       this._documentInEditionData!.content += newContent;
     }
   }
@@ -272,7 +282,10 @@ export class DocumentService {
 
     // if the documentId is not the one that we have in edition, then request it to the server.
     if (documentId && (!this._documentInEditionData || (this._documentInEditionData && this._documentInEditionData.uuid !== documentId))) {
-      this.findByUuid(documentId).subscribe();
+     {
+      this._showFavorites = false;
+       this.findByUuid(documentId).subscribe();
+      }
     } else if (!documentId) {
       this._currentFolderData = undefined;
       this._currentFolderId = undefined;
@@ -299,7 +312,10 @@ export class DocumentService {
 
     // if the documentId is not the one that we have in edition, then request it to the server.
     if (this.selectedProjectId)
-      this.listDocsForTable(this.selectedProjectId).subscribe();
+     {
+      this._showFavorites = false;
+       this.listDocsForTable(this.selectedProjectId).subscribe();
+      }
   }
 
   
@@ -311,6 +327,23 @@ export class DocumentService {
   public get selectedFolderName() : string | undefined {
     return this._currentFolderData ? this._currentFolderData.name : undefined;
   }
+
+  
+  public set showFavorites(v : boolean) {
+    this._showFavorites = v;
+
+    if (v) {
+      this._currentFolderId = undefined;
+      this.listDocsForTable(this.selectedProjectId).subscribe();
+    }
+  }
+
+  
+  public get showFavorites() : boolean {
+    return this._showFavorites;
+  }
+  
+  
   
   
 }

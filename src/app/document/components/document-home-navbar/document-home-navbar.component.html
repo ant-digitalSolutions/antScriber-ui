@@ -3,8 +3,14 @@
     <!-- <xng-breadcrumb></xng-breadcrumb> -->
 
     <ng-container *ngIf="selectedFoldername; else homeHeader">
-      <div class="folder-elements-container d-flex align-items-center justify-content-around">
-        <button class="mini-fab-btn btn-goback m-r-10" mat-mini-fab (click)="goBack()">
+      <div
+        class="folder-elements-container d-flex align-items-center justify-content-around"
+      >
+        <button
+          class="mini-fab-btn btn-goback m-r-10"
+          mat-mini-fab
+          (click)="goBack()"
+        >
           <mat-icon class="btn-mat-icon btn-goback">arrow_back</mat-icon>
         </button>
         <h3 class="selected-folder-name">{{ selectedFoldername }}</h3>
@@ -12,12 +18,26 @@
     </ng-container>
 
     <ng-template #homeHeader>
-        <h3 class="selected-folder-name">Home</h3>
+      <h3 class="selected-folder-name">Home</h3>
     </ng-template>
   </div>
 
   <div class="doc-navbar-actions-container">
-    <button mat-button class="doc-navbar-btn">Favorites</button>
+    <button
+      mat-button
+      class="doc-navbar-btn"
+      (click)="showFavorites()"
+      *ngIf="!showFavoriteElements; else homeBtn"
+    >
+      Favorites
+    </button>
+
+    <ng-template #homeBtn>
+      <button mat-button class="doc-navbar-btn" (click)="goHome()">
+        Home
+      </button>
+    </ng-template>
+
     <button mat-button class="doc-navbar-btn" (click)="newFolder()">
       Add Folder
     </button>

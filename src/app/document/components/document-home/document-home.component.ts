@@ -32,12 +32,21 @@ export class DocumentHomeComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe(params => {
         if (params['docId']) {
+          this._docService.showFavorites = false;
           this._docService.documentInEditionId = params['docId'];
         } else if(params['folderId']) {
+          this._docService.showFavorites = false;
           this._docService.selectedFolderId = params['folderId']
-        } 
+        } else if (params['show']) {
+          const paramValue = params['show'];
+
+          if (paramValue === 'favorites') {
+            this._docService.showFavorites = true;
+          }
+        }
         
         else {
+          this._docService.showFavorites = false;
           this._docService.documentInEditionId = null;
         }
       });

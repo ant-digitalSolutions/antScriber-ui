@@ -10,6 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class DocumentHomeNavbarComponent {
 
+  listFavorites = false;
 
   constructor(
     private _dialogService: DialogService, 
@@ -45,10 +46,40 @@ export class DocumentHomeNavbarComponent {
     });
   }
 
+  showFavorites() {
+    this.router.navigate([], {
+      relativeTo: this._route,
+      queryParams:
+      {
+        show: 'favorites'
+      },
+      replaceUrl: true,
+    });
+    this.listFavorites = true;
+  }
+
+  goHome() {
+    this.router.navigate([], {
+      relativeTo: this._route,
+      queryParams:
+      {
+        folderId: null,
+        show: null
+      },
+      replaceUrl: true,
+    });
+  }
+
 
   public get selectedFoldername(): string | undefined {
     return this._docService.selectedFolderName;
   }
+
+  
+  public get showFavoriteElements() : boolean {
+    return this._docService.showFavorites;
+  }
+  
 
 
 }
