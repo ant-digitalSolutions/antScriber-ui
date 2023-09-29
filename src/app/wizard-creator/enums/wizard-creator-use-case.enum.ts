@@ -15,7 +15,7 @@ export enum WizardCreatorUseCase {
     // WriterFrameworkPAS = 'Writer Framework PAS',
     // CoverLetter = 'Cover Letter',
     // Email = 'Email',
-    GoogleSearchAd = 'Google Search Ad',
+    // GoogleSearchAd = 'Google Search Ad',
     // FacebookInstagramCaption = 'Facebook or Instagram Caption',
     // LinkedinPost = 'Linkedin Post',
     // KeywordGenerator = 'Keyword Generator',
@@ -23,8 +23,8 @@ export enum WizardCreatorUseCase {
     // LandingPageCopy = 'Landing Page Copy',
     // SEOMetaTitle = 'SEO Meta Title',
     // SEOMetaDescription = 'SEO Meta Description',
-    GithubIssue = 'GitHub Issue',
-    GithubMilestone = 'Github Milestone',
+    // GithubIssue = 'GitHub Issue',
+    // GithubMilestone = 'Github Milestone',
 }
 
 export function wizardCreatorUseCaseList(): string[] {

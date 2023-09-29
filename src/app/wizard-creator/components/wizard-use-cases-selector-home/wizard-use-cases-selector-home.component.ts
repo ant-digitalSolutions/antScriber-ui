@@ -9,6 +9,10 @@ import { WizardSocialMediaUseCases } from '../../enums/wizard-creator-social-med
 import { WizardBlogAndArticlesUseCases } from '../../enums/wizard-creator-blog-and-articles-use-cases.enum';
 import { WizardCreatorService } from '../../services/wizard-creator.service';
 import { F } from '@angular/cdk/keycodes';
+import { WizardCreatorEcommerceUseCasesEnum } from '../../enums/wizard-creator-ecommerce-use-cases.enum';
+import { WizardCreatorMarketingUseCasesEnum } from '../../enums/wizard-creator-marketing-use-cases.enum';
+import { WizardCreatorCodingUseCasesEnum } from '../../enums/wizard-creator-coding-use-cases.enum';
+import { WizardCreatorInternalDevUseCasesEnum } from '../../enums/wizard-creator-internal-dev-use-cases.enum';
 
 @Component({
   selector: 'app-wizard-use-cases-selector-home',
@@ -82,6 +86,18 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
         break;
       case WizardCreatorUseCaseGroup.ArticlesAndBlog:
         this.selectGroupUseCases = mapEnumNameAndValue(WizardBlogAndArticlesUseCases);
+        break;
+      case WizardCreatorUseCaseGroup.Ecommerce:
+        this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorEcommerceUseCasesEnum);
+        break;
+      case WizardCreatorUseCaseGroup.AdsAndMarketing:
+        this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorMarketingUseCasesEnum);
+        break;
+      case WizardCreatorUseCaseGroup.Coding:
+        this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorCodingUseCasesEnum);
+        break;
+      case WizardCreatorUseCaseGroup.InternalDev:
+        this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorInternalDevUseCasesEnum);
         break;
 
       default:
