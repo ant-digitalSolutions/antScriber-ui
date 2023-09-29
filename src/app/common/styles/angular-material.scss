@@ -97,3 +97,11 @@ input.mat-input-element {
   border-left: none !important;
   border-right: none !important;
 }
+
+// wizard - section styles
+
+.wizard-use-case-outer-container {
+  .mat-expansion-panel-body {
+    padding: 10px !important;
+  }
+}

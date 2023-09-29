@@ -8,6 +8,7 @@ import { WizardGeneralWritingUseCases } from '../../enums/wizard-creator-general
 import { WizardSocialMediaUseCases } from '../../enums/wizard-creator-social-media-use-cases.enum';
 import { WizardBlogAndArticlesUseCases } from '../../enums/wizard-creator-blog-and-articles-use-cases.enum';
 import { WizardCreatorService } from '../../services/wizard-creator.service';
+import { F } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-wizard-use-cases-selector-home',
@@ -36,6 +37,8 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
 
   selectedCase = 'Select the Use Case';
 
+  showLoadMoreUseCasesBtn = true;
+
   constructor(private _wizardService: WizardCreatorService) {
 
   }
@@ -57,9 +60,16 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
     })
   }
 
-  setUseCases() {
-    this.useCasesGroups = mapEnumNameAndValue(WizardCreatorUseCaseGroup);
+  setUseCases(initialElements: boolean = true) {
+   const values = mapEnumNameAndValue(WizardCreatorUseCaseGroup);
+    this.useCasesGroups = initialElements ? values.slice(0,3) : values;
+
+    if(!initialElements) {
+      this.showLoadMoreUseCasesBtn = false;
+    }
   }
+
+
 
   selectUseCaseGroup(selectedGroup: string, isOpen: boolean) {
     const selectValue = WizardCreatorUseCaseGroup

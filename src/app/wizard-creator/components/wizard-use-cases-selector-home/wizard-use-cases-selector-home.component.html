@@ -6,8 +6,8 @@
     </button>
   </div>
 
-  <div class="use-cases-container" *ngIf="showUseCases">
-    <mat-accordion>
+  <div class="use-cases-container d-flex justify-content-center flex-column align-items-center" *ngIf="showUseCases">
+    <mat-accordion class="w-100">
       <ng-container *ngFor="let group of useCasesGroups">
         <mat-expansion-panel
           (opened)="selectUseCaseGroup(group.value, true)"
@@ -15,7 +15,7 @@
         >
           <mat-expansion-panel-header>
             <mat-panel-title> {{ group.text }} </mat-panel-title>
-            <mat-panel-description> </mat-panel-description>
+            <!-- <mat-panel-description> </mat-panel-description> -->
           </mat-expansion-panel-header>
 
           <app-wizard-use-cases-selector-by-group
@@ -24,5 +24,7 @@
         </mat-expansion-panel>
       </ng-container>
     </mat-accordion>
+
+    <button class="m-t-10 btn-load-more" mat-button (click)="setUseCases(false)" *ngIf="showLoadMoreUseCasesBtn">show more</button>
   </div>
 </div>
