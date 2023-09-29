@@ -7,8 +7,6 @@ export class WizardCreatorCreateDto {
 
     voiceTone: ContentTone;
 
-    useCase: WizardCreatorUseCase;
-
     description: string;
 
     amountOfVariants: number;
@@ -16,4 +14,22 @@ export class WizardCreatorCreateDto {
     creativityLevel: ContentCreationCreativityLevel;
 
     documentId?: number;
+
+    /**
+     * Contains the selected value of the WizardCreatorUseCaseGroup enum.
+     *
+     * @type {string}
+     * @memberof WizardCreatorCreateDto
+     */
+    useCaseGroup: string;
+
+    /**
+     * Contains the specific use case the belongs to the selected group.
+     * 
+     * This value should be mapped in the server to the corresponding Enum.
+     *
+     * @type {string}
+     * @memberof WizardCreatorCreateDto
+     */
+    useCase: string;
 }

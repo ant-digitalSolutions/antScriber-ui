@@ -72,7 +72,7 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
 
 
   selectUseCaseGroup(selectedGroup: string, isOpen: boolean) {
-    const selectValue = WizardCreatorUseCaseGroup
+   this._wizardService.wizardUseCaseGroup = selectedGroup;
     switch (selectedGroup) {
       case WizardCreatorUseCaseGroup.GeneralWriting:
         this.selectGroupUseCases = mapEnumNameAndValue(WizardGeneralWritingUseCases);

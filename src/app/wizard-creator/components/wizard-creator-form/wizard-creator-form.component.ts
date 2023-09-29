@@ -87,7 +87,6 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
     this.wizardCreatorForm = new FormGroup({
       outputLang: new FormControl('', Validators.required), // Assuming it's a required field
       voiceTone: new FormControl(ContentTone.Informative, Validators.required),  // Defaulting to Informative
-      useCase: new FormControl(null, Validators.required), // Replace DefaultValue with your default or appropriate enum value
       description: new FormControl('', [Validators.required, Validators.minLength(3)]),
       amountOfVariants: new FormControl(1, [Validators.required, Validators.min(1)]), // Defaulting to 1
       creativityLevel: new FormControl(ContentCreationCreativityLevel.Zen, Validators.required) // Replace DefaultValue with your default or appropriate enum value
