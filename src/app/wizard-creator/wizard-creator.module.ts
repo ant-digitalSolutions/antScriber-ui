@@ -10,6 +10,9 @@ import { RouterModule } from '@angular/router';
 import { ContentCreationModule } from '../content-creation/content-creation.module';
 import { DocumentModule } from '../document/document.module';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { WizardUseCasesSelectorHomeComponent } from './components/wizard-use-cases-selector-home/wizard-use-cases-selector-home.component';
+import { WizardUseCasesSelectorByGroupComponent } from './components/wizard-use-cases-selector-by-group/wizard-use-cases-selector-by-group.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 
@@ -17,7 +20,9 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
   declarations: [
     WizardCreatorHomeComponent,
     WizardCreatorFormComponent,
-    WizardCreatorEditorComponent
+    WizardCreatorEditorComponent,
+    WizardUseCasesSelectorHomeComponent,
+    WizardUseCasesSelectorByGroupComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +30,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     RouterModule.forChild(WizardCreatorRoutes),
     ContentCreationModule,
     DocumentModule,
-    CKEditorModule
+    CKEditorModule,
+    MatExpansionModule
    
   ],
   providers: [WizardCreatorService]

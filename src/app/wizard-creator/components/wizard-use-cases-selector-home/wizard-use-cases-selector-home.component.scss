@@ -1,0 +1,13 @@
+@import "/src/app/common/styles/colors.scss";
+
+
+
+#btn-use-case-selector {
+  min-height: 50px;
+  background-color: #fff;
+  font-weight: 500;
+  // font-size: 1.04rem;
+  // color: black;
+  border-radius: 30px;
+  border: 2px solid $border-gray;
+}

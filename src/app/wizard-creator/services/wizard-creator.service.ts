@@ -16,6 +16,12 @@ export class WizardCreatorService {
   private _wizardCreatedContent = new ReplaySubject<string | null>();
   wizardCreatedContent$ = this._wizardCreatedContent.asObservable();
 
+  private _wizardUseCase = new ReplaySubject<string>();
+  wizardUseCase$ = this._wizardUseCase.asObservable();
+
+  private _wizardUseCaseGroup = new ReplaySubject<string>();
+  wizardUseCaseGroup$ = this._wizardUseCaseGroup.asObservable();
+
 
   constructor(private http: HttpClient, private toastr: ToastrService, private _docService: DocumentService) { }
 
@@ -33,4 +39,16 @@ export class WizardCreatorService {
         }
       }))
   }
+
+  
+  public set wizardUseCase(v : string) {
+    this._wizardUseCase.next(v);
+  }
+
+  
+  public set wizardUseCaseGroup(v : string) {
+    this._wizardUseCaseGroup.next(v);
+  }
+  
+  
 }
