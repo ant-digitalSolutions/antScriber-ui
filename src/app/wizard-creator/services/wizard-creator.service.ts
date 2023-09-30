@@ -16,10 +16,20 @@ export class WizardCreatorService {
   private _wizardCreatedContent = new ReplaySubject<string | null>();
   wizardCreatedContent$ = this._wizardCreatedContent.asObservable();
 
+  private _wizardUseCaseSubject = new ReplaySubject<string>();
+  wizardUseCase$ = this._wizardUseCaseSubject.asObservable();
+  _wizardUseCase: string;
+
+  private _wizardUseCaseGroupSubject = new ReplaySubject<string>();
+  wizardUseCaseGroup$ = this._wizardUseCaseGroupSubject.asObservable();
+  _wizardUseCaseGroup: string;
+
 
   constructor(private http: HttpClient, private toastr: ToastrService, private _docService: DocumentService) { }
 
   generateContent(params: WizardCreatorCreateDto) {
+    params.useCaseGroup = this._wizardUseCaseGroup;
+    params.useCase = this._wizardUseCase;
     return this.http.post<IRequestResponse<string>>(this.baseUrl + '/generate',  params )
       .pipe(tap(r => {
         if (r.success) {
@@ -33,4 +43,18 @@ export class WizardCreatorService {
         }
       }))
   }
+
+  
+  public set wizardUseCase(v : string) {
+    this._wizardUseCaseSubject.next(v);
+    this._wizardUseCase = v;
+  }
+
+  
+  public set wizardUseCaseGroup(v : string) {
+    this._wizardUseCaseGroupSubject.next(v);
+    this._wizardUseCaseGroup = v;
+  }
+  
+  
 }

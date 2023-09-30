@@ -1,12 +1,14 @@
 .field-container {
   margin: 30px 0;
+  flex-wrap: wrap ;
 }
 
 .wizard-tone-selector,
 .wizard-lang-selector,
 .wizard-variants-selector,
 .wizard-creativity-selector {
-  width: 48%;
+  width: 50%;
+  margin-top: 15px;
 }
 
 .wizard-generate-btn-container {

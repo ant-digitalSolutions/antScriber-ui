@@ -11,6 +11,17 @@ mat-tab-group {
 
 // MAT-FORM-FIELD STYLES
 
+.text-area-custom-element {
+  .mdc-text-field {
+    border-radius: 20px !important;
+
+    .mat-mdc-form-field > .mat-mdc-form-field-infix {
+      min-height: 75px !important;
+      max-height: 600px !important;
+    }
+  }
+}
+
 .mat-mdc-form-field {
   background-color: transparent;
 
@@ -40,6 +51,20 @@ mat-tab-group {
     border-radius: 40px;
     background-color: #fff !important;
   }
+
+  .mat-mdc-form-field-infix {
+    min-height: 40px !important;
+    padding-top: 16px !important;
+    // max-height: 40px !important;
+
+    .mat-mdc-floating-label {
+      top: 25px !important;
+    }
+  }
+}
+
+.mat-form-field-appearance-fill .mat-mdc-select-arrow-wrapper {
+  transform: translateY(-3px) !important;
 }
 
 /* Border */
@@ -96,4 +121,12 @@ input.mat-input-element {
   border-bottom: none !important;
   border-left: none !important;
   border-right: none !important;
+}
+
+// wizard - section styles
+
+.wizard-use-case-outer-container {
+  .mat-expansion-panel-body {
+    padding: 10px !important;
+  }
 }

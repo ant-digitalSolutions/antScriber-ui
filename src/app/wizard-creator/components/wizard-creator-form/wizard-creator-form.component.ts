@@ -8,6 +8,8 @@ import { langEnumOptionFields } from 'src/app/common/enum/lang-options.enum';
 import { ContentCreationCreativityLevel, creativityLevelOptionFields } from 'src/app/common/enum/content generation/content-creation-imagination-level.enum';
 import { WizardCreatorUseCase, wizardCreatorUseCaseEnumOptionFields } from '../../enums/wizard-creator-use-case.enum';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
+import { mapEnumNameAndValue } from 'src/app/common/functions/name-and-values-of-enum.function';
+import { OpenAiGPTVersionEnum } from 'src/app/common/enum/content generation/openai-gtp-version.enum';
 
 @Component({
   selector: 'app-wizard-creator-form',
@@ -17,7 +19,8 @@ import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.serv
 export class WizardCreatorFormComponent implements OnDestroy, OnInit {
 
 
-  MAX_AMOUNT_OPTIONS = 3;
+
+  MAX_AMOUNT_OPTIONS = 5;
 
 
   componentDestroyed$: Subject<boolean> = new Subject();
@@ -41,6 +44,8 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
 
   wizardDescriptionValidators = [Validators.required, Validators.minLength(10), Validators.maxLength(800)]
 
+  gptVersionOptions: OptionField<string>[];
+
   constructor(private _wizardCreatorService: WizardCreatorService, private projectService: BlogProjectsService) {
 
   }
@@ -53,6 +58,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
     this.initVariantsOptions();
     this.initForm();
     this.setListeners();
+    this.initGPTVersionOptions()
   }
 
   ngOnDestroy(): void {
@@ -87,15 +93,19 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
     this.wizardCreatorForm = new FormGroup({
       outputLang: new FormControl('', Validators.required), // Assuming it's a required field
       voiceTone: new FormControl(ContentTone.Informative, Validators.required),  // Defaulting to Informative
-      useCase: new FormControl(WizardCreatorUseCase.Email, Validators.required), // Replace DefaultValue with your default or appropriate enum value
       description: new FormControl('', [Validators.required, Validators.minLength(3)]),
       amountOfVariants: new FormControl(1, [Validators.required, Validators.min(1)]), // Defaulting to 1
-      creativityLevel: new FormControl(ContentCreationCreativityLevel.Zen, Validators.required) // Replace DefaultValue with your default or appropriate enum value
+      creativityLevel: new FormControl(ContentCreationCreativityLevel.Zen, Validators.required), // Replace DefaultValue with your default or appropriate enum value
+      gptVersion: new FormControl(OpenAiGPTVersionEnum.GPT3, Validators.required)
     });
   }
 
   initContentToneOptions() {
     this.contentToneOptions = contentToneOptionFields();
+  }
+
+  initGPTVersionOptions() {
+    this.gptVersionOptions = mapEnumNameAndValue(OpenAiGPTVersionEnum);
   }
 
   setContentTone(voiceTone: any) {
@@ -116,6 +126,10 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
 
   setCreativityLevel(creativityLevel: any) {
     this.wizardCreatorForm.get('creativityLevel')?.setValue(creativityLevel);
+  }
+
+  setGptVersion(gptVersion: any) {
+    this.wizardCreatorForm.get('gptVersion')?.setValue(gptVersion);
   }
 
   initwizardUseCaseOptions() {

@@ -1,0 +1,30 @@
+<div class="wizard-use-case-outer-container">
+  <div class="selected-use-case-btn-container w-100" *ngIf="!showUseCases">
+    <button mat-raised-button (click)="toggleUseCases()" class="w-100" id="btn-use-case-selector">
+      {{ selectedCase }}
+      <mat-icon>arrow_drop_down</mat-icon>
+    </button>
+  </div>
+
+  <div class="use-cases-container d-flex justify-content-center flex-column align-items-center" *ngIf="showUseCases">
+    <mat-accordion class="w-100">
+      <ng-container *ngFor="let group of useCasesGroups">
+        <mat-expansion-panel
+          (opened)="selectUseCaseGroup(group.value, true)"
+          (closed)="selectUseCaseGroup(group.value, false)"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-title> {{ group.text }} </mat-panel-title>
+            <!-- <mat-panel-description> </mat-panel-description> -->
+          </mat-expansion-panel-header>
+
+          <app-wizard-use-cases-selector-by-group
+            [useCases]="selectGroupUseCases"
+          ></app-wizard-use-cases-selector-by-group>
+        </mat-expansion-panel>
+      </ng-container>
+    </mat-accordion>
+
+    <button class="m-t-10 btn-load-more" mat-button (click)="setUseCases(false)" *ngIf="showLoadMoreUseCasesBtn">show more</button>
+  </div>
+</div>

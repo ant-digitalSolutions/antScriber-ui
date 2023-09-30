@@ -1,118 +1,124 @@
-  <div class="b-t-1 p-20" *ngIf="wizardCreatorForm">
-    <form [formGroup]="wizardCreatorForm" (ngSubmit)="generateContent()">
-      <!-- ------------------------------------------------------------------------- -->
-      <!-- Lang and Tone Selector -->
-      <!-- ------------------------------------------------------------------------- -->
+<div class="b-t-1 p-20" *ngIf="wizardCreatorForm">
+  <form [formGroup]="wizardCreatorForm" (ngSubmit)="generateContent()">
+    <!-- ------------------------------------------------------------------------- -->
+    <!-- Lang and Tone Selector -->
+    <!-- ------------------------------------------------------------------------- -->
 
-      <div
-        class="field-container lang-and-tone-container d-flex justify-content-between align-items-center"
+    <div
+      class="field-container lang-and-tone-container d-flex justify-content-between align-items-center"
+    >
+      <!-- ------------------------------------------------------------------------- -->
+      <!-- Lang Selector -->
+      <!-- ------------------------------------------------------------------------- -->
+      <app-option-field-render-and-editor
+        [fieldHumanName]="'Select Language'"
+        [options]="langEnumOptions"
+        (selectionChangeEvent)="setLang($event)"
+        class="wizard-lang-selector"
       >
-        <!-- ------------------------------------------------------------------------- -->
-        <!-- Lang Selector -->
-        <!-- ------------------------------------------------------------------------- -->
-        <app-option-field-render-and-editor
-          [fieldHumanName]="'Select Language'"
-          [options]="langEnumOptions"
-          (selectionChangeEvent)="setLang($event)"
-          class="wizard-lang-selector"
-        >
-        </app-option-field-render-and-editor>
-
-        <!-- ------------------------------------------------------------------------- -->
-        <!-- Tone Selector -->
-        <!-- ------------------------------------------------------------------------- -->
-        <app-option-field-render-and-editor
-          [fieldHumanName]="'Select Tone'"
-          [options]="contentToneOptions"
-          class="wizard-tone-selector"
-          (selectionChangeEvent)="setContentTone($event)"
-        >
-        </app-option-field-render-and-editor>
-      </div>
-
-      <div class="use-case-selector-container field-container">
-        <!-- ------------------------------------------------------------------------- -->
-        <!-- Use Case Selector -->
-        <!-- ------------------------------------------------------------------------- -->
-        <app-option-field-render-and-editor
-          [fieldHumanName]="'Select Use Case'"
-          [options]="wizardUseCaseOptions"
-          (selectionChangeEvent)="setWizardUseCase($event)"
-        >
-        </app-option-field-render-and-editor>
-      </div>
+      </app-option-field-render-and-editor>
 
       <!-- ------------------------------------------------------------------------- -->
-      <!-- Variable Input Container -->
+      <!-- Tone Selector -->
       <!-- ------------------------------------------------------------------------- -->
-      <div class="variable-input-container">
-        <app-text-area-field-render-and-editor
-          [fieldHumanName]="'Description'"
-          [fieldValue]="wizardDescription"
-          [isGenerator]="false"
-          (valueEditedEvent)="setWizardDescription($event)"
-          [inEdition]="true"
-          [placeholder]="
-            'Short description about what you intend to generate'
-          "
-          [validators]="wizardDescriptionValidators"
-          [showActions]="false"
-          [autoToggleEdition]="false"
-        ></app-text-area-field-render-and-editor>
-      </div>
-
-      <!-- ------------------------------------------------------------------------- -->
-      <!-- Variants and Creativity Level SElectors -->
-      <!-- ------------------------------------------------------------------------- -->
-
-      <div
-        class="field-container lang-and-tone-container d-flex justify-content-between align-items-center"
+      <app-option-field-render-and-editor
+        [fieldHumanName]="'Select Tone'"
+        [options]="contentToneOptions"
+        class="wizard-tone-selector"
+        (selectionChangeEvent)="setContentTone($event)"
       >
-        <!-- ------------------------------------------------------------------------- -->
-        <!-- Variants Selector -->
-        <!-- ------------------------------------------------------------------------- -->
-        <app-option-field-render-and-editor
-          [fieldHumanName]="'Variants to Generate'"
-          [options]="variantsOptions"
-          (selectionChangeEvent)="setVariants($event)"
-          class="wizard-variants-selector"
-        >
-        </app-option-field-render-and-editor>
+      </app-option-field-render-and-editor>
+    </div>
 
-        <!-- ------------------------------------------------------------------------- -->
-        <!-- Creativity Level Selector -->
-        <!-- ------------------------------------------------------------------------- -->
-        <app-option-field-render-and-editor
-          [fieldHumanName]="'Creative Intensity'"
-          [options]="creativityLevelOptions"
-          (selectionChangeEvent)="setCreativityLevel($event)"
-          class="wizard-creativity-selector"
-        >
-        </app-option-field-render-and-editor>
-      </div>
+    <!-- ------------------------------------------------------------------------- -->
+    <!-- Use Case Selector -->
+    <!-- ------------------------------------------------------------------------- -->
+
+    <div class="use-case-selector-container field-container">
+      <app-wizard-use-cases-selector-home></app-wizard-use-cases-selector-home>
+    </div>
+
+    <!-- ------------------------------------------------------------------------- -->
+    <!-- Variable Input Container -->
+    <!-- ------------------------------------------------------------------------- -->
+    <div class="variable-input-container">
+      <app-text-area-field-render-and-editor
+        [fieldHumanName]="'Description'"
+        [fieldValue]="wizardDescription"
+        [isGenerator]="false"
+        (valueEditedEvent)="setWizardDescription($event)"
+        [inEdition]="true"
+        [placeholder]="'Short description about what you intend to generate'"
+        [validators]="wizardDescriptionValidators"
+        [showActions]="false"
+        [autoToggleEdition]="false"
+      ></app-text-area-field-render-and-editor>
+    </div>
+
+    <!-- ------------------------------------------------------------------------- -->
+    <!-- Variants and Creativity Level SElectors -->
+    <!-- ------------------------------------------------------------------------- -->
+
+    <div
+      class="field-container lang-and-tone-container d-flex justify-content-between align-items-center m-t-0"
+    >
+      <!-- ------------------------------------------------------------------------- -->
+      <!-- Variants Selector -->
+      <!-- ------------------------------------------------------------------------- -->
+      <app-option-field-render-and-editor
+        [fieldHumanName]="'# Of Spells'"
+        [options]="variantsOptions"
+        (selectionChangeEvent)="setVariants($event)"
+        class="wizard-variants-selector col-4 m-0"
+      >
+      </app-option-field-render-and-editor>
 
       <!-- ------------------------------------------------------------------------- -->
-      <!-- Action Buttons -->
+      <!-- GPT Version Selector -->
       <!-- ------------------------------------------------------------------------- -->
+      <app-option-field-render-and-editor
+        [fieldHumanName]="'Select Your Sorcery Level'"
+        [options]="gptVersionOptions"
+        (selectionChangeEvent)="setGptVersion($event)"
+        class="gpt-version-selector col-8 m-0"
+      >
+      </app-option-field-render-and-editor>
+    </div>
 
-      <div class="wizard-generate-btn-container">
-        <button
-          mat-flat-button
-          color="primary"
-          type="submit"
-          [disabled]="isLoading"
-          class="wizard-generate-btn"
-        >
+    <div class="field-container">
+      <!-- ------------------------------------------------------------------------- -->
+      <!-- Creativity Level Selector -->
+      <!-- ------------------------------------------------------------------------- -->
+      <app-option-field-render-and-editor
+        [fieldHumanName]="'Creative Intensity'"
+        [options]="creativityLevelOptions"
+        (selectionChangeEvent)="setCreativityLevel($event)"
+        class="wizard-creativity-selector"
+      >
+      </app-option-field-render-and-editor>
+    </div>
+
+    <!-- ------------------------------------------------------------------------- -->
+    <!-- Action Buttons -->
+    <!-- ------------------------------------------------------------------------- -->
+
+    <div class="wizard-generate-btn-container">
+      <button
+        mat-flat-button
+        color="primary"
+        type="submit"
+        [disabled]="isLoading"
+        class="wizard-generate-btn"
+      >
         <mat-icon *ngIf="!isLoading; else loading">rocket_launch</mat-icon>
-     
 
         <ng-template #loading>
           <mat-spinner class="btn-loading-spinner"></mat-spinner>
         </ng-template>
 
-          Unleash the Magic
-        </button>
-      </div>
-    </form>
-  </div>
-    <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
+        Unleash the Magic
+      </button>
+    </div>
+  </form>
+</div>
+<!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
