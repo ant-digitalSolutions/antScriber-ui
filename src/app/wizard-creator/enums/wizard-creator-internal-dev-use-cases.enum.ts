@@ -1,3 +1,3 @@
 export enum WizardCreatorInternalDevUseCasesEnum {
-    UseCasePromptGenerator = 'Prompt for use case'
+    UseCasePromptGenerator = 'Generate prompt for Wizard Use Case'
 }
