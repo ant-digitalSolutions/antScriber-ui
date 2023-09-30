@@ -1,6 +1,7 @@
 import { ContentTone } from "src/app/common/enum/content generation/content-tone.enum";
 import { WizardCreatorUseCase } from "../enums/wizard-creator-use-case.enum";
 import { ContentCreationCreativityLevel } from "src/app/common/enum/content generation/content-creation-imagination-level.enum";
+import { OpenAiGPTVersionEnum } from "src/app/common/enum/content generation/openai-gtp-version.enum";
 
 export class WizardCreatorCreateDto {
     outputLang: string;
@@ -32,4 +33,6 @@ export class WizardCreatorCreateDto {
      * @memberof WizardCreatorCreateDto
      */
     useCase: string;
+
+    gptVersion: OpenAiGPTVersionEnum;
 }

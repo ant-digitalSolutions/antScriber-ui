@@ -66,13 +66,26 @@
       <!-- Variants Selector -->
       <!-- ------------------------------------------------------------------------- -->
       <app-option-field-render-and-editor
-        [fieldHumanName]="'Variants to Generate'"
+        [fieldHumanName]="'# Of Spells'"
         [options]="variantsOptions"
         (selectionChangeEvent)="setVariants($event)"
-        class="wizard-variants-selector"
+        class="wizard-variants-selector col-4 m-0"
       >
       </app-option-field-render-and-editor>
 
+      <!-- ------------------------------------------------------------------------- -->
+      <!-- GPT Version Selector -->
+      <!-- ------------------------------------------------------------------------- -->
+      <app-option-field-render-and-editor
+        [fieldHumanName]="'Select Your Sorcery Level'"
+        [options]="gptVersionOptions"
+        (selectionChangeEvent)="setGptVersion($event)"
+        class="gpt-version-selector col-8 m-0"
+      >
+      </app-option-field-render-and-editor>
+    </div>
+
+    <div class="field-container">
       <!-- ------------------------------------------------------------------------- -->
       <!-- Creativity Level Selector -->
       <!-- ------------------------------------------------------------------------- -->
