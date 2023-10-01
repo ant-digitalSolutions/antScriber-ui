@@ -13,6 +13,7 @@ import { WizardCreatorEcommerceUseCasesEnum } from '../../enums/wizard-creator-e
 import { WizardCreatorMarketingUseCasesEnum } from '../../enums/wizard-creator-marketing-use-cases.enum';
 import { WizardCreatorCodingUseCasesEnum } from '../../enums/wizard-creator-coding-use-cases.enum';
 import { WizardCreatorInternalDevUseCasesEnum } from '../../enums/wizard-creator-internal-dev-use-cases.enum';
+import { WizardCreatorLearningUseCasesEnum } from '../../enums/wizard-creator-learning-use-cases.enum';
 
 @Component({
   selector: 'app-wizard-use-cases-selector-home',
@@ -98,6 +99,9 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
         break;
       case WizardCreatorUseCaseGroup.InternalDev:
         this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorInternalDevUseCasesEnum);
+        break;
+      case WizardCreatorUseCaseGroup.Learning:
+        this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorLearningUseCasesEnum);
         break;
 
       default:
