@@ -24,12 +24,16 @@ export class WizardCreatorService {
   wizardUseCaseGroup$ = this._wizardUseCaseGroupSubject.asObservable();
   _wizardUseCaseGroup: string;
 
+  _formAdditionalData: any = {};
+
 
   constructor(private http: HttpClient, private toastr: ToastrService, private _docService: DocumentService) { }
 
   generateContent(params: WizardCreatorCreateDto) {
     params.useCaseGroup = this._wizardUseCaseGroup;
     params.useCase = this._wizardUseCase;
+    params.data = this._formAdditionalData;
+    
     return this.http.post<IRequestResponse<string>>(this.baseUrl + '/generate',  params )
       .pipe(tap(r => {
         if (r.success) {
@@ -54,6 +58,10 @@ export class WizardCreatorService {
   public set wizardUseCaseGroup(v : string) {
     this._wizardUseCaseGroupSubject.next(v);
     this._wizardUseCaseGroup = v;
+  }
+
+  updateAdditionalData(fieldName: string, fieldValue: any) {
+    this._formAdditionalData[fieldName] = fieldValue;
   }
   
   

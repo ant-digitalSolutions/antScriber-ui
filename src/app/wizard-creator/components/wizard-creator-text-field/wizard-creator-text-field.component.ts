@@ -4,6 +4,7 @@ import { FloatLabelType } from '@angular/material/form-field';
 import { Validators } from 'ngx-editor';
 import { ToastrService } from 'ngx-toastr';
 import { TextFieldToRenderData } from 'src/app/common/interfaces/field-to-render-data';
+import { WizardCreatorService } from '../../services/wizard-creator.service';
 
 @Component({
   selector: 'app-wizard-creator-text-field',
@@ -24,7 +25,8 @@ export class WizardCreatorTextFieldComponent {
   @Output()
   valueEditedEvent = new EventEmitter<string>();
 
-  constructor(private toastr: ToastrService) {
+  constructor(private toastr: ToastrService, 
+    private _wizardService: WizardCreatorService) {
 
 
   }
@@ -43,6 +45,7 @@ export class WizardCreatorTextFieldComponent {
   saveEdition() {
     if (this.fieldForm.valid) {
       this.valueEditedEvent.emit(this.fieldForm.value);
+      this._wizardService.updateAdditionalData(this.fieldData.dataName, this.fieldForm.value);
     } else {
       this.toastr.error('Please fix the errors')
     }

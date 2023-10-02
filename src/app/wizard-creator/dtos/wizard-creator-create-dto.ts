@@ -35,4 +35,15 @@ export class WizardCreatorCreateDto {
     useCase: string;
 
     gptVersion: OpenAiGPTVersionEnum;
+
+    /**
+   * Contains additional from the user that is needed to generate the prompt.
+   * This data is variable for each use-case.
+   *
+   * This field is an object that contains variable fields
+   *
+   * @type {*}
+   * @memberof WizardCreatorCreateDto
+   */
+    data: any;
 }

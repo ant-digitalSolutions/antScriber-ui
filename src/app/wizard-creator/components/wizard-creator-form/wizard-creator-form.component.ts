@@ -10,6 +10,7 @@ import { WizardCreatorUseCase, wizardCreatorUseCaseEnumOptionFields } from '../.
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 import { mapEnumNameAndValue } from 'src/app/common/functions/name-and-values-of-enum.function';
 import { OpenAiGPTVersionEnum } from 'src/app/common/enum/content generation/openai-gtp-version.enum';
+import { WizardFormService } from '../../services/wizard-form.service';
 
 @Component({
   selector: 'app-wizard-creator-form',
@@ -53,7 +54,10 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
    */
   showDescriptionField = true;
 
-  constructor(private _wizardCreatorService: WizardCreatorService, private projectService: BlogProjectsService) {
+  constructor(
+    private _wizardCreatorService: WizardCreatorService, 
+    private projectService: BlogProjectsService,
+    private _wizardFormService: WizardFormService) {
 
   }
 
@@ -166,5 +170,31 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
     this.wizardCreatorForm.get('description')?.setValue(description);
 
   }
+
+  
+  public get showDescription() : boolean {
+    return this._wizardFormService.showDescriptionInput;
+  }
+
+  public get showLang(): boolean {
+    return this._wizardFormService.showLangInput;
+  }
+  
+  public get showTone(): boolean {
+    return this._wizardFormService.showToneInput;
+  }
+
+  public get showCreativity(): boolean {
+    return this._wizardFormService.showCreativityInput;
+  }
+
+  public get showNumberOfVariantsToGenerate(): boolean {
+    return this._wizardFormService.showNumberOfVariantsToGenerate;
+  }
+
+  public get showGptVersion(): boolean {
+    return this._wizardFormService.showGptVersion;
+  }
+  
 
 }

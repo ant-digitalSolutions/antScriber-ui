@@ -7,7 +7,9 @@
   <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block">{{
     fieldData.fieldLabel
   }}</mat-label>
-  <input matInput type="text" [formControl]="fieldForm" [placeholder]="fieldData.placeholder" (blur)="saveEdition()">
+  <input matInput type="text" [formControl]="fieldForm" [placeholder]="fieldData.placeholder" (blur)="saveEdition()" *ngIf="!fieldData.isLongText">
+
+   <textarea matInput rows="5" [formControl]="fieldForm" [placeholder]="fieldData.placeholder" (blur)="saveEdition()" *ngIf="fieldData.isLongText" ></textarea>
    <mat-error *ngIf="fieldForm.invalid">{{getErrorMessage()}}</mat-error>
 </mat-form-field>
 

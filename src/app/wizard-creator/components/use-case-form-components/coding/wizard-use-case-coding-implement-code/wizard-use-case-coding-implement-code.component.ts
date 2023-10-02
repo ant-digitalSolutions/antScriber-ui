@@ -3,6 +3,7 @@ import { IconBrandTypescript } from 'angular-tabler-icons/icons';
 import { Validators } from 'ngx-editor';
 import { TextFieldToRenderData } from 'src/app/common/interfaces/field-to-render-data';
 import { WizardCreatorService } from 'src/app/wizard-creator/services/wizard-creator.service';
+import { WizardFormService } from 'src/app/wizard-creator/services/wizard-form.service';
 
 @Component({
   selector: 'app-wizard-use-case-coding-implement-code',
@@ -14,9 +15,12 @@ export class WizardUseCaseCodingImplementCodeComponent implements OnInit {
 
   fields: TextFieldToRenderData[];
 
-  constructor(private _wizard: WizardCreatorService) { }
+  constructor(
+    private _wizard: WizardCreatorService,
+    private _wizardForm: WizardFormService) { }
 
   ngOnInit(): void {
+    this._wizardForm.updateFieldsForCodingImplementCode();
     this.setNeededFields();
   }
 
