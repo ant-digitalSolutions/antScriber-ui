@@ -3,7 +3,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 import { WizardCreatorService } from '../../services/wizard-creator.service';
 import { DocumentService } from 'src/app/document/services/document.service';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import InlineEditor from '@ckeditor/ckeditor5-build-inline';
 
 @Component({
   selector: 'app-wizard-creator-editor',
@@ -13,7 +13,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 export class WizardCreatorEditorComponent implements OnDestroy, OnInit {
 
 
-  public Editor = ClassicEditor;
+  public Editor = InlineEditor;
 
 
   componentDestroyed$: Subject<boolean> = new Subject();

@@ -1,4 +1,3 @@
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { DocumentService } from '../../services/document.service';
 import { DocumentDetailsDto } from '../../dtos/document-details.dto';
@@ -9,6 +8,7 @@ import { Validators } from 'ngx-editor';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { P } from '@angular/cdk/keycodes';
+import InlineEditor from '@ckeditor/ckeditor5-build-inline';
 
 @Component({
   selector: 'app-document-editor',
@@ -19,7 +19,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
 
 
 
-  public Editor = ClassicEditor;
+  public Editor = InlineEditor;
 
 
   componentDestroyed$: Subject<boolean> = new Subject();
