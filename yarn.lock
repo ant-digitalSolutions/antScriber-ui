@@ -1293,10 +1293,10 @@
   dependencies:
     ckeditor5 "39.0.2"
 
-"@ckeditor/ckeditor5-build-inline@^39.0.2":
+"@ckeditor/ckeditor5-build-balloon@^39.0.2":
   version "39.0.2"
-  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-build-inline/-/ckeditor5-build-inline-39.0.2.tgz#6a48ee80064b293106f6beec649df4ecd4c45cd8"
-  integrity sha512-NQsRD6NOOyzpTaFDYNiK0lV2egJBEoz+QJUDR/nNwzd/OV4MmINTkbD3Rn9Srf0f9+gNfCFf0AZRr01CCqhDLg==
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-build-balloon/-/ckeditor5-build-balloon-39.0.2.tgz#e71f7871403bb26a2f13983e2cf54c474099d82b"
+  integrity sha512-NT48xbElyBXgDU6jaga+7bS2wQDnaGZrcsFRdjwSm8KlV78RMltPVHafb2lLyUg9EK25Pe+5NYFXFiNmx8LzMw==
   dependencies:
     "@ckeditor/ckeditor5-adapter-ckfinder" "39.0.2"
     "@ckeditor/ckeditor5-autoformat" "39.0.2"
@@ -1306,7 +1306,7 @@
     "@ckeditor/ckeditor5-ckfinder" "39.0.2"
     "@ckeditor/ckeditor5-cloud-services" "39.0.2"
     "@ckeditor/ckeditor5-easy-image" "39.0.2"
-    "@ckeditor/ckeditor5-editor-inline" "39.0.2"
+    "@ckeditor/ckeditor5-editor-balloon" "39.0.2"
     "@ckeditor/ckeditor5-essentials" "39.0.2"
     "@ckeditor/ckeditor5-heading" "39.0.2"
     "@ckeditor/ckeditor5-image" "39.0.2"
@@ -1368,10 +1368,10 @@
   dependencies:
     ckeditor5 "39.0.2"
 
-"@ckeditor/ckeditor5-editor-inline@39.0.2":
+"@ckeditor/ckeditor5-editor-balloon@39.0.2":
   version "39.0.2"
-  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-editor-inline/-/ckeditor5-editor-inline-39.0.2.tgz#28d2a2390947d03af16d79bdf7f982a9d8f20eba"
-  integrity sha512-NNDRipP7/oD8ksBo06/4pYreXdke5wxmJXKHDJ80LOyLPKk+5nM58mCbsZ1S0t/0RQb9EdOUbE5nzatS/o0kfA==
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-editor-balloon/-/ckeditor5-editor-balloon-39.0.2.tgz#4a72fd313e66d41fb84e68e5f4469927ebe31da2"
+  integrity sha512-5tT0zzsF9OQViZekLQYfcLuwwhxqV352cFmT2ir/LRxVqz8dyz7e/yk54Peint0Fsstk2uzaZ4eINzUTdpsfSA==
   dependencies:
     ckeditor5 "39.0.2"
     lodash-es "4.17.21"

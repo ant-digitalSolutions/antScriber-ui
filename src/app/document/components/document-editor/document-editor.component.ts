@@ -8,7 +8,7 @@ import { Validators } from 'ngx-editor';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { P } from '@angular/cdk/keycodes';
-import InlineEditor from '@ckeditor/ckeditor5-build-inline';
+import BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 
 @Component({
   selector: 'app-document-editor',
@@ -19,7 +19,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
 
 
 
-  public Editor = InlineEditor;
+  public Editor = BalloonEditor;
 
 
   componentDestroyed$: Subject<boolean> = new Subject();
