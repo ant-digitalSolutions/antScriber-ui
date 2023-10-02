@@ -4,8 +4,9 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { WizardCreatorCreateDto } from '../dtos/wizard-creator-create-dto';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, ReplaySubject, tap } from 'rxjs';
+import { EMPTY, Observable, ReplaySubject, of, tap } from 'rxjs';
 import { DocumentService } from 'src/app/document/services/document.service';
+import { WizardFormService } from './wizard-form.service';
 
 @Injectable()
 export class WizardCreatorService {
@@ -27,20 +28,32 @@ export class WizardCreatorService {
   _formAdditionalData: any = {};
 
 
-  constructor(private http: HttpClient, private toastr: ToastrService, private _docService: DocumentService) { }
+  constructor(
+    private http: HttpClient, 
+    private toastr: ToastrService, 
+    private _docService: DocumentService, 
+    private _wizardForm: WizardFormService) { }
 
   generateContent(params: WizardCreatorCreateDto) {
     params.useCaseGroup = this._wizardUseCaseGroup;
     params.useCase = this._wizardUseCase;
     params.data = this._formAdditionalData;
+
+    if (!this._wizardForm.checkAdditionalData()) {
+      this.toastr.error('Please check your data');
+      return of({});
+    }
     
     return this.http.post<IRequestResponse<string>>(this.baseUrl + '/generate',  params )
       .pipe(tap(r => {
         if (r.success) {
           this._wizardCreatedContent.next(r.data!);
 
-          const creatorDescription = params.description.substring(0, 50);
-          this._docService.handleNewContent(creatorDescription, r.data!);
+          const newDocName = params.description ? 
+          params.description.substring(0, 50)
+          : `${params.useCaseGroup} - ${params.useCase}` ;
+          
+          this._docService.handleNewContent(newDocName, r.data!);
         } else {
           this.toastr.error(r.error);
           this._wizardCreatedContent.next(null);

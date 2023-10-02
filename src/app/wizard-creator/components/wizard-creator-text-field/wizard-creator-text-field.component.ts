@@ -1,3 +1,4 @@
+import { piechart } from './../../../template-bundle/components/dashboard3/pie-cards/pie-cards.component';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FloatLabelType } from '@angular/material/form-field';
@@ -5,6 +6,8 @@ import { Validators } from 'ngx-editor';
 import { ToastrService } from 'ngx-toastr';
 import { TextFieldToRenderData } from 'src/app/common/interfaces/field-to-render-data';
 import { WizardCreatorService } from '../../services/wizard-creator.service';
+import { Subject, takeUntil } from 'rxjs';
+import { WizardFormService } from '../../services/wizard-form.service';
 
 @Component({
   selector: 'app-wizard-creator-text-field',
@@ -12,6 +15,8 @@ import { WizardCreatorService } from '../../services/wizard-creator.service';
   styleUrls: ['./wizard-creator-text-field.component.scss']
 })
 export class WizardCreatorTextFieldComponent {
+  
+  componentDestroyed$: Subject<boolean> = new Subject();
 
   @Input()
   fieldData: TextFieldToRenderData;
@@ -26,20 +31,33 @@ export class WizardCreatorTextFieldComponent {
   valueEditedEvent = new EventEmitter<string>();
 
   constructor(private toastr: ToastrService, 
-    private _wizardService: WizardCreatorService) {
+    private _wizardService: WizardCreatorService,
+    private _wizardFormService: WizardFormService) {
 
 
   }
 
   ngOnInit(): void {
-    this.fieldForm = new FormControl(this.fieldData.fieldValue, [...this.fieldData.validators])
+    this.fieldForm = new FormControl(this.fieldData.fieldValue, [...this.fieldData.validators]);
+    this.setListeners();
+    this._wizardFormService.registerAdditionalDataFormField(this.fieldData.dataName, this.fieldForm);
   }
 
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes['fieldValue']) {
-  //     this.isLoading = false;
-  //   }
-  // }
+
+  ngOnDestroy(): void {
+    this.componentDestroyed$.next(true)
+    this.componentDestroyed$.complete()
+  }
+
+ setListeners() {
+  this._wizardFormService.additionalDataFieldWithError$
+  .pipe(takeUntil(this.componentDestroyed$))
+  .subscribe(fieldName => {
+    if (fieldName === this.fieldData.dataName) {
+      this.fieldForm.markAsDirty();
+    }
+  })
+ }
 
 
   saveEdition() {
@@ -68,4 +86,16 @@ export class WizardCreatorTextFieldComponent {
 
     return 'There is an error in your input'
   }
+  
+  
+  public get length() : number {
+    return (this.fieldForm.value as string).length;
+  }
+
+  
+  public get maxLen() : number {
+    return this.fieldData.inputMaxLen;
+  }
+  
+  
 }

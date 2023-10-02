@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IconBrandTypescript } from 'angular-tabler-icons/icons';
 import { Validators } from 'ngx-editor';
 import { TextFieldToRenderData } from 'src/app/common/interfaces/field-to-render-data';
@@ -10,7 +10,7 @@ import { WizardFormService } from 'src/app/wizard-creator/services/wizard-form.s
   templateUrl: './wizard-use-case-coding-implement-code.component.html',
   styleUrls: ['./wizard-use-case-coding-implement-code.component.scss']
 })
-export class WizardUseCaseCodingImplementCodeComponent implements OnInit {
+export class WizardUseCaseCodingImplementCodeComponent implements OnInit, OnDestroy {
 
 
   fields: TextFieldToRenderData[];
@@ -19,9 +19,15 @@ export class WizardUseCaseCodingImplementCodeComponent implements OnInit {
     private _wizard: WizardCreatorService,
     private _wizardForm: WizardFormService) { }
 
+
   ngOnInit(): void {
     this._wizardForm.updateFieldsForCodingImplementCode();
+    this._wizardForm.cleanData();
     this.setNeededFields();
+  }
+
+  ngOnDestroy(): void {
+   this._wizardForm.restoreDefaultFields();
   }
 
   setNeededFields() {
@@ -32,6 +38,7 @@ export class WizardUseCaseCodingImplementCodeComponent implements OnInit {
       fieldLabel: 'Programming Lang',
       fieldValue: 'Typescript',
       validators: [Validators.required(), Validators.maxLength(20)],
+      inputMaxLen: 20,
       dataName: 'programmingLang'
     })
 
@@ -40,6 +47,7 @@ export class WizardUseCaseCodingImplementCodeComponent implements OnInit {
       fieldLabel: 'Framework',
       fieldValue: 'Angular',
       validators: [Validators.maxLength(20)],
+      inputMaxLen: 20,
       dataName: 'framework'
     })
 
@@ -48,6 +56,7 @@ export class WizardUseCaseCodingImplementCodeComponent implements OnInit {
       fieldLabel: 'Additional Code',
       fieldValue: '',
       validators: [Validators.maxLength(4000)],
+      inputMaxLen: 4000,
       dataName: 'additionalCode',
       isLongText: true
     })
@@ -57,6 +66,7 @@ export class WizardUseCaseCodingImplementCodeComponent implements OnInit {
       fieldLabel: 'Instruction',
       fieldValue: '',
       validators: [Validators.required(), Validators.minLength(10), Validators.maxLength(600)],
+      inputMaxLen: 600,
       dataName: 'instruction',
       isLongText: true
     })

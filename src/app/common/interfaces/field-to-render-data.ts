@@ -48,4 +48,6 @@ export class TextFieldToRenderData {
      * @memberof TextFieldToRenderData
      */
     isLongText?: boolean;
+
+    inputMaxLen: number;
 }
