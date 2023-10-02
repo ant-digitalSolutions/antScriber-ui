@@ -1,4 +1,3 @@
-import { WizardCreatorUseCase } from './../../../../enums/wizard-creator-use-case.enum';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { WizardCreatorCodingUseCasesEnum } from 'src/app/wizard-creator/enums/wizard-creator-coding-use-cases.enum';
@@ -25,7 +24,7 @@ export class WizardUseCaseCodingHomeComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.setListeners();
   }
 
   setListeners() {

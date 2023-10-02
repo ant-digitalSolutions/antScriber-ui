@@ -46,6 +46,13 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
 
   gptVersionOptions: OptionField<string>[];
 
+  /**
+   * If true the default description field will be shown.
+   *
+   * @memberof WizardCreatorFormComponent
+   */
+  showDescriptionField = true;
+
   constructor(private _wizardCreatorService: WizardCreatorService, private projectService: BlogProjectsService) {
 
   }

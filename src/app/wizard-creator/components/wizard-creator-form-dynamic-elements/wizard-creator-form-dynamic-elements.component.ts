@@ -28,7 +28,7 @@ export class WizardCreatorFormDynamicElementsComponent implements OnDestroy, OnI
   }
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.setListeners();
   }
 
   setListeners() {
