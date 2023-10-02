@@ -12,6 +12,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { WizardUseCasesSelectorHomeComponent } from './components/wizard-use-cases-selector-home/wizard-use-cases-selector-home.component';
 import { WizardUseCasesSelectorByGroupComponent } from './components/wizard-use-cases-selector-by-group/wizard-use-cases-selector-by-group.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { WizardCreatorTextFieldComponent } from './components/wizard-creator-text-field/wizard-creator-text-field.component';
 
 
 
@@ -20,7 +21,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     WizardCreatorHomeComponent,
     WizardCreatorFormComponent,
     WizardUseCasesSelectorHomeComponent,
-    WizardUseCasesSelectorByGroupComponent
+    WizardUseCasesSelectorByGroupComponent,
+    WizardCreatorTextFieldComponent
   ],
   imports: [
     CommonModule,
