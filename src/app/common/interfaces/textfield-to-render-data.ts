@@ -50,4 +50,12 @@ export class TextFieldToRenderData {
     isLongText?: boolean;
 
     inputMaxLen: number;
+
+    /**
+     * Contains the text to render in the tooltip of the element
+     *
+     * @type {string}
+     * @memberof TextFieldToRenderData
+     */
+    tooltipText?: string;
 }
