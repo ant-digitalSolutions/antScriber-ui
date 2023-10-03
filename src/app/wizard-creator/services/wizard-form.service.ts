@@ -100,6 +100,12 @@ export class WizardFormService {
     this._formAdditionalData[fieldName] = fieldValue;
   }
 
+  /**
+   * Emit when there is an update in a button toggle element.
+   *
+   * @param {string} dataName
+   * @memberof WizardFormService
+   */
   buttonToggleUpdate(dataName: string) {
     this._buttonToggleUpdate.next(dataName)
   }
@@ -133,6 +139,24 @@ export class WizardFormService {
     } 
 
     return undefined;
+  }
+
+  /**
+   * Remove the data from the additionalData object and
+   * any other state object.
+   * 
+   * Use this method when using conditional elements in the form view of
+   * an specific use-case.
+   *
+   * @param {string} fieldName
+   * @memberof WizardFormService
+   */
+  removeFieldFromAdditionalData(fieldName: string): void {
+    if (Object.keys(this._formAdditionalData).indexOf(fieldName) >= 0) {
+      delete this._formAdditionalData[fieldName];
+    }
+
+    this._additionalDataFormFields = this._additionalDataFormFields.filter(field => field.fieldName !== fieldName);
   }
 
   

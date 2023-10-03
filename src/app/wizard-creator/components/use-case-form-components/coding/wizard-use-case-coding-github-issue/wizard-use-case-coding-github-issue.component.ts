@@ -45,7 +45,8 @@ export class WizardUseCaseCodingGithubIssueComponent {
   ngOnDestroy(): void {
     this._wizardForm.restoreDefaultFields();
     this.componentDestroyed$.next(true)
-    this.componentDestroyed$.complete()
+    this.componentDestroyed$.complete();
+    this._wizardForm.cleanData();
   }
 
   setNeededFields() {
@@ -87,17 +88,6 @@ export class WizardUseCaseCodingGithubIssueComponent {
       isLongText: true
     })
 
-    this.textFields.push({
-      placeholder: 'Your code here',
-      fieldLabel: 'Additional Code',
-      fieldValue: '',
-      validators: [Validators.maxLength(2000)],
-      inputMaxLen: 2000,
-      dataName: 'additionalCode',
-      isLongText: true,
-      tooltipText: 'Any pre-existing code that needs to be incorporated or considered.'
-    });
-
     this.buttonToggleFields.push({
       dataName: 'typeOfIssue',
       fieldLabel: 'Type of Issue',
@@ -128,6 +118,13 @@ export class WizardUseCaseCodingGithubIssueComponent {
 
   setFieldsToRender(selectedTypeOfIssue: string): void {
     this.selectedTypeOfIssue = selectedTypeOfIssue;
+
+    if (selectedTypeOfIssue === 'bugReport') {
+      this._wizardForm.removeFieldFromAdditionalData('featureDescription');
+    } else {
+      this._wizardForm.removeFieldFromAdditionalData('bugSolution');
+      this._wizardForm.removeFieldFromAdditionalData('bugDescription');
+    }
   }
 
 
