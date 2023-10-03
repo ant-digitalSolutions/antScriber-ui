@@ -1,13 +1,12 @@
-import { piechart } from './../../../template-bundle/components/dashboard3/pie-cards/pie-cards.component';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FloatLabelType } from '@angular/material/form-field';
 import { Validators } from 'ngx-editor';
 import { ToastrService } from 'ngx-toastr';
-import { TextFieldToRenderData } from 'src/app/common/interfaces/field-to-render-data';
-import { WizardCreatorService } from '../../services/wizard-creator.service';
+import { TextFieldToRenderData } from 'src/app/common/interfaces/textfield-to-render-data';
 import { Subject, takeUntil } from 'rxjs';
-import { WizardFormService } from '../../services/wizard-form.service';
+import { WizardCreatorService } from 'src/app/wizard-creator/services/wizard-creator.service';
+import { WizardFormService } from 'src/app/wizard-creator/services/wizard-form.service';
 
 @Component({
   selector: 'app-wizard-creator-text-field',

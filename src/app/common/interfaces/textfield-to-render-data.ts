@@ -14,7 +14,7 @@ export class TextFieldToRenderData {
      * @type {string}
      * @memberof TextFieldToRenderData
      */
-    fieldValue?: string;
+    fieldValue?: any;
 
     /**
      * The human name of the field to show to the user.
