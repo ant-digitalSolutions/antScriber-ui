@@ -2,7 +2,7 @@
     <app-wizard-creator-button-toggle [fieldData]="buttonToggleData('typeOfIssue')"></app-wizard-creator-button-toggle>
 </div>
 
-<div class="fields-container">
+<div class="fields-container" *ngIf="selectedTypeOfIssue === 'bugReport'">
     <app-wizard-creator-text-field 
     [fieldData]="textFieldData('bugDescription')"
     >
@@ -14,7 +14,7 @@
     </app-wizard-creator-text-field>
 </div>
 
-<div class="fields-container">
+<div class="fields-container" *ngIf="selectedTypeOfIssue === 'featureRequest'">
     <app-wizard-creator-text-field 
     [fieldData]="textFieldData('featureDescription')"
     >

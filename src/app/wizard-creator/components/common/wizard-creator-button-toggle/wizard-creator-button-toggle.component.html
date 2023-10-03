@@ -2,7 +2,7 @@
   <mat-button-toggle-group
     [name]="fieldData.dataName"
     formControlName="value"
-    (change)="(valueChange)"
+    (change)="valueChange()"
   >
     <mat-button-toggle
       [value]="item.value"

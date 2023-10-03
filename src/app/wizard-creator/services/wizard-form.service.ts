@@ -6,9 +6,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class WizardFormService {
-  buttonToggleUpdate(dataName: string) {
-    throw new Error('Method not implemented.');
-  }
+
 
   showDescriptionInput = true;
 
@@ -102,6 +100,10 @@ export class WizardFormService {
     this._formAdditionalData[fieldName] = fieldValue;
   }
 
+  buttonToggleUpdate(dataName: string) {
+    this._buttonToggleUpdate.next(dataName)
+  }
+
   cleanData() {
     this._additionalDataFormFields = [];
     this._formAdditionalData = {};
@@ -115,6 +117,22 @@ export class WizardFormService {
     this.showNumberOfVariantsToGenerate = true;
     this.showGptVersion = true;
     this.showCreativityInput = true;
+  }
+
+  /**
+   * Returns the value of the field in the additionalData object
+   * which name match with the given name
+   *
+   * @param {string} dataName
+   * @return {*}  {*}
+   * @memberof WizardFormService
+   */
+  additionalDataFieldValue(dataName: string): any {
+    if (Object.keys(this._formAdditionalData).indexOf(dataName) >= 0) {
+      return this._formAdditionalData[dataName];
+    } 
+
+    return undefined;
   }
 
   
