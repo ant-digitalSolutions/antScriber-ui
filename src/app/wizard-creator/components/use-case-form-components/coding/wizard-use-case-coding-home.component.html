@@ -1,0 +1,7 @@
+<div class="dynamic-coding-use-case-outer-container">
+  <ng-container [ngSwitch]="userCase">
+    <app-wizard-use-case-coding-implement-code
+      *ngSwitchCase="wizardUseCase.ImplementFunction"
+    ></app-wizard-use-case-coding-implement-code>
+  </ng-container>
+</div>

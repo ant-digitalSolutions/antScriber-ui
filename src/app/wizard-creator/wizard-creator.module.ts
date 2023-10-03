@@ -12,6 +12,11 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { WizardUseCasesSelectorHomeComponent } from './components/wizard-use-cases-selector-home/wizard-use-cases-selector-home.component';
 import { WizardUseCasesSelectorByGroupComponent } from './components/wizard-use-cases-selector-by-group/wizard-use-cases-selector-by-group.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { WizardCreatorFormDynamicElementsComponent } from './components/wizard-creator-form-dynamic-elements/wizard-creator-form-dynamic-elements.component';
+import { WizardUseCaseCodingImplementCodeComponent } from './components/use-case-form-components/coding/wizard-use-case-coding-implement-code/wizard-use-case-coding-implement-code.component';
+import { WizardUseCaseCodingHomeComponent } from './components/use-case-form-components/coding/wizard-use-case-coding-home.component';
+import { WizardCreatorTextFieldComponent } from './components/common/wizard-creator-text-field/wizard-creator-text-field.component';
+import { WizardCreatorCheckboxFieldComponent } from './components/common/wizard-creator-checkbox-field/wizard-creator-checkbox-field.component';
 
 
 
@@ -20,7 +25,12 @@ import { MatExpansionModule } from '@angular/material/expansion';
     WizardCreatorHomeComponent,
     WizardCreatorFormComponent,
     WizardUseCasesSelectorHomeComponent,
-    WizardUseCasesSelectorByGroupComponent
+    WizardUseCasesSelectorByGroupComponent,
+    WizardCreatorTextFieldComponent,
+    WizardCreatorFormDynamicElementsComponent,
+    WizardUseCaseCodingHomeComponent,
+    WizardUseCaseCodingImplementCodeComponent,
+    WizardCreatorCheckboxFieldComponent
   ],
   imports: [
     CommonModule,

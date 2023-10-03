@@ -15,6 +15,7 @@
         [options]="langEnumOptions"
         (selectionChangeEvent)="setLang($event)"
         class="wizard-lang-selector"
+        *ngIf="showLang"
       >
       </app-option-field-render-and-editor>
 
@@ -26,6 +27,7 @@
         [options]="contentToneOptions"
         class="wizard-tone-selector"
         (selectionChangeEvent)="setContentTone($event)"
+        *ngIf="showTone"
       >
       </app-option-field-render-and-editor>
     </div>
@@ -41,7 +43,7 @@
     <!-- ------------------------------------------------------------------------- -->
     <!-- Variable Input Container -->
     <!-- ------------------------------------------------------------------------- -->
-    <div class="variable-input-container">
+    <div class="variable-input-container" *ngIf="showDescription">
       <app-text-area-field-render-and-editor
         [fieldHumanName]="'Description'"
         [fieldValue]="wizardDescription"
@@ -53,6 +55,10 @@
         [showActions]="false"
         [autoToggleEdition]="false"
       ></app-text-area-field-render-and-editor>
+    </div>
+
+    <div class="field-container">
+      <app-wizard-creator-form-dynamic-elements></app-wizard-creator-form-dynamic-elements>
     </div>
 
     <!-- ------------------------------------------------------------------------- -->
@@ -70,6 +76,7 @@
         [options]="variantsOptions"
         (selectionChangeEvent)="setVariants($event)"
         class="wizard-variants-selector col-4 m-0"
+        *ngIf="showNumberOfVariantsToGenerate"
       >
       </app-option-field-render-and-editor>
 
@@ -81,6 +88,7 @@
         [options]="gptVersionOptions"
         (selectionChangeEvent)="setGptVersion($event)"
         class="gpt-version-selector col-8 m-0"
+        *ngIf="showGptVersion"
       >
       </app-option-field-render-and-editor>
     </div>
@@ -94,6 +102,7 @@
         [options]="creativityLevelOptions"
         (selectionChangeEvent)="setCreativityLevel($event)"
         class="wizard-creativity-selector"
+        *ngIf="showCreativity"
       >
       </app-option-field-render-and-editor>
     </div>

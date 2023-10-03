@@ -1,0 +1,7 @@
+<div class="dynamic-component-outer-container">
+  <ng-container [ngSwitch]="userCaseGroup">
+    <app-wizard-use-case-coding-home
+      *ngSwitchCase="useCaseGroupEnum.Coding"
+    ></app-wizard-use-case-coding-home>
+  </ng-container>
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { EMPTY, Subject, takeUntil, tap } from 'rxjs';
 import { WizardCreatorService } from '../../services/wizard-creator.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { OptionField } from 'src/app/common/dto/option-field.dto';
@@ -10,6 +10,7 @@ import { WizardCreatorUseCase, wizardCreatorUseCaseEnumOptionFields } from '../.
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 import { mapEnumNameAndValue } from 'src/app/common/functions/name-and-values-of-enum.function';
 import { OpenAiGPTVersionEnum } from 'src/app/common/enum/content generation/openai-gtp-version.enum';
+import { WizardFormService } from '../../services/wizard-form.service';
 
 @Component({
   selector: 'app-wizard-creator-form',
@@ -46,7 +47,17 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
 
   gptVersionOptions: OptionField<string>[];
 
-  constructor(private _wizardCreatorService: WizardCreatorService, private projectService: BlogProjectsService) {
+  /**
+   * If true the default description field will be shown.
+   *
+   * @memberof WizardCreatorFormComponent
+   */
+  showDescriptionField = true;
+
+  constructor(
+    private _wizardCreatorService: WizardCreatorService, 
+    private projectService: BlogProjectsService,
+    private _wizardFormService: WizardFormService) {
 
   }
 
@@ -73,7 +84,11 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
       const formValue = this.wizardCreatorForm.value;
 
       formValue.projectId = this.currentProjectId;
-      this._wizardCreatorService.generateContent(formValue).subscribe();
+      this._wizardCreatorService.generateContent(formValue).subscribe(r => {
+        if (Object.keys(r).length === 0) {
+          this.isLoading = false;
+        }
+      });
     }
   }
 
@@ -87,15 +102,31 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
     this._wizardCreatorService.wizardCreatedContent$.pipe(takeUntil(this.componentDestroyed$)).subscribe(r => {
       this.isLoading = false;
     })
+
+    this._wizardFormService.fieldToRenderUpdate$.pipe(takeUntil(this.componentDestroyed$))
+    .subscribe(() => this.setConditionalFields())
+  }
+
+  setConditionalFields(): void {
+    if (this._wizardFormService.showCreativityInput) {
+      this.wizardCreatorForm.addControl('creativityLevel', new FormControl(ContentCreationCreativityLevel.Zen, Validators.required))
+    }
+    if (this._wizardFormService.showDescriptionInput) {
+      this.wizardCreatorForm.addControl('description', new FormControl('', [Validators.required, Validators.minLength(3)]))
+    }
+    if (this._wizardFormService.showLangInput) {
+      this.wizardCreatorForm.addControl('outputLang', new FormControl('', Validators.required))
+    }
+    if (this._wizardFormService.showToneInput) {
+      this.wizardCreatorForm.addControl('voiceTone', new FormControl(ContentTone.Informative, Validators.required))
+    }
+    if (this._wizardFormService.showNumberOfVariantsToGenerate) {
+      this.wizardCreatorForm.addControl('amountOfVariants', new FormControl(1, [Validators.required, Validators.min(1)]))
+    }
   }
 
   initForm() {
     this.wizardCreatorForm = new FormGroup({
-      outputLang: new FormControl('', Validators.required), // Assuming it's a required field
-      voiceTone: new FormControl(ContentTone.Informative, Validators.required),  // Defaulting to Informative
-      description: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      amountOfVariants: new FormControl(1, [Validators.required, Validators.min(1)]), // Defaulting to 1
-      creativityLevel: new FormControl(ContentCreationCreativityLevel.Zen, Validators.required), // Replace DefaultValue with your default or appropriate enum value
       gptVersion: new FormControl(OpenAiGPTVersionEnum.GPT3, Validators.required)
     });
   }
@@ -159,5 +190,31 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
     this.wizardCreatorForm.get('description')?.setValue(description);
 
   }
+
+  
+  public get showDescription() : boolean {
+    return this._wizardFormService.showDescriptionInput;
+  }
+
+  public get showLang(): boolean {
+    return this._wizardFormService.showLangInput;
+  }
+  
+  public get showTone(): boolean {
+    return this._wizardFormService.showToneInput;
+  }
+
+  public get showCreativity(): boolean {
+    return this._wizardFormService.showCreativityInput;
+  }
+
+  public get showNumberOfVariantsToGenerate(): boolean {
+    return this._wizardFormService.showNumberOfVariantsToGenerate;
+  }
+
+  public get showGptVersion(): boolean {
+    return this._wizardFormService.showGptVersion;
+  }
+  
 
 }
