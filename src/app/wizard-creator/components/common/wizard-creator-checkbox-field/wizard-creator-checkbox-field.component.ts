@@ -4,7 +4,7 @@ import { FloatLabelType } from '@angular/material/form-field';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, takeUntil } from 'rxjs';
 import { CheckboxFieldToRenderData } from 'src/app/common/interfaces/checkbox-field-to-render-data';
-import { TextFieldToRenderData } from 'src/app/common/interfaces/field-to-render-data';
+import { TextFieldToRenderData } from 'src/app/common/interfaces/textfield-to-render-data';
 import { WizardCreatorService } from 'src/app/wizard-creator/services/wizard-creator.service';
 import { WizardFormService } from 'src/app/wizard-creator/services/wizard-form.service';
 

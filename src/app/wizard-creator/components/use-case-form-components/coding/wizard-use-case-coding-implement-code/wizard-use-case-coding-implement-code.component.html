@@ -1,18 +1,18 @@
 <div class="fields-container">
     <app-wizard-creator-text-field 
-    [fieldData]="fieldData('programmingLang')"
+    [fieldData]="textFieldData('programmingLang')"
     >
     </app-wizard-creator-text-field>
 
     <app-wizard-creator-text-field 
-    [fieldData]="fieldData('framework')"
+    [fieldData]="textFieldData('framework')"
     >
     </app-wizard-creator-text-field>
 </div>
 
 <div class="fields-container">
     <app-wizard-creator-text-field 
-    [fieldData]="fieldData('instruction')"
+    [fieldData]="textFieldData('instruction')"
     >
     </app-wizard-creator-text-field>
 
@@ -20,8 +20,12 @@
 
 <div class="fields-container">
     <app-wizard-creator-text-field 
-    [fieldData]="fieldData('additionalCode')"
+    [fieldData]="textFieldData('additionalCode')"
     >
     </app-wizard-creator-text-field>
 
 </div>
+
+<app-wizard-creator-checkbox-field 
+[fieldData]="checkBoxFieldData('explainCode')"
+></app-wizard-creator-checkbox-field>

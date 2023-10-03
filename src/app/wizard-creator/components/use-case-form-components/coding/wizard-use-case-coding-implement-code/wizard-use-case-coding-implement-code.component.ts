@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IconBrandTypescript } from 'angular-tabler-icons/icons';
 import { Validators } from 'ngx-editor';
-import { TextFieldToRenderData } from 'src/app/common/interfaces/field-to-render-data';
+import { CheckboxFieldToRenderData } from 'src/app/common/interfaces/checkbox-field-to-render-data';
+import { TextFieldToRenderData } from 'src/app/common/interfaces/textfield-to-render-data';
 import { WizardCreatorService } from 'src/app/wizard-creator/services/wizard-creator.service';
 import { WizardFormService } from 'src/app/wizard-creator/services/wizard-form.service';
 
@@ -13,7 +14,8 @@ import { WizardFormService } from 'src/app/wizard-creator/services/wizard-form.s
 export class WizardUseCaseCodingImplementCodeComponent implements OnInit, OnDestroy {
 
 
-  fields: TextFieldToRenderData[];
+  textFields: TextFieldToRenderData[];
+  checkboxFields: CheckboxFieldToRenderData[];
 
   constructor(
     private _wizard: WizardCreatorService,
@@ -31,27 +33,28 @@ export class WizardUseCaseCodingImplementCodeComponent implements OnInit, OnDest
   }
 
   setNeededFields() {
-    this.fields = [];
+    this.textFields = [];
+    this.checkboxFields = [];
 
-    this.fields.push({
+    this.textFields.push({
       placeholder: 'The specific programming language for the code. [E.g., "Python"]',
       fieldLabel: 'Programming Lang',
-      fieldValue: 'Typescript',
+      fieldValue: '',
       validators: [Validators.required(), Validators.maxLength(20)],
       inputMaxLen: 20,
       dataName: 'programmingLang'
     })
 
-    this.fields.push({
+    this.textFields.push({
       placeholder: 'If any, specific framework is to be used. [E.g., "Django"]',
       fieldLabel: 'Framework',
-      fieldValue: 'Angular',
+      fieldValue: '',
       validators: [Validators.maxLength(20)],
       inputMaxLen: 20,
       dataName: 'framework'
     })
 
-    this.fields.push({
+    this.textFields.push({
       placeholder: 'Any pre-existing code that needs to be incorporated or considered.',
       fieldLabel: 'Additional Code',
       fieldValue: '',
@@ -61,7 +64,7 @@ export class WizardUseCaseCodingImplementCodeComponent implements OnInit, OnDest
       isLongText: true
     })
 
-    this.fields.push({
+    this.textFields.push({
       placeholder: 'E.g., "Generate a function that sorts an array in descending order"',
       fieldLabel: 'Instruction',
       fieldValue: '',
@@ -69,12 +72,28 @@ export class WizardUseCaseCodingImplementCodeComponent implements OnInit, OnDest
       inputMaxLen: 600,
       dataName: 'instruction',
       isLongText: true
+    });
+
+    this.checkboxFields.push({
+      fieldLabel: 'Explain code',
+      fieldValue: false,
+      dataName: 'explainCode'
     })
   }
 
   
-  fieldData(dataName: string) : TextFieldToRenderData {
-    const data = this.fields.find(d => d.dataName === dataName);
+  textFieldData(dataName: string) : TextFieldToRenderData  {
+    const data = this.textFields.find(d => d.dataName === dataName);
+
+    if (data) {
+      return data;
+    } else {
+      throw new Error(`The given dataName is not registered: ${dataName}`)
+    }
+  }
+
+  checkBoxFieldData(dataName: string): CheckboxFieldToRenderData {
+    const data = this.checkboxFields.find(d => d.dataName === dataName);
 
     if (data) {
       return data;
