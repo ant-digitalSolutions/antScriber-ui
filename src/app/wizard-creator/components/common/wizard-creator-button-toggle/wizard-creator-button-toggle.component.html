@@ -1,0 +1,13 @@
+<form [formGroup]="form">
+  <mat-button-toggle-group
+    [name]="fieldData.dataName"
+    formControlName="value"
+    (change)="(valueChange)"
+  >
+    <mat-button-toggle
+      [value]="item.value"
+      *ngFor="let item of fieldData.values"
+      >{{ item.text }}</mat-button-toggle
+    >
+  </mat-button-toggle-group>
+</form>

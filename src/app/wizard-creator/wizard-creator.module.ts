@@ -17,6 +17,8 @@ import { WizardUseCaseCodingImplementCodeComponent } from './components/use-case
 import { WizardUseCaseCodingHomeComponent } from './components/use-case-form-components/coding/wizard-use-case-coding-home.component';
 import { WizardCreatorTextFieldComponent } from './components/common/wizard-creator-text-field/wizard-creator-text-field.component';
 import { WizardCreatorCheckboxFieldComponent } from './components/common/wizard-creator-checkbox-field/wizard-creator-checkbox-field.component';
+import { WizardUseCaseCodingGithubIssueComponent } from './components/use-case-form-components/coding/wizard-use-case-coding-github-issue/wizard-use-case-coding-github-issue.component';
+import { WizardCreatorButtonToggleComponent } from './components/common/wizard-creator-button-toggle/wizard-creator-button-toggle.component';
 
 
 
@@ -30,7 +32,9 @@ import { WizardCreatorCheckboxFieldComponent } from './components/common/wizard-
     WizardCreatorFormDynamicElementsComponent,
     WizardUseCaseCodingHomeComponent,
     WizardUseCaseCodingImplementCodeComponent,
-    WizardCreatorCheckboxFieldComponent
+    WizardCreatorCheckboxFieldComponent,
+    WizardUseCaseCodingGithubIssueComponent,
+    WizardCreatorButtonToggleComponent
   ],
   imports: [
     CommonModule,
