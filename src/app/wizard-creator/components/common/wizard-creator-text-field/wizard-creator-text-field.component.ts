@@ -62,7 +62,7 @@ export class WizardCreatorTextFieldComponent {
   saveEdition() {
     if (this.fieldForm.valid) {
       this.valueEditedEvent.emit(this.fieldForm.value);
-      this._wizardService.updateAdditionalData(this.fieldData.dataName, this.fieldForm.value);
+      this._wizardFormService.updateAdditionalData(this.fieldData.dataName, this.fieldForm.value);
     } else {
       this.toastr.error('Please fix the errors')
     }

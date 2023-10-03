@@ -25,9 +25,6 @@ export class WizardCreatorService {
   wizardUseCaseGroup$ = this._wizardUseCaseGroupSubject.asObservable();
   _wizardUseCaseGroup: string;
 
-  _formAdditionalData: any = {};
-
-
   constructor(
     private http: HttpClient, 
     private toastr: ToastrService, 
@@ -37,7 +34,7 @@ export class WizardCreatorService {
   generateContent(params: WizardCreatorCreateDto) {
     params.useCaseGroup = this._wizardUseCaseGroup;
     params.useCase = this._wizardUseCase;
-    params.data = this._formAdditionalData;
+    params.data = this._wizardForm.additionalData;
 
     if (!this._wizardForm.checkAdditionalData()) {
       this.toastr.error('Please check your data');
@@ -73,9 +70,4 @@ export class WizardCreatorService {
     this._wizardUseCaseGroup = v;
   }
 
-  updateAdditionalData(fieldName: string, fieldValue: any) {
-    this._formAdditionalData[fieldName] = fieldValue;
-  }
-  
-  
 }
