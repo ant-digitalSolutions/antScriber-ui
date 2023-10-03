@@ -1,6 +1,7 @@
 import { label } from './../../../../../template-bundle/pages/apps/email/listing/categories';
 import { Component } from '@angular/core';
 import { Validators } from 'ngx-editor';
+import { Subject, takeUntil } from 'rxjs';
 import { ButtonToggleToRenderData } from 'src/app/common/interfaces/button-toggle-to-render-data';
 import { CheckboxFieldToRenderData } from 'src/app/common/interfaces/checkbox-field-to-render-data';
 import { TextFieldToRenderData } from 'src/app/common/interfaces/textfield-to-render-data';
@@ -17,6 +18,18 @@ export class WizardUseCaseCodingGithubIssueComponent {
   checkboxFields: CheckboxFieldToRenderData[];
   buttonToggleFields: ButtonToggleToRenderData[];
 
+  componentDestroyed$: Subject<boolean> = new Subject();
+
+  defaultTypeOfIssue = 'featureRequest';
+
+  /**
+   *
+   *
+   * @type {('bugReport' | 'featureRequest')}
+   * @memberof WizardUseCaseCodingGithubIssueComponent
+   */
+  selectedTypeOfIssue: string = this.defaultTypeOfIssue;
+
   constructor(
     private _wizard: WizardCreatorService,
     private _wizardForm: WizardFormService) { }
@@ -26,10 +39,13 @@ export class WizardUseCaseCodingGithubIssueComponent {
     this._wizardForm.updateFieldsForCodingImplementCode();
     this._wizardForm.cleanData();
     this.setNeededFields();
+    this.setListeners();
   }
 
   ngOnDestroy(): void {
     this._wizardForm.restoreDefaultFields();
+    this.componentDestroyed$.next(true)
+    this.componentDestroyed$.complete()
   }
 
   setNeededFields() {
@@ -85,7 +101,7 @@ export class WizardUseCaseCodingGithubIssueComponent {
     this.buttonToggleFields.push({
       dataName: 'typeOfIssue',
       fieldLabel: 'Type of Issue',
-      fieldValue: 'featureRequest',
+      fieldValue: this.defaultTypeOfIssue,
       tooltipText: 'Select the type of issue you want to create.',
       values: [
         {
@@ -98,6 +114,20 @@ export class WizardUseCaseCodingGithubIssueComponent {
         }
       ]
     })
+  }
+
+  setListeners() {
+    this._wizardForm.buttonToggleUpdate$.pipe(takeUntil(this.componentDestroyed$))
+    .subscribe(buttonToggleName => {
+      if (buttonToggleName === 'typeOfIssue') {
+        const selectedTypeOfIssue = this._wizardForm.additionalDataFieldValue(buttonToggleName);
+        this.setFieldsToRender(selectedTypeOfIssue);
+      }
+    })
+  }
+
+  setFieldsToRender(selectedTypeOfIssue: string): void {
+    this.selectedTypeOfIssue = selectedTypeOfIssue;
   }
 
 
