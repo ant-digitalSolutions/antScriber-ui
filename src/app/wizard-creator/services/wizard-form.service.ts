@@ -6,6 +6,9 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class WizardFormService {
+  buttonToggleUpdate(dataName: string) {
+    throw new Error('Method not implemented.');
+  }
 
   showDescriptionInput = true;
 
@@ -33,6 +36,11 @@ export class WizardFormService {
 
   private _fieldsToShowUpdate = new Subject<void>();
   fieldToRenderUpdate$ = this._fieldsToShowUpdate.asObservable();
+
+  private _buttonToggleUpdate = new Subject<string>();
+  buttonToggleUpdate$ = this._buttonToggleUpdate.asObservable();
+
+  _formAdditionalData: any = {};
 
 
 
@@ -82,8 +90,21 @@ export class WizardFormService {
     return isValid;
   }
 
+  /**
+   * Add or update a field the additionalData object
+   * that is send in the wizard creator request.
+   *
+   * @param {string} fieldName
+   * @param {*} fieldValue
+   * @memberof WizardFormService
+   */
+  updateAdditionalData(fieldName: string, fieldValue: any) {
+    this._formAdditionalData[fieldName] = fieldValue;
+  }
+
   cleanData() {
     this._additionalDataFormFields = [];
+    this._formAdditionalData = {};
     this._fieldsToShowUpdate.next();
   }
 
@@ -95,5 +116,11 @@ export class WizardFormService {
     this.showGptVersion = true;
     this.showCreativityInput = true;
   }
+
+  
+  public get additionalData() : any {
+    return this._formAdditionalData;
+  }
+  
   
 }

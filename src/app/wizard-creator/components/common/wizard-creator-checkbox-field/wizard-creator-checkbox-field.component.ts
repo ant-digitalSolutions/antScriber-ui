@@ -49,6 +49,6 @@ export class WizardCreatorCheckboxFieldComponent {
 
 
   valueChange() {
-    this._wizardService.updateAdditionalData(this.fieldData.dataName, this.fieldData.fieldValue);
+    this._wizardFormService.updateAdditionalData(this.fieldData.dataName, this.fieldData.fieldValue);
   }
 }

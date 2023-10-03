@@ -54,6 +54,7 @@ export class WizardCreatorButtonToggleComponent {
 
   valueChange() {
     const value = this.form.get('value')?.value;
-    this._wizardService.updateAdditionalData(this.fieldData.dataName, value);
+    this._wizardFormService.updateAdditionalData(this.fieldData.dataName, value);
+    this._wizardFormService.buttonToggleUpdate(this.fieldData.dataName);
   }
 }
