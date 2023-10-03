@@ -1,4 +1,5 @@
 export enum WizardGeneralWritingUseCases {
+    Message = 'Message',
     WriterFrameworkIDA = 'Writer Framework AIDA',
     WriterFrameworkPAS = 'Writer Framework PAS',
     CoverLetter = 'Cover Letter',

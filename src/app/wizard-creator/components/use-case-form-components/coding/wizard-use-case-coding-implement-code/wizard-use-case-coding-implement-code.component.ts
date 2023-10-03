@@ -68,8 +68,8 @@ export class WizardUseCaseCodingImplementCodeComponent implements OnInit, OnDest
       placeholder: 'E.g., "Generate a function that sorts an array in descending order"',
       fieldLabel: 'Instruction',
       fieldValue: '',
-      validators: [Validators.required(), Validators.minLength(10), Validators.maxLength(600)],
-      inputMaxLen: 600,
+      validators: [Validators.required(), Validators.minLength(10), Validators.maxLength(4000)],
+      inputMaxLen: 4000,
       dataName: 'instruction',
       isLongText: true
     });

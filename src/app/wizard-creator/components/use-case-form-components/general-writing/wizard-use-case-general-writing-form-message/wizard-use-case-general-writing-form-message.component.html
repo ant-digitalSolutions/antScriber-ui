@@ -1,0 +1,38 @@
+<div class="fields-container">
+    <app-wizard-creator-button-toggle [fieldData]="buttonToggleData('typeOfMessage')"></app-wizard-creator-button-toggle>
+</div>
+
+<div class="fields-container">
+    <app-wizard-creator-text-field 
+    [fieldData]="textFieldData('senderName')"
+    >
+    </app-wizard-creator-text-field>
+
+</div>
+
+<div class="fields-container">
+    <app-wizard-creator-text-field 
+    [fieldData]="textFieldData('recipientName')"
+    >
+    </app-wizard-creator-text-field>
+
+</div>
+
+<div class="fields-container">
+    <app-wizard-creator-text-field 
+    [fieldData]="textFieldData('primaryTheme')"
+    >
+    </app-wizard-creator-text-field>
+
+</div>
+
+
+
+<div class="fields-container" *ngIf="selectedMessageType === 'replyMessage'">
+    <app-wizard-creator-text-field 
+    [fieldData]="textFieldData('messageToReply')"
+    >
+    </app-wizard-creator-text-field>
+</div>
+
+
