@@ -4,6 +4,8 @@
 .wizard-content {
   min-height: 100vh;
   padding: 0;
+  max-height: 100vh;
+  overflow: auto;
 }
 
 .mat-tab-group {
@@ -32,6 +34,6 @@
   }
 
   .mat-mdc-tab.mdc-tab--active:focus .mdc-tab-indicator__content--underline {
-   border-color: $gray-medium-dark !important;
-}
+    border-color: $gray-medium-dark !important;
+  }
 }

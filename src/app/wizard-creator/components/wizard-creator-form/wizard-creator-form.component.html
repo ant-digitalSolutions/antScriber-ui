@@ -1,5 +1,5 @@
-<div class="b-t-1 p-20" *ngIf="wizardCreatorForm">
-  <form [formGroup]="wizardCreatorForm" (ngSubmit)="generateContent()">
+<div class="b-t-1 p-20 wizard-creator-form-outer-container" *ngIf="wizardCreatorForm">
+  <form [formGroup]="wizardCreatorForm" class="wizard-form">
     <!-- ------------------------------------------------------------------------- -->
     <!-- Lang and Tone Selector -->
     <!-- ------------------------------------------------------------------------- -->
@@ -107,7 +107,10 @@
       </app-option-field-render-and-editor>
     </div>
 
-    <!-- ------------------------------------------------------------------------- -->
+   
+  </form>
+
+   <!-- ------------------------------------------------------------------------- -->
     <!-- Action Buttons -->
     <!-- ------------------------------------------------------------------------- -->
 
@@ -115,9 +118,10 @@
       <button
         mat-flat-button
         color="primary"
-        type="submit"
+        type="button"
         [disabled]="isLoading"
         class="wizard-generate-btn"
+        (click)="generateContent()"
       >
         <mat-icon *ngIf="!isLoading; else loading">rocket_launch</mat-icon>
 
@@ -128,6 +132,5 @@
         Unleash the Magic
       </button>
     </div>
-  </form>
 </div>
 <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->

@@ -1,12 +1,14 @@
-<form [formGroup]="form">
+<form [formGroup]="form" class="d-flex align-items-center justify-content-center m-b-20">
   <mat-button-toggle-group
     [name]="fieldData.dataName"
     formControlName="value"
     (change)="valueChange()"
+    class="wizard-button-group"
   >
     <mat-button-toggle
       [value]="item.value"
       *ngFor="let item of fieldData.values"
+      class="wizard-mat-button-toggle"
       >{{ item.text }}</mat-button-toggle
     >
   </mat-button-toggle-group>
