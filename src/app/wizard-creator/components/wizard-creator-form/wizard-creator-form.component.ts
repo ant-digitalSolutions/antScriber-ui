@@ -1,18 +1,19 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { EMPTY, Subject, takeUntil, tap } from 'rxjs';
+import {Subject, takeUntil, tap } from 'rxjs';
 import { WizardCreatorService } from '../../services/wizard-creator.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {Validators } from '@angular/forms';
 import { OptionField } from 'src/app/common/dto/option-field.dto';
 import { ContentTone, contentToneOptionFields } from 'src/app/common/enum/content generation/content-tone.enum';
 import { langEnumOptionFields } from 'src/app/common/enum/lang-options.enum';
 import { ContentCreationCreativityLevel, creativityLevelOptionFields } from 'src/app/common/enum/content generation/content-creation-imagination-level.enum';
-import { WizardCreatorUseCase, wizardCreatorUseCaseEnumOptionFields } from '../../enums/wizard-creator-use-case.enum';
+import { wizardCreatorUseCaseEnumOptionFields } from '../../enums/wizard-creator-use-case.enum';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 import { mapEnumNameAndValue } from 'src/app/common/functions/name-and-values-of-enum.function';
 import { OpenAiGPTVersionEnum } from 'src/app/common/enum/content generation/openai-gtp-version.enum';
 import { WizardFormService } from '../../services/wizard-form.service';
 import { SelectorFieldToRenderData } from 'src/app/common/interfaces/button-toggle-to-render-data';
 import { TextFieldToRenderData } from 'src/app/common/interfaces/textfield-to-render-data';
+import { WizardUseCaseService } from '../../services/use-case/wizard-use-case.service';
 
 @Component({
   selector: 'app-wizard-creator-form',
@@ -66,7 +67,8 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
   constructor(
     private _wizardCreatorService: WizardCreatorService,
     private projectService: BlogProjectsService,
-    private _wizardFormService: WizardFormService) {
+    private _wizardFormService: WizardFormService,
+    private _useCaseService: WizardUseCaseService) {
 
   }
 
@@ -111,7 +113,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
       this.isLoading = false;
     })
 
-    this._wizardCreatorService.wizardUseCase$.pipe(takeUntil(this.componentDestroyed$))
+    this._useCaseService.wizardUseCase$.pipe(takeUntil(this.componentDestroyed$))
     .subscribe(() => {
       this.useCaseSelected = true;
     })

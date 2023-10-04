@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { WizardCreatorCreateDto } from '../dtos/wizard-creator-create-dto';
 import { ToastrService } from 'ngx-toastr';
-import { EMPTY, Observable, ReplaySubject, of, tap } from 'rxjs';
+import { ReplaySubject, of, tap } from 'rxjs';
 import { DocumentService } from 'src/app/document/services/document.service';
 import { WizardFormService } from './wizard-form.service';
 
@@ -17,13 +17,7 @@ export class WizardCreatorService {
   private _wizardCreatedContent = new ReplaySubject<string | null>();
   wizardCreatedContent$ = this._wizardCreatedContent.asObservable();
 
-  private _wizardUseCaseSubject = new ReplaySubject<string>();
-  wizardUseCase$ = this._wizardUseCaseSubject.asObservable();
-  _wizardUseCase: string;
-
-  private _wizardUseCaseGroupSubject = new ReplaySubject<string>();
-  wizardUseCaseGroup$ = this._wizardUseCaseGroupSubject.asObservable();
-  _wizardUseCaseGroup: string;
+ 
 
   constructor(
     private http: HttpClient,
@@ -57,17 +51,4 @@ export class WizardCreatorService {
         }
       }))
   }
-
-
-  public set wizardUseCase(v: string) {
-    this._wizardUseCaseSubject.next(v);
-    this._wizardUseCase = v;
-  }
-
-
-  public set wizardUseCaseGroup(v: string) {
-    this._wizardUseCaseGroupSubject.next(v);
-    this._wizardUseCaseGroup = v;
-  }
-
 }

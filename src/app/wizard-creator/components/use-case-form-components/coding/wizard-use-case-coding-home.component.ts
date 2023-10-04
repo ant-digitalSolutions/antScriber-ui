@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { WizardCreatorCodingUseCasesEnum } from 'src/app/wizard-creator/enums/wizard-creator-coding-use-cases.enum';
-import { WizardCreatorService } from 'src/app/wizard-creator/services/wizard-creator.service';
+import { WizardUseCaseService } from 'src/app/wizard-creator/services/use-case/wizard-use-case.service';
 
 @Component({
   selector: 'app-wizard-use-case-coding-home',
@@ -14,7 +14,9 @@ export class WizardUseCaseCodingHomeComponent implements OnDestroy, OnInit {
 
   userCase: WizardCreatorCodingUseCasesEnum;
 
-  constructor(private _wizard: WizardCreatorService) {
+  constructor(
+    private _useCaseService: WizardUseCaseService,
+  ) {
 
   }
 
@@ -29,7 +31,7 @@ export class WizardUseCaseCodingHomeComponent implements OnDestroy, OnInit {
 
   setListeners() {
 
-    this._wizard.wizardUseCase$.pipe(takeUntil(this.componentDestroyed$)).subscribe(useCase => {
+    this._useCaseService.wizardUseCase$.pipe(takeUntil(this.componentDestroyed$)).subscribe(useCase => {
       this.userCase = useCase as WizardCreatorCodingUseCasesEnum;
     })
   }

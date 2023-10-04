@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { WizardCreatorService } from '../../services/wizard-creator.service';
 import { Subject, takeUntil } from 'rxjs';
 import { WizardCreatorUseCaseGroup } from '../../enums/wizard-creator-use-case-group.enum';
+import { WizardUseCaseService } from '../../services/use-case/wizard-use-case.service';
 
 @Component({
   selector: 'app-wizard-creator-form-dynamic-elements',
@@ -18,7 +18,8 @@ export class WizardCreatorFormDynamicElementsComponent implements OnDestroy, OnI
 
   componentToRender: Component;
 
-  constructor(private _wizard: WizardCreatorService) {
+  constructor(
+    private _useCaseService: WizardUseCaseService) {
 
   }
 
@@ -32,11 +33,11 @@ export class WizardCreatorFormDynamicElementsComponent implements OnDestroy, OnI
   }
 
   setListeners() {
-    this._wizard.wizardUseCaseGroup$.pipe(takeUntil(this.componentDestroyed$)).subscribe(useCaseGroup => {
+    this._useCaseService.wizardUseCaseGroup$.pipe(takeUntil(this.componentDestroyed$)).subscribe(useCaseGroup => {
       this.userCaseGroup =useCaseGroup as WizardCreatorUseCaseGroup;
     })
 
-    this._wizard.wizardUseCase$.pipe(takeUntil(this.componentDestroyed$)).subscribe(useCase => {
+    this._useCaseService.wizardUseCase$.pipe(takeUntil(this.componentDestroyed$)).subscribe(useCase => {
       this.userCase = useCase;
     })
   }
