@@ -3,6 +3,10 @@ $view-top-height: 50px;
 .field-container {
   margin: 30px 0;
   flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .wizard-tone-selector,

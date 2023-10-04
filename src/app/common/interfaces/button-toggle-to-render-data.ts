@@ -33,5 +33,5 @@ export interface SelectorFieldToRenderData {
     */
     dataName: string;
 
-    values: OptionField<string>[]
+    values: OptionField<any>[]
 }
