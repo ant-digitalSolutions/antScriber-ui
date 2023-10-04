@@ -1,56 +1,21 @@
 import { Component } from '@angular/core';
-import { Validators } from 'ngx-editor';
-import { Subject, takeUntil } from 'rxjs';
 import { SelectorFieldToRenderData } from 'src/app/common/interfaces/button-toggle-to-render-data';
-import { CheckboxFieldToRenderData } from 'src/app/common/interfaces/checkbox-field-to-render-data';
 import { TextFieldToRenderData } from 'src/app/common/interfaces/textfield-to-render-data';
-import { WizardCreatorService } from 'src/app/wizard-creator/services/wizard-creator.service';
-import { WizardFormService } from 'src/app/wizard-creator/services/wizard-form.service';
+import { UseCaseFormBaseComponent } from '../../use-case-form-base/use-case-form-base.component';
 
 @Component({
   selector: 'app-wizard-use-case-general-writing-form-message',
-  templateUrl: './wizard-use-case-general-writing-form-message.component.html',
-  styleUrls: ['./wizard-use-case-general-writing-form-message.component.scss']
+  templateUrl: '../../use-case-form-base/use-case-form-base.component.html',
+  styleUrls: ['./wizard-use-case-general-writing-form-message.component.scss', '../../use-case-form-base/use-case-form-base.component.scss']
 })
-export class WizardUseCaseGeneralWritingFormMessageComponent {
-  textFields: TextFieldToRenderData[];
-  checkboxFields: CheckboxFieldToRenderData[];
-  selectorFields: SelectorFieldToRenderData[];
-
-  componentDestroyed$: Subject<boolean> = new Subject();
+export class WizardUseCaseGeneralWritingFormMessageComponent extends UseCaseFormBaseComponent {
 
   defaultTypeOfMessage = 'newMessage';
 
-  /**
-   *
-   *
-   * @type {('replyTo' | 'newMessage')}
-   * @memberof WizardUseCaseCodingGithubIssueComponent
-   */
-  selectedMessageType: string = this.defaultTypeOfMessage;
+  override setTextFieldsData(): void {
+    const fields: TextFieldToRenderData[] = [];
 
-  constructor(
-    private _wizardForm: WizardFormService) { }
-
-
-  ngOnInit(): void {
-    this.setNeededFields();
-    this.setListeners();
-  }
-
-  ngOnDestroy(): void {
-    this.componentDestroyed$.next(true)
-    this.componentDestroyed$.complete();
-  }
-
-  setNeededFields() {
-    this.textFields = [];
-    this.checkboxFields = [];
-    this.selectorFields = [];
-
-    this._wizardForm.updateAdditionalData('isReply', this.defaultTypeOfMessage === 'newMessage' ? false : true);
-
-    this.textFields.push({
+    fields.push({
       placeholder: 'John Doe',
       fieldLabel: 'Sender\'s Name',
       fieldValue: ``,
@@ -60,7 +25,7 @@ export class WizardUseCaseGeneralWritingFormMessageComponent {
       tooltipText: 'The name of the person or entity sending the message'
     });
 
-    this.textFields.push({
+    fields.push({
       placeholder: 'Jane Smith',
       fieldLabel: 'Recipient\'s Name',
       fieldValue: ``,
@@ -70,7 +35,7 @@ export class WizardUseCaseGeneralWritingFormMessageComponent {
       tooltipText: 'The name of the person or entity receiving the message'
     });
 
-    this.textFields.push({
+    fields.push({
       placeholder: 'E.g. "Thank you for your purchase!"',
       fieldLabel: 'Primary Theme/Concept',
       fieldValue: ``,
@@ -81,18 +46,25 @@ export class WizardUseCaseGeneralWritingFormMessageComponent {
       isLongText: true
     });
 
-      this.textFields.push({
-        placeholder: 'When will my order be shipped?',
-        fieldLabel: 'Message To Reply',
-        fieldValue: ``,
-        validators: [],
-        inputMaxLen: 1000,
-        dataName: 'messageToReply',
-        tooltipText: 'The message this is replying to',
-        isLongText: true
-      });
+    fields.push({
+      placeholder: 'When will my order be shipped?',
+      fieldLabel: 'Message To Reply',
+      fieldValue: ``,
+      validators: [],
+      inputMaxLen: 1000,
+      dataName: 'messageToReply',
+      tooltipText: 'The message this is replying to',
+      isLongText: true
+    });
 
-    this.selectorFields.push({
+
+    this._wizardFormService.updateFormDefaultField_Text(fields);
+  }
+
+  override setSelectorFieldsData(): void {
+    const fields: SelectorFieldToRenderData[] =[];
+
+    fields.push({
       fieldLabel: 'Words Range',
       fieldValue: '0-50',
       dataName: 'wordsRange',
@@ -126,7 +98,11 @@ export class WizardUseCaseGeneralWritingFormMessageComponent {
       ]
     });
 
-    this.selectorFields.push({
+    this._wizardFormService.updateFormDefaultField_Selectors(fields);
+  }
+
+  override setButtonToggleData(): void {
+    const field = {
       dataName: 'typeOfMessage',
       fieldLabel: 'Type of Message',
       fieldValue: this.defaultTypeOfMessage,
@@ -141,59 +117,21 @@ export class WizardUseCaseGeneralWritingFormMessageComponent {
           text: 'Reply Message'
         }
       ]
-    })
-  }
-
-  setListeners() {
-    this._wizardForm.buttonToggleUpdate$.pipe(takeUntil(this.componentDestroyed$))
-      .subscribe(buttonToggleName => {
-        if (buttonToggleName === 'typeOfMessage') {
-          const selectedTypeOfIssue = this._wizardForm.additionalDataFieldValue(buttonToggleName);
-          this.setFieldsToRender(selectedTypeOfIssue);
-        }
-      })
-  }
-
-  setFieldsToRender(selectedTypeOfIssue: string): void {
-    this.selectedMessageType = selectedTypeOfIssue;
-
-    if (selectedTypeOfIssue === 'newMessage') {
-      this._wizardForm.updateAdditionalData('isReply', false);
-    } else {
-      this._wizardForm.updateAdditionalData('isReply', true);
-
     }
+
+    this._wizardFormService.updateFormDefaultField_ButtonToggle(field);
   }
 
+  override toggleButtonUpdateActions(buttonToggleName: string): void {
+    if (buttonToggleName === 'typeOfMessage') {
+      const buttonToggleValue = this._wizardFormService.additionalDataFieldValue(buttonToggleName);
 
-
-  textFieldData(dataName: string): TextFieldToRenderData {
-    const data = this.textFields.find(d => d.dataName === dataName);
-
-    if (data) {
-      return data;
-    } else {
-      throw new Error(`The given dataName is not registered: ${dataName}`)
-    }
-  }
-
-  selectorData(dataName: string): SelectorFieldToRenderData {
-    const data = this.selectorFields.find(d => d.dataName === dataName);
-
-    if (data) {
-      return data;
-    } else {
-      throw new Error(`The given dataName is not registered: ${dataName}`)
-    }
-  }
-
-  checkBoxFieldData(dataName: string): CheckboxFieldToRenderData {
-    const data = this.checkboxFields.find(d => d.dataName === dataName);
-
-    if (data) {
-      return data;
-    } else {
-      throw new Error(`The given dataName is not registered: ${dataName}`)
+      if (buttonToggleValue === 'newMessage') {
+        this._wizardFormService.hideFieldFromForm(['messageToReply']);
+      }
+      if (buttonToggleValue === 'replyMessage') {
+        this._wizardFormService.showFieldInForm(['messageToReply']);
+      }
     }
   }
 }

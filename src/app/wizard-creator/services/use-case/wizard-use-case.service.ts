@@ -68,6 +68,8 @@ export class WizardUseCaseService {
     switch (this._wizardUseCase) {
       case WizardGeneralWritingUseCases.Message:
         this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'add');
+        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.Instruction], 'del');
+
         break;
     
       default:
