@@ -1,25 +1,17 @@
-import { label } from './../../../../../template-bundle/pages/apps/email/listing/categories';
 import { Component } from '@angular/core';
 import { Validators } from 'ngx-editor';
-import { Subject, takeUntil } from 'rxjs';
-import { SelectorFieldToRenderData } from 'src/app/common/interfaces/button-toggle-to-render-data';
-import { CheckboxFieldToRenderData } from 'src/app/common/interfaces/checkbox-field-to-render-data';
+
+import { UseCaseFormBaseComponent } from '../../use-case-form-base/use-case-form-base.component';
 import { TextFieldToRenderData } from 'src/app/common/interfaces/textfield-to-render-data';
-import { WizardCreatorService } from 'src/app/wizard-creator/services/wizard-creator.service';
 import { WizardFormService } from 'src/app/wizard-creator/services/wizard-form.service';
 
 @Component({
   selector: 'app-wizard-use-case-coding-github-issue',
-  templateUrl: './wizard-use-case-coding-github-issue.component.html',
-  styleUrls: ['./wizard-use-case-coding-github-issue.component.scss']
+  templateUrl: '../../use-case-form-base/use-case-form-base.component.html',
+  styleUrls: ['../../use-case-form-base/use-case-form-base.component.html',
+  './wizard-use-case-coding-github-issue.component.scss']
 })
-export class WizardUseCaseCodingGithubIssueComponent {
-  textFields: TextFieldToRenderData[];
-  checkboxFields: CheckboxFieldToRenderData[];
-  buttonToggleFields: SelectorFieldToRenderData[];
-
-  componentDestroyed$: Subject<boolean> = new Subject();
-
+export class WizardUseCaseCodingGithubIssueComponent extends UseCaseFormBaseComponent {
   defaultTypeOfIssue = 'featureRequest';
 
   /**
@@ -30,26 +22,25 @@ export class WizardUseCaseCodingGithubIssueComponent {
    */
   selectedTypeOfIssue: string = this.defaultTypeOfIssue;
 
-  constructor(
-    private _wizardForm: WizardFormService) { }
-
-
-  ngOnInit(): void {
-    this.setNeededFields();
-    this.setListeners();
+  constructor(_wizardFormService: WizardFormService) {
+    super(_wizardFormService);
   }
 
-  ngOnDestroy(): void {
-    this.componentDestroyed$.next(true)
-    this.componentDestroyed$.complete();
+  
+  setFieldsToRender(selectedTypeOfIssue: string): void {
+    this.selectedTypeOfIssue = selectedTypeOfIssue;
   }
 
-  setNeededFields() {
-    this.textFields = [];
-    this.checkboxFields = [];
-    this.buttonToggleFields = [];
+  override toggleButtonUpdateActions(buttonToggleName: string): void {
+    if (buttonToggleName === 'typeOfIssue') {
+      const selectedTypeOfIssue = this._wizardFormService.additionalDataFieldValue(buttonToggleName);
+      this.setFieldsToRender(selectedTypeOfIssue);
+    }
+  }
 
-    this.textFields.push({
+  override setTextFieldsData(): void {
+    const fields: TextFieldToRenderData[] = [];
+    fields.push({
       placeholder: 'Application crashes when clicking on Settings...',
       fieldLabel: 'Bug Description',
       fieldValue: '',
@@ -60,7 +51,7 @@ export class WizardUseCaseCodingGithubIssueComponent {
       isLongText: true
     })
 
-    this.textFields.push({
+    fields.push({
       placeholder: 'Add a dark mode option...',
       fieldLabel: 'Feature Description',
       fieldValue: '',
@@ -72,7 +63,7 @@ export class WizardUseCaseCodingGithubIssueComponent {
     })
 
 
-    this.textFields.push({
+    fields.push({
       placeholder: 'Avoid null reference when fetching user settings',
       fieldLabel: 'Bug Solution',
       fieldValue: '',
@@ -83,7 +74,11 @@ export class WizardUseCaseCodingGithubIssueComponent {
       isLongText: true
     })
 
-    this.buttonToggleFields.push({
+    this._wizardFormService.updateFormDefaultField_Text(fields);
+  }
+
+  override setButtonToggleData(): void {
+    const field = {
       dataName: 'typeOfIssue',
       fieldLabel: 'Type of Issue',
       fieldValue: this.defaultTypeOfIssue,
@@ -98,52 +93,8 @@ export class WizardUseCaseCodingGithubIssueComponent {
           text: 'Feature Request'
         }
       ]
-    })
-  }
-
-  setListeners() {
-    this._wizardForm.buttonToggleUpdate$.pipe(takeUntil(this.componentDestroyed$))
-    .subscribe(buttonToggleName => {
-      if (buttonToggleName === 'typeOfIssue') {
-        const selectedTypeOfIssue = this._wizardForm.additionalDataFieldValue(buttonToggleName);
-        this.setFieldsToRender(selectedTypeOfIssue);
-      }
-    })
-  }
-
-  setFieldsToRender(selectedTypeOfIssue: string): void {
-    this.selectedTypeOfIssue = selectedTypeOfIssue;
-  }
-
-
-
-  textFieldData(dataName: string): TextFieldToRenderData {
-    const data = this.textFields.find(d => d.dataName === dataName);
-
-    if (data) {
-      return data;
-    } else {
-      throw new Error(`The given dataName is not registered: ${dataName}`)
     }
-  }
 
-  buttonToggleData(dataName: string): SelectorFieldToRenderData {
-    const data = this.buttonToggleFields.find(d => d.dataName === dataName);
-
-    if (data) {
-      return data;
-    } else {
-      throw new Error(`The given dataName is not registered: ${dataName}`)
-    }
-  }
-
-  checkBoxFieldData(dataName: string): CheckboxFieldToRenderData {
-    const data = this.checkboxFields.find(d => d.dataName === dataName);
-
-    if (data) {
-      return data;
-    } else {
-      throw new Error(`The given dataName is not registered: ${dataName}`)
-    }
+    this._wizardFormService.updateFormDefaultField_ButtonToggle(field);
   }
 }

@@ -5,19 +5,18 @@ import { CheckboxFieldToRenderData } from 'src/app/common/interfaces/checkbox-fi
 import { TextFieldToRenderData } from 'src/app/common/interfaces/textfield-to-render-data';
 import { WizardUseCaseService } from 'src/app/wizard-creator/services/use-case/wizard-use-case.service';
 import { WizardFormService } from 'src/app/wizard-creator/services/wizard-form.service';
+import { UseCaseFormBaseAbstractLogic } from './use-case-form-abstract-logic.abstract';
 
 @Component({
   selector: 'app-use-case-form-base',
   templateUrl: './use-case-form-base.component.html',
   styleUrls: ['./use-case-form-base.component.scss']
 })
-export abstract class UseCaseFormBaseComponent {
-
+export class UseCaseFormBaseComponent {
   componentDestroyed$: Subject<boolean> = new Subject();
 
   constructor(
-    public _wizardFormService: WizardFormService,
-    private _wizardUseCaseService: WizardUseCaseService) {
+    public _wizardFormService: WizardFormService) {
   }
 
   ngOnInit(): void {
@@ -100,14 +99,19 @@ export abstract class UseCaseFormBaseComponent {
     return this._wizardFormService.checkboxFieldsToRender;
   }
   
-  
-  abstract toggleButtonUpdateActions(buttonToggleName: string): void;
+  toggleButtonUpdateActions(buttonToggleName: string): void {
 
-  abstract setTextFieldsData(): void;
+  }
 
-  abstract setSelectorFieldsData(): void;
+  setTextFieldsData(): void {
+  }
 
-  abstract setButtonToggleData(): void;
+  setSelectorFieldsData(): void {
+  }
 
-  abstract setCheckboxFieldsData(): void;
+  setButtonToggleData(): void {
+  }
+
+  setCheckboxFieldsData(): void {
+  }
 }
