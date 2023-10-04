@@ -1,5 +1,5 @@
 export enum WizardDefaultFieldNamesEnum {
-    Instruction = 'instruction',
+    Instruction = 'instructionDefault',
     VoiceTone = 'voiceTone',
     GtpVersion = 'gptVersion',
     OutputLang = 'outputLang',

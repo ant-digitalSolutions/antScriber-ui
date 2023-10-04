@@ -5,34 +5,21 @@ import { CheckboxFieldToRenderData } from 'src/app/common/interfaces/checkbox-fi
 import { TextFieldToRenderData } from 'src/app/common/interfaces/textfield-to-render-data';
 import { WizardCreatorService } from 'src/app/wizard-creator/services/wizard-creator.service';
 import { WizardFormService } from 'src/app/wizard-creator/services/wizard-form.service';
+import { UseCaseFormBaseComponent } from '../../use-case-form-base/use-case-form-base.component';
 
 @Component({
   selector: 'app-wizard-use-case-coding-implement-code',
-  templateUrl: './wizard-use-case-coding-implement-code.component.html',
-  styleUrls: ['./wizard-use-case-coding-implement-code.component.scss']
+  templateUrl: '../../use-case-form-base/use-case-form-base.component.html',
+  styleUrls: [
+    './wizard-use-case-coding-implement-code.component.scss',
+    '../../use-case-form-base/use-case-form-base.component.scss']
 })
-export class WizardUseCaseCodingImplementCodeComponent implements OnInit, OnDestroy {
+export class WizardUseCaseCodingImplementCodeComponent extends UseCaseFormBaseComponent {
 
+  override setTextFieldsData(): void {
+    const fields: TextFieldToRenderData[] = [];
 
-  textFields: TextFieldToRenderData[];
-  checkboxFields: CheckboxFieldToRenderData[];
-
-  constructor(
-    private _wizardForm: WizardFormService) { }
-
-
-  ngOnInit(): void {
-    this.setNeededFields();
-  }
-
-  ngOnDestroy(): void {
-  }
-
-  setNeededFields() {
-    this.textFields = [];
-    this.checkboxFields = [];
-
-    this.textFields.push({
+    fields.push({
       placeholder: 'The specific programming language for the code. [E.g., "Python"]',
       fieldLabel: 'Programming Lang',
       fieldValue: '',
@@ -41,7 +28,7 @@ export class WizardUseCaseCodingImplementCodeComponent implements OnInit, OnDest
       dataName: 'programmingLang'
     })
 
-    this.textFields.push({
+    fields.push({
       placeholder: 'If any, specific framework is to be used. [E.g., "Django"]',
       fieldLabel: 'Framework',
       fieldValue: '',
@@ -50,7 +37,7 @@ export class WizardUseCaseCodingImplementCodeComponent implements OnInit, OnDest
       dataName: 'framework'
     })
 
-    this.textFields.push({
+    fields.push({
       placeholder: 'Any pre-existing code that needs to be incorporated or considered.',
       fieldLabel: 'Additional Code',
       fieldValue: '',
@@ -60,7 +47,7 @@ export class WizardUseCaseCodingImplementCodeComponent implements OnInit, OnDest
       isLongText: true
     })
 
-    this.textFields.push({
+    fields.push({
       placeholder: 'E.g., "Generate a function that sorts an array in descending order"',
       fieldLabel: 'Instruction',
       fieldValue: '',
@@ -69,33 +56,20 @@ export class WizardUseCaseCodingImplementCodeComponent implements OnInit, OnDest
       dataName: 'instruction',
       isLongText: true
     });
+    
 
-    this.checkboxFields.push({
+    this._wizardFormService.updateFormDefaultField_Text(fields);
+  }
+
+  override setCheckboxFieldsData(): void {
+    const fields: CheckboxFieldToRenderData[] = [];
+
+    fields.push({
       fieldLabel: 'Explain code',
       fieldValue: false,
       dataName: 'explainCode'
     })
+
+    this._wizardFormService.updateFormDefaultField_Checkboxes(fields);
   }
-
-  
-  textFieldData(dataName: string) : TextFieldToRenderData  {
-    const data = this.textFields.find(d => d.dataName === dataName);
-
-    if (data) {
-      return data;
-    } else {
-      throw new Error(`The given dataName is not registered: ${dataName}`)
-    }
-  }
-
-  checkBoxFieldData(dataName: string): CheckboxFieldToRenderData {
-    const data = this.checkboxFields.find(d => d.dataName === dataName);
-
-    if (data) {
-      return data;
-    } else {
-      throw new Error(`The given dataName is not registered: ${dataName}`)
-    }
-  }
-  
 }

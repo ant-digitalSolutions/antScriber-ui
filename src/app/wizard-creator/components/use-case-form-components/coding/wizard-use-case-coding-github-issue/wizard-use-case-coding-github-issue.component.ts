@@ -8,7 +8,7 @@ import { WizardFormService } from 'src/app/wizard-creator/services/wizard-form.s
 @Component({
   selector: 'app-wizard-use-case-coding-github-issue',
   templateUrl: '../../use-case-form-base/use-case-form-base.component.html',
-  styleUrls: ['../../use-case-form-base/use-case-form-base.component.html',
+  styleUrls: ['../../use-case-form-base/use-case-form-base.component.scss',
   './wizard-use-case-coding-github-issue.component.scss']
 })
 export class WizardUseCaseCodingGithubIssueComponent extends UseCaseFormBaseComponent {

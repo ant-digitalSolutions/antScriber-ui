@@ -200,6 +200,7 @@ export class WizardFormService {
     // the case for rendering or hiding all the fields
     if (fields[0] === WizardDefaultFieldNamesEnum.ALL) {
       this._defaultFieldsToRenderOnForm = [];
+      this._fieldNamesToRender.clear();
 
       if (addOrDel === 'add') {
         Object.values(WizardDefaultFieldNamesEnum).forEach(v => {

@@ -1,5 +1,5 @@
 <div class="b-t-1 p-20 wizard-creator-form-outer-container" *ngIf="dataReady">
-  <div class="wizard-form" >
+  <div class="wizard-form">
     <!-- ------------------------------------------------------------------------- -->
     <!-- Use Case Selector -->
     <!-- ------------------------------------------------------------------------- -->
@@ -13,14 +13,20 @@
       <!-- ------------------------------------------------------------------------- -->
       <!-- Variable Input Container -->
       <!-- ------------------------------------------------------------------------- -->
-      <div class="field-container" *ngIf="checkIfFieldRender('instruction')">
+      <div
+        class="field-container"
+        *ngIf="checkIfFieldRender('instructionDefault')"
+      >
         <app-wizard-creator-text-field
-          [fieldData]="textFieldData('instruction')"
+          [fieldData]="textFieldData('instructionDefault')"
           class="col-12"
         >
         </app-wizard-creator-text-field>
       </div>
 
+      <!-- ------------------------------------------------------------------------- -->
+      <!-- Render the specific fields for the selected use-case -->
+      <!-- ------------------------------------------------------------------------- -->
       <div class="field-container">
         <app-wizard-creator-form-dynamic-elements
           class="col-12"
@@ -85,7 +91,7 @@
         <app-wizard-creator-selector-field
           [fieldData]="selectorData('creativityLevel')"
           *ngIf="checkIfFieldRender('creativityLevel')"
-          class="col-8"
+          [ngClass]="checkIfFieldRender('amountOfVariants')? 'col-8' : 'col-12'"
         ></app-wizard-creator-selector-field>
       </div>
     </div>
