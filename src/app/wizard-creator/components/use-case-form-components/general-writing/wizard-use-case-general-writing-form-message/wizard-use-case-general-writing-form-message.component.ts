@@ -15,7 +15,7 @@ import { WizardFormService } from 'src/app/wizard-creator/services/wizard-form.s
 export class WizardUseCaseGeneralWritingFormMessageComponent {
   textFields: TextFieldToRenderData[];
   checkboxFields: CheckboxFieldToRenderData[];
-  buttonToggleFields: ButtonToggleToRenderData[];
+  selectorFields: ButtonToggleToRenderData[];
 
   componentDestroyed$: Subject<boolean> = new Subject();
 
@@ -51,7 +51,7 @@ export class WizardUseCaseGeneralWritingFormMessageComponent {
   setNeededFields() {
     this.textFields = [];
     this.checkboxFields = [];
-    this.buttonToggleFields = [];
+    this.selectorFields = [];
 
     this._wizardForm.updateAdditionalData('isReply', this.defaultTypeOfMessage === 'newMessage' ? false : true);
 
@@ -97,17 +97,41 @@ export class WizardUseCaseGeneralWritingFormMessageComponent {
         isLongText: true
       });
 
-    this.textFields.push({
-      placeholder: 'Eg: 100-200',
+    this.selectorFields.push({
       fieldLabel: 'Words Range',
-      fieldValue: '',
-      validators: [],
-      inputMaxLen: 100,
+      fieldValue: '0-50',
       dataName: 'wordsRange',
-      tooltipText: 'Select the desired word count range for the message'
+      tooltipText: 'Select the desired word count range for the message',
+      values: [
+        {
+          value: '0-25',
+          text: '0-25 words'
+        },
+        {
+          value: '25-50',
+          text: '25-50 words'
+        },
+        {
+          value: '50-100',
+          text: '50-100 words'
+        },
+        {
+          value: '100-150',
+          text: '100-150 words'
+        },
+        {
+          value: '150-300',
+          text: '150-300 words'
+        }
+        ,
+        {
+          value: '300+',
+          text: '300+ words'
+        }
+      ]
     });
 
-    this.buttonToggleFields.push({
+    this.selectorFields.push({
       dataName: 'typeOfMessage',
       fieldLabel: 'Type of Message',
       fieldValue: this.defaultTypeOfMessage,
@@ -139,7 +163,6 @@ export class WizardUseCaseGeneralWritingFormMessageComponent {
     this.selectedMessageType = selectedTypeOfIssue;
 
     if (selectedTypeOfIssue === 'newMessage') {
-      this._wizardForm.removeFieldFromAdditionalData('messageToReply');
       this._wizardForm.updateAdditionalData('isReply', false);
     } else {
       this._wizardForm.updateAdditionalData('isReply', true);
@@ -159,8 +182,8 @@ export class WizardUseCaseGeneralWritingFormMessageComponent {
     }
   }
 
-  buttonToggleData(dataName: string): ButtonToggleToRenderData {
-    const data = this.buttonToggleFields.find(d => d.dataName === dataName);
+  selectorData(dataName: string): ButtonToggleToRenderData {
+    const data = this.selectorFields.find(d => d.dataName === dataName);
 
     if (data) {
       return data;

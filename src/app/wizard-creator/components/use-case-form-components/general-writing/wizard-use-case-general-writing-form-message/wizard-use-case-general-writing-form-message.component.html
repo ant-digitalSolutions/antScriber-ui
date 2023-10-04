@@ -1,5 +1,5 @@
 <div class="fields-container">
-    <app-wizard-creator-button-toggle [fieldData]="buttonToggleData('typeOfMessage')"></app-wizard-creator-button-toggle>
+    <app-wizard-creator-button-toggle [fieldData]="selectorData('typeOfMessage')"></app-wizard-creator-button-toggle>
 </div>
 
 <div class="fields-container">
@@ -33,6 +33,10 @@
     [fieldData]="textFieldData('messageToReply')"
     >
     </app-wizard-creator-text-field>
+</div>
+
+<div class="fields-container">
+    <app-wizard-creator-selector-field [fieldData]="selectorData('wordsRange')"></app-wizard-creator-selector-field>
 </div>
 
 
