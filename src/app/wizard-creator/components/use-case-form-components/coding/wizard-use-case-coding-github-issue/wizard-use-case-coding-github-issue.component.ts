@@ -2,7 +2,7 @@ import { label } from './../../../../../template-bundle/pages/apps/email/listing
 import { Component } from '@angular/core';
 import { Validators } from 'ngx-editor';
 import { Subject, takeUntil } from 'rxjs';
-import { ButtonToggleToRenderData } from 'src/app/common/interfaces/button-toggle-to-render-data';
+import { SelectorFieldToRenderData } from 'src/app/common/interfaces/button-toggle-to-render-data';
 import { CheckboxFieldToRenderData } from 'src/app/common/interfaces/checkbox-field-to-render-data';
 import { TextFieldToRenderData } from 'src/app/common/interfaces/textfield-to-render-data';
 import { WizardCreatorService } from 'src/app/wizard-creator/services/wizard-creator.service';
@@ -16,7 +16,7 @@ import { WizardFormService } from 'src/app/wizard-creator/services/wizard-form.s
 export class WizardUseCaseCodingGithubIssueComponent {
   textFields: TextFieldToRenderData[];
   checkboxFields: CheckboxFieldToRenderData[];
-  buttonToggleFields: ButtonToggleToRenderData[];
+  buttonToggleFields: SelectorFieldToRenderData[];
 
   componentDestroyed$: Subject<boolean> = new Subject();
 
@@ -132,7 +132,7 @@ export class WizardUseCaseCodingGithubIssueComponent {
     }
   }
 
-  buttonToggleData(dataName: string): ButtonToggleToRenderData {
+  buttonToggleData(dataName: string): SelectorFieldToRenderData {
     const data = this.buttonToggleFields.find(d => d.dataName === dataName);
 
     if (data) {

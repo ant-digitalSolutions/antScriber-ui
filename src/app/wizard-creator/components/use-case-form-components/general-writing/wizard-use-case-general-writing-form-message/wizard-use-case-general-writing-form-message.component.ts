@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Validators } from 'ngx-editor';
 import { Subject, takeUntil } from 'rxjs';
-import { ButtonToggleToRenderData } from 'src/app/common/interfaces/button-toggle-to-render-data';
+import { SelectorFieldToRenderData } from 'src/app/common/interfaces/button-toggle-to-render-data';
 import { CheckboxFieldToRenderData } from 'src/app/common/interfaces/checkbox-field-to-render-data';
 import { TextFieldToRenderData } from 'src/app/common/interfaces/textfield-to-render-data';
 import { WizardCreatorService } from 'src/app/wizard-creator/services/wizard-creator.service';
@@ -15,7 +15,7 @@ import { WizardFormService } from 'src/app/wizard-creator/services/wizard-form.s
 export class WizardUseCaseGeneralWritingFormMessageComponent {
   textFields: TextFieldToRenderData[];
   checkboxFields: CheckboxFieldToRenderData[];
-  selectorFields: ButtonToggleToRenderData[];
+  selectorFields: SelectorFieldToRenderData[];
 
   componentDestroyed$: Subject<boolean> = new Subject();
 
@@ -182,7 +182,7 @@ export class WizardUseCaseGeneralWritingFormMessageComponent {
     }
   }
 
-  selectorData(dataName: string): ButtonToggleToRenderData {
+  selectorData(dataName: string): SelectorFieldToRenderData {
     const data = this.selectorFields.find(d => d.dataName === dataName);
 
     if (data) {
