@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ReplaySubject, of, tap } from 'rxjs';
 import { DocumentService } from 'src/app/document/services/document.service';
 import { WizardFormService } from './wizard-form.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class WizardCreatorService {
@@ -23,7 +24,8 @@ export class WizardCreatorService {
     private http: HttpClient,
     private toastr: ToastrService,
     private _docService: DocumentService,
-    private _wizardForm: WizardFormService) { }
+    private _wizardForm: WizardFormService,
+    private _snackBar: MatSnackBar) { }
 
   generateContent() {
     const formData = new WizardCreatorCreateDto();
@@ -31,7 +33,10 @@ export class WizardCreatorService {
     formData.data = this._wizardForm.additionalData;
 
     if (!this._wizardForm.checkAdditionalData()) {
-      this.toastr.error('Please check your data');
+      this._snackBar.open('Error on data','Fix',{
+        duration: 2000,
+        panelClass: 'snack-warning'
+      });
       return of({});
     }
 

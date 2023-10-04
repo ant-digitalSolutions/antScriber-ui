@@ -2,11 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import {Subject, takeUntil, tap } from 'rxjs';
 import { WizardCreatorService } from '../../services/wizard-creator.service';
 import {Validators } from '@angular/forms';
-import { OptionField } from 'src/app/common/dto/option-field.dto';
 import { ContentTone, contentToneOptionFields } from 'src/app/common/enum/content generation/content-tone.enum';
 import { langEnumOptionFields } from 'src/app/common/enum/lang-options.enum';
 import { ContentCreationCreativityLevel, creativityLevelOptionFields } from 'src/app/common/enum/content generation/content-creation-imagination-level.enum';
-import { wizardCreatorUseCaseEnumOptionFields } from '../../enums/wizard-creator-use-case.enum';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 import { mapEnumNameAndValue } from 'src/app/common/functions/name-and-values-of-enum.function';
 import { OpenAiGPTVersionEnum } from 'src/app/common/enum/content generation/openai-gtp-version.enum';
@@ -23,8 +21,6 @@ import { WizardDefaultFieldNamesEnum } from '../../enums/wizard-default-fields-n
 })
 export class WizardCreatorFormComponent implements OnDestroy, OnInit {
 
-  wizardUseCaseOptions: OptionField<string>[];
-
   MAX_AMOUNT_OPTIONS = 5;
 
   componentDestroyed$: Subject<boolean> = new Subject();
@@ -34,8 +30,6 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
   currentProjectId: number;
 
   wizardDescription: string;
-
-  gptVersionOptions: OptionField<string>[];
 
   selectorFields: SelectorFieldToRenderData[];
 
@@ -80,7 +74,6 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
     this.initContentToneOptions();
     this.initLangEnumOptions();
     this.initCreativityLevelOptions();
-    this.initwizardUseCaseOptions()
     this.initVariantsOptions();
     this.setListeners();
     this.initGPTVersionOptions()
@@ -172,10 +165,6 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
       tooltipText: 'How much imagination to apply?',
       values: creativityLevelOptionFields()
     });
-  }
-
-  initwizardUseCaseOptions() {
-    this.wizardUseCaseOptions = wizardCreatorUseCaseEnumOptionFields();
   }
 
   initVariantsOptions() {
