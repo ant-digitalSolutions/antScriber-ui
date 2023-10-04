@@ -3,7 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { FloatLabelType } from '@angular/material/form-field';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, takeUntil } from 'rxjs';
-import { ButtonToggleToRenderData } from 'src/app/common/interfaces/button-toggle-to-render-data';
+import { SelectorFieldToRenderData } from 'src/app/common/interfaces/button-toggle-to-render-data';
 import { WizardCreatorService } from 'src/app/wizard-creator/services/wizard-creator.service';
 import { WizardFormService } from 'src/app/wizard-creator/services/wizard-form.service';
 
@@ -16,7 +16,7 @@ export class WizardCreatorSelectorFieldComponent {
   componentDestroyed$: Subject<boolean> = new Subject();
 
   @Input()
-  fieldData: ButtonToggleToRenderData;
+  fieldData: SelectorFieldToRenderData;
 
   isLoading = false;
 
@@ -40,6 +40,10 @@ export class WizardCreatorSelectorFieldComponent {
     this.valueChange(this.fieldData.fieldValue)
   }
 
+  registerData() {
+    this._wizardFormService.registerAdditionalDataFormField(this.fieldData.dataName, this.form);
+  }
+
 
   ngOnDestroy(): void {
     this.componentDestroyed$.next(true)
@@ -53,8 +57,7 @@ export class WizardCreatorSelectorFieldComponent {
 
 
   valueChange(value: any) {
-    const value1 = this.form.get('value')?.value;
-    this._wizardFormService.updateAdditionalData(this.fieldData.dataName, value);
+    this._wizardFormService.updateAdditionalData(this.fieldData.dataName, this.form.value);
     this._wizardFormService.buttonToggleUpdate(this.fieldData.dataName);
   }
 }

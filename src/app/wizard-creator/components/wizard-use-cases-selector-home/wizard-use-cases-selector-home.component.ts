@@ -3,17 +3,16 @@ import { Subject, takeUntil } from 'rxjs';
 import { OptionField } from 'src/app/common/dto/option-field.dto';
 import { mapEnumNameAndValue } from 'src/app/common/functions/name-and-values-of-enum.function';
 import { WizardCreatorUseCaseGroup } from '../../enums/wizard-creator-use-case-group.enum';
-import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
 import { WizardGeneralWritingUseCases } from '../../enums/wizard-creator-general-writing-use-cases.enum';
 import { WizardSocialMediaUseCases } from '../../enums/wizard-creator-social-media-use-cases.enum';
 import { WizardBlogAndArticlesUseCases } from '../../enums/wizard-creator-blog-and-articles-use-cases.enum';
-import { WizardCreatorService } from '../../services/wizard-creator.service';
-import { F } from '@angular/cdk/keycodes';
 import { WizardCreatorEcommerceUseCasesEnum } from '../../enums/wizard-creator-ecommerce-use-cases.enum';
 import { WizardCreatorMarketingUseCasesEnum } from '../../enums/wizard-creator-marketing-use-cases.enum';
 import { WizardCreatorCodingUseCasesEnum } from '../../enums/wizard-creator-coding-use-cases.enum';
 import { WizardCreatorInternalDevUseCasesEnum } from '../../enums/wizard-creator-internal-dev-use-cases.enum';
 import { WizardCreatorLearningUseCasesEnum } from '../../enums/wizard-creator-learning-use-cases.enum';
+import { WizardFormService } from '../../services/wizard-form.service';
+import { WizardUseCaseService } from '../../services/use-case/wizard-use-case.service';
 
 @Component({
   selector: 'app-wizard-use-cases-selector-home',
@@ -23,7 +22,7 @@ import { WizardCreatorLearningUseCasesEnum } from '../../enums/wizard-creator-le
 export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
 
 
-  showUseCases = false;
+  showUseCases = true;
 
 
   /**
@@ -44,7 +43,9 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
 
   showLoadMoreUseCasesBtn = true;
 
-  constructor(private _wizardService: WizardCreatorService) {
+  constructor(
+    private _wizardForm: WizardFormService,
+    private _useCaseService: WizardUseCaseService) {
 
   }
 
@@ -59,25 +60,31 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
   }
 
   setListeners() {
-    this._wizardService.wizardUseCase$.pipe(takeUntil(this.componentDestroyed$)).subscribe(useCase => {
-      this.selectedCase = useCase;
-      this.showUseCases = false;
+    this._useCaseService.wizardUseCase$.pipe(takeUntil(this.componentDestroyed$)).subscribe(useCase => {
+      if (useCase) {
+        this.selectedCase = useCase;
+        this.showUseCases = false;
+      }
     })
   }
 
   setUseCases(initialElements: boolean = true) {
-   const values = mapEnumNameAndValue(WizardCreatorUseCaseGroup);
-    this.useCasesGroups = initialElements ? values.slice(0,3) : values;
+    const values = mapEnumNameAndValue(WizardCreatorUseCaseGroup);
+    this.useCasesGroups = initialElements ? values.slice(0, 3) : values;
 
-    if(!initialElements) {
+    if (!initialElements) {
       this.showLoadMoreUseCasesBtn = false;
     }
+
+    this.showUseCases = true;
   }
 
 
 
-  selectUseCaseGroup(selectedGroup: string, isOpen: boolean) {
-   this._wizardService.wizardUseCaseGroup = selectedGroup;
+  selectUseCaseGroup(selectedGroup: string) {
+    this._useCaseService.setWizardUseCaseGroup(selectedGroup);
+    this._wizardForm.updateAdditionalData('useCaseGroup', selectedGroup);
+    
     switch (selectedGroup) {
       case WizardCreatorUseCaseGroup.GeneralWriting:
         this.selectGroupUseCases = mapEnumNameAndValue(WizardGeneralWritingUseCases);

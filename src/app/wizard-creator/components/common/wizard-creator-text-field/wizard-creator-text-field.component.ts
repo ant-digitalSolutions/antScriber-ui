@@ -30,7 +30,6 @@ export class WizardCreatorTextFieldComponent {
   valueEditedEvent = new EventEmitter<string>();
 
   constructor(private toastr: ToastrService, 
-    private _wizardService: WizardCreatorService,
     private _wizardFormService: WizardFormService) {
 
 

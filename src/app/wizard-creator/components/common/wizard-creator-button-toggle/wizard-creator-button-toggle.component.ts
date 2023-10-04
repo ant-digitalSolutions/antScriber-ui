@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { FloatLabelType } from '@angular/material/form-field';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, takeUntil } from 'rxjs';
-import { ButtonToggleToRenderData } from 'src/app/common/interfaces/button-toggle-to-render-data';
+import { SelectorFieldToRenderData } from 'src/app/common/interfaces/button-toggle-to-render-data';
 import { WizardCreatorService } from 'src/app/wizard-creator/services/wizard-creator.service';
 import { WizardFormService } from 'src/app/wizard-creator/services/wizard-form.service';
 
@@ -16,7 +16,7 @@ export class WizardCreatorButtonToggleComponent implements OnInit, OnDestroy {
   componentDestroyed$: Subject<boolean> = new Subject();
 
   @Input()
-  fieldData: ButtonToggleToRenderData;
+  fieldData: SelectorFieldToRenderData;
 
   isLoading = false;
 

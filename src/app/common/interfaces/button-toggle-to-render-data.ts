@@ -1,6 +1,6 @@
 import { OptionField } from "../dto/option-field.dto";
 
-export interface ButtonToggleToRenderData {
+export interface SelectorFieldToRenderData {
     /**
    * The initial value of the field, if any.
    *
@@ -33,5 +33,5 @@ export interface ButtonToggleToRenderData {
     */
     dataName: string;
 
-    values: OptionField<string>[]
+    values: OptionField<any>[]
 }

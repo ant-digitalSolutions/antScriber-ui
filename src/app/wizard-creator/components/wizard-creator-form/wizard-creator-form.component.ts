@@ -1,16 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { EMPTY, Subject, takeUntil, tap } from 'rxjs';
+import {Subject, takeUntil, tap } from 'rxjs';
 import { WizardCreatorService } from '../../services/wizard-creator.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { OptionField } from 'src/app/common/dto/option-field.dto';
+import {Validators } from '@angular/forms';
 import { ContentTone, contentToneOptionFields } from 'src/app/common/enum/content generation/content-tone.enum';
 import { langEnumOptionFields } from 'src/app/common/enum/lang-options.enum';
 import { ContentCreationCreativityLevel, creativityLevelOptionFields } from 'src/app/common/enum/content generation/content-creation-imagination-level.enum';
-import { WizardCreatorUseCase, wizardCreatorUseCaseEnumOptionFields } from '../../enums/wizard-creator-use-case.enum';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 import { mapEnumNameAndValue } from 'src/app/common/functions/name-and-values-of-enum.function';
 import { OpenAiGPTVersionEnum } from 'src/app/common/enum/content generation/openai-gtp-version.enum';
 import { WizardFormService } from '../../services/wizard-form.service';
+import { SelectorFieldToRenderData } from 'src/app/common/interfaces/button-toggle-to-render-data';
+import { TextFieldToRenderData } from 'src/app/common/interfaces/textfield-to-render-data';
+import { WizardUseCaseService } from '../../services/use-case/wizard-use-case.service';
+import { WizardDefaultFieldNamesEnum } from '../../enums/wizard-default-fields-names.enum';
 
 @Component({
   selector: 'app-wizard-creator-form',
@@ -19,33 +21,27 @@ import { WizardFormService } from '../../services/wizard-form.service';
 })
 export class WizardCreatorFormComponent implements OnDestroy, OnInit {
 
-
-
   MAX_AMOUNT_OPTIONS = 5;
-
 
   componentDestroyed$: Subject<boolean> = new Subject();
 
-  wizardCreatorForm: FormGroup;
-
   isLoading = false;
 
-  contentToneOptions: OptionField<string>[];
-
-  langEnumOptions: OptionField<string>[];
-
-  creativityLevelOptions: OptionField<string>[];
-
-  wizardUseCaseOptions: OptionField<string>[];
-
-  variantsOptions: OptionField<number>[];
   currentProjectId: number;
 
   wizardDescription: string;
 
-  wizardDescriptionValidators = [Validators.required, Validators.minLength(10), Validators.maxLength(800)]
+  selectorFields: SelectorFieldToRenderData[];
 
-  gptVersionOptions: OptionField<string>[];
+  textFields: TextFieldToRenderData[];
+
+  /**
+   * Indicates if the data is ready. If true, render th content.
+   *
+   * @memberof WizardCreatorFormComponent
+   */
+  dataReady = false;
+
 
   /**
    * If true the default description field will be shown.
@@ -54,22 +50,35 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
    */
   showDescriptionField = true;
 
+  /**
+   * Indicate if the user selected a use case.
+   * 
+   * If true, render the dynamic field content.
+   *
+   * @memberof WizardCreatorFormComponent
+   */
+  useCaseSelected = false;
+
   constructor(
-    private _wizardCreatorService: WizardCreatorService, 
+    private _wizardCreatorService: WizardCreatorService,
     private projectService: BlogProjectsService,
-    private _wizardFormService: WizardFormService) {
+    private _wizardFormService: WizardFormService,
+    private _useCaseService: WizardUseCaseService) {
 
   }
 
   ngOnInit(): void {
+    this.selectorFields = [];
+    this.textFields = [];
+    this.initTextFields();
     this.initContentToneOptions();
     this.initLangEnumOptions();
     this.initCreativityLevelOptions();
-    this.initwizardUseCaseOptions()
     this.initVariantsOptions();
-    this.initForm();
     this.setListeners();
     this.initGPTVersionOptions()
+
+    this.dataReady = true;
   }
 
   ngOnDestroy(): void {
@@ -78,18 +87,13 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
   }
 
   generateContent(): void {
+    this.isLoading = true;
 
-    if (this.wizardCreatorForm.valid) {
-      this.isLoading = true;
-      const formValue = this.wizardCreatorForm.value;
-
-      formValue.projectId = this.currentProjectId;
-      this._wizardCreatorService.generateContent(formValue).subscribe(r => {
-        if (Object.keys(r).length === 0) {
-          this.isLoading = false;
-        }
-      });
-    }
+    this._wizardCreatorService.generateContent().subscribe(r => {
+      if (Object.keys(r).length === 0) {
+        this.isLoading = false;
+      }
+    });
   }
 
   setListeners() {
@@ -103,118 +107,105 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
       this.isLoading = false;
     })
 
-    this._wizardFormService.fieldToRenderUpdate$.pipe(takeUntil(this.componentDestroyed$))
-    .subscribe(() => this.setConditionalFields())
+    this._useCaseService.wizardUseCase$.pipe(takeUntil(this.componentDestroyed$))
+    .subscribe(() => {
+      this.useCaseSelected = true;
+    })
+
   }
 
-  setConditionalFields(): void {
-    if (this._wizardFormService.showCreativityInput) {
-      this.wizardCreatorForm.addControl('creativityLevel', new FormControl(ContentCreationCreativityLevel.Zen, Validators.required))
-    }
-    if (this._wizardFormService.showDescriptionInput) {
-      this.wizardCreatorForm.addControl('description', new FormControl('', [Validators.required, Validators.minLength(3)]))
-    }
-    if (this._wizardFormService.showLangInput) {
-      this.wizardCreatorForm.addControl('outputLang', new FormControl('', Validators.required))
-    }
-    if (this._wizardFormService.showToneInput) {
-      this.wizardCreatorForm.addControl('voiceTone', new FormControl(ContentTone.Informative, Validators.required))
-    }
-    if (this._wizardFormService.showNumberOfVariantsToGenerate) {
-      this.wizardCreatorForm.addControl('amountOfVariants', new FormControl(1, [Validators.required, Validators.min(1)]))
-    }
-  }
-
-  initForm() {
-    this.wizardCreatorForm = new FormGroup({
-      gptVersion: new FormControl(OpenAiGPTVersionEnum.GPT3, Validators.required)
+  initTextFields() {
+    this.textFields.push({
+      placeholder: 'E.g. "Describe the benefits of solar energy"',
+      fieldLabel: 'Instruction',
+      fieldValue: ``,
+      validators: [Validators.required, Validators.maxLength(600), Validators.minLength(10)],
+      inputMaxLen: 600,
+      dataName: WizardDefaultFieldNamesEnum.Instruction,
+      tooltipText: 'Detailed instruction to generate the desired content.',
+      isLongText: true
     });
   }
 
   initContentToneOptions() {
-    this.contentToneOptions = contentToneOptionFields();
+    this.selectorFields.push({
+      fieldLabel: 'Voice Tone',
+      fieldValue: ContentTone.Friendly,
+      dataName: WizardDefaultFieldNamesEnum.VoiceTone,
+      tooltipText: 'The voice tone to use.',
+      values: contentToneOptionFields()
+    });
   }
 
   initGPTVersionOptions() {
-    this.gptVersionOptions = mapEnumNameAndValue(OpenAiGPTVersionEnum);
-  }
-
-  setContentTone(voiceTone: any) {
-    this.wizardCreatorForm.get('voiceTone')?.setValue(voiceTone);
+    this.selectorFields.push({
+      fieldLabel: 'Sorcery Level',
+      fieldValue: OpenAiGPTVersionEnum.GPT3,
+      dataName: WizardDefaultFieldNamesEnum.GtpVersion,
+      tooltipText: 'GPT version to use.',
+      values: mapEnumNameAndValue(OpenAiGPTVersionEnum)
+    });
   }
 
   initLangEnumOptions() {
-    this.langEnumOptions = langEnumOptionFields();
-  }
-
-  setLang(lang: any) {
-    this.wizardCreatorForm.get('outputLang')?.setValue(lang);
+    this.selectorFields.push({
+      fieldLabel: 'Output Lang',
+      fieldValue: 'English',
+      dataName: WizardDefaultFieldNamesEnum.OutputLang,
+      tooltipText: 'The desired language for the output content.',
+      values: langEnumOptionFields()
+    });
   }
 
   initCreativityLevelOptions() {
-    this.creativityLevelOptions = creativityLevelOptionFields();
-  }
-
-  setCreativityLevel(creativityLevel: any) {
-    this.wizardCreatorForm.get('creativityLevel')?.setValue(creativityLevel);
-  }
-
-  setGptVersion(gptVersion: any) {
-    this.wizardCreatorForm.get('gptVersion')?.setValue(gptVersion);
-  }
-
-  initwizardUseCaseOptions() {
-    this.wizardUseCaseOptions = wizardCreatorUseCaseEnumOptionFields();
-  }
-
-  setWizardUseCase(useCase: any) {
-    this.wizardCreatorForm.get('useCase')?.setValue(useCase);
+    this.selectorFields.push({
+      fieldLabel: 'Creative Level',
+      fieldValue: ContentCreationCreativityLevel.Zen,
+      dataName: WizardDefaultFieldNamesEnum.ImaginationSelector,
+      tooltipText: 'How much imagination to apply?',
+      values: creativityLevelOptionFields()
+    });
   }
 
   initVariantsOptions() {
     const x: number[] = new Array(this.MAX_AMOUNT_OPTIONS).fill(0).map((_, index) => index + 1);
-    this.variantsOptions = x.map(v => {
+    const variantOptions = x.map(v => {
       return {
         value: v,
         text: v.toString()
       }
     });
+
+    this.selectorFields.push({
+      fieldLabel: '# of Spells',
+      fieldValue: 1,
+      dataName: WizardDefaultFieldNamesEnum.AmountOfVariants,
+      tooltipText: '# of variants to generate.',
+      values: variantOptions
+    });
   }
 
-  setVariants(variants: number) {
-    this.wizardCreatorForm.get('amountOfVariants')?.setValue(variants);
+  selectorData(dataName: string): SelectorFieldToRenderData {
+    const data = this.selectorFields.find(d => d.dataName === dataName);
+
+    if (data) {
+      return data;
+    } else {
+      throw new Error(`The given dataName is not registered: ${dataName}`)
+    }
   }
 
-  setWizardDescription(description: string) {
-    this.wizardDescription = description;
-    this.wizardCreatorForm.get('description')?.setValue(description);
+  textFieldData(dataName: string): TextFieldToRenderData {
+    const data = this.textFields.find(d => d.dataName === dataName);
 
+    if (data) {
+      return data;
+    } else {
+      throw new Error(`The given dataName is not registered: ${dataName}`)
+    }
   }
 
-  
-  public get showDescription() : boolean {
-    return this._wizardFormService.showDescriptionInput;
+  checkIfFieldRender(fieldName: string) : boolean {
+    return this._wizardFormService.checkIfFieldShouldRender(fieldName);
   }
-
-  public get showLang(): boolean {
-    return this._wizardFormService.showLangInput;
-  }
-  
-  public get showTone(): boolean {
-    return this._wizardFormService.showToneInput;
-  }
-
-  public get showCreativity(): boolean {
-    return this._wizardFormService.showCreativityInput;
-  }
-
-  public get showNumberOfVariantsToGenerate(): boolean {
-    return this._wizardFormService.showNumberOfVariantsToGenerate;
-  }
-
-  public get showGptVersion(): boolean {
-    return this._wizardFormService.showGptVersion;
-  }
-  
-
 }

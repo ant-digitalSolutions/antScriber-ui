@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { WizardCreatorCodingUseCasesEnum } from 'src/app/wizard-creator/enums/wizard-creator-coding-use-cases.enum';
 import { WizardGeneralWritingUseCases } from 'src/app/wizard-creator/enums/wizard-creator-general-writing-use-cases.enum';
-import { WizardCreatorService } from 'src/app/wizard-creator/services/wizard-creator.service';
+import { WizardUseCaseService } from 'src/app/wizard-creator/services/use-case/wizard-use-case.service';
 
 @Component({
   selector: 'app-wizard-use-case-general-writing-form',
@@ -14,7 +13,8 @@ export class WizardUseCaseGeneralWritingFormComponent {
 
   userCase: WizardGeneralWritingUseCases;
 
-  constructor(private _wizard: WizardCreatorService) {
+  constructor(
+    private _useCaseService: WizardUseCaseService) {
 
   }
 
@@ -28,7 +28,7 @@ export class WizardUseCaseGeneralWritingFormComponent {
   }
 
   setListeners() {
-    this._wizard.wizardUseCase$.pipe(takeUntil(this.componentDestroyed$)).subscribe(useCase => {
+    this._useCaseService.wizardUseCase$.pipe(takeUntil(this.componentDestroyed$)).subscribe(useCase => {
       this.userCase = useCase as WizardGeneralWritingUseCases;
     })
   }

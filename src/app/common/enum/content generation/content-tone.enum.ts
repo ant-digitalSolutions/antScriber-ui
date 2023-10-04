@@ -13,6 +13,7 @@ import { OptionField } from "../../dto/option-field.dto";
 // }
 
 export enum ContentTone {
+    Friendly = 'Friendly',
     Appreciative = 'Appreciative',
     Assertive = 'Assertive',
     Candid = 'Candid',
