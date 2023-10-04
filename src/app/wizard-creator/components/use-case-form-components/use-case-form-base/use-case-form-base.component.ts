@@ -39,7 +39,6 @@ export class UseCaseFormBaseComponent {
 
   setFieldsAndData(): void {
     this.setSelectorFieldsData();
-    this.setSelectorFieldsData();
     this.setButtonToggleData();
     this.setCheckboxFieldsData();
     this.setTextFieldsData()
