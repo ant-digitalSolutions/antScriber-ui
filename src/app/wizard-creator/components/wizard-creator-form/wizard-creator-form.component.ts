@@ -111,6 +111,11 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
       this.isLoading = false;
     })
 
+    this._wizardCreatorService.wizardUseCase$.pipe(takeUntil(this.componentDestroyed$))
+    .subscribe(() => {
+      this.useCaseSelected = true;
+    })
+
   }
 
   initTextFields() {
@@ -121,7 +126,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
       validators: [Validators.required, Validators.maxLength(600), Validators.minLength(10)],
       inputMaxLen: 600,
       dataName: 'instruction',
-      tooltipText: 'Detailed instruction to generate the desired content. [E.g., ""]',
+      tooltipText: 'Detailed instruction to generate the desired content.',
       isLongText: true
     });
   }

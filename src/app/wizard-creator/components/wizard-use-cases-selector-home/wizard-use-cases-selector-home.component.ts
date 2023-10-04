@@ -23,7 +23,7 @@ import { WizardCreatorLearningUseCasesEnum } from '../../enums/wizard-creator-le
 export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
 
 
-  showUseCases = false;
+  showUseCases = true;
 
 
   /**
@@ -60,24 +60,28 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
 
   setListeners() {
     this._wizardService.wizardUseCase$.pipe(takeUntil(this.componentDestroyed$)).subscribe(useCase => {
-      this.selectedCase = useCase;
-      this.showUseCases = false;
+      if (useCase) {
+        this.selectedCase = useCase;
+        this.showUseCases = false;
+      }
     })
   }
 
   setUseCases(initialElements: boolean = true) {
-   const values = mapEnumNameAndValue(WizardCreatorUseCaseGroup);
-    this.useCasesGroups = initialElements ? values.slice(0,3) : values;
+    const values = mapEnumNameAndValue(WizardCreatorUseCaseGroup);
+    this.useCasesGroups = initialElements ? values.slice(0, 3) : values;
 
-    if(!initialElements) {
+    if (!initialElements) {
       this.showLoadMoreUseCasesBtn = false;
     }
+
+    this.showUseCases = true;
   }
 
 
 
   selectUseCaseGroup(selectedGroup: string, isOpen: boolean) {
-   this._wizardService.wizardUseCaseGroup = selectedGroup;
+    this._wizardService.wizardUseCaseGroup = selectedGroup;
     switch (selectedGroup) {
       case WizardCreatorUseCaseGroup.GeneralWriting:
         this.selectGroupUseCases = mapEnumNameAndValue(WizardGeneralWritingUseCases);
