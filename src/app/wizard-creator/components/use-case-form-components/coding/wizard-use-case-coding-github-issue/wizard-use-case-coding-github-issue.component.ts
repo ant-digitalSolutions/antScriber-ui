@@ -25,16 +25,19 @@ export class WizardUseCaseCodingGithubIssueComponent extends UseCaseFormBaseComp
   constructor(_wizardFormService: WizardFormService) {
     super(_wizardFormService);
   }
-
   
-  setFieldsToRender(selectedTypeOfIssue: string): void {
-    this.selectedTypeOfIssue = selectedTypeOfIssue;
-  }
-
   override toggleButtonUpdateActions(buttonToggleName: string): void {
     if (buttonToggleName === 'typeOfIssue') {
       const selectedTypeOfIssue = this._wizardFormService.additionalDataFieldValue(buttonToggleName);
-      this.setFieldsToRender(selectedTypeOfIssue);
+
+      if (selectedTypeOfIssue === 'featureRequest') {
+        this._wizardFormService.hideFieldFromForm(['bugDescription', 'bugSolution']);
+        this._wizardFormService.showFieldInForm(['featureDescription'])
+      }
+      if (selectedTypeOfIssue === 'bugReport') {
+        this._wizardFormService.showFieldInForm(['bugDescription', 'bugSolution']);
+        this._wizardFormService.hideFieldFromForm(['featureDescription'])
+      }
     }
   }
 

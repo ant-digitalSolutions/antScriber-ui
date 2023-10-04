@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
 import { WizardDefaultFieldNamesEnum } from '../enums/wizard-default-fields-names.enum';
 import { SelectorFieldToRenderData } from 'src/app/common/interfaces/button-toggle-to-render-data';
 import { CheckboxFieldToRenderData } from 'src/app/common/interfaces/checkbox-field-to-render-data';
@@ -25,7 +25,7 @@ export class WizardFormService {
   private _fieldsToShowUpdate = new Subject<void>();
   fieldToRenderUpdate$ = this._fieldsToShowUpdate.asObservable();
 
-  private _buttonToggleUpdate = new Subject<string>();
+  private _buttonToggleUpdate = new ReplaySubject<string>();
   buttonToggleUpdate$ = this._buttonToggleUpdate.asObservable();
 
   _formAdditionalData: any = {};
@@ -45,6 +45,15 @@ export class WizardFormService {
   private _checkboxFieldsToRender: CheckboxFieldToRenderData[];
   private _selectorFieldsToRender: SelectorFieldToRenderData[];
   private _buttonToggleFieldToRender: SelectorFieldToRenderData;
+
+  /**
+   * Contains the list of names of the fields to render in the form of a given
+   * use case. This is necessary in other to modify the data to render after
+   * the user clicks in a button toggle.
+   *
+   * @memberof WizardFormService
+   */
+  _fieldNamesToRender = new Map<string, void>();
 
 
 
@@ -128,6 +137,7 @@ export class WizardFormService {
     this._formAdditionalData = {};
     this._defaultFieldsToRenderOnForm = [];
     this._fieldsToShowUpdate.next();
+    this._fieldNamesToRender.clear();
   }
 
   /**
@@ -173,7 +183,8 @@ export class WizardFormService {
    * @memberof WizardFormService
    */
   checkIfFieldShouldRender(fieldName: string): boolean {
-    return this._defaultFieldsToRenderOnForm.indexOf(fieldName) >= 0;
+    // return this._defaultFieldsToRenderOnForm.indexOf(fieldName) >= 0;
+    return this._fieldNamesToRender.has(fieldName);
   }
 
   /**
@@ -191,7 +202,10 @@ export class WizardFormService {
       this._defaultFieldsToRenderOnForm = [];
 
       if (addOrDel === 'add') {
-        Object.values(WizardDefaultFieldNamesEnum).forEach(v => this._defaultFieldsToRenderOnForm.push(v))
+        Object.values(WizardDefaultFieldNamesEnum).forEach(v => {
+          this._defaultFieldsToRenderOnForm.push(v);
+          this._fieldNamesToRender.set(v)
+        })
       }
       return;
     }
@@ -200,6 +214,7 @@ export class WizardFormService {
     if (addOrDel === 'add') {
       fields.forEach(field => {
         this._defaultFieldsToRenderOnForm.push(field);
+        this._fieldNamesToRender.set(field)
       });
     } else {
       fields.forEach(field => {
@@ -207,6 +222,7 @@ export class WizardFormService {
 
         if (indexToDelete >= 0) {
           this._defaultFieldsToRenderOnForm = this._defaultFieldsToRenderOnForm.splice(indexToDelete, 1);
+          this._fieldNamesToRender.delete(field);
         }
       });
     }
@@ -216,34 +232,83 @@ export class WizardFormService {
 
   updateFormDefaultField_Text(fields: TextFieldToRenderData[]): void {
     this._textFieldsToRender = fields;
+    fields.forEach(field => {
+      this._fieldNamesToRender.set(field.dataName);
+    });
   }
 
   updateFormDefaultField_Selectors(fields: SelectorFieldToRenderData[]): void {
     this._selectorFieldsToRender = fields;
+    fields.forEach(field => {
+      this._fieldNamesToRender.set(field.dataName);
+    });
   }
 
   updateFormDefaultField_Checkboxes(fields: CheckboxFieldToRenderData[]): void {
     this._checkboxFieldsToRender = fields;
+    fields.forEach(field => {
+      this._fieldNamesToRender.set(field.dataName);
+    });
   }
 
   updateFormDefaultField_ButtonToggle(fields: SelectorFieldToRenderData): void {
     this._buttonToggleFieldToRender = fields;
+      this._fieldNamesToRender.set(fields.dataName);
   }
 
-  
-  public get textFieldsToRender() : TextFieldToRenderData[] {
-    return this._textFieldsToRender
+  hideFieldFromForm(fieldNames: string[]) {
+    fieldNames.forEach(fieldName => {
+      this._fieldNamesToRender.delete(fieldName);
+    });
+  }
+
+  showFieldInForm(fieldNames: string[]) {
+    fieldNames.forEach(fieldName => {
+      this._fieldNamesToRender.set(fieldName);
+    });
+  }
+
+
+  public get textFieldsToRender(): TextFieldToRenderData[] {
+    if (!this._textFieldsToRender) {
+      return [];
+    }
+    const output: TextFieldToRenderData[] = [];
+    this._textFieldsToRender.forEach(field => {
+      if (this.checkIfFieldShouldRender(field.dataName)) {
+        output.push(field);
+      }
+    });
+    return output;
   }
 
   public get selectorFieldsToRender(): SelectorFieldToRenderData[] {
-    return this._selectorFieldsToRender;
+    if (!this._selectorFieldsToRender) {
+      return [];
+    }
+    const output: SelectorFieldToRenderData[] = [];
+    this._selectorFieldsToRender.forEach(field => {
+      if (this.checkIfFieldShouldRender(field.dataName)) {
+        output.push(field);
+      }
+    });
+    return output;
   }
 
   public get checkboxFieldsToRender(): CheckboxFieldToRenderData[] {
-    return this._checkboxFieldsToRender
+    if (!this._checkboxFieldsToRender) {
+      return [];
+    }
+    const output: CheckboxFieldToRenderData[] = [];
+    this._checkboxFieldsToRender.forEach(field => {
+      if (this.checkIfFieldShouldRender(field.dataName)) {
+        output.push(field);
+      }
+    });
+    return output;
   }
 
-  public get buttonToggleFieldToRender() : SelectorFieldToRenderData {
+  public get buttonToggleFieldToRender(): SelectorFieldToRenderData {
     return this._buttonToggleFieldToRender;
   }
 

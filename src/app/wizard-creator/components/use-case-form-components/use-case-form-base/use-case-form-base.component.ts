@@ -5,7 +5,6 @@ import { CheckboxFieldToRenderData } from 'src/app/common/interfaces/checkbox-fi
 import { TextFieldToRenderData } from 'src/app/common/interfaces/textfield-to-render-data';
 import { WizardUseCaseService } from 'src/app/wizard-creator/services/use-case/wizard-use-case.service';
 import { WizardFormService } from 'src/app/wizard-creator/services/wizard-form.service';
-import { UseCaseFormBaseAbstractLogic } from './use-case-form-abstract-logic.abstract';
 
 @Component({
   selector: 'app-use-case-form-base',
@@ -43,6 +42,7 @@ export class UseCaseFormBaseComponent {
     this.setSelectorFieldsData();
     this.setButtonToggleData();
     this.setCheckboxFieldsData();
+    this.setTextFieldsData()
   }
 
   textFieldData(dataName: string): TextFieldToRenderData {
@@ -83,6 +83,10 @@ export class UseCaseFormBaseComponent {
     } else {
       throw new Error(`The given dataName is not registered: ${dataName}`)
     }
+  }
+
+  checkIfFieldShouldRender(fieldName: string): boolean {
+    return this._wizardFormService.checkIfFieldShouldRender(fieldName);
   }
 
   
