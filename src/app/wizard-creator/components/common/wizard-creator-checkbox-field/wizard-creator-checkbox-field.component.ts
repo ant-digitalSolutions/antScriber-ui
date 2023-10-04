@@ -41,6 +41,8 @@ export class WizardCreatorCheckboxFieldComponent {
   ngOnDestroy(): void {
     this.componentDestroyed$.next(true)
     this.componentDestroyed$.complete()
+    this._wizardFormService.removeFieldFromAdditionalData(this.fieldData.dataName);
+
   }
 
   setListeners() {

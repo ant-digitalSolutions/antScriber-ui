@@ -118,13 +118,6 @@ export class WizardUseCaseCodingGithubIssueComponent {
 
   setFieldsToRender(selectedTypeOfIssue: string): void {
     this.selectedTypeOfIssue = selectedTypeOfIssue;
-
-    if (selectedTypeOfIssue === 'bugReport') {
-      this._wizardForm.removeFieldFromAdditionalData('featureDescription');
-    } else {
-      this._wizardForm.removeFieldFromAdditionalData('bugSolution');
-      this._wizardForm.removeFieldFromAdditionalData('bugDescription');
-    }
   }
 
 
