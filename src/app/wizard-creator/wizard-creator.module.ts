@@ -22,6 +22,8 @@ import { WizardCreatorButtonToggleComponent } from './components/common/wizard-c
 import { WizardUseCaseGeneralWritingFormComponent } from './components/use-case-form-components/general-writing/wizard-use-case-general-writing-form.component';
 import { WizardUseCaseGeneralWritingFormMessageComponent } from './components/use-case-form-components/general-writing/wizard-use-case-general-writing-form-message/wizard-use-case-general-writing-form-message.component';
 import { WizardCreatorSelectorFieldComponent } from './components/common/wizard-creator-selector-field/wizard-creator-selector-field.component';
+import { WizardUseCaseService } from './services/use-case/wizard-use-case.service';
+import { WizardFormService } from './services/wizard-form.service';
 
 
 
@@ -50,8 +52,11 @@ import { WizardCreatorSelectorFieldComponent } from './components/common/wizard-
     DocumentModule,
     CKEditorModule,
     MatExpansionModule
-   
+
   ],
-  providers: [WizardCreatorService]
+  providers: [
+    WizardCreatorService,
+    WizardUseCaseService,
+    WizardFormService]
 })
 export class WizardCreatorModule { }

@@ -22,12 +22,10 @@ export class WizardUseCaseCodingImplementCodeComponent implements OnInit, OnDest
 
 
   ngOnInit(): void {
-    this._wizardForm.updateFieldsForCodingImplementCode();
     this.setNeededFields();
   }
 
   ngOnDestroy(): void {
-   this._wizardForm.restoreDefaultFields();
   }
 
   setNeededFields() {

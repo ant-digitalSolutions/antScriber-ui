@@ -35,16 +35,13 @@ export class WizardUseCaseCodingGithubIssueComponent {
 
 
   ngOnInit(): void {
-    this._wizardForm.updateFieldsForCodingImplementCode();
     this.setNeededFields();
     this.setListeners();
   }
 
   ngOnDestroy(): void {
-    this._wizardForm.restoreDefaultFields();
     this.componentDestroyed$.next(true)
     this.componentDestroyed$.complete();
-    this._wizardForm.cleanData();
   }
 
   setNeededFields() {

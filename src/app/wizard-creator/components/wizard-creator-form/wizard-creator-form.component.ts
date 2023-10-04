@@ -14,6 +14,7 @@ import { WizardFormService } from '../../services/wizard-form.service';
 import { SelectorFieldToRenderData } from 'src/app/common/interfaces/button-toggle-to-render-data';
 import { TextFieldToRenderData } from 'src/app/common/interfaces/textfield-to-render-data';
 import { WizardUseCaseService } from '../../services/use-case/wizard-use-case.service';
+import { WizardDefaultFieldNamesEnum } from '../../enums/wizard-default-fields-names.enum';
 
 @Component({
   selector: 'app-wizard-creator-form',
@@ -127,7 +128,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
       fieldValue: ``,
       validators: [Validators.required, Validators.maxLength(600), Validators.minLength(10)],
       inputMaxLen: 600,
-      dataName: 'instruction',
+      dataName: WizardDefaultFieldNamesEnum.Instruction,
       tooltipText: 'Detailed instruction to generate the desired content.',
       isLongText: true
     });
@@ -137,7 +138,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
     this.selectorFields.push({
       fieldLabel: 'Voice Tone',
       fieldValue: ContentTone.Friendly,
-      dataName: 'voiceTone',
+      dataName: WizardDefaultFieldNamesEnum.VoiceTone,
       tooltipText: 'The voice tone to use.',
       values: contentToneOptionFields()
     });
@@ -147,7 +148,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
     this.selectorFields.push({
       fieldLabel: 'Sorcery Level',
       fieldValue: OpenAiGPTVersionEnum.GPT3,
-      dataName: 'gptVersion',
+      dataName: WizardDefaultFieldNamesEnum.GtpVersion,
       tooltipText: 'GPT version to use.',
       values: mapEnumNameAndValue(OpenAiGPTVersionEnum)
     });
@@ -157,7 +158,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
     this.selectorFields.push({
       fieldLabel: 'Output Lang',
       fieldValue: 'English',
-      dataName: 'outputLang',
+      dataName: WizardDefaultFieldNamesEnum.OutputLang,
       tooltipText: 'The desired language for the output content.',
       values: langEnumOptionFields()
     });
@@ -167,7 +168,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
     this.selectorFields.push({
       fieldLabel: 'Creative Level',
       fieldValue: ContentCreationCreativityLevel.Zen,
-      dataName: 'creativityLevel',
+      dataName: WizardDefaultFieldNamesEnum.ImaginationSelector,
       tooltipText: 'How much imagination to apply?',
       values: creativityLevelOptionFields()
     });
@@ -189,7 +190,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
     this.selectorFields.push({
       fieldLabel: '# of Spells',
       fieldValue: 1,
-      dataName: 'amountOfVariants',
+      dataName: WizardDefaultFieldNamesEnum.AmountOfVariants,
       tooltipText: '# of variants to generate.',
       values: variantOptions
     });
@@ -217,27 +218,27 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
 
 
   public get showDescription(): boolean {
-    return this._wizardFormService.showDescriptionInput;
+    return this._wizardFormService.checkIfFieldShouldRender(WizardDefaultFieldNamesEnum.Instruction);
   }
 
   public get showLang(): boolean {
-    return this._wizardFormService.showLangInput;
+    return this._wizardFormService.checkIfFieldShouldRender(WizardDefaultFieldNamesEnum.OutputLang);
   }
 
   public get showTone(): boolean {
-    return this._wizardFormService.showToneInput;
+    return this._wizardFormService.checkIfFieldShouldRender(WizardDefaultFieldNamesEnum.VoiceTone);
   }
 
   public get showCreativity(): boolean {
-    return this._wizardFormService.showCreativityInput;
+    return this._wizardFormService.checkIfFieldShouldRender(WizardDefaultFieldNamesEnum.ImaginationSelector);
   }
 
   public get showNumberOfVariantsToGenerate(): boolean {
-    return this._wizardFormService.showNumberOfVariantsToGenerate;
+    return this._wizardFormService.checkIfFieldShouldRender(WizardDefaultFieldNamesEnum.AmountOfVariants);
   }
 
   public get showGptVersion(): boolean {
-    return this._wizardFormService.showGptVersion;
+    return this._wizardFormService.checkIfFieldShouldRender(WizardDefaultFieldNamesEnum.GtpVersion);
   }
 
 

@@ -1,26 +1,13 @@
 import { Injectable } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { WizardDefaultFieldNamesEnum } from '../enums/wizard-default-fields-names.enum';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class WizardFormService {
 
 
-  showDescriptionInput = true;
-
-  showToneInput = true;
-
-  showLangInput = true;
-
-  showNumberOfVariantsToGenerate = true;
-
-  showGptVersion = true;
-
-  showCreativityInput = true;
-
-  _additionalDataFormFields: {fieldName: string, formControl: FormControl}[] = [];
+  _additionalDataFormFields: { fieldName: string, formControl: FormControl }[] = [];
 
   /**
    * Emit the name of the field that contains an error.
@@ -40,28 +27,23 @@ export class WizardFormService {
 
   _formAdditionalData: any = {};
 
+  /**
+   * Contains the name of the fields to be shown in the wizard form.
+   *
+   * @type {string[]}
+   * @memberof WizardFormService
+   */
+  _defaultFieldsToRenderOnForm: string[] = [];
 
 
   constructor() { }
 
-  updateFieldsForCodingImplementCode() {
-    this.showDescriptionInput = false;
-    this.showToneInput = false;
-    this.showLangInput = false;
-    this.showNumberOfVariantsToGenerate = false;
-    this._fieldsToShowUpdate.next();
-  }
 
-  updateFieldsForGeneralWriting() {
-    this.showDescriptionInput = false;
-
-    this._fieldsToShowUpdate.next();
-  }
-
-  
   /**
    * Each of the use-case specific component should register its fields through this 
    * function.
+   * 
+   * This is used to check the validation of the fields before sending the data to the server.
    *
    * @param {string} fieldName
    * @param {FormControl} formControl
@@ -78,11 +60,14 @@ export class WizardFormService {
    * Check if any of the additional data field has an error.
    * 
    * If does, then notify and return false.
+   * 
+   * Used to check if all the fields that are rendering now are valid.
+   * If a fields is invalid, send an event so the field can show the error.
    *
    * @return {*}  {boolean}
    * @memberof WizardFormService
    */
-  checkAdditionalData() : boolean {
+  checkAdditionalData(): boolean {
     let isValid = true;
     this._additionalDataFormFields.forEach(data => {
       if (!data.formControl.valid) {
@@ -108,6 +93,9 @@ export class WizardFormService {
 
   /**
    * Emit when there is an update in a button toggle element.
+   * 
+   * Used so the fields of an specific use-case component can be updated
+   * accordantly.
    *
    * @param {string} dataName
    * @memberof WizardFormService
@@ -116,19 +104,16 @@ export class WizardFormService {
     this._buttonToggleUpdate.next(dataName)
   }
 
+  /**
+   * Clean all the data of the service.
+   *
+   * @memberof WizardFormService
+   */
   cleanData() {
     this._additionalDataFormFields = [];
     this._formAdditionalData = {};
+    this._defaultFieldsToRenderOnForm = [];
     this._fieldsToShowUpdate.next();
-  }
-
-  restoreDefaultFields() {
-    this.showDescriptionInput = true;
-    this.showToneInput = true;
-    this.showLangInput = true;
-    this.showNumberOfVariantsToGenerate = true;
-    this.showGptVersion = true;
-    this.showCreativityInput = true;
   }
 
   /**
@@ -142,7 +127,7 @@ export class WizardFormService {
   additionalDataFieldValue(dataName: string): any {
     if (Object.keys(this._formAdditionalData).indexOf(dataName) >= 0) {
       return this._formAdditionalData[dataName];
-    } 
+    }
 
     return undefined;
   }
@@ -165,10 +150,53 @@ export class WizardFormService {
     this._additionalDataFormFields = this._additionalDataFormFields.filter(field => field.fieldName !== fieldName);
   }
 
-  
-  public get additionalData() : any {
+  /**
+   * Check if the field with the given name can render in the wizard form.
+   *
+   * @param {string} fieldName
+   * @return {*}  {boolean}
+   * @memberof WizardFormService
+   */
+  checkIfFieldShouldRender(fieldName: string): boolean {
+    return this._defaultFieldsToRenderOnForm.indexOf(fieldName) >= 0;
+  }
+
+  /**
+   * Update the default fields to render in the form by
+   * addigin or deleting an element with the given name
+   *
+   * @param {WizardDefaultFieldNamesEnum} field Name of the field to add or delete.
+   * @param {('add' | 'del')} addOrDel Indicate if the given field should be added or deleted.
+   * @return {*} 
+   * @memberof WizardFormService
+   */
+  updateFormDefaultFieldsToRender(field: WizardDefaultFieldNamesEnum, addOrDel: 'add' | 'del') {
+    if (field === WizardDefaultFieldNamesEnum.ALL) {
+      this._defaultFieldsToRenderOnForm = [];
+
+      if (addOrDel === 'add') {
+        Object.values(WizardDefaultFieldNamesEnum).forEach(v => this._defaultFieldsToRenderOnForm.push(v))
+      }
+      return;
+    }
+
+    if (addOrDel === 'add') {
+      this._defaultFieldsToRenderOnForm.push(field);
+    } else {
+      const indexToDelete = this._defaultFieldsToRenderOnForm.indexOf(field);
+
+      if (indexToDelete >= 0) {
+        this._defaultFieldsToRenderOnForm = this._defaultFieldsToRenderOnForm.splice(indexToDelete, 1);
+      }
+    }
+
+    this._fieldsToShowUpdate.next();
+  }
+
+
+  public get additionalData(): any {
     return this._formAdditionalData;
   }
-  
-  
+
+
 }

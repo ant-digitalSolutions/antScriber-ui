@@ -34,16 +34,13 @@ export class WizardUseCaseGeneralWritingFormMessageComponent {
 
 
   ngOnInit(): void {
-    this._wizardForm.updateFieldsForGeneralWriting();
     this.setNeededFields();
     this.setListeners();
   }
 
   ngOnDestroy(): void {
-    this._wizardForm.restoreDefaultFields();
     this.componentDestroyed$.next(true)
     this.componentDestroyed$.complete();
-    this._wizardForm.cleanData();
   }
 
   setNeededFields() {
