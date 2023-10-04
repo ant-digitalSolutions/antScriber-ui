@@ -216,30 +216,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
     }
   }
 
-
-  public get showDescription(): boolean {
-    return this._wizardFormService.checkIfFieldShouldRender(WizardDefaultFieldNamesEnum.Instruction);
+  checkIfFieldRender(fieldName: string) : boolean {
+    return this._wizardFormService.checkIfFieldShouldRender(fieldName);
   }
-
-  public get showLang(): boolean {
-    return this._wizardFormService.checkIfFieldShouldRender(WizardDefaultFieldNamesEnum.OutputLang);
-  }
-
-  public get showTone(): boolean {
-    return this._wizardFormService.checkIfFieldShouldRender(WizardDefaultFieldNamesEnum.VoiceTone);
-  }
-
-  public get showCreativity(): boolean {
-    return this._wizardFormService.checkIfFieldShouldRender(WizardDefaultFieldNamesEnum.ImaginationSelector);
-  }
-
-  public get showNumberOfVariantsToGenerate(): boolean {
-    return this._wizardFormService.checkIfFieldShouldRender(WizardDefaultFieldNamesEnum.AmountOfVariants);
-  }
-
-  public get showGptVersion(): boolean {
-    return this._wizardFormService.checkIfFieldShouldRender(WizardDefaultFieldNamesEnum.GtpVersion);
-  }
-
-
 }

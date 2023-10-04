@@ -13,7 +13,7 @@
       <!-- ------------------------------------------------------------------------- -->
       <!-- Variable Input Container -->
       <!-- ------------------------------------------------------------------------- -->
-      <div class="field-container" *ngIf="showDescription">
+      <div class="field-container" *ngIf="checkIfFieldRender('instruction')">
         <app-wizard-creator-text-field
           [fieldData]="textFieldData('instruction')"
           class="col-12"
@@ -39,7 +39,7 @@
         <!-- ------------------------------------------------------------------------- -->
         <app-wizard-creator-selector-field
           [fieldData]="selectorData('outputLang')"
-          *ngIf="showLang"
+          *ngIf="checkIfFieldRender('outputLang')"
           class="col-12 col-md-6 col-sm-12s"
         ></app-wizard-creator-selector-field>
 
@@ -48,7 +48,7 @@
         <!-- ------------------------------------------------------------------------- -->
         <app-wizard-creator-selector-field
           [fieldData]="selectorData('voiceTone')"
-          *ngIf="showTone"
+          *ngIf="checkIfFieldRender('voiceTone')"
           class="col-12 col-md-6 col-sm-12s"
         ></app-wizard-creator-selector-field>
       </div>
@@ -65,7 +65,7 @@
         <!-- ------------------------------------------------------------------------- -->
         <app-wizard-creator-selector-field
           [fieldData]="selectorData('gptVersion')"
-          *ngIf="showGptVersion"
+          *ngIf="checkIfFieldRender('gptVersion')"
           class="col-12"
         ></app-wizard-creator-selector-field>
       </div>
@@ -76,7 +76,7 @@
         <!-- ------------------------------------------------------------------------- -->
         <app-wizard-creator-selector-field
           [fieldData]="selectorData('amountOfVariants')"
-          *ngIf="showNumberOfVariantsToGenerate"
+          *ngIf="checkIfFieldRender('amountOfVariants')"
           class="col-4"
         ></app-wizard-creator-selector-field>
         <!-- ------------------------------------------------------------------------- -->
@@ -84,7 +84,7 @@
         <!-- ------------------------------------------------------------------------- -->
         <app-wizard-creator-selector-field
           [fieldData]="selectorData('creativityLevel')"
-          *ngIf="showCreativity"
+          *ngIf="checkIfFieldRender('creativityLevel')"
           class="col-8"
         ></app-wizard-creator-selector-field>
       </div>
