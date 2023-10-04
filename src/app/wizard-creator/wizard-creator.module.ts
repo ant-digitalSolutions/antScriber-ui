@@ -24,6 +24,7 @@ import { WizardUseCaseGeneralWritingFormMessageComponent } from './components/us
 import { WizardCreatorSelectorFieldComponent } from './components/common/wizard-creator-selector-field/wizard-creator-selector-field.component';
 import { WizardUseCaseService } from './services/use-case/wizard-use-case.service';
 import { WizardFormService } from './services/wizard-form.service';
+import { UseCaseFormBaseComponent } from './components/use-case-form-components/use-case-form-base/use-case-form-base.component';
 
 
 
@@ -42,7 +43,8 @@ import { WizardFormService } from './services/wizard-form.service';
     WizardCreatorButtonToggleComponent,
     WizardUseCaseGeneralWritingFormComponent,
     WizardUseCaseGeneralWritingFormMessageComponent,
-    WizardCreatorSelectorFieldComponent
+    WizardCreatorSelectorFieldComponent,
+    UseCaseFormBaseComponent
   ],
   imports: [
     CommonModule,

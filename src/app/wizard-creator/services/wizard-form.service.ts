@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { WizardDefaultFieldNamesEnum } from '../enums/wizard-default-fields-names.enum';
+import { SelectorFieldToRenderData } from 'src/app/common/interfaces/button-toggle-to-render-data';
+import { CheckboxFieldToRenderData } from 'src/app/common/interfaces/checkbox-field-to-render-data';
+import { TextFieldToRenderData } from 'src/app/common/interfaces/textfield-to-render-data';
 
 @Injectable()
 export class WizardFormService {
@@ -35,6 +38,15 @@ export class WizardFormService {
    */
   _defaultFieldsToRenderOnForm: string[] = [];
 
+  // fields to render in the form. The values of these fields
+  // are based on the current use case. The responsibility to set
+  // these values are on each use-case specific component
+  private _textFieldsToRender: TextFieldToRenderData[];
+  private _checkboxFieldsToRender: CheckboxFieldToRenderData[];
+  private _selectorFieldsToRender: SelectorFieldToRenderData[];
+  private _buttonToggleFieldToRender: SelectorFieldToRenderData;
+
+
 
   constructor() { }
 
@@ -67,6 +79,7 @@ export class WizardFormService {
    * @return {*}  {boolean}
    * @memberof WizardFormService
    */
+  // TODO: Change name to checkDataError()
   checkAdditionalData(): boolean {
     let isValid = true;
     this._additionalDataFormFields.forEach(data => {
@@ -87,6 +100,7 @@ export class WizardFormService {
    * @param {*} fieldValue
    * @memberof WizardFormService
    */
+  // TODO: change name to updateData() 
   updateAdditionalData(fieldName: string, fieldValue: any) {
     this._formAdditionalData[fieldName] = fieldValue;
   }
@@ -124,6 +138,7 @@ export class WizardFormService {
    * @return {*}  {*}
    * @memberof WizardFormService
    */
+  // TODO: change name to getDataValue()
   additionalDataFieldValue(dataName: string): any {
     if (Object.keys(this._formAdditionalData).indexOf(dataName) >= 0) {
       return this._formAdditionalData[dataName];
@@ -140,7 +155,7 @@ export class WizardFormService {
    * an specific use-case.
    *
    * @param {string} fieldName
-   * @memberof WizardFormService
+   * @mem berof WizardFormService
    */
   removeFieldFromAdditionalData(fieldName: string): void {
     if (Object.keys(this._formAdditionalData).indexOf(fieldName) >= 0) {
@@ -199,6 +214,38 @@ export class WizardFormService {
     this._fieldsToShowUpdate.next();
   }
 
+  updateFormDefaultField_Text(fields: TextFieldToRenderData[]): void {
+    this._textFieldsToRender = fields;
+  }
+
+  updateFormDefaultField_Selectors(fields: SelectorFieldToRenderData[]): void {
+    this._selectorFieldsToRender = fields;
+  }
+
+  updateFormDefaultField_Checkboxes(fields: CheckboxFieldToRenderData[]): void {
+    this._checkboxFieldsToRender = fields;
+  }
+
+  updateFormDefaultField_ButtonToggle(fields: SelectorFieldToRenderData): void {
+    this._buttonToggleFieldToRender = fields;
+  }
+
+  
+  public get textFieldsToRender() : TextFieldToRenderData[] {
+    return this._textFieldsToRender
+  }
+
+  public get selectorFieldsToRender(): SelectorFieldToRenderData[] {
+    return this._selectorFieldsToRender;
+  }
+
+  public get checkboxFieldsToRender(): CheckboxFieldToRenderData[] {
+    return this._checkboxFieldsToRender
+  }
+
+  public get buttonToggleFieldToRender() : SelectorFieldToRenderData {
+    return this._buttonToggleFieldToRender;
+  }
 
   public get additionalData(): any {
     return this._formAdditionalData;
