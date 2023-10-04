@@ -32,11 +32,14 @@ export class WizardCreatorButtonToggleComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.setListeners();
 
-      this.form = new FormControl(this.fieldData.fieldValue);
-      this.form.valueChanges.pipe(takeUntil(this.componentDestroyed$))
-      .subscribe( v => this.valueChange(v));
+    this.form = new FormControl(this.fieldData.fieldValue);
+    this.form.valueChanges.pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(v => this.valueChange(v));
+
+    this._wizardFormService.updateAdditionalData(this.fieldData.dataName, this.fieldData.fieldValue);
+    this._wizardFormService.buttonToggleUpdate(this.fieldData.dataName);
+
   }
 
 
@@ -45,11 +48,6 @@ export class WizardCreatorButtonToggleComponent implements OnInit, OnDestroy {
     this.componentDestroyed$.complete()
     this._wizardFormService.removeFieldFromAdditionalData(this.fieldData.dataName);
   }
-
-  setListeners() {
-
-  }
-
 
   valueChange(value: any) {
     this._wizardFormService.updateAdditionalData(this.fieldData.dataName, value);

@@ -1,0 +1,32 @@
+<div class="fields-container" *ngIf="buttonToggleData()">
+  <app-wizard-creator-button-toggle
+    [fieldData]="buttonToggleData()!"
+  ></app-wizard-creator-button-toggle>
+</div>
+
+<div class="fields-container">
+  <ng-container *ngFor="let field of textFieldsToRender">
+    <app-wizard-creator-text-field
+      *ngIf="checkIfFieldShouldRender(field.dataName)"
+      [fieldData]="textFieldData(field.dataName)"
+    ></app-wizard-creator-text-field>
+  </ng-container>
+</div>
+
+<div class="fields-container">
+  <ng-container *ngFor="let field of selectorFieldsToRender">
+    <app-wizard-creator-selector-field
+      *ngIf="checkIfFieldShouldRender(field.dataName)"
+      [fieldData]="selectorFieldData(field.dataName)"
+    ></app-wizard-creator-selector-field>
+  </ng-container>
+</div>
+
+<div class="fields-container">
+  <ng-container *ngFor="let field of checkboxFieldsToRender">
+    <app-wizard-creator-checkbox-field
+      *ngIf="checkIfFieldShouldRender(field.dataName)"
+      [fieldData]="checkBoxFieldData(field.dataName)"
+    ></app-wizard-creator-checkbox-field>
+  </ng-container>
+</div>
