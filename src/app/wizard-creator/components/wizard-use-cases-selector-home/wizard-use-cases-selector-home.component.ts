@@ -14,6 +14,7 @@ import { WizardCreatorMarketingUseCasesEnum } from '../../enums/wizard-creator-m
 import { WizardCreatorCodingUseCasesEnum } from '../../enums/wizard-creator-coding-use-cases.enum';
 import { WizardCreatorInternalDevUseCasesEnum } from '../../enums/wizard-creator-internal-dev-use-cases.enum';
 import { WizardCreatorLearningUseCasesEnum } from '../../enums/wizard-creator-learning-use-cases.enum';
+import { WizardFormService } from '../../services/wizard-form.service';
 
 @Component({
   selector: 'app-wizard-use-cases-selector-home',
@@ -44,7 +45,7 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
 
   showLoadMoreUseCasesBtn = true;
 
-  constructor(private _wizardService: WizardCreatorService) {
+  constructor(private _wizardService: WizardCreatorService, private _wizardForm: WizardFormService) {
 
   }
 
@@ -80,8 +81,10 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
 
 
 
-  selectUseCaseGroup(selectedGroup: string, isOpen: boolean) {
+  selectUseCaseGroup(selectedGroup: string) {
     this._wizardService.wizardUseCaseGroup = selectedGroup;
+    this._wizardForm.updateAdditionalData('useCaseGroup', selectedGroup);
+    
     switch (selectedGroup) {
       case WizardCreatorUseCaseGroup.GeneralWriting:
         this.selectGroupUseCases = mapEnumNameAndValue(WizardGeneralWritingUseCases);

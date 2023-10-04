@@ -31,13 +31,11 @@ export class WizardUseCaseCodingGithubIssueComponent {
   selectedTypeOfIssue: string = this.defaultTypeOfIssue;
 
   constructor(
-    private _wizard: WizardCreatorService,
     private _wizardForm: WizardFormService) { }
 
 
   ngOnInit(): void {
     this._wizardForm.updateFieldsForCodingImplementCode();
-    this._wizardForm.cleanData();
     this.setNeededFields();
     this.setListeners();
   }

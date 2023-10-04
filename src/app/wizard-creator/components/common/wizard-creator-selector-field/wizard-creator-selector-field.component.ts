@@ -40,6 +40,10 @@ export class WizardCreatorSelectorFieldComponent {
     this.valueChange(this.fieldData.fieldValue)
   }
 
+  registerData() {
+    this._wizardFormService.registerAdditionalDataFormField(this.fieldData.dataName, this.form);
+  }
+
 
   ngOnDestroy(): void {
     this.componentDestroyed$.next(true)
@@ -53,8 +57,7 @@ export class WizardCreatorSelectorFieldComponent {
 
 
   valueChange(value: any) {
-    const value1 = this.form.get('value')?.value;
-    this._wizardFormService.updateAdditionalData(this.fieldData.dataName, value);
+    this._wizardFormService.updateAdditionalData(this.fieldData.dataName, this.form.value);
     this._wizardFormService.buttonToggleUpdate(this.fieldData.dataName);
   }
 }

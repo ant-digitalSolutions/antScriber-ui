@@ -18,13 +18,11 @@ export class WizardUseCaseCodingImplementCodeComponent implements OnInit, OnDest
   checkboxFields: CheckboxFieldToRenderData[];
 
   constructor(
-    private _wizard: WizardCreatorService,
     private _wizardForm: WizardFormService) { }
 
 
   ngOnInit(): void {
     this._wizardForm.updateFieldsForCodingImplementCode();
-    this._wizardForm.cleanData();
     this.setNeededFields();
   }
 

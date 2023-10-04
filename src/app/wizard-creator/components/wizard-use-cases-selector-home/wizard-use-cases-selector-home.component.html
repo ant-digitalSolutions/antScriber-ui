@@ -11,8 +11,7 @@
     <mat-accordion class="w-100">
       <ng-container *ngFor="let group of useCasesGroups">
         <mat-expansion-panel
-          (opened)="selectUseCaseGroup(group.value, true)"
-          (closed)="selectUseCaseGroup(group.value, false)"
+          (opened)="selectUseCaseGroup(group.value)"
         >
           <mat-expansion-panel-header>
             <mat-panel-title> {{ group.text }} </mat-panel-title>
