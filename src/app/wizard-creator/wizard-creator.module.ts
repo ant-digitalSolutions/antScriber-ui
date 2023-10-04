@@ -19,6 +19,9 @@ import { WizardCreatorTextFieldComponent } from './components/common/wizard-crea
 import { WizardCreatorCheckboxFieldComponent } from './components/common/wizard-creator-checkbox-field/wizard-creator-checkbox-field.component';
 import { WizardUseCaseCodingGithubIssueComponent } from './components/use-case-form-components/coding/wizard-use-case-coding-github-issue/wizard-use-case-coding-github-issue.component';
 import { WizardCreatorButtonToggleComponent } from './components/common/wizard-creator-button-toggle/wizard-creator-button-toggle.component';
+import { WizardUseCaseGeneralWritingFormComponent } from './components/use-case-form-components/general-writing/wizard-use-case-general-writing-form.component';
+import { WizardUseCaseGeneralWritingFormMessageComponent } from './components/use-case-form-components/general-writing/wizard-use-case-general-writing-form-message/wizard-use-case-general-writing-form-message.component';
+import { WizardCreatorSelectorFieldComponent } from './components/common/wizard-creator-selector-field/wizard-creator-selector-field.component';
 
 
 
@@ -34,7 +37,10 @@ import { WizardCreatorButtonToggleComponent } from './components/common/wizard-c
     WizardUseCaseCodingImplementCodeComponent,
     WizardCreatorCheckboxFieldComponent,
     WizardUseCaseCodingGithubIssueComponent,
-    WizardCreatorButtonToggleComponent
+    WizardCreatorButtonToggleComponent,
+    WizardUseCaseGeneralWritingFormComponent,
+    WizardUseCaseGeneralWritingFormMessageComponent,
+    WizardCreatorSelectorFieldComponent
   ],
   imports: [
     CommonModule,

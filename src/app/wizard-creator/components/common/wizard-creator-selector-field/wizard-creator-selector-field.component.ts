@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { FloatLabelType } from '@angular/material/form-field';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, takeUntil } from 'rxjs';
@@ -8,11 +8,11 @@ import { WizardCreatorService } from 'src/app/wizard-creator/services/wizard-cre
 import { WizardFormService } from 'src/app/wizard-creator/services/wizard-form.service';
 
 @Component({
-  selector: 'app-wizard-creator-button-toggle',
-  templateUrl: './wizard-creator-button-toggle.component.html',
-  styleUrls: ['./wizard-creator-button-toggle.component.scss']
+  selector: 'app-wizard-creator-selector-field',
+  templateUrl: './wizard-creator-selector-field.component.html',
+  styleUrls: ['./wizard-creator-selector-field.component.scss']
 })
-export class WizardCreatorButtonToggleComponent implements OnInit, OnDestroy {
+export class WizardCreatorSelectorFieldComponent {
   componentDestroyed$: Subject<boolean> = new Subject();
 
   @Input()
@@ -34,15 +34,16 @@ export class WizardCreatorButtonToggleComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.setListeners();
 
-      this.form = new FormControl(this.fieldData.fieldValue);
-      this.form.valueChanges.pipe(takeUntil(this.componentDestroyed$))
-      .subscribe( v => this.valueChange(v));
+    this.form = new FormControl(this.fieldData.fieldValue)
+    this.form.valueChanges.pipe(takeUntil(this.componentDestroyed$))
+    .subscribe(v => this.valueChange(v))
+    this.valueChange(this.fieldData.fieldValue)
   }
 
 
   ngOnDestroy(): void {
     this.componentDestroyed$.next(true)
-    this.componentDestroyed$.complete()
+    this.componentDestroyed$.complete();
     this._wizardFormService.removeFieldFromAdditionalData(this.fieldData.dataName);
   }
 
@@ -52,6 +53,7 @@ export class WizardCreatorButtonToggleComponent implements OnInit, OnDestroy {
 
 
   valueChange(value: any) {
+    const value1 = this.form.get('value')?.value;
     this._wizardFormService.updateAdditionalData(this.fieldData.dataName, value);
     this._wizardFormService.buttonToggleUpdate(this.fieldData.dataName);
   }

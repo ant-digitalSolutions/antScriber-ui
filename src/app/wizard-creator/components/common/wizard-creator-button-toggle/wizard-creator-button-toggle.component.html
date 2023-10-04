@@ -1,8 +1,7 @@
-<form [formGroup]="form" class="d-flex align-items-center justify-content-center m-b-20">
+<div class="d-flex align-items-center justify-content-center m-b-20">
   <mat-button-toggle-group
     [name]="fieldData.dataName"
-    formControlName="value"
-    (change)="valueChange()"
+    [formControl]="form"
     class="wizard-button-group"
   >
     <mat-button-toggle
@@ -12,4 +11,4 @@
       >{{ item.text }}</mat-button-toggle
     >
   </mat-button-toggle-group>
-</form>
+</div>

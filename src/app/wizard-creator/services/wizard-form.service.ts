@@ -52,6 +52,12 @@ export class WizardFormService {
     this._fieldsToShowUpdate.next();
   }
 
+  updateFieldsForGeneralWriting() {
+    this.showDescriptionInput = false;
+
+    this._fieldsToShowUpdate.next();
+  }
+
   
   /**
    * Each of the use-case specific component should register its fields through this 
