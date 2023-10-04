@@ -35,10 +35,10 @@ export class WizardUseCaseService {
   updateWizardFormFields() {
     switch (this._wizardUseCaseGroup) {
       case WizardCreatorUseCaseGroup.Coding:
-        this.updateWizardFormFieldsForGroupCoding()
+        this.updateWizardFormFieldsForGroup_Coding()
         break;
     case WizardCreatorUseCaseGroup.GeneralWriting:
-      this.updateWizardFormFieldsForGroupGeneralWriting();
+      this.updateWizardFormFieldsForGroup_GeneralWriting();
       break;
       case WizardCreatorUseCaseGroup.InternalDev:
         this.updateWizardFormFieldsForGroup_InternalDev();
@@ -51,7 +51,12 @@ export class WizardUseCaseService {
   updateWizardFormFieldsForGroup_InternalDev() {
    switch (this._wizardUseCase) {
     case WizardCreatorInternalDevUseCasesEnum.UseCasePromptGenerator:
-       this.updateWizardFormFieldsForGroup_InternalDev_PromptGenerator();
+       this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'del');
+       this._wizardFormService.updateFormDefaultFieldsToRender([
+         WizardDefaultFieldNamesEnum.GtpVersion,
+         WizardDefaultFieldNamesEnum.ImaginationSelector,
+         WizardDefaultFieldNamesEnum.Instruction
+       ], 'add');
       break;
    
     default:
@@ -59,19 +64,10 @@ export class WizardUseCaseService {
    }
   }
 
-  updateWizardFormFieldsForGroup_InternalDev_PromptGenerator() {
-    this._wizardFormService.updateFormDefaultFieldsToRender(WizardDefaultFieldNamesEnum.ALL, 'del');
-    this._wizardFormService.updateFormDefaultFieldsToRender(WizardDefaultFieldNamesEnum.GtpVersion, 'add');
-    this._wizardFormService.updateFormDefaultFieldsToRender(WizardDefaultFieldNamesEnum.ImaginationSelector, 'add');
-    this._wizardFormService.updateFormDefaultFieldsToRender(WizardDefaultFieldNamesEnum.Instruction, 'add');
-
-
-  }
-
-  updateWizardFormFieldsForGroupGeneralWriting() {
+  updateWizardFormFieldsForGroup_GeneralWriting() {
     switch (this._wizardUseCase) {
       case WizardGeneralWritingUseCases.Message:
-        this.updateWizardFormForGeneralWriting_Message()
+        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'add');
         break;
     
       default:
@@ -80,18 +76,25 @@ export class WizardUseCaseService {
   }
  
 
-  updateWizardFormFieldsForGroupCoding() {
+  updateWizardFormFieldsForGroup_Coding() {
     switch (this._wizardUseCase) {
       case WizardCreatorCodingUseCasesEnum.GithubIssue:
-        
+        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'del');
+        this._wizardFormService.updateFormDefaultFieldsToRender([
+          WizardDefaultFieldNamesEnum.GtpVersion,
+          WizardDefaultFieldNamesEnum.ImaginationSelector
+        ], 'add');
+        break;
+      case WizardCreatorCodingUseCasesEnum.ImplementFunction:
+        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'del');
+        this._wizardFormService.updateFormDefaultFieldsToRender([
+          WizardDefaultFieldNamesEnum.GtpVersion,
+          WizardDefaultFieldNamesEnum.ImaginationSelector
+        ], 'add');
         break;
     
       default:
         break;
     }
-  }
-
-  updateWizardFormForGeneralWriting_Message() {
-    this._wizardFormService.updateFormDefaultFieldsToRender(WizardDefaultFieldNamesEnum.ALL, 'add');
   }
 }

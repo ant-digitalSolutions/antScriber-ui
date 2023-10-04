@@ -165,13 +165,14 @@ export class WizardFormService {
    * Update the default fields to render in the form by
    * addigin or deleting an element with the given name
    *
-   * @param {WizardDefaultFieldNamesEnum} field Name of the field to add or delete.
+   * @param {WizardDefaultFieldNamesEnum} fields Name of the field to add or delete.
    * @param {('add' | 'del')} addOrDel Indicate if the given field should be added or deleted.
    * @return {*} 
    * @memberof WizardFormService
    */
-  updateFormDefaultFieldsToRender(field: WizardDefaultFieldNamesEnum, addOrDel: 'add' | 'del') {
-    if (field === WizardDefaultFieldNamesEnum.ALL) {
+  updateFormDefaultFieldsToRender(fields: WizardDefaultFieldNamesEnum[], addOrDel: 'add' | 'del') {
+    // the case for rendering or hiding all the fields
+    if (fields[0] === WizardDefaultFieldNamesEnum.ALL) {
       this._defaultFieldsToRenderOnForm = [];
 
       if (addOrDel === 'add') {
@@ -180,14 +181,19 @@ export class WizardFormService {
       return;
     }
 
+    // to rendering or hiding multiple fields
     if (addOrDel === 'add') {
-      this._defaultFieldsToRenderOnForm.push(field);
+      fields.forEach(field => {
+        this._defaultFieldsToRenderOnForm.push(field);
+      });
     } else {
-      const indexToDelete = this._defaultFieldsToRenderOnForm.indexOf(field);
+      fields.forEach(field => {
+        const indexToDelete = this._defaultFieldsToRenderOnForm.indexOf(field);
 
-      if (indexToDelete >= 0) {
-        this._defaultFieldsToRenderOnForm = this._defaultFieldsToRenderOnForm.splice(indexToDelete, 1);
-      }
+        if (indexToDelete >= 0) {
+          this._defaultFieldsToRenderOnForm = this._defaultFieldsToRenderOnForm.splice(indexToDelete, 1);
+        }
+      });
     }
 
     this._fieldsToShowUpdate.next();
