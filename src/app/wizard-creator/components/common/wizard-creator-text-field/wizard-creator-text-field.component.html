@@ -28,5 +28,5 @@
     [required]="isRequired"
   ></textarea>
   <mat-hint align="end">{{ length }}/{{ maxLen }}</mat-hint>
-  <mat-error *ngIf="fieldForm.invalid">{{ getErrorMessage() }}</mat-error>
+  <mat-error *ngIf="fieldForm.invalid && showErrors">{{ getErrorMessage() }}</mat-error>
 </mat-form-field>

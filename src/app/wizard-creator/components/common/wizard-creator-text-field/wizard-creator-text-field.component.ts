@@ -14,7 +14,7 @@ import { WizardFormService } from 'src/app/wizard-creator/services/wizard-form.s
   styleUrls: ['./wizard-creator-text-field.component.scss']
 })
 export class WizardCreatorTextFieldComponent {
-  
+
   componentDestroyed$: Subject<boolean> = new Subject();
 
   @Input()
@@ -31,10 +31,10 @@ export class WizardCreatorTextFieldComponent {
 
   isRequired = false;
 
-  constructor(private toastr: ToastrService, 
+  showErrors = false;
+
+  constructor(private toastr: ToastrService,
     private _wizardFormService: WizardFormService) {
-
-
   }
 
   ngOnInit(): void {
@@ -53,53 +53,50 @@ export class WizardCreatorTextFieldComponent {
     this._wizardFormService.removeFieldFromAdditionalData(this.fieldData.dataName);
   }
 
- setListeners() {
-  this._wizardFormService.additionalDataFieldWithError$
-  .pipe(takeUntil(this.componentDestroyed$))
-  .subscribe(fieldName => {
-    if (fieldName === this.fieldData.dataName) {
-      this.fieldForm.markAsDirty();
-    }
-  })
- }
+  setListeners() {
+    this._wizardFormService.additionalDataFieldWithError$
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(fieldName => {
+        if (fieldName === this.fieldData.dataName) {
+          this.fieldForm.markAsDirty();
+          this.showErrors = true;
+        }
+      })
+  }
 
 
   saveEdition() {
     if (this.fieldForm.valid) {
       this.valueEditedEvent.emit(this.fieldForm.value);
       this._wizardFormService.updateAdditionalData(this.fieldData.dataName, this.fieldForm.value);
-    } else {
-      this.toastr.error('Please fix the errors')
     }
   }
 
   getErrorMessage() {
     if (this.fieldForm.hasError('required')) {
-      return 'You must enter a value';
+      return 'Please enter a value.';
     }
     if (this.fieldForm.hasError('min')) {
-      return 'The value is too short.';
+      return 'The value entered is too small. Provide more context';
     }
     if (this.fieldForm.hasError('minlength')) {
-      return `Please, provide more context. The min length is: ${this.fieldForm.getError('minlength').requiredLength}`
+      return`Please provide more context. The minimum length is: ${this.fieldForm.getError('minlength').requiredLength}`;
     }
     if (this.fieldForm.hasError('maxlength')) {
-      return `Your context is too long. The max length is: ${this.fieldForm.getError('maxlength').requiredLength}`
-
+      return `Your context is too long. The maximum length allowed is: ${this.fieldForm.getError('maxlength').requiredLength}`;
     }
-
-    return 'There is an error in your input'
+    return 'An error occurred with your input.';
   }
-  
-  
-  public get length() : number {
+
+
+  public get length(): number {
     return (this.fieldForm.value as string).length;
   }
 
-  
-  public get maxLen() : number {
+
+  public get maxLen(): number {
     return this.fieldData.inputMaxLen;
   }
-  
-  
+
+
 }
