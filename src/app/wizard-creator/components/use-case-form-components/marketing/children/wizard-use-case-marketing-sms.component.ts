@@ -55,7 +55,7 @@ export class WizardUseCaseMarketingSmsComponent extends UseCaseFormBaseComponent
       placeholder: 'E.g. SuperFast Charger',
       fieldLabel: 'Product/Service Name',
       fieldValue: '',
-      validators: [Validators.maxLength(100)],
+      validators: [Validators.maxLength(100), Validators.required],
       inputMaxLen: 100,
       dataName: 'product_service_name',
       tooltipText: 'Enter the name of your product or service',
@@ -66,7 +66,7 @@ export class WizardUseCaseMarketingSmsComponent extends UseCaseFormBaseComponent
       placeholder: 'E.g. Quick phone charging',
       fieldLabel: 'Problem/Need Addressed',
       fieldValue: '',
-      validators: [Validators.maxLength(100)],
+      validators: [Validators.maxLength(100), Validators.required],
       inputMaxLen: 100,
       dataName: 'problem_need_addressed',
       tooltipText: 'Describe the problem or need your product or service addresses',
@@ -99,7 +99,7 @@ export class WizardUseCaseMarketingSmsComponent extends UseCaseFormBaseComponent
       placeholder: 'E.g. Call Now',
       fieldLabel: 'Call to Action Text',
       fieldValue: '',
-      validators: [],
+      validators: [Validators.maxLength(50)],
       inputMaxLen: 50,
       dataName: 'call_to_action_text',
       tooltipText: 'Enter the text for your call to action button',
@@ -114,7 +114,7 @@ export class WizardUseCaseMarketingSmsComponent extends UseCaseFormBaseComponent
 
     fieldsData.push({
       fieldLabel: 'Text Length',
-      fieldValue: 'chars_range',
+      fieldValue: '0-160',
       dataName: 'text_length',
       tooltipText: 'Select the length of the text',
       values: [
