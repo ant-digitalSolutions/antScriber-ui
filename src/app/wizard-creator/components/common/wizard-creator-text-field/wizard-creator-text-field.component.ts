@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { AbstractControl, FormControl } from '@angular/forms';
 import { FloatLabelType } from '@angular/material/form-field';
 import { Validators } from 'ngx-editor';
 import { ToastrService } from 'ngx-toastr';
@@ -29,6 +29,8 @@ export class WizardCreatorTextFieldComponent {
   @Output()
   valueEditedEvent = new EventEmitter<string>();
 
+  isRequired = false;
+
   constructor(private toastr: ToastrService, 
     private _wizardFormService: WizardFormService) {
 
@@ -37,6 +39,9 @@ export class WizardCreatorTextFieldComponent {
 
   ngOnInit(): void {
     this.fieldForm = new FormControl(this.fieldData.fieldValue, [...this.fieldData.validators]);
+
+    this.isRequired = this.fieldForm.validator && this.fieldForm.validator({} as AbstractControl)?.['required'];
+
     this.setListeners();
     this._wizardFormService.registerAdditionalDataFormField(this.fieldData.dataName, this.fieldForm);
   }

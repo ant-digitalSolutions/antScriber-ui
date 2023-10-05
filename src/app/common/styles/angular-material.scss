@@ -58,7 +58,9 @@ mat-tab-group {
     // max-height: 40px !important;
 
     .mat-mdc-floating-label {
-      top: 25px !important;
+      top: 24px !important;
+      display: flex;
+
     }
   }
 }
