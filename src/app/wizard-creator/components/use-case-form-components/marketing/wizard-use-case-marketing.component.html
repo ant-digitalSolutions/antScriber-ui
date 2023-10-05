@@ -1,0 +1,7 @@
+<div class="use-case-field-container">
+  <ng-container [ngSwitch]="useCase">
+    <app-wizard-use-case-google-ads
+      *ngSwitchCase="wizardUseCase.GoogleAd"
+    ></app-wizard-use-case-google-ads>
+  </ng-container>
+</div>

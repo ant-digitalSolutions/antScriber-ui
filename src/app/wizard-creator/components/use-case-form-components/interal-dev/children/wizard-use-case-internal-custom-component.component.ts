@@ -41,6 +41,10 @@ export class WizardUseCaseInternalCustomComponentComponent extends UseCaseFormBa
         {
           value: 'selectorFields',
           text: 'Selector Fields'
+        },
+        {
+          value: 'buttonToggleFields',
+          text: 'Button Toggle'
         }
       ]
     }

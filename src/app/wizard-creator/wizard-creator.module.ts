@@ -27,6 +27,8 @@ import { WizardFormService } from './services/wizard-form.service';
 import { UseCaseFormBaseComponent } from './components/use-case-form-components/use-case-form-base/use-case-form-base.component';
 import { WizardUseCaseInternalCustomComponentComponent } from './components/use-case-form-components/interal-dev/children/wizard-use-case-internal-custom-component.component';
 import { WizardUseCaseInternalDevFormComponent } from './components/use-case-form-components/interal-dev/wizard-use-case-internal-dev-form.component';
+import { WizardUseCaseMarketingComponent } from './components/use-case-form-components/marketing/wizard-use-case-marketing.component';
+import { WizardUseCaseGoogleAdsTitleComponent } from './components/use-case-form-components/marketing/children/wizard-use-case-google-ads.component';
 
 
 
@@ -48,7 +50,9 @@ import { WizardUseCaseInternalDevFormComponent } from './components/use-case-for
     WizardCreatorSelectorFieldComponent,
     UseCaseFormBaseComponent,
     WizardUseCaseInternalCustomComponentComponent,
-    WizardUseCaseInternalDevFormComponent
+    WizardUseCaseInternalDevFormComponent,
+    WizardUseCaseMarketingComponent,
+    WizardUseCaseGoogleAdsTitleComponent
   ],
   imports: [
     CommonModule,
