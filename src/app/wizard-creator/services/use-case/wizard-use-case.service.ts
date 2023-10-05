@@ -132,6 +132,12 @@ export class WizardUseCaseService {
           WizardDefaultFieldNamesEnum.AmountOfVariants
         ], 'del');
         break;
+      case WizardCreatorMarketingUseCasesEnum.SmsMarketing:
+        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'add');
+        this._wizardFormService.updateFormDefaultFieldsToRender([
+          WizardDefaultFieldNamesEnum.Instruction
+        ], 'del');
+        break;
 
       default:
         break;

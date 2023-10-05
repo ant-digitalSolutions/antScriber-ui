@@ -31,6 +31,7 @@ import { WizardUseCaseMarketingComponent } from './components/use-case-form-comp
 import { WizardUseCaseGoogleAdsTitleComponent } from './components/use-case-form-components/marketing/children/wizard-use-case-google-ads.component';
 import { WizardUseCaseFacebookAdsComponent } from './components/use-case-form-components/marketing/children/wizard-use-case-facebook-ads.component';
 import { WizardUseCaseEmailComponent } from './components/use-case-form-components/marketing/children/wizard-use-case-email.component';
+import { WizardUseCaseMarketingSmsComponent } from './components/use-case-form-components/marketing/children/wizard-use-case-marketing-sms.component';
 
 
 
@@ -56,7 +57,8 @@ import { WizardUseCaseEmailComponent } from './components/use-case-form-componen
     WizardUseCaseMarketingComponent,
     WizardUseCaseGoogleAdsTitleComponent,
     WizardUseCaseFacebookAdsComponent,
-    WizardUseCaseEmailComponent
+    WizardUseCaseEmailComponent,
+    WizardUseCaseMarketingSmsComponent
   ],
   imports: [
     CommonModule,
