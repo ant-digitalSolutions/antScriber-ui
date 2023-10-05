@@ -34,10 +34,18 @@ export class DocumentHomeComponent implements OnInit, OnDestroy {
         if (params['docId']) {
           this._docService.showFavorites = false;
           this._docService.documentInEditionId = params['docId'];
-        } else if(params['folderId']) {
+        } else {
+          this._docService.documentInEditionId = null;
+        }
+
+        if(params['folderId']) {
           this._docService.showFavorites = false;
           this._docService.selectedFolderId = params['folderId']
-        } else if (params['show']) {
+        } else {
+          this._docService.selectedFolderId = undefined;
+        }
+        
+        if (params['show']) {
           const paramValue = params['show'];
 
           if (paramValue === 'favorites') {
@@ -45,10 +53,10 @@ export class DocumentHomeComponent implements OnInit, OnDestroy {
           }
         }
         
-        else {
-          this._docService.showFavorites = false;
-          this._docService.documentInEditionId = null;
-        }
+        // else {
+        //   this._docService.showFavorites = false;
+        //   this._docService.documentInEditionId = null;
+        // }
       });
   }
 

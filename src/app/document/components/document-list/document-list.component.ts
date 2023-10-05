@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, merge } from 'rxjs';
 import { DocumentDetailsDto } from '../../dtos/document-details.dto';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -56,8 +56,9 @@ export class DocumentListComponent implements OnInit, OnDestroy {
 
   setListeners() {
     this._docService.wizardTableElements$.pipe(takeUntil(this.componentDestroyed$)).subscribe(elements => {
-      this.tableElementsToRender = elements;
-      this.dataSource = new MatTableDataSource<WizardTableElement>(this.tableElementsToRender);
+      if (elements)
+{      this.tableElementsToRender = elements;
+      this.dataSource = new MatTableDataSource<WizardTableElement>(this.tableElementsToRender);}
     });
 
     this._projectService.selectedProjectId$.pipe(takeUntil(this.componentDestroyed$)).subscribe(pId => {
@@ -88,22 +89,24 @@ export class DocumentListComponent implements OnInit, OnDestroy {
   }
 
   documentRowSelected(tableElement: WizardTableElement) {
+    const existingQueryParams = this.activeRoute.snapshot.queryParams;
 
-    const queryParams = tableElement.isDocument ?
+    const newQueryParams = tableElement.isDocument ?
       {
+        ...existingQueryParams,
         docId: tableElement.uuid
       }
       :
       {
+        ...existingQueryParams,
         folderId: tableElement.uuid
       };
 
     this.router.navigate([], {
       relativeTo: this.activeRoute,
-      queryParams: queryParams,
+      queryParams: newQueryParams,
       replaceUrl: true,
     });
-
   }
 
   setAsFavorite(tableElement: WizardTableElement): void  {

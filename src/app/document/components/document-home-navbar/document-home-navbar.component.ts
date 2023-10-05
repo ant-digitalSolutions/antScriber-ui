@@ -36,12 +36,22 @@ export class DocumentHomeNavbarComponent {
   }
 
   goBack() {
+    const queryParams = this._route.snapshot.queryParams;
+
+    const newQueryParams = {
+      ...queryParams
+    };
+    newQueryParams['docId'] = null;
+
+    if (queryParams.hasOwnProperty('docId')) {
+      newQueryParams['docId'] = null;
+    } else {
+      newQueryParams['folderId'] = null;
+    }
+
     this.router.navigate([], {
       relativeTo: this._route,
-      queryParams:
-      {
-        folderId: null
-      },
+      queryParams: newQueryParams,
       replaceUrl: true,
     });
   }

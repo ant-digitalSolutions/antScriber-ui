@@ -69,18 +69,21 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     console.log('After blur')
   }
 
+
   goback() {
     this.saveEditorChanges();
-    // this._location.back();
+    const queryParams = this._route.snapshot.queryParams;
+
+    const newQueryParams = {
+      ...queryParams
+    };
+    newQueryParams['docId'] = null;
+
     this.router.navigate([], {
       relativeTo: this._route,
-      queryParams:
-      {
-        docId: null
-      },
+      queryParams: newQueryParams,
       replaceUrl: true,
     });
-    // this.router.navigate(['/wizard/creator'])
   }
 
   

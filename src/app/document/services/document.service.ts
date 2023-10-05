@@ -25,13 +25,13 @@ export class DocumentService {
   baseUrl = environment.apiUrl + 'document';
   selectedProjectId: any;
 
-  private _documentResponse = new ReplaySubject<DocumentDetailsDto | null>();
+  private _documentResponse = new BehaviorSubject<DocumentDetailsDto | null>(null);
   documentInEdition$ = this._documentResponse.asObservable();
 
-  private _docsList = new ReplaySubject<DocumentDetailsDto[]>();
+  private _docsList = new BehaviorSubject<DocumentDetailsDto[]>([]);
   docsList$ = this._docsList.asObservable();
 
-  private _wizardTableElements = new ReplaySubject<WizardTableElement[]>();
+  private _wizardTableElements = new BehaviorSubject<WizardTableElement[]>([]);
   wizardTableElements$ = this._wizardTableElements.asObservable();
 
   /**
@@ -286,12 +286,13 @@ export class DocumentService {
       this._showFavorites = false;
        this.findByUuid(documentId).subscribe();
       }
-    } else if (!documentId) {
-      this._currentFolderData = undefined;
-      this._currentFolderId = undefined;
+     } 
+    //else if (!documentId) {
+    //   this._currentFolderData = undefined;
+    //   this._currentFolderId = undefined;
 
-      this.listDocsForTable(this.selectedProjectId).subscribe();
-    }
+    //   // this.listDocsForTable(this.selectedProjectId).subscribe();
+    // }
 
   
   }
@@ -308,6 +309,9 @@ export class DocumentService {
    * @memberof DocumentService
    */
   public set selectedFolderId(folderId: string | undefined) {
+    if (folderId === this._currentFolderId) {
+      return;
+    }
     this._currentFolderId = folderId;
 
     // if the documentId is not the one that we have in edition, then request it to the server.
@@ -333,7 +337,7 @@ export class DocumentService {
     this._showFavorites = v;
 
     if (v) {
-      this._currentFolderId = undefined;
+      // this._currentFolderId = undefined;
       this.listDocsForTable(this.selectedProjectId).subscribe();
     }
   }
