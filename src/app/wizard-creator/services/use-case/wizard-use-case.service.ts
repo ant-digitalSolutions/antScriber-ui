@@ -6,6 +6,7 @@ import { WizardCreatorCodingUseCasesEnum } from '../../enums/wizard-creator-codi
 import { WizardGeneralWritingUseCases } from '../../enums/wizard-creator-general-writing-use-cases.enum';
 import { WizardDefaultFieldNamesEnum } from '../../enums/wizard-default-fields-names.enum';
 import { WizardCreatorInternalDevUseCasesEnum } from '../../enums/wizard-creator-internal-dev-use-cases.enum';
+import { WizardCreatorMarketingUseCasesEnum } from '../../enums/wizard-creator-marketing-use-cases.enum';
 
 @Injectable()
 export class WizardUseCaseService {
@@ -37,11 +38,15 @@ export class WizardUseCaseService {
       case WizardCreatorUseCaseGroup.Coding:
         this.updateWizardFormFieldsForGroup_Coding()
         break;
-    case WizardCreatorUseCaseGroup.GeneralWriting:
-      this.updateWizardFormFieldsForGroup_GeneralWriting();
-      break;
+      case WizardCreatorUseCaseGroup.GeneralWriting:
+        this.updateWizardFormFieldsForGroup_GeneralWriting();
+        break;
       case WizardCreatorUseCaseGroup.InternalDev:
         this.updateWizardFormFieldsForGroup_InternalDev();
+        break;
+
+      case WizardCreatorUseCaseGroup.AdsAndMarketing:
+        this.updateWizardFormFieldsForGroup_Marketing();
         break;
       default:
         break;
@@ -49,26 +54,26 @@ export class WizardUseCaseService {
   }
 
   updateWizardFormFieldsForGroup_InternalDev() {
-   switch (this._wizardUseCase) {
-    case WizardCreatorInternalDevUseCasesEnum.UseCasePromptGenerator:
-       this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'del');
-       this._wizardFormService.updateFormDefaultFieldsToRender([
-         WizardDefaultFieldNamesEnum.GtpVersion,
-         WizardDefaultFieldNamesEnum.ImaginationSelector,
-         WizardDefaultFieldNamesEnum.Instruction
-       ], 'add');
-      break;
-     case WizardCreatorInternalDevUseCasesEnum.UseCaseCustomComponent:
-       this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'del');
-       this._wizardFormService.updateFormDefaultFieldsToRender([
-         WizardDefaultFieldNamesEnum.GtpVersion,
-         WizardDefaultFieldNamesEnum.ImaginationSelector
-       ], 'add');
-       break;
-   
-    default:
-      break;
-   }
+    switch (this._wizardUseCase) {
+      case WizardCreatorInternalDevUseCasesEnum.UseCasePromptGenerator:
+        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'del');
+        this._wizardFormService.updateFormDefaultFieldsToRender([
+          WizardDefaultFieldNamesEnum.GtpVersion,
+          WizardDefaultFieldNamesEnum.ImaginationSelector,
+          WizardDefaultFieldNamesEnum.Instruction
+        ], 'add');
+        break;
+      case WizardCreatorInternalDevUseCasesEnum.UseCaseCustomComponent:
+        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'del');
+        this._wizardFormService.updateFormDefaultFieldsToRender([
+          WizardDefaultFieldNamesEnum.GtpVersion,
+          WizardDefaultFieldNamesEnum.ImaginationSelector
+        ], 'add');
+        break;
+
+      default:
+        break;
+    }
   }
 
   updateWizardFormFieldsForGroup_GeneralWriting() {
@@ -78,12 +83,12 @@ export class WizardUseCaseService {
         this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.Instruction], 'del');
 
         break;
-    
+
       default:
         break;
     }
   }
- 
+
 
   updateWizardFormFieldsForGroup_Coding() {
     switch (this._wizardUseCase) {
@@ -101,7 +106,19 @@ export class WizardUseCaseService {
           WizardDefaultFieldNamesEnum.ImaginationSelector
         ], 'add');
         break;
-    
+
+      default:
+        break;
+    }
+  }
+
+  updateWizardFormFieldsForGroup_Marketing() {
+    switch (this._wizardUseCase) {
+      case WizardCreatorMarketingUseCasesEnum.GoogleAd:
+        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'add');
+        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.Instruction], 'del');
+        break;
+
       default:
         break;
     }
