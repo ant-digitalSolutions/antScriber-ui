@@ -118,6 +118,13 @@ export class WizardUseCaseService {
         this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'add');
         this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.Instruction], 'del');
         break;
+      case WizardCreatorMarketingUseCasesEnum.FacebookAds:
+        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'add');
+        this._wizardFormService.updateFormDefaultFieldsToRender([
+          WizardDefaultFieldNamesEnum.Instruction, 
+          WizardDefaultFieldNamesEnum.AmountOfVariants
+        ], 'del');
+        break;
 
       default:
         break;
