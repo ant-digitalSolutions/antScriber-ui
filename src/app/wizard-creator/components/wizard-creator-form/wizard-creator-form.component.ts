@@ -119,8 +119,8 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
       placeholder: 'E.g. "Describe the benefits of solar energy"',
       fieldLabel: 'Instruction',
       fieldValue: ``,
-      validators: [Validators.required, Validators.maxLength(600), Validators.minLength(10)],
-      inputMaxLen: 600,
+      validators: [Validators.required, Validators.maxLength(4000), Validators.minLength(10)],
+      inputMaxLen: 4000,
       dataName: WizardDefaultFieldNamesEnum.Instruction,
       tooltipText: 'Detailed instruction to generate the desired content.',
       isLongText: true

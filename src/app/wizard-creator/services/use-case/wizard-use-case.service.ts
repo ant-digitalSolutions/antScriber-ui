@@ -58,6 +58,13 @@ export class WizardUseCaseService {
          WizardDefaultFieldNamesEnum.Instruction
        ], 'add');
       break;
+     case WizardCreatorInternalDevUseCasesEnum.UseCaseCustomComponent:
+       this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'del');
+       this._wizardFormService.updateFormDefaultFieldsToRender([
+         WizardDefaultFieldNamesEnum.GtpVersion,
+         WizardDefaultFieldNamesEnum.ImaginationSelector
+       ], 'add');
+       break;
    
     default:
       break;
