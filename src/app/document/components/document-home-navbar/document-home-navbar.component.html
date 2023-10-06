@@ -1,25 +1,22 @@
-<div class="doc-navbar-container">
-  <div class="folder-selector">
-    <!-- <xng-breadcrumb></xng-breadcrumb> -->
+<div class="doc-navbar-container  align-items-center justify-content-between">
+  <div
+    class="folder-tree-container d-flex align-items-center justify-content-around"
+  >
+    <button
+      class="mini-fab-btn docs-navbar-btn-home m-r-10"
+      mat-mini-fab
+      (click)="goHome()"
+      [disabled]="!selectedFoldername"
+    >
+      <mat-icon class="btn-mat-icon btn-goback">home</mat-icon>
+    </button>
 
-    <ng-container *ngIf="selectedFoldername; else homeHeader">
-      <div
-        class="folder-elements-container d-flex align-items-center justify-content-around"
-      >
-        <button
-          class="mini-fab-btn btn-goback m-r-10"
-          mat-mini-fab
-          (click)="goBack()"
-        >
-          <mat-icon class="btn-mat-icon btn-goback">arrow_back</mat-icon>
-        </button>
-        <h3 class="selected-folder-name">{{ selectedFoldername }}</h3>
-      </div>
+    <ng-container *ngIf="selectedFoldername">
+      <span>
+        <mat-icon class="btn-mat-icon btn-goback">chevron_right</mat-icon>
+      </span>
+      <span class="selected-folder-name">{{ selectedFoldername }}</span>
     </ng-container>
-
-    <ng-template #homeHeader>
-      <h3 class="selected-folder-name">Home</h3>
-    </ng-template>
   </div>
 
   <div class="doc-navbar-actions-container">
@@ -33,9 +30,7 @@
     </button>
 
     <ng-template #homeBtn>
-      <button mat-button class="doc-navbar-btn" (click)="goHome()">
-        Home
-      </button>
+      <button mat-button class="doc-navbar-btn" (click)="goHome()">Home</button>
     </ng-template>
 
     <button mat-button class="doc-navbar-btn" (click)="newFolder()">

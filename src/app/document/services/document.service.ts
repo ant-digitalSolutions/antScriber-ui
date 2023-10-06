@@ -302,6 +302,11 @@ export class DocumentService {
     return this._currentDocumentId;
   }
 
+  cleanFolderData(): void {
+    this._currentFolderData = undefined;
+    this._currentFolderId = undefined;
+  }
+
 
   /**
    *
@@ -360,7 +365,7 @@ export class DocumentService {
 
   
   public get selectedFolderName() : string | undefined {
-    return this._currentFolderData ? this._currentFolderData.name : undefined;
+    return this._currentFolderData && this._currentFolderId ? this._currentFolderData.name : undefined;
   }
 
   
