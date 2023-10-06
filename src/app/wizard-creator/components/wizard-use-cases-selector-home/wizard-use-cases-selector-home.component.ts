@@ -13,6 +13,8 @@ import { WizardCreatorInternalDevUseCasesEnum } from '../../enums/wizard-creator
 import { WizardCreatorLearningUseCasesEnum } from '../../enums/wizard-creator-learning-use-cases.enum';
 import { WizardFormService } from '../../services/wizard-form.service';
 import { WizardUseCaseService } from '../../services/use-case/wizard-use-case.service';
+import { ActivatedRoute } from '@angular/router';
+import { QueryParamNames } from 'src/app/common/enum/query-params-names.enum';
 
 @Component({
   selector: 'app-wizard-use-cases-selector-home',
@@ -47,12 +49,14 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private _wizardForm: WizardFormService,
-    private _useCaseService: WizardUseCaseService) {
+    private _useCaseService: WizardUseCaseService,
+    private _activeRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
     this.setUseCases()
     this.setListeners()
+    this.setUseCaseFromParams();
   }
 
   ngOnDestroy(): void {
@@ -125,5 +129,16 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
 
   toggleUseCases() {
     this.showUseCases = !this.showUseCases;
+  }
+
+  setUseCaseFromParams() {
+    const queryParams = this._activeRoute.snapshot.queryParams;
+
+    if (queryParams[QueryParamNames.UseCageGroup]) {
+      this.selectUseCaseGroup(queryParams[QueryParamNames.UseCageGroup])
+    }
+    if (queryParams[QueryParamNames.UseCase]) {
+      this._useCaseService.setWizardUseCase(queryParams[QueryParamNames.UseCase])
+    }
   }
 }

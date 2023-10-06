@@ -7,6 +7,8 @@ import { WizardGeneralWritingUseCases } from '../../enums/wizard-creator-general
 import { WizardDefaultFieldNamesEnum } from '../../enums/wizard-default-fields-names.enum';
 import { WizardCreatorInternalDevUseCasesEnum } from '../../enums/wizard-creator-internal-dev-use-cases.enum';
 import { WizardCreatorMarketingUseCasesEnum } from '../../enums/wizard-creator-marketing-use-cases.enum';
+import { ActivatedRoute, Router } from '@angular/router';
+import { QueryParamNames } from 'src/app/common/enum/query-params-names.enum';
 
 @Injectable()
 export class WizardUseCaseService {
@@ -19,18 +21,23 @@ export class WizardUseCaseService {
   wizardUseCaseGroup$ = this._wizardUseCaseGroupSubject.asObservable();
   _wizardUseCaseGroup: string;
 
-  constructor(private _wizardFormService: WizardFormService) { }
+  constructor(
+    private _wizardFormService: WizardFormService,
+    private _router: Router,
+    private _activeRoute: ActivatedRoute) { }
 
 
   setWizardUseCase(v: string) {
     this._wizardUseCaseSubject.next(v);
     this._wizardUseCase = v;
-    this.updateWizardFormFields()
+    this.updateWizardFormFields();
+    this.updateQueryParamsWithUseCase(v);
   }
 
   setWizardUseCaseGroup(v: string) {
     this._wizardUseCaseGroupSubject.next(v);
     this._wizardUseCaseGroup = v;
+
   }
 
   updateWizardFormFields() {
@@ -142,5 +149,20 @@ export class WizardUseCaseService {
       default:
         break;
     }
+  }
+
+  updateQueryParamsWithUseCase(useCase: string) {
+    const queryParams = {
+      ...this._activeRoute.snapshot.queryParams
+      };
+
+    queryParams[QueryParamNames.UseCase] = useCase;
+    queryParams[QueryParamNames.UseCageGroup] = this._wizardUseCaseGroup;
+
+    this._router.navigate([], {
+      relativeTo: this._activeRoute,
+      queryParams,
+      replaceUrl: true,
+    });
   }
 }
