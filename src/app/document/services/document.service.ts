@@ -221,6 +221,7 @@ export class DocumentService {
       relativeTo: this._route,
       queryParams:
       {
+        ...this._route.snapshot.queryParams,
         docId: documentId
       },
       replaceUrl: true,
