@@ -1,3 +1,6 @@
+@import "src/assets/scss/_variables.scss";
+$paginator-height: 60px;
+
 .btn-table {
   height: 25px;
   width: 25px;
@@ -49,9 +52,23 @@ mat-header-cell {
 }
 
 .wizard-is-favorite-btn {
-  z-index: 100;
+  z-index: 10;
 }
 
 .folder-icon {
   color: #deb887 !important;
+}
+
+.docs-table-container {
+   max-height: calc(100vh - $header-height - $inner-navbar-height); // or height: calc(100vh - 155px); depending on your need  change
+    overflow: auto;
+    position: relative;
+}
+
+.docs-table-paginator {
+  position: sticky;
+  bottom: 0;
+  top: auto;
+  height: $paginator-height;
+  z-index: 99;
 }

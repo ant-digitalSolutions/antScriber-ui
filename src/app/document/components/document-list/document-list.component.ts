@@ -29,7 +29,7 @@ export class DocumentListComponent implements OnInit, OnDestroy {
 
   // @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator = Object.create(null);
 
-  pageSize = 10;
+  pageSize = 1000;
   pageIndex = 0;
   pageSizeOptions = [5, 10, 25];
 

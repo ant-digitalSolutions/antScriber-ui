@@ -1,5 +1,5 @@
 <div class="docs-table-container">
-  <div class="table-responsive m-t-30">
+  <div class="table-responsive docs-table-container">
     <mat-table
       #table
       [dataSource]="dataSource"
@@ -122,17 +122,24 @@
         </mat-cell>
       </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns" ></mat-row>
+      <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true" >
+        <mat-row *matRowDef="let row; columns: displayedColumns" ></mat-row>
+      </mat-header-row>
+      
+     
     </mat-table>
-
-    <!-- <mat-paginator
+<!-- 
+     <mat-paginator
         #paginator
         [pageSize]="pageSize"
         [pageSizeOptions]="pageSizeOptions"
-        [length]="articlesCount"
+        [length]="docsCount"
         (page)="handlePageEvent($event)"
+        class="docs-table-paginator"
       >
       </mat-paginator> -->
   </div>
+  
 </div>
+
+
