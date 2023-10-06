@@ -5,7 +5,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { CoreService } from 'src/app/services/core.service';
 import { AppSettings } from 'src/app/app.config';
 import { navItems } from './vertical/sidebar/sidebar-data';
-import { NavService } from '../../../services/nav.service';
+import { NavService } from '../../services/nav.service';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import {
   AppSearchDialogComponent,

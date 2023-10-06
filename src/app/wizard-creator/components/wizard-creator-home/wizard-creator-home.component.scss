@@ -1,15 +1,16 @@
 @import "src/app/common/styles/colors.scss";
+@import "src/assets/scss/_variables.scss";
 
 .wizard-form-container,
 .wizard-content {
-  min-height: 100vh;
+  min-height: calc(100vh - $header-height);
   padding: 0;
-  max-height: 100vh;
+  max-height:calc(100vh - $header-height);
   overflow-y: hidden;
 }
 
 .mat-tab-group {
-  min-height: 100vh;
+  min-height: calc(100vh - $header-height);
   background-color: #80808014;
 }
 

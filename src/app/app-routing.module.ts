@@ -1,15 +1,30 @@
 import { ContentCreationModule } from './content-creation/content-creation.module';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BlankComponent } from './template-bundle/layouts/blank/blank.component';
-import { FullComponent } from './template-bundle/layouts/full/full.component';
+import { BlankComponent } from './layouts/blank/blank.component';
+import { FullComponent } from './layouts/full/full.component';
 import { authGuard } from './auth/guards/auth.guard';
+import { LayoutWizardComponent } from './layouts/layout-wizard/layout-wizard.component';
 
 const routes: Routes = [
   {
     path: '',
+    component: LayoutWizardComponent,
+    children: [
+      {
+        path: 'wizard',
+        loadChildren: () =>
+          import('./wizard-creator/wizard-creator.module').then((m) => m.WizardCreatorModule),
+        data: { breadcrumb: 'Home' }
+      },
+    ]
+  },
+  {
+    path: '',
     component: FullComponent,
     children: [
+     
+
       {
         path: 'content',
         loadChildren: () =>
@@ -89,13 +104,7 @@ const routes: Routes = [
     path: '',
     component: BlankComponent,
     children: [
-      {
-        path: 'wizard',
-        loadChildren: () =>
-          import('./wizard-creator/wizard-creator.module').then((m) => m.WizardCreatorModule),
-        data: { breadcrumb: 'Home' }
-      },
-
+   
 
       // template
       {
