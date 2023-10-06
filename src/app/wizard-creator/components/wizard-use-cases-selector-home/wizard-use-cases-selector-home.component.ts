@@ -43,10 +43,11 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
 
   showLoadMoreUseCasesBtn = true;
 
+  selectedUseCaseGroup = '';
+
   constructor(
     private _wizardForm: WizardFormService,
     private _useCaseService: WizardUseCaseService) {
-
   }
 
   ngOnInit(): void {
@@ -64,6 +65,7 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
       if (useCase) {
         this.selectedCase = useCase;
         this.showUseCases = false;
+        this.selectedUseCaseGroup = '';
       }
     })
   }
@@ -77,6 +79,9 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
     }
 
     this.showUseCases = true;
+
+    if (initialElements)
+      this.selectUseCaseGroup(this.useCasesGroups[0].value);
   }
 
 
@@ -114,6 +119,8 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
       default:
         break;
     }
+
+    this.selectedUseCaseGroup = selectedGroup;
   }
 
   toggleUseCases() {

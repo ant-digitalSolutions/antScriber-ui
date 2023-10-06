@@ -12,6 +12,7 @@
       <ng-container *ngFor="let group of useCasesGroups">
         <mat-expansion-panel
           (opened)="selectUseCaseGroup(group.value)"
+          [expanded]="selectedUseCaseGroup === group.value"
         >
           <mat-expansion-panel-header>
             <mat-panel-title> {{ group.text }} </mat-panel-title>
