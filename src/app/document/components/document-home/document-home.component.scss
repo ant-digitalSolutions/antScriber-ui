@@ -1,9 +1,10 @@
 @import 'src/app/common/styles/colors.scss';
+@import "src/assets/scss/_variables.scss";
 
 
 .doc-home-outer-container {
         border-left: 1px solid $border-gray;
-    min-height: 100vh;
+    min-height: calc(100vh - $header-height);
 }
 
 .doc-list-container {
