@@ -1,5 +1,4 @@
 @import "src/assets/scss/_variables.scss";
-$view-top-height: 50px;
 
 .field-container {
   // margin: 10px 0;
@@ -53,8 +52,8 @@ $view-top-height: 50px;
   align-items: center;
   justify-content: center;
   flex: 1 1 0%;
-  height: calc(100vh - $view-top-height - $header-height);
-  max-height: calc(100vh - $view-top-height - $header-height);
+  height: calc(100vh - $inner-navbar-height - $header-height);
+  max-height: calc(100vh - $inner-navbar-height - $header-height);
   padding: 0 !important;
 
   .wizard-form {
