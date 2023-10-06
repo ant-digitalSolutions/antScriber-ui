@@ -17,7 +17,8 @@ const routes: Routes = [
           import('./wizard-creator/wizard-creator.module').then((m) => m.WizardCreatorModule),
         data: { breadcrumb: 'Home' }
       },
-    ]
+    ],
+    canActivate: [authGuard]
   },
   {
     path: '',
