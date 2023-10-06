@@ -12,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { WizardTableElements } from '../dtos/wizard-table-elements.dto';
 import { WizardTableElement } from '../dtos/wizard-table-element.dto';
 import { FolderDetailsDto } from '../dtos/folder-details.dto';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -68,7 +69,8 @@ export class DocumentService {
     private toastr: ToastrService,
     private blogProjectService: BlogProjectsService,
     private _route: ActivatedRoute,
-    private _router: Router
+    private _router: Router,
+    private _snackBar: MatSnackBar
   ) {
     this.blogProjectService.selectedProjectId$.subscribe(r => {
       this.selectedProjectId = r;
@@ -93,9 +95,16 @@ export class DocumentService {
 
         // navigate to the edition view after creating a new doc
         this.navigateToDocumentEditionView(r.data!.uuid);
+        this._snackBar.open('Document created',undefined, {
+          duration: 1000,
+          panelClass: 'snack-success'
+        });
 
       } else {
-        this.toastr.error(r.error);
+        this._snackBar.open('Error','Report', {
+          duration: 1000,
+          panelClass: 'snack-error'
+        });
       }
     }))
   }
@@ -103,9 +112,15 @@ export class DocumentService {
   update(doc: DocumentUpdateDto): Observable<IRequestResponse<DocumentDetailsDto>> {
     return this.http.put<IRequestResponse<DocumentDetailsDto>>(`${this.baseUrl}/${this.documentInEditionId}`, doc).pipe(tap(r => {
       if (r.success) {
-        // this._documentResponse.next(r.data!)
+        this._snackBar.open('Document updated', undefined, {
+          duration: 1000,
+          panelClass: 'snack-success'
+        });
       } else {
-        this.toastr.error(r.error);
+        this._snackBar.open('Error','Report', {
+          duration: 1000,
+          panelClass: 'snack-error'
+        });
       }
     }))
   }
@@ -116,9 +131,15 @@ export class DocumentService {
     }
     return this.http.put<IRequestResponse<DocumentDetailsDto>>(`${this.baseUrl}/${docUUId}`, doc).pipe(tap(r => {
       if (r.success) {
-        // this._documentResponse.next(r.data!);
+        this._snackBar.open('Document updated', undefined, {
+          duration: 1000,
+          panelClass: 'snack-success'
+        });
       } else {
-        this.toastr.error(r.error);
+        this._snackBar.open('Error','Report', {
+          duration: 1000,
+          panelClass: 'snack-error'
+        });
       }
     }))
   }
@@ -160,7 +181,10 @@ export class DocumentService {
           this._currentFolderData = r.data!.folderData;
         }
       } else {
-        this.toastr.error(r.error);
+        this._snackBar.open('Error','Report', {
+          duration: 1000,
+          panelClass: 'snack-error'
+        });
       }
     }))
   }
@@ -174,7 +198,10 @@ export class DocumentService {
           this._documentResponse.next(r.data!);
           this._documentInEditionData = r.data!;
         } else {
-          this.toastr.error(r.error);
+          this._snackBar.open('Error','Report', {
+          duration: 1000,
+          panelClass: 'snack-error'
+        });
         }
       }))
   }
@@ -197,7 +224,10 @@ export class DocumentService {
         // // navigate to the edition view after creating a new doc
         this.navigateToFolderView(r.data!.uuid);
       } else {
-        this.toastr.error(r.error);
+        this._snackBar.open('Error','Report', {
+          duration: 1000,
+          panelClass: 'snack-error'
+        });
       }
     }))
   }
