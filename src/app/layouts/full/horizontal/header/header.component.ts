@@ -80,7 +80,7 @@ export class AppHorizontalHeaderComponent {
       icon: '/assets/images/flag/icon-flag-en.svg',
     },
     {
-      language: 'Español',
+      language: 'Españolll',
       code: 'es',
       icon: '/assets/images/flag/icon-flag-es.svg',
     },

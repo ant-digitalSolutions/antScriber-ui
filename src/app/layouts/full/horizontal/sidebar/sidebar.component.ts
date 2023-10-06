@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { navItems } from './sidebar-data';
 import { Router } from '@angular/router';
-import { NavService } from '../../../../../services/nav.service';
+import { NavService } from '../../../../services/nav.service';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { MaterialModule } from 'src/app/material.module';
