@@ -58,7 +58,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     this._docService.documentInEdition$.pipe(takeUntil(this.componentDestroyed$))
       .subscribe(doc => {
         if (doc) {
-          this.docNameForm = new FormControl(doc.name, [Validators.required(), Validators.maxLength(50)])
+          this.docNameForm = new FormControl(doc.name, [Validators.required(), Validators.maxLength(200)])
         }
       })
   }
