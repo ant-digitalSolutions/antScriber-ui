@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { DocumentService } from '../../services/document.service';
 import { Location } from '@angular/common';
+import { configs_UI } from 'src/app/common/configs/ui.config';
 
 @Component({
   selector: 'app-document-home',
@@ -36,7 +37,7 @@ export class DocumentHomeComponent implements OnInit, OnDestroy {
 
 
   private setContainerHeight() {
-    this.windowHeight = `${window.innerHeight}px`
+    this.windowHeight = `${window.innerHeight - configs_UI.main_navbar_height}px`
   }
 
   setListeners() {

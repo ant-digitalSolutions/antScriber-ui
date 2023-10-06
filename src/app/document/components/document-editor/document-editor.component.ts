@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { P } from '@angular/cdk/keycodes';
 import BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
+import { configs_UI } from 'src/app/common/configs/ui.config';
 
 @Component({
   selector: 'app-document-editor',
@@ -95,7 +96,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
   }
 
   setEditorHeight() {
-    this.editorHeight = `${window.innerHeight}px`;
+    this.editorHeight = `${window.innerHeight - configs_UI.main_navbar_height - configs_UI.internal_navbar_height}px`;
   }
 
   
