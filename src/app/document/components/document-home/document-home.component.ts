@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { DocumentService } from '../../services/document.service';
@@ -13,6 +13,8 @@ export class DocumentHomeComponent implements OnInit, OnDestroy {
 
   componentDestroyed$: Subject<boolean> = new Subject();
 
+  windowHeight: string;
+
   constructor(
     private _docService: DocumentService,
     private _route: ActivatedRoute) { }
@@ -24,6 +26,17 @@ export class DocumentHomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.setListeners();
+    this.setContainerHeight();
+  }
+
+  @HostListener('window:resize')
+  onWindowResize() {
+    this.setContainerHeight();
+  }
+
+
+  private setContainerHeight() {
+    this.windowHeight = `${window.innerHeight}px`
   }
 
   setListeners() {
@@ -38,13 +51,13 @@ export class DocumentHomeComponent implements OnInit, OnDestroy {
           this._docService.documentInEditionId = null;
         }
 
-        if(params['folderId']) {
+        if (params['folderId']) {
           this._docService.showFavorites = false;
           this._docService.selectedFolderId = params['folderId']
         } else {
           this._docService.selectedFolderId = undefined;
         }
-        
+
         if (params['show']) {
           const paramValue = params['show'];
 
@@ -52,7 +65,7 @@ export class DocumentHomeComponent implements OnInit, OnDestroy {
             this._docService.showFavorites = true;
           }
         }
-        
+
         // else {
         //   this._docService.showFavorites = false;
         //   this._docService.documentInEditionId = null;

@@ -5,3 +5,18 @@
         border-left: 1px solid $border-gray;
     min-height: 100vh;
 }
+
+.doc-list-container {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+
+    #docs-navbar {
+        align-self: flex-start;
+        width: 100%;
+    }
+
+    .docs-list {
+        overflow-y: auto;
+    }
+}

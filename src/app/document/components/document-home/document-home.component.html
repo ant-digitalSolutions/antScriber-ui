@@ -1,13 +1,13 @@
 <div class="doc-home-outer-container">
   <div class="doc-list-container" *ngIf="!documentId; else editorContainer">
-    <app-document-home-navbar></app-document-home-navbar>
+    <app-document-home-navbar id="docs-navbar"></app-document-home-navbar>
 
-    <app-document-list></app-document-list>
+      <app-document-list class="docs-list" [ngStyle]="{'height': [windowHeight]}"></app-document-list>
   </div>
 
   <ng-template #editorContainer>
     <div class="editor-container" #editorContainer>
-        <app-document-editor [documentId]="documentId!"></app-document-editor>
+      <app-document-editor [documentId]="documentId!"></app-document-editor>
     </div>
   </ng-template>
 </div>

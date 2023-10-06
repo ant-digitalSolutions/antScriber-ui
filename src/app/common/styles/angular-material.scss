@@ -130,3 +130,11 @@ input.mat-input-element {
     padding: 10px !important;
   }
 }
+
+.editor-navbar-container {
+  .name-editor-mat-field {
+    .mdc-text-field, .mat-mdc-form-field-focus-overlay {
+      background-color: transparent !important;
+    }
+  }
+}

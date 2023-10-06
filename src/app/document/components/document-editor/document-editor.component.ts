@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { DocumentService } from '../../services/document.service';
 import { DocumentDetailsDto } from '../../dtos/document-details.dto';
 import { Subject, take, takeUntil } from 'rxjs';
@@ -33,6 +33,8 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
 
   docNameForm: FormControl;
 
+  editorHeight: string;
+
 
   constructor(
     private _docService: DocumentService,
@@ -40,7 +42,8 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     private _route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.setListerners()
+    this.setListerners();
+    this.setEditorHeight();
   }
 
   ngOnDestroy(): void {
@@ -84,6 +87,15 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
       queryParams: newQueryParams,
       replaceUrl: true,
     });
+  }
+
+  @HostListener('window:resize')
+  onWindowResize() {
+    this.setEditorHeight();
+  }
+
+  setEditorHeight() {
+    this.editorHeight = `${window.innerHeight}px`;
   }
 
   

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, HostBinding, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subject, takeUntil, merge } from 'rxjs';
 import { DocumentDetailsDto } from '../../dtos/document-details.dto';
 import { MatTableDataSource } from '@angular/material/table';
@@ -16,9 +16,6 @@ import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
   styleUrls: ['./document-list.component.scss']
 })
 export class DocumentListComponent implements OnInit, OnDestroy {
-
-
-
 
   componentDestroyed$: Subject<boolean> = new Subject();
 
