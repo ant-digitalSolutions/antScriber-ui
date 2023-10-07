@@ -33,6 +33,7 @@ export class WizardUseCaseService {
     this._wizardUseCase = v;
     this.updateWizardFormFields();
     this.updateQueryParamsWithUseCase(v);
+    this._wizardFormService.updateAdditionalData('useCase', v);
   }
 
   setWizardUseCaseGroup(v: string) {
@@ -159,7 +160,11 @@ export class WizardUseCaseService {
     switch (this._wizardUseCase) {
       case WizardCreatorLearningUseCasesEnum.HowTo:
         this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'del');
-        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.GtpVersion, WizardDefaultFieldNamesEnum.ImaginationSelector, WizardDefaultFieldNamesEnum.Instruction], 'add');
+        this._wizardFormService.updateFormDefaultFieldsToRender([
+          WizardDefaultFieldNamesEnum.GtpVersion, 
+          WizardDefaultFieldNamesEnum.ImaginationSelector, 
+          WizardDefaultFieldNamesEnum.Instruction, 
+          WizardDefaultFieldNamesEnum.OutputLang], 'add');
 
         break;
       case WizardCreatorLearningUseCasesEnum.Explain:

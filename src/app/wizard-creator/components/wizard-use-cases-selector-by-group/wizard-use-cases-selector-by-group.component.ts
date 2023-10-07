@@ -24,6 +24,6 @@ export class WizardUseCasesSelectorByGroupComponent {
 
   selectUseCase(useCase: string) {
     this._useCaseService.setWizardUseCase(useCase);
-    this._wizardForm.updateAdditionalData('useCase', useCase);
+    // this._wizardForm.updateAdditionalData('useCase', useCase);
   }
 }
