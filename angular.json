@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Materialpro": {
+    "antScriber-ui": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -18,7 +18,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": ["apexcharts", "jszip", "devexpress-diagram", "devexpress-gantt", "devextreme-quill", "bezier-easing"],
-            "outputPath": "dist/Materialpro",
+            "outputPath": "dist/antScriber-ui",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": ["zone.js"],
