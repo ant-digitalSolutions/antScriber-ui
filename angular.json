@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Materialpro": {
+    "antscriber-ui": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -18,7 +18,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": ["apexcharts", "jszip", "devexpress-diagram", "devexpress-gantt", "devextreme-quill", "bezier-easing"],
-            "outputPath": "dist/Materialpro",
+            "outputPath": "dist/antScriber-ui",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -69,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Materialpro:build:production"
+              "browserTarget": "antscriber-ui:build:production"
             },
             "development": {
-              "browserTarget": "Materialpro:build:development"
+              "browserTarget": "antscriber-ui:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -80,7 +80,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Materialpro:build"
+            "browserTarget": "antscriber-ui:build"
           }
         },
         "test": {
