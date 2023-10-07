@@ -1,7 +1,7 @@
 import { DocumentUpdateDto } from './../dtos/document-update.dto';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, ReplaySubject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, Subject, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DocumentCreateDto } from '../dtos/document-create.dto';
 import { DocumentDetailsDto } from '../dtos/document-details.dto';
@@ -34,6 +34,10 @@ export class DocumentService {
 
   private _wizardTableElements = new BehaviorSubject<WizardTableElement[]>([]);
   wizardTableElements$ = this._wizardTableElements.asObservable();
+
+  // emit when there is a new update on the current document
+  private _newDocUpdate = new Subject<void>();
+  newDocUpdate$ = this._newDocUpdate.asObservable();
 
   /**
    * UUId of the selected document. This document is in edition mode.
@@ -238,6 +242,7 @@ export class DocumentService {
     } else {
       this._documentInEditionData!.content += '<p>---</p>'
       this._documentInEditionData!.content += newContent;
+      this._newDocUpdate.next();
     }
   }
 

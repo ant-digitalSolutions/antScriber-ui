@@ -25,7 +25,25 @@
     
   </div>
 
-  <ckeditor [editor]="Editor" [(ngModel)]="documentContent" (blur)="saveEditorChanges()" id="doc-editor" [ngStyle]="{'height': [editorHeight]}"></ckeditor>
+  <div id="doc-editor-inner-container">
+
+    <div class="new-content-noti-container" *ngIf="newContentAmount > 0">
+      <button mat-flat-button (click)="newContentNotificationClick()" color="primary" class="btn-noti btn-new-content">
+        <mat-icon>arrow_downward</mat-icon>
+        <!-- <mat-icon>step_into</mat-icon> -->
+
+        New Content 
+        <span id="new-content-amount" *ngIf="newContentAmount > 1">&nbsp;-&nbsp;{{newContentAmount}}</span>
+      </button>
+      <button mat-flat-button class="btn-noti btn-dismiss" color="accent" (click)="dismissNewContentNoti()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <div id="editor-element-container" [ngStyle]="{'height': [editorHeight]}">
+  <ckeditor [editor]="Editor" [(ngModel)]="documentContent" (blur)="saveEditorChanges()" id="doc-editor" ></ckeditor>
+  </div>
+  </div>
 
   <!-- <div [innerHTML]="documentContent"></div> -->
 

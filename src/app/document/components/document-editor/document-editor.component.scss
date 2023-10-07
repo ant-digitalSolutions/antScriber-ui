@@ -22,8 +22,6 @@
       align-items: center;
       width: 90%;
 
-    
-
       .name-editor-mat-field {
         width: 100%;
         min-width: 400px;
@@ -33,8 +31,6 @@
           font-weight: 500;
           height: 65px;
         }
-
-       
 
         .mat-mdc-text-field-wrapper {
           background-color: transparent;
@@ -61,7 +57,7 @@
     // Styles for the ckeditor if required
 
     .ck-content {
-        min-height: calc(100vh - 50px - 45px);
+      min-height: calc(100vh - 50px - 45px);
     }
   }
 }
@@ -69,4 +65,44 @@
 #doc-editor {
   overflow-y: auto;
   background-color: #fff;
+}
+
+#doc-editor-inner-container {
+  position: relative;
+  .new-content-noti-container {
+    position: absolute;
+    top: 15px;
+    bottom: auto;
+    right: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 20;
+
+    .btn-noti {
+      height: 25px;
+      padding: 8;
+    }
+    .btn-dismiss {
+      border-radius: 0 15px 15px 0;
+      max-width: 40px;
+      min-width: 32px;
+      padding: 2px;
+      align-items: center;
+      padding-left: 7px;
+    }
+
+    .btn-new-content {
+      border-radius: 15px 0 0 15px;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  }
+
+  #editor-element-container {
+    overflow-y: auto;
+  }
 }

@@ -18,6 +18,17 @@ import { configs_UI } from 'src/app/common/configs/ui.config';
 })
 export class DocumentEditorComponent implements OnInit, OnDestroy {
 
+  /**
+   * The amount of new content added to the document.
+   * 
+   * When the user see the new content, reset it to 0.
+   *
+   * @type {number}
+   * @memberof DocumentEditorComponent
+   */
+  newContentAmount: number = 0;
+
+
 
 
   public Editor = BalloonEditor;
@@ -35,6 +46,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
   docNameForm: FormControl;
 
   editorHeight: string;
+
 
 
   constructor(
@@ -60,6 +72,11 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
         if (doc) {
           this.docNameForm = new FormControl(doc.name, [Validators.required(), Validators.maxLength(200)])
         }
+      })
+
+    this._docService.newDocUpdate$.pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(() => {
+        this.newContentAmount++;
       })
   }
 
@@ -99,8 +116,23 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     this.editorHeight = `${window.innerHeight - configs_UI.main_navbar_height - configs_UI.internal_navbar_height}px`;
   }
 
-  
-  public get documentContent() : string {
+  newContentNotificationClick() {
+    this.newContentAmount = 0;
+    this.scrollToBottom();
+  }
+
+  scrollToBottom() {
+    window.scrollTo(0, document.body.scrollHeight);
+    const element = document.getElementById('editor-element-container')!;
+    element.scrollTop = element.scrollHeight;
+  }
+
+  dismissNewContentNoti() {
+    this.newContentAmount = 0;
+  }
+
+
+  public get documentContent(): string {
     if (this._docService.documentInEdition) {
       return this._docService.documentInEdition!.content;
     } else {
@@ -108,11 +140,11 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     }
   }
 
-  
-  public set documentContent(v : string) {
+
+  public set documentContent(v: string) {
     this._docService.documentInEdition!.content = v;
   }
-  
-  
+
+
 
 }
