@@ -9,6 +9,7 @@ import { WizardCreatorInternalDevUseCasesEnum } from '../../enums/wizard-creator
 import { WizardCreatorMarketingUseCasesEnum } from '../../enums/wizard-creator-marketing-use-cases.enum';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QueryParamNames } from 'src/app/common/enum/query-params-names.enum';
+import { WizardCreatorLearningUseCasesEnum } from '../../enums/wizard-creator-learning-use-cases.enum';
 
 @Injectable()
 export class WizardUseCaseService {
@@ -54,6 +55,9 @@ export class WizardUseCaseService {
 
       case WizardCreatorUseCaseGroup.AdsAndMarketing:
         this.updateWizardFormFieldsForGroup_Marketing();
+        break;
+      case WizardCreatorUseCaseGroup.Learning:
+        this.updateWizardFormFieldsForGroup_Learning();
         break;
       default:
         break;
@@ -144,6 +148,24 @@ export class WizardUseCaseService {
         this._wizardFormService.updateFormDefaultFieldsToRender([
           WizardDefaultFieldNamesEnum.Instruction
         ], 'del');
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  updateWizardFormFieldsForGroup_Learning() {
+    switch (this._wizardUseCase) {
+      case WizardCreatorLearningUseCasesEnum.HowTo:
+        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'del');
+        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.GtpVersion, WizardDefaultFieldNamesEnum.ImaginationSelector, WizardDefaultFieldNamesEnum.Instruction], 'add');
+
+        break;
+      case WizardCreatorLearningUseCasesEnum.Explain:
+        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'del');
+        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.GtpVersion, WizardDefaultFieldNamesEnum.ImaginationSelector, WizardDefaultFieldNamesEnum.Instruction], 'add');
+
         break;
 
       default:
