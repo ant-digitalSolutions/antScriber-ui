@@ -8,6 +8,47 @@ export class CacheService implements ICacheService {
 
   constructor(private _cacheStorage: LocalStorageCacheService) { }
 
+  // updateWizardFormData(fieldName: string, fieldValue: any) {
+  //   const currentUseCaseData = this.getLatestWizardUseCase();
+  //   if (currentUseCaseData) { 
+  //     const key = this.useCaseFormKey(currentUseCaseData!.useCase, currentUseCaseData!.useCase); 
+
+  //   }
+  // }
+
+  updateWizardFormData(formData: any) {
+    const currentUseCaseData = this.getLatestWizardUseCase();
+    if (!currentUseCaseData) {
+      return;
+    }
+  
+    this.storeFormDataByUseCase(currentUseCaseData!.useCase, currentUseCaseData!.useCaseGroup, formData)
+  }
+
+  /**
+   * Store or update the wizard form data to the cache.
+   *
+   * @param {string} useCase Selected use case.
+   * @param {string} useCaseGroup selected use case group.
+   * @param {*} formData The data of the current Wizard form.
+   * @return {*}  {void}
+   * @memberof CacheService
+   */
+  storeFormDataByUseCase(useCase: string, useCaseGroup: string, formData: any): void {
+    const key = this.useCaseFormKey(useCase, useCaseGroup);
+    const dataString = this.getData(key);
+
+    // if the cache contains data for the selected use case, update it
+    if (dataString) {
+      const formDataCache = JSON.parse(dataString);
+      this.updateCacheFormData(formData, formDataCache);
+      this.setData(key, JSON.stringify(formDataCache));
+      return;
+    }
+    else { // if not, then store the new form data.
+      this.setData(key, JSON.stringify(formData));
+    }
+  }
 
   /**
    * Store the wizard data in the local storage.
@@ -17,7 +58,7 @@ export class CacheService implements ICacheService {
    * @memberof UserService
    */
   storeWizardForm(formData: any) {
-      this._cacheStorage.setData(StorageObjectNamesEnum.WizardFormData, JSON.stringify(formData));
+    this._cacheStorage.setData(StorageObjectNamesEnum.WizardFormData, JSON.stringify(formData));
   }
 
   /**
@@ -44,6 +85,13 @@ export class CacheService implements ICacheService {
    */
   getWizardForm() {
     return this._cacheStorage.getData(StorageObjectNamesEnum.WizardFormData);
+  }
+
+  getWizardDataByUseCase(useCase: string, useCaseGroup: string) {
+    const data = this.getData(this.useCaseFormKey(useCase, useCaseGroup));
+    if (data) {
+      return JSON.parse(data);
+    }
   }
 
   /**
@@ -74,7 +122,7 @@ export class CacheService implements ICacheService {
     return this._cacheStorage.getData(dataKey)
   }
 
-  setData(key: string, data: any): boolean {
+  setData(key: string, data: string): boolean {
     return this._cacheStorage.setData(key, data);
   }
 
@@ -83,5 +131,17 @@ export class CacheService implements ICacheService {
   }
   clear(): void {
     this._cacheStorage.clear();
+  }
+
+  private useCaseFormKey(useCase: string, useCaseGroup: string): string {
+    return `${useCaseGroup}_${useCase}`;
+  }
+
+  private updateCacheFormData(newFormData: any, formDataFromCache: any) {
+    Object.keys(newFormData).forEach(fieldName => {
+      const value = newFormData[fieldName];
+
+      formDataFromCache[fieldName] = value;
+    });
   }
 }

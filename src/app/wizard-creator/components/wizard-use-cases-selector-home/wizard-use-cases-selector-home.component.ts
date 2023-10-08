@@ -58,6 +58,7 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.setListeners()
     this.setUseCaseFromParams();
+    this.setInitialGroupOptions(true);
   }
 
   ngOnDestroy(): void {
@@ -76,8 +77,7 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
   }
 
   setUseCases(initialElements: boolean = true) {
-    const values = mapEnumNameAndValue(WizardCreatorUseCaseGroup);
-    this.useCasesGroups = initialElements ? values.slice(0, 3) : values;
+   this.setInitialGroupOptions(initialElements)
 
     if (!initialElements) {
       this.showLoadMoreUseCasesBtn = false;
@@ -155,7 +155,7 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
 
     if (hasUseCase && hasUseCaseGroup) {
       // Get the latest form data from the cache and set it in the wizard form
-      const latestFormData = this._cacheService.getWizardForm();
+      const latestFormData = this._cacheService.getWizardDataByUseCase(queryParams[QueryParamNames.UseCase], queryParams[QueryParamNames.UseCageGroup]);
       if (latestFormData) {
         this._wizardForm.setWizardFormData(latestFormData);
       }
@@ -177,9 +177,10 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
 
     if (useCaseData) {
       this.selectUseCaseGroup(useCaseData.useCaseGroup);
-      this._useCaseService.setWizardUseCase(useCaseData.useCaseGroup);
+      this._useCaseService.setWizardUseCase(useCaseData.useCase);
 
-      const latestFormData = this._cacheService.getWizardForm();
+      // if the cache contains the latest data for this use case, set the form data
+      const latestFormData = this._cacheService.getWizardDataByUseCase(useCaseData.useCase, useCaseData.useCaseGroup);
       if (latestFormData) {
         this._wizardForm.setWizardFormData(latestFormData);
       }
@@ -188,5 +189,16 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
     }
 
   
+  }
+
+  /**
+   * Set the values for the use case group options
+   *
+   * @private
+   * @memberof WizardUseCasesSelectorHomeComponent
+   */
+  private setInitialGroupOptions(initialValues: boolean): void {
+    const values = mapEnumNameAndValue(WizardCreatorUseCaseGroup);
+    this.useCasesGroups = initialValues ? values.slice(0, 3) : values;
   }
 }

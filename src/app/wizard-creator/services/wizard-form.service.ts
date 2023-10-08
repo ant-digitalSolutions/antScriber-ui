@@ -122,7 +122,7 @@ export class WizardFormService {
   // TODO: change name to updateData() 
   updateAdditionalData(fieldName: string, fieldValue: any) {
     this._formAdditionalData[fieldName] = fieldValue;
-    // this._cacheService.storeWizardForm(this._formAdditionalData);
+    this._cacheService.updateWizardFormData(this._formAdditionalData);
   }
 
   /**

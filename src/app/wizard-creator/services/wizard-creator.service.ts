@@ -42,7 +42,7 @@ export class WizardCreatorService {
       return of({});
     }
 
-    this.saveDataOnCache(formData.data, formData.data.useCase, formData.data.useCaseGroup);
+    // this.saveDataOnCache(formData.data, formData.data.useCase, formData.data.useCaseGroup);
    
 
     return this.http.post<IRequestResponse<string>>(this.baseUrl + '/generate', formData)

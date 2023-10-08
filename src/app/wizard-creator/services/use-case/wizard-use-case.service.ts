@@ -190,6 +190,8 @@ export class WizardUseCaseService {
     queryParams[QueryParamNames.UseCase] = useCase;
     queryParams[QueryParamNames.UseCageGroup] = this._wizardUseCaseGroup;
 
+    this._cacheService.setUseCaseData(useCase, this._wizardUseCaseGroup)
+
     this._router.navigate([], {
       relativeTo: this._activeRoute,
       queryParams,
