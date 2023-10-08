@@ -26,8 +26,9 @@ export class WizardCreatorCheckboxFieldComponent {
   @Output()
   valueEditedEvent = new EventEmitter<string>();
 
-  constructor(private toastr: ToastrService,
-    private _wizardService: WizardCreatorService,
+  checkBoxValue: boolean;
+
+  constructor(
     private _wizardFormService: WizardFormService) {
 
 
@@ -35,6 +36,7 @@ export class WizardCreatorCheckboxFieldComponent {
 
   ngOnInit(): void {
     this.setListeners();
+    this.checkBoxValue = this.fieldData.fieldValue;
   }
 
 
@@ -54,10 +56,16 @@ export class WizardCreatorCheckboxFieldComponent {
           this.valueChange();
         }
       });
+
+    this._wizardFormService.resetFieldsToDefault$
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(data => {
+        this.checkBoxValue = this.fieldData.fieldValue
+      });
   }
 
 
   valueChange() {
-    this._wizardFormService.updateAdditionalData(this.fieldData.dataName, this.fieldData.fieldValue);
+    this._wizardFormService.updateAdditionalData(this.fieldData.dataName, this.checkBoxValue);
   }
 }

@@ -208,4 +208,8 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
   checkIfFieldRender(fieldName: string) : boolean {
     return this._wizardFormService.checkIfFieldShouldRender(fieldName);
   }
+
+  resetForm() {
+    this._wizardFormService.resetFormData()
+  }
 }

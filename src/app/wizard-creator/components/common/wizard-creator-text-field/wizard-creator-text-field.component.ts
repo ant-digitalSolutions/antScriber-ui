@@ -70,14 +70,24 @@ export class WizardCreatorTextFieldComponent {
          this.fieldForm.setValue(data.fieldValue)
         }
       });
+
+    this._wizardFormService.resetFieldsToDefault$
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(data => {
+       this.fieldForm.setValue(this.fieldData.fieldValue);
+       this.saveEdition();
+      });
   }
 
 
+  /**
+   * Sync the field data with the data to send in the request
+   *
+   * @memberof WizardCreatorTextFieldComponent
+   */
   saveEdition() {
-    if (this.fieldForm.valid) {
       this.valueEditedEvent.emit(this.fieldForm.value);
       this._wizardFormService.updateAdditionalData(this.fieldData.dataName, this.fieldForm.value);
-    }
   }
 
   getErrorMessage() {

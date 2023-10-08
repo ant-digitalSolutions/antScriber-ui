@@ -94,7 +94,12 @@
           [ngClass]="checkIfFieldRender('amountOfVariants')? 'col-8' : 'col-12'"
         ></app-wizard-creator-selector-field>
       </div>
+
+      <div class="reset-form-container d-flex align-items-center justify-content-center">
+        <button mat-button (click)="resetForm()">Reset Form</button>
+      </div>
     </div>
+
   </div>
 
   <!-- ------------------------------------------------------------------------- -->

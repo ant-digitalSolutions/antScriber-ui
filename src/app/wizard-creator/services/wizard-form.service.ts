@@ -9,6 +9,7 @@ import { CacheService } from 'src/app/common/services/cache/cache.service';
 
 @Injectable()
 export class WizardFormService {
+
  
   _additionalDataFormFields: { fieldName: string, formControl: FormControl }[] = [];
 
@@ -25,8 +26,13 @@ export class WizardFormService {
   private _fieldsToShowUpdate = new Subject<void>();
   fieldToRenderUpdate$ = this._fieldsToShowUpdate.asObservable();
 
+  // emit when the user click an option of the button toggle of the forms
   private _buttonToggleUpdate = new BehaviorSubject<string>('');
   buttonToggleUpdate$ = this._buttonToggleUpdate.asObservable();
+
+  // emit when the user wants to reset the form data to its default values.
+  private _resetFieldsToDefault = new Subject<void>();
+  resetFieldsToDefault$ = this._resetFieldsToDefault.asObservable();
 
 // emit if the user has available data in cache from their last section
   private _wizardFormFieldDataFromCache = new ReplaySubject<{
@@ -295,6 +301,15 @@ export class WizardFormService {
         fieldValue
       })
     });
+  }
+
+  /**
+   * Used to reset the wizard form data to the default values.
+   *
+   * @memberof WizardFormService
+   */
+  resetFormData() {
+   this._resetFieldsToDefault.next();
   }
 
 

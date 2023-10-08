@@ -60,6 +60,12 @@ export class WizardCreatorSelectorFieldComponent {
           this.form.setValue(data.fieldValue)
         }
       });
+
+    this._wizardFormService.resetFieldsToDefault$
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(data => {
+        this.form.setValue(this.fieldData.fieldValue);
+      });
   }
 
 
