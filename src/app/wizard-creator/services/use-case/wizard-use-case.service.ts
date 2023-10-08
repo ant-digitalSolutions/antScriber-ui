@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { QueryParamNames } from 'src/app/common/enum/query-params-names.enum';
 import { WizardCreatorLearningUseCasesEnum } from '../../enums/wizard-creator-learning-use-cases.enum';
 import { CacheService } from 'src/app/common/services/cache/cache.service';
+import { WizardSocialMediaUseCases } from '../../enums/wizard-creator-social-media-use-cases.enum';
 
 @Injectable()
 export class WizardUseCaseService {
@@ -63,6 +64,9 @@ export class WizardUseCaseService {
         break;
       case WizardCreatorUseCaseGroup.Learning:
         this.updateWizardFormFieldsForGroup_Learning();
+        break;
+      case WizardCreatorUseCaseGroup.SocialMedia:
+        this.updateWizardFormFieldsForGroup_Social();
         break;
       default:
         break;
@@ -169,6 +173,25 @@ export class WizardUseCaseService {
           WizardDefaultFieldNamesEnum.ImaginationSelector, 
           WizardDefaultFieldNamesEnum.Instruction, 
           WizardDefaultFieldNamesEnum.OutputLang], 'add');
+
+        break;
+      case WizardCreatorLearningUseCasesEnum.Explain:
+        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'del');
+        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.GtpVersion, WizardDefaultFieldNamesEnum.ImaginationSelector, WizardDefaultFieldNamesEnum.Instruction], 'add');
+
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  updateWizardFormFieldsForGroup_Social() {
+    switch (this._wizardUseCase) {
+      case WizardSocialMediaUseCases.InstagramCaption:
+        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'add');
+        this._wizardFormService.updateFormDefaultFieldsToRender([
+          WizardDefaultFieldNamesEnum.Instruction], 'del');
 
         break;
       case WizardCreatorLearningUseCasesEnum.Explain:
