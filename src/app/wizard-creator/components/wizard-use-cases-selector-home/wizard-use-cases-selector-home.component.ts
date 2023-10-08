@@ -15,6 +15,7 @@ import { WizardFormService } from '../../services/wizard-form.service';
 import { WizardUseCaseService } from '../../services/use-case/wizard-use-case.service';
 import { ActivatedRoute } from '@angular/router';
 import { QueryParamNames } from 'src/app/common/enum/query-params-names.enum';
+import { CacheService } from 'src/app/common/services/cache/cache.service';
 
 @Component({
   selector: 'app-wizard-use-cases-selector-home',
@@ -50,13 +51,14 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
   constructor(
     private _wizardForm: WizardFormService,
     private _useCaseService: WizardUseCaseService,
-    private _activeRoute: ActivatedRoute) {
+    private _activeRoute: ActivatedRoute,
+    private _cacheService: CacheService) {
   }
 
   ngOnInit(): void {
-    this.setUseCases()
     this.setListeners()
     this.setUseCaseFromParams();
+    this.setInitialGroupOptions(true);
   }
 
   ngOnDestroy(): void {
@@ -75,8 +77,7 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
   }
 
   setUseCases(initialElements: boolean = true) {
-    const values = mapEnumNameAndValue(WizardCreatorUseCaseGroup);
-    this.useCasesGroups = initialElements ? values.slice(0, 3) : values;
+   this.setInitialGroupOptions(initialElements)
 
     if (!initialElements) {
       this.showLoadMoreUseCasesBtn = false;
@@ -131,14 +132,73 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
     this.showUseCases = !this.showUseCases;
   }
 
+  /**
+ * This function sets the use case and use case group based on the query parameters.
+ * It also retrieves the latest form data from the cache if both use case and use case group are present in the query parameters,
+ * otherwise it retrieves the wizard data from the storage.
+ */
   setUseCaseFromParams() {
     const queryParams = this._activeRoute.snapshot.queryParams;
+    let hasUseCase = false;
+    let hasUseCaseGroup = false;
 
     if (queryParams[QueryParamNames.UseCageGroup]) {
+      // Select the use case group from the query parameters
       this.selectUseCaseGroup(queryParams[QueryParamNames.UseCageGroup])
+      hasUseCaseGroup = true;
     }
     if (queryParams[QueryParamNames.UseCase]) {
+      // Set the wizard use case from the query parameters
       this._useCaseService.setWizardUseCase(queryParams[QueryParamNames.UseCase])
+      hasUseCase = true;
     }
+
+    if (hasUseCase && hasUseCaseGroup) {
+      // Get the latest form data from the cache and set it in the wizard form
+      const latestFormData = this._cacheService.getWizardDataByUseCase(queryParams[QueryParamNames.UseCase], queryParams[QueryParamNames.UseCageGroup]);
+      if (latestFormData) {
+        this._wizardForm.setWizardFormData(latestFormData);
+      }
+    } else {
+      // If the user doesn't have the use case in the query parameters, try to get them from the cache
+      this.setWizardDataFromStorage();
+    }
+  }
+
+  /**
+   * Get the useCase and useCase group from the cache.
+   * 
+   * If the data is available, also set the formData.
+   *
+   * @memberof WizardUseCasesSelectorHomeComponent
+   */
+  setWizardDataFromStorage() {
+    const useCaseData = this._cacheService.getLatestWizardUseCase();
+
+    if (useCaseData) {
+      this.selectUseCaseGroup(useCaseData.useCaseGroup);
+      this._useCaseService.setWizardUseCase(useCaseData.useCase);
+
+      // if the cache contains the latest data for this use case, set the form data
+      const latestFormData = this._cacheService.getWizardDataByUseCase(useCaseData.useCase, useCaseData.useCaseGroup);
+      if (latestFormData) {
+        this._wizardForm.setWizardFormData(latestFormData);
+      }
+    } else { // if don't have data in the queryParams of the cache, then set the default values
+      this.setUseCases()
+    }
+
+  
+  }
+
+  /**
+   * Set the values for the use case group options
+   *
+   * @private
+   * @memberof WizardUseCasesSelectorHomeComponent
+   */
+  private setInitialGroupOptions(initialValues: boolean): void {
+    const values = mapEnumNameAndValue(WizardCreatorUseCaseGroup);
+    this.useCasesGroups = initialValues ? values.slice(0, 3) : values;
   }
 }

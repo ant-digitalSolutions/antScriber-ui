@@ -42,6 +42,16 @@ export class WizardCreatorButtonToggleComponent implements OnInit, OnDestroy {
 
   }
 
+  setListeners() {
+    this._wizardFormService.wizardFormFieldDataFromCache$
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(data => {
+        if (data.fieldName === this.fieldData.dataName) {
+         this.valueChange(data.fieldValue);
+        }
+      });
+  }
+
 
   ngOnDestroy(): void {
     this.componentDestroyed$.next(true)

@@ -12,6 +12,8 @@ import * as TablerIcons from 'angular-tabler-icons/icons';
 import { ContentEditionMagicActionsComponent } from './components/content-edition-magic-actions/content-edition-magic-actions.component';
 import { MagicEditionService } from './services/content-magic-edition.service';
 import { DialogsModule } from '../dialogs/dialogs.module';
+import { LocalStorageCacheService } from './services/cache/local-storage-cache.service';
+import { CacheService } from './services/cache/cache.service';
 
 
 
@@ -34,7 +36,11 @@ import { DialogsModule } from '../dialogs/dialogs.module';
     TimeagoModule,
     DialogsModule
   ],
-  providers: [MagicEditionService],
+  providers: [
+    MagicEditionService, 
+    LocalStorageCacheService,
+  CacheService
+],
   exports: [
     TextAreaFieldRenderAndEditorComponent,
     OptionFieldRenderAndEditorComponent,

@@ -8,6 +8,7 @@ import { ReplaySubject, of, tap } from 'rxjs';
 import { DocumentService } from 'src/app/document/services/document.service';
 import { WizardFormService } from './wizard-form.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CacheService } from 'src/app/common/services/cache/cache.service';
 
 @Injectable()
 export class WizardCreatorService {
@@ -25,7 +26,8 @@ export class WizardCreatorService {
     private toastr: ToastrService,
     private _docService: DocumentService,
     private _wizardForm: WizardFormService,
-    private _snackBar: MatSnackBar) { }
+    private _snackBar: MatSnackBar,
+    private _cacheService: CacheService) { }
 
   generateContent() {
     const formData = new WizardCreatorCreateDto();
@@ -39,6 +41,9 @@ export class WizardCreatorService {
       });
       return of({});
     }
+
+    // this.saveDataOnCache(formData.data, formData.data.useCase, formData.data.useCaseGroup);
+   
 
     return this.http.post<IRequestResponse<string>>(this.baseUrl + '/generate', formData)
       .pipe(tap(r => {
@@ -55,5 +60,20 @@ export class WizardCreatorService {
           this._wizardCreatedContent.next(null);
         }
       }))
+  }
+
+  /**
+   * Save the wizard form data to the cache, so users can continue
+   * with their work
+   *
+   * @private
+   * @param {*} data
+   * @param {string} useCase
+   * @param {string} useCaseGroup
+   * @memberof WizardCreatorService
+   */
+  private saveDataOnCache(data: any, useCase: string, useCaseGroup: string): void {
+    this._cacheService.setUseCaseData(useCase, useCaseGroup)
+    this._cacheService.storeWizardForm(data);
   }
 }

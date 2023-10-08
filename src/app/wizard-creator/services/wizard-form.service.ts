@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ReplaySubject, Subject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
 import { WizardDefaultFieldNamesEnum } from '../enums/wizard-default-fields-names.enum';
 import { SelectorFieldToRenderData } from 'src/app/common/interfaces/button-toggle-to-render-data';
 import { CheckboxFieldToRenderData } from 'src/app/common/interfaces/checkbox-field-to-render-data';
 import { TextFieldToRenderData } from 'src/app/common/interfaces/textfield-to-render-data';
+import { CacheService } from 'src/app/common/services/cache/cache.service';
 
 @Injectable()
 export class WizardFormService {
 
-
+ 
   _additionalDataFormFields: { fieldName: string, formControl: FormControl }[] = [];
 
   /**
@@ -25,8 +26,20 @@ export class WizardFormService {
   private _fieldsToShowUpdate = new Subject<void>();
   fieldToRenderUpdate$ = this._fieldsToShowUpdate.asObservable();
 
-  private _buttonToggleUpdate = new ReplaySubject<string>();
+  // emit when the user click an option of the button toggle of the forms
+  private _buttonToggleUpdate = new BehaviorSubject<string>('');
   buttonToggleUpdate$ = this._buttonToggleUpdate.asObservable();
+
+  // emit when the user wants to reset the form data to its default values.
+  private _resetFieldsToDefault = new Subject<void>();
+  resetFieldsToDefault$ = this._resetFieldsToDefault.asObservable();
+
+// emit if the user has available data in cache from their last section
+  private _wizardFormFieldDataFromCache = new ReplaySubject<{
+    fieldName: string,
+    fieldValue: any
+  }>(undefined as any);
+  wizardFormFieldDataFromCache$ = this._wizardFormFieldDataFromCache.asObservable();
 
   _formAdditionalData: any = {};
 
@@ -57,7 +70,7 @@ export class WizardFormService {
 
 
 
-  constructor() { }
+  constructor(private _cacheService: CacheService) { }
 
 
   /**
@@ -104,6 +117,9 @@ export class WizardFormService {
   /**
    * Add or update a field the additionalData object
    * that is send in the wizard creator request.
+   * 
+   * This method is called every time a value of a wizard
+   * form field is updated
    *
    * @param {string} fieldName
    * @param {*} fieldValue
@@ -112,6 +128,7 @@ export class WizardFormService {
   // TODO: change name to updateData() 
   updateAdditionalData(fieldName: string, fieldValue: any) {
     this._formAdditionalData[fieldName] = fieldValue;
+    this._cacheService.updateWizardFormData(this._formAdditionalData);
   }
 
   /**
@@ -267,6 +284,32 @@ export class WizardFormService {
     fieldNames.forEach(fieldName => {
       this._fieldNamesToRender.set(fieldName);
     });
+  }
+
+  /**
+   * Set the wizard form data with the data of the latest section
+   * from the user.
+   *
+   * @param {*} latestFormData
+   * @memberof WizardFormService
+   */
+  setWizardFormData(latestFormData: any) {
+    Object.keys(latestFormData).forEach(fieldName => {
+      const fieldValue = latestFormData[fieldName];
+      this._wizardFormFieldDataFromCache.next({
+        fieldName,
+        fieldValue
+      })
+    });
+  }
+
+  /**
+   * Used to reset the wizard form data to the default values.
+   *
+   * @memberof WizardFormService
+   */
+  resetFormData() {
+   this._resetFieldsToDefault.next();
   }
 
 

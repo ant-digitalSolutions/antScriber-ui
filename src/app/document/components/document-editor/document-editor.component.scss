@@ -63,15 +63,14 @@
 }
 
 #doc-editor {
-  overflow-y: auto;
-  background-color: #fff;
+  
 }
 
 #doc-editor-inner-container {
   position: relative;
   .new-content-noti-container {
     position: absolute;
-    top: 15px;
+    top: 10px;
     bottom: auto;
     right: 0;
     left: 0;

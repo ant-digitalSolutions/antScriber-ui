@@ -30,7 +30,6 @@ export class WizardCreatorSelectorFieldComponent {
   }
 
   ngOnInit(): void {
-    this.setListeners();
 
     this.form = new FormControl(this.fieldData.fieldValue);
     this.form.valueChanges
@@ -38,6 +37,8 @@ export class WizardCreatorSelectorFieldComponent {
       .subscribe(v => this.valueChange(v));
 
     this.valueChange(this.fieldData.fieldValue);
+    this.setListeners();
+
   }
 
   registerData() {
@@ -52,7 +53,19 @@ export class WizardCreatorSelectorFieldComponent {
   }
 
   setListeners() {
+    this._wizardFormService.wizardFormFieldDataFromCache$
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(data => {
+        if (data.fieldName === this.fieldData.dataName) {
+          this.form.setValue(data.fieldValue)
+        }
+      });
 
+    this._wizardFormService.resetFieldsToDefault$
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(data => {
+        this.form.setValue(this.fieldData.fieldValue);
+      });
   }
 
 

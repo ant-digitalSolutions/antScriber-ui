@@ -16,14 +16,11 @@ export class WizardUseCasesSelectorByGroupComponent {
   useCases: OptionField<string>[];
 
   constructor(
-    private _wizardService: WizardCreatorService, 
-    private _wizardForm: WizardFormService,
     private _useCaseService: WizardUseCaseService) {
 
   }
 
   selectUseCase(useCase: string) {
     this._useCaseService.setWizardUseCase(useCase);
-    // this._wizardForm.updateAdditionalData('useCase', useCase);
   }
 }
