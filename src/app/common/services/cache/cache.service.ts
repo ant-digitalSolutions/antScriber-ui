@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageCacheService } from './local-storage-cache.service';
 import { StorageObjectNamesEnum } from '../../enum/storage-objects-name.enum';
+import { ICacheService } from './cache-service.interface';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class CacheService {
+@Injectable()
+export class CacheService implements ICacheService {
 
   constructor(private _cacheStorage: LocalStorageCacheService) { }
+
 
   /**
    * Store the wizard data in the local storage.
@@ -16,11 +16,23 @@ export class CacheService {
    * @param {*} formData
    * @memberof UserService
    */
-  storeWizardForm(useCase: string, useCaseGroup: string, formData: any) {
+  storeWizardForm(formData: any) {
+      this._cacheStorage.setData(StorageObjectNamesEnum.WizardFormData, JSON.stringify(formData));
+  }
 
+  /**
+   * Store the useCase data selected by the user.
+   *
+   * @param {string} useCase
+   * @param {string} useCaseGroup
+   * @memberof CacheService
+   */
+  setUseCaseData(useCase: string, useCaseGroup: string) {
     this._cacheStorage.setData(StorageObjectNamesEnum.WizardUseCase, useCase);
     this._cacheStorage.setData(StorageObjectNamesEnum.WizardGroupCase, useCaseGroup);
-    this._cacheStorage.setData(StorageObjectNamesEnum.WizardFormData, JSON.stringify(formData));
+
+    // if a new use case is selected, we remove the data from the previous one
+    this.deleteData(StorageObjectNamesEnum.WizardFormData);
   }
 
   /**
@@ -64,5 +76,12 @@ export class CacheService {
 
   setData(key: string, data: any): boolean {
     return this._cacheStorage.setData(key, data);
+  }
+
+  deleteData(key: string): void {
+    this._cacheStorage.deleteData(key);
+  }
+  clear(): void {
+    this._cacheStorage.clear();
   }
 }

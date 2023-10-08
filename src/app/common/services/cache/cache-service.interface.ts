@@ -17,4 +17,19 @@ export interface ICacheService {
      * @memberof ICacheService
      */
     setData(key: string, data: any): boolean;
+
+    /**
+     * Delete the data associated with the given key.
+     *
+     * @param {string} key
+     * @memberof ICacheService
+     */
+    deleteData(key: string): void;
+
+    /**
+     * Clear all data in cache.
+     *
+     * @memberof ICacheService
+     */
+    clear(): void;
 }
