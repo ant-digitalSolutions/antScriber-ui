@@ -190,13 +190,22 @@ export class WizardUseCaseService {
     queryParams[QueryParamNames.UseCase] = useCase;
     queryParams[QueryParamNames.UseCageGroup] = this._wizardUseCaseGroup;
 
-    this._cacheService.setUseCaseData(useCase, this._wizardUseCaseGroup)
+    this.handleUseCaseCache(useCase, this._wizardUseCaseGroup)
 
     this._router.navigate([], {
       relativeTo: this._activeRoute,
       queryParams,
       replaceUrl: true,
     });
+  }
+
+  handleUseCaseCache(useCase: string, useCaseGroup: string) {
+    this._cacheService.setUseCaseData(useCase, this._wizardUseCaseGroup)
+    
+    const latestFormData = this._cacheService.getWizardDataByUseCase(useCase, useCaseGroup);
+    if (latestFormData) {
+      this._wizardFormService.setWizardFormData(latestFormData);
+    }
   }
 
 
