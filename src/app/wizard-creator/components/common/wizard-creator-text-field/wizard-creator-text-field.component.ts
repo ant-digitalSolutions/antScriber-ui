@@ -61,7 +61,15 @@ export class WizardCreatorTextFieldComponent {
           this.fieldForm.markAsDirty();
           this.showErrors = true;
         }
-      })
+      });
+
+    this._wizardFormService.wizardFormFieldDataFromCache$
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(data => {
+        if (data.fieldName === this.fieldData.dataName) {
+         this.fieldForm.setValue(data.fieldValue)
+        }
+      });
   }
 
 

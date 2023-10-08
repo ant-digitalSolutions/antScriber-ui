@@ -46,7 +46,14 @@ export class WizardCreatorCheckboxFieldComponent {
   }
 
   setListeners() {
-
+    this._wizardFormService.wizardFormFieldDataFromCache$
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(data => {
+        if (data.fieldName === this.fieldData.dataName) {
+          this.fieldData.fieldValue = data.fieldValue;
+          this.valueChange();
+        }
+      });
   }
 
 

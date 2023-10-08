@@ -52,7 +52,13 @@ export class WizardCreatorSelectorFieldComponent {
   }
 
   setListeners() {
-
+    this._wizardFormService.wizardFormFieldDataFromCache$
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(data => {
+        if (data.fieldName === this.fieldData.dataName) {
+          this.form.setValue(data.fieldValue)
+        }
+      });
   }
 
 
