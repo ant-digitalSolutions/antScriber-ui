@@ -41,4 +41,15 @@
   flex-direction: column;
 }
 
+.btn-small {
+  height: 25px;
+  padding: 8;
+  padding: 8px 10px;
+  border-radius: 12px;
+  font-weight: 500;
+}
 
+.btn-warning {
+  background-color: $warning;
+  color: $text-dark;
+}
