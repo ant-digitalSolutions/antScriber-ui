@@ -10,6 +10,7 @@ import { WizardCreatorMarketingUseCasesEnum } from '../../enums/wizard-creator-m
 import { ActivatedRoute, Router } from '@angular/router';
 import { QueryParamNames } from 'src/app/common/enum/query-params-names.enum';
 import { WizardCreatorLearningUseCasesEnum } from '../../enums/wizard-creator-learning-use-cases.enum';
+import { CacheService } from 'src/app/common/services/cache/cache.service';
 
 @Injectable()
 export class WizardUseCaseService {
@@ -25,7 +26,8 @@ export class WizardUseCaseService {
   constructor(
     private _wizardFormService: WizardFormService,
     private _router: Router,
-    private _activeRoute: ActivatedRoute) { }
+    private _activeRoute: ActivatedRoute,
+    private _cacheService: CacheService) { }
 
 
   setWizardUseCase(v: string) {
@@ -34,6 +36,8 @@ export class WizardUseCaseService {
     this.updateWizardFormFields();
     this.updateQueryParamsWithUseCase(v);
     this._wizardFormService.updateAdditionalData('useCase', v);
+
+    // this._cacheService.setUseCaseData(v, this._wizardUseCaseGroup);
   }
 
   setWizardUseCaseGroup(v: string) {
@@ -192,4 +196,8 @@ export class WizardUseCaseService {
       replaceUrl: true,
     });
   }
+
+
+
+
 }
