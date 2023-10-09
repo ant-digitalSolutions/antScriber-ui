@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { WizardTableElement } from '../../dtos/wizard-table-element.dto';
 import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
+import { DialogService } from 'src/app/dialogs/dialog.service';
 
 @Component({
   selector: 'app-document-list',
@@ -16,6 +17,7 @@ import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
   styleUrls: ['./document-list.component.scss']
 })
 export class DocumentListComponent implements OnInit, OnDestroy {
+
 
   componentDestroyed$: Subject<boolean> = new Subject();
 
@@ -40,7 +42,8 @@ export class DocumentListComponent implements OnInit, OnDestroy {
     private _projectService: BlogProjectsService,
     private router: Router,
     private _location: Location,
-    private activeRoute: ActivatedRoute) { }
+    private activeRoute: ActivatedRoute,
+    private _dialogService: DialogService,) { }
 
   ngOnInit(): void {
     this.setListeners();
@@ -121,5 +124,27 @@ export class DocumentListComponent implements OnInit, OnDestroy {
         }
       });
     }
+  }
+
+  delete(_t93: any) {
+    throw new Error('Method not implemented.');
+  }
+  move(_t93: any) {
+    throw new Error('Method not implemented.');
+  }
+  rename(doc: any) {
+    this._dialogService.openDialogWithSingleInput_v2(
+      { 
+        title: 'Rename Document', 
+        labelText: 'Document Name',
+         value: doc.name, 
+         okBtnText: 'Rename',
+        placeholder: 'The name for your doc'
+      })
+      .afterClosed()
+      .subscribe(result => {
+      if (result)
+        this._docService.update(doc.uuid, { name: result }).subscribe();
+    });
   }
 }

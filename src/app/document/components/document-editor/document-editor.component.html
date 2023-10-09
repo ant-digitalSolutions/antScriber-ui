@@ -19,7 +19,7 @@
 
     <div class="options-container">
       <button class="mini-fab-btn" mat-mini-fab>
-        <mat-icon class="btn-mat-icon">more_vert</mat-icon>
+        <mat-icon class="btn-mat-icon" fontSet="material-icons-outlined">more_vert</mat-icon>
       </button>
     </div>
     
@@ -29,7 +29,7 @@
 
     <div class="new-content-noti-container" *ngIf="newContentAmount > 0">
       <button mat-flat-button (click)="newContentNotificationClick()" color="primary" class="btn-noti btn-new-content">
-        <mat-icon>arrow_downward</mat-icon>
+        <mat-icon >arrow_downward</mat-icon>
         <!-- <mat-icon>step_into</mat-icon> -->
  <span id="new-content-amount">{{newContentAmount}}&nbsp;</span>
         new
