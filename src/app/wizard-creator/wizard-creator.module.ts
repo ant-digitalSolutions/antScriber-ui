@@ -34,6 +34,7 @@ import { WizardUseCaseEmailComponent } from './components/use-case-form-componen
 import { WizardUseCaseMarketingSmsComponent } from './components/use-case-form-components/marketing/children/wizard-use-case-marketing-sms.component';
 import { WizardUseCaseSocialComponent } from './components/use-case-form-components/social/wizard-use-case-social.component';
 import { WizardUseCaseSocialInstagramComponent } from './components/use-case-form-components/social/use-cases/wizard-use-case-social-instagram.component';
+import { WizardUseCaseSocialLinkedinComponent } from './components/use-case-form-components/social/use-cases/wizard-use-case-social-linkedin.component';
 
 
 
@@ -62,7 +63,8 @@ import { WizardUseCaseSocialInstagramComponent } from './components/use-case-for
     WizardUseCaseEmailComponent,
     WizardUseCaseMarketingSmsComponent,
     WizardUseCaseSocialInstagramComponent,
-    WizardUseCaseSocialComponent
+    WizardUseCaseSocialComponent,
+    WizardUseCaseSocialLinkedinComponent
   ],
   imports: [
     CommonModule,

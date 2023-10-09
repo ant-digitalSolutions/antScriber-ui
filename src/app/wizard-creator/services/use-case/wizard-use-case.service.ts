@@ -194,9 +194,10 @@ export class WizardUseCaseService {
           WizardDefaultFieldNamesEnum.Instruction], 'del');
 
         break;
-      case WizardCreatorLearningUseCasesEnum.Explain:
-        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'del');
-        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.GtpVersion, WizardDefaultFieldNamesEnum.ImaginationSelector, WizardDefaultFieldNamesEnum.Instruction], 'add');
+      case WizardSocialMediaUseCases.LinkedinPost:
+        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'add');
+        this._wizardFormService.updateFormDefaultFieldsToRender([
+          WizardDefaultFieldNamesEnum.Instruction], 'del');
 
         break;
 
