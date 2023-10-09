@@ -69,4 +69,24 @@
 @import "rtl/rtl";
 
 // documents
-@import "overrides/ckEDitor";
+// @import "overrides/ckEDitor";
+
+// CK EDitor Styles
+
+ckeditor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: $editor-outer-container-bc;
+  overflow-y: auto;
+
+  .ck-content {
+    max-width: 1200px;
+    width: 100%;
+    padding: 25px 5% !important;
+    min-height: calc(100vh - $header-height - $inner-navbar-height);
+        border: none !important;
+    box-shadow: none;
+    background-color: $editor-bc;
+  }
+}
