@@ -17,7 +17,7 @@ export class WizardUseCaseSocialInstagramComponent extends UseCaseFormBaseCompon
 
     fieldsData.push({
       placeholder: 'E.g. "Sunsets and new beginnings #MondayMotivation"',
-      fieldLabel: 'Instagram Caption Theme',
+      fieldLabel: 'Post Idea',
       fieldValue: '',
       validators: [Validators.required, Validators.maxLength(600), Validators.minLength(10)],
       inputMaxLen: 600,
