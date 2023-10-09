@@ -3,5 +3,7 @@
         class="btn-use-case"
         (click)="selectUseCase(useCase.value)" 
         *ngFor="let useCase of useCases"
-        >{{useCase.text}}</button>
+        >
+        <img width="20" height="20" [src]="getIconUrl(useCase.value)" alt="use-case-icon"/>
+        {{useCase.text}}</button>
 </div>

@@ -12,6 +12,12 @@ import { QueryParamNames } from 'src/app/common/enum/query-params-names.enum';
 import { WizardCreatorLearningUseCasesEnum } from '../../enums/wizard-creator-learning-use-cases.enum';
 import { CacheService } from 'src/app/common/services/cache/cache.service';
 import { WizardSocialMediaUseCases } from '../../enums/wizard-creator-social-media-use-cases.enum';
+import { UseCaseMeta } from '../../interfaces/use-case-meta.interface';
+import {  useCaseMeta_GeneralWriting } from '../../data/use-cases/use-cases-general-writing.data';
+import { useCaseMeta_Marketing } from '../../data/use-cases/use-cases-marketing.data';
+import { useCaseMeta_Social } from '../../data/use-cases/use-cases-social.data';
+import { useCaseMeta_Coding } from '../../data/use-cases/use-cases-general-coding.data';
+import { useCaseMeta_Internal } from '../../data/use-cases/use-cases-general-internal.data';
 
 @Injectable()
 export class WizardUseCaseService {
@@ -238,6 +244,36 @@ export class WizardUseCaseService {
     const latestFormData = this._cacheService.getWizardDataByUseCase(useCase, useCaseGroup);
     if (latestFormData) {
       this._wizardFormService.setWizardFormData(latestFormData);
+    }
+  }
+
+  /**
+   * Return the meta-data of the given useCase.
+   * 
+   *  TODO: Improve this implementation by using hashtables
+   *
+   * @param {string} useCase
+   * @return {*}  {UseCaseMeta}
+   * @memberof WizardUseCaseService
+   */
+  useCaseMetaData(useCase: string): UseCaseMeta {
+    const metaDataList = [
+      ...useCaseMeta_GeneralWriting, 
+      ...useCaseMeta_Marketing, 
+      ...useCaseMeta_Social, 
+      ...useCaseMeta_Coding,
+      ...useCaseMeta_Internal];
+
+    const index = metaDataList.findIndex(m => m.useCaseName === useCase);
+    if (index >= 0) {
+      return metaDataList[index];
+    }
+    else {
+      return {
+        iconName: 'default',
+        isAvailableForFreeUsers: false,
+        useCaseName: 'default'
+      }
     }
   }
 
