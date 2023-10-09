@@ -23,6 +23,7 @@ export class DocumentService {
 
 
 
+
   baseUrl = environment.apiUrl + 'document';
   selectedProjectId: any;
 
@@ -113,8 +114,8 @@ export class DocumentService {
     }))
   }
 
-  update(doc: DocumentUpdateDto): Observable<IRequestResponse<DocumentDetailsDto>> {
-    return this.http.put<IRequestResponse<DocumentDetailsDto>>(`${this.baseUrl}/${this.documentInEditionId}`, doc).pipe(tap(r => {
+  update(docId: string, doc: DocumentUpdateDto): Observable<IRequestResponse<DocumentDetailsDto>> {
+    return this.http.put<IRequestResponse<DocumentDetailsDto>>(`${this.baseUrl}/${docId}`, doc).pipe(tap(r => {
       if (r.success) {
         this._snackBar.open('Document updated', undefined, {
           duration: 1000,
