@@ -192,19 +192,22 @@ export class WizardUseCaseService {
         this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'add');
         this._wizardFormService.updateFormDefaultFieldsToRender([
           WizardDefaultFieldNamesEnum.Instruction], 'del');
-
         break;
       case WizardSocialMediaUseCases.FacebookPost:
         this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'add');
         this._wizardFormService.updateFormDefaultFieldsToRender([
           WizardDefaultFieldNamesEnum.Instruction], 'del');
-
         break;
       case WizardSocialMediaUseCases.LinkedinPost:
         this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'add');
         this._wizardFormService.updateFormDefaultFieldsToRender([
           WizardDefaultFieldNamesEnum.Instruction], 'del');
+        break;
 
+      case WizardSocialMediaUseCases.TwitterThread:
+        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'add');
+        this._wizardFormService.updateFormDefaultFieldsToRender([
+          WizardDefaultFieldNamesEnum.Instruction], 'del');
         break;
 
       default:
