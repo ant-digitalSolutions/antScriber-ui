@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, HostListener, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { DocumentService } from '../../services/document.service';
 import { DocumentDetailsDto } from '../../dtos/document-details.dto';
 import { Subject, take, takeUntil } from 'rxjs';
@@ -16,7 +16,7 @@ import { configs_UI } from 'src/app/common/configs/ui.config';
   templateUrl: './document-editor.component.html',
   styleUrls: ['./document-editor.component.scss']
 })
-export class DocumentEditorComponent implements OnInit, OnDestroy {
+export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit {
 
   /**
    * The amount of new content added to the document.
@@ -54,6 +54,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     private router: Router,
     private _route: ActivatedRoute) { }
 
+
   ngOnInit(): void {
     this.setListerners();
     this.setEditorHeight();
@@ -64,6 +65,10 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     this.componentDestroyed$.complete();
 
     this._docService.cleanData();
+  }
+
+  ngAfterViewInit(): void {
+    this.setScrollListener()
   }
 
   setListerners() {
@@ -111,6 +116,43 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
   onWindowResize() {
     this.setEditorHeight();
   }
+
+  @HostListener('body:scroll')
+  innerScroll() {
+    console.log('inside scroll')
+  }
+
+  /**
+   * Event to listen to the scroll event of the doc-editor container
+   *
+   * @memberof DocumentEditorComponent
+   */
+  setScrollListener() {
+    var editorContainer = document.getElementById("editor-element-container");
+    editorContainer!.addEventListener("scroll", this.checkIfScrollTillBottom.bind(this), false)
+  }
+
+  /**
+   * Check if the user reach the bottom of the screen
+   * 
+   * TODO: in the future this should be improved by checking if the new content inserted
+   * in the docEditor has entered the screen
+   *
+   * @memberof DocumentEditorComponent
+   */
+  checkIfScrollTillBottom() {
+    var editorContainer = document.getElementById("editor-element-container");
+    var docEditor = document.getElementById("doc-editor");
+
+    const scrollTop = editorContainer!.scrollTop + editorContainer!.clientHeight;
+    const height = docEditor!.clientHeight;
+    const totalHeight = height - configs_UI.internal_navbar_height - configs_UI.main_navbar_height - 100;
+    if (scrollTop >= totalHeight) {
+      this.newContentAmount = 0;
+    }
+  }
+
+
 
   setEditorHeight() {
     this.editorHeight = `${window.innerHeight - configs_UI.main_navbar_height - configs_UI.internal_navbar_height}px`;

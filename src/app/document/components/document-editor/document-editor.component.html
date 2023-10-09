@@ -31,9 +31,12 @@
       <button mat-flat-button (click)="newContentNotificationClick()" color="primary" class="btn-noti btn-new-content">
         <mat-icon>arrow_downward</mat-icon>
         <!-- <mat-icon>step_into</mat-icon> -->
+ <span id="new-content-amount">{{newContentAmount}}&nbsp;</span>
+        new
+        <span *ngIf="newContentAmount === 1">creation</span> 
 
-        New Content 
-        <span id="new-content-amount" *ngIf="newContentAmount > 1">&nbsp;-&nbsp;{{newContentAmount}}</span>
+        <span *ngIf="newContentAmount > 1">creations</span> 
+       
       </button>
       <button mat-flat-button class="btn-noti btn-dismiss" color="accent" (click)="dismissNewContentNoti()">
         <mat-icon>close</mat-icon>
