@@ -207,7 +207,7 @@ export class WizardUseCaseService {
       case WizardSocialMediaUseCases.TwitterThread:
         this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'add');
         this._wizardFormService.updateFormDefaultFieldsToRender([
-          WizardDefaultFieldNamesEnum.Instruction], 'del');
+          WizardDefaultFieldNamesEnum.Instruction, WizardDefaultFieldNamesEnum.AmountOfVariants], 'del');
         break;
 
       default:
