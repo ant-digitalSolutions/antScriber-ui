@@ -4,14 +4,14 @@
     <mat-label>{{ data.labelText }}</mat-label>
     <input
       matInput
-      [(ngModel)]="data.result"
+      [(ngModel)]="data.value"
       [placeholder]="data.placeholder"
     />
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onClose()">Cancel</button>
-  <button mat-button [mat-dialog-close]="data.result" cdkFocusInitial>
+  <button mat-button [mat-dialog-close]="data.value" cdkFocusInitial class="btn-success">
     {{ data.okBtnText }}
   </button>
 </div>

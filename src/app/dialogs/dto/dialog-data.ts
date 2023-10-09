@@ -1,4 +1,4 @@
-export interface DialogCustomData {
+export interface DialogCustomData_SingleInput {
     title: string;
 
     okBtnText: string;
@@ -7,5 +7,5 @@ export interface DialogCustomData {
 
     labelText: string;
 
-    result: string;
+    value: string;
 }
