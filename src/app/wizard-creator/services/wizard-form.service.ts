@@ -240,6 +240,8 @@ export class WizardFormService {
 
         if (indexToDelete >= 0) {
           this._defaultFieldsToRenderOnForm = this._defaultFieldsToRenderOnForm.splice(indexToDelete, 1);
+        }
+        if (this._fieldNamesToRender.has(field)) {
           this._fieldNamesToRender.delete(field);
         }
       });
