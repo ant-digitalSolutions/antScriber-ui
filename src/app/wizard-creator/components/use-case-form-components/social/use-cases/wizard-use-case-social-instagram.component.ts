@@ -36,7 +36,7 @@ export class WizardUseCaseSocialInstagramComponent extends UseCaseFormBaseCompon
       fieldLabel: 'Words Count',
       fieldValue: '',
       dataName: 'wordsRange',
-      tooltipText: 'Choose a word count range for your Instagram caption. Depending on the content and context, select the length that best tells your story.',
+      tooltipText: 'Choose a word count range for your Instagram caption.',
       values: [
         {
           value: '0-30 words',
