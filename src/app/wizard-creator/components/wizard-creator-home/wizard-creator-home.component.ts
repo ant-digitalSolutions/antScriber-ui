@@ -13,6 +13,8 @@ export class WizardCreatorHomeComponent {
 
   isMobile = false;
 
+  selectedTabIndex = 0;
+
   constructor(
     private _wizard: WizardCreatorService,
     private breakpointObserver: BreakpointObserver) {
@@ -25,7 +27,7 @@ export class WizardCreatorHomeComponent {
   }
 
   ngOnInit(): void {
-    
+
     this.setListeners();
     this.checkIfMobile();
     window.addEventListener("resize", this.checkIfMobile.bind(this), false)
@@ -34,7 +36,9 @@ export class WizardCreatorHomeComponent {
   setListeners() {
     this._wizard.wizardCreatedContent$.pipe(takeUntil(this.componentDestroyed$))
       .subscribe(() => {
-        this.scrollToBottom();
+        if (this.isMobile) {
+          this.selectedTabIndex = 1;
+        }
       })
   }
 

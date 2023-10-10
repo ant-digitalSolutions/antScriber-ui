@@ -129,7 +129,8 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
    */
   setScrollListener() {
     var editorContainer = document.getElementById("editor-element-container");
-    editorContainer!.addEventListener("scroll", this.checkIfScrollTillBottom.bind(this), false)
+    if (editorContainer)
+      editorContainer!.addEventListener("scroll", this.checkIfScrollTillBottom.bind(this), false)
   }
 
   /**
