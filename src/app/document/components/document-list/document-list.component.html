@@ -168,7 +168,7 @@
             <button mat-menu-item (click)="rename(doc)">
                <mat-icon fontSet="material-icons-outlined">edit</mat-icon>
               Rename</button>
-            <button mat-menu-item (click)="move(doc)">
+            <button mat-menu-item (click)="move(doc)" *ngIf="doc.isDocument">
                <mat-icon fontSet="material-icons-outlined">folder</mat-icon>
               Move</button>
             <button mat-menu-item (click)="delete(doc)">
