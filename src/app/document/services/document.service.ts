@@ -13,11 +13,13 @@ import { WizardTableElements } from '../dtos/wizard-table-elements.dto';
 import { WizardTableElement } from '../dtos/wizard-table-element.dto';
 import { FolderDetailsDto } from '../dtos/folder-details.dto';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FolderUpdateDto } from '../dtos/folder-update.dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DocumentService {
+
 
 
 
@@ -359,6 +361,42 @@ export class DocumentService {
     }).pipe(tap(r => {
       if (r.success) {
         this._snackBar.open('Document updated', undefined, {
+          duration: 1000,
+          panelClass: 'snack-success'
+        });
+      } else {
+        this._snackBar.open('Error', 'Report', {
+          duration: 1000,
+          panelClass: 'snack-error'
+        });
+      }
+    }))
+  }
+
+  deleteFolder(folderUUID: string) {
+    return this.http.delete<IRequestResponse<boolean>>(`${this.baseUrl}/delete-folder/${folderUUID}`).pipe(tap(r => {
+      if (r.success) {
+        this._snackBar.open('Folder deleted', undefined, {
+          duration: 1000,
+          panelClass: 'snack-success'
+        });
+      } else {
+        this._snackBar.open('Error deleting the folder', 'Report', {
+          duration: 1000,
+          panelClass: 'snack-error'
+        });
+      }
+    }))
+  }
+
+  renameFolder(folderUUID: string, newName: string): Observable<IRequestResponse<boolean>> {
+    const folderUpdate: FolderUpdateDto = {
+      uuid: folderUUID,
+      name: newName
+    }
+    return this.http.put<IRequestResponse<boolean>>(`${this.baseUrl}/update-folder/${folderUUID}`, folderUpdate).pipe(tap(r => {
+      if (r.success) {
+        this._snackBar.open('Folder updated', undefined, {
           duration: 1000,
           panelClass: 'snack-success'
         });

@@ -60,9 +60,10 @@ export class DocumentListComponent implements OnInit, OnDestroy {
 
   setListeners() {
     this._docService.wizardTableElements$.pipe(takeUntil(this.componentDestroyed$)).subscribe(elements => {
-      if (elements)
-{      this.tableElementsToRender = elements;
-      this.dataSource = new MatTableDataSource<WizardTableElement>(this.tableElementsToRender);}
+      if (elements) {
+        this.tableElementsToRender = elements;
+        this.dataSource = new MatTableDataSource<WizardTableElement>(this.tableElementsToRender);
+      }
     });
 
     this._projectService.selectedProjectId$.pipe(takeUntil(this.componentDestroyed$)).subscribe(pId => {
@@ -113,9 +114,8 @@ export class DocumentListComponent implements OnInit, OnDestroy {
     });
   }
 
-  setAsFavorite(tableElement: WizardTableElement): void  {
-    if (tableElement.isDocument)
-    {
+  setAsFavorite(tableElement: WizardTableElement): void {
+    if (tableElement.isDocument) {
       const docIsFavorite = tableElement.isFavorite!;
 
       this._docService.setAsFavorite(tableElement.uuid, !docIsFavorite).subscribe(r => {
@@ -130,74 +130,96 @@ export class DocumentListComponent implements OnInit, OnDestroy {
     }
   }
 
-  delete(doc: any) {
-   this._dialogService.openConfirmationDialog({
-    okBtnText: 'Yes',
-    cancelBtnText: 'No',
-    message: 'Are you sure you want to permanently delete this document?'
-   })
-   .afterClosed()
-   .subscribe(r => {
-    if (r) {
-      this._docService.deleteDoc(doc.uuid).subscribe(r => {
-        if (r.success) {
-          const index = this.tableElementsToRender.findIndex(d => d.uuid === doc.uuid);
-          if (index) {
-             this.tableElementsToRender.splice(index, 1);
-            this.dataSource = new MatTableDataSource<WizardTableElement>(this.tableElementsToRender);
-            // this.dataSource.data;
+  delete(doc: WizardTableElement) {
+    const dialogMessage = doc.isDocument ?
+      'Are you sure you want to permanently delete this document?' :
+      'Are you sure you want to delete this folder and its documents?'
+    this._dialogService.openConfirmationDialog({
+      okBtnText: 'Yes',
+      cancelBtnText: 'No',
+      message: dialogMessage
+    })
+      .afterClosed()
+      .subscribe(r => {
+        if (r) {
+          if (doc.isDocument) {
+            this._docService.deleteDoc(doc.uuid).subscribe(r => {
+              if (r.success) {
+                this.removeElementFromTable(doc.uuid)
+              }
+            });
+          }
+          else {
+            this._docService.deleteFolder(doc.uuid).subscribe(r => {
+              if (r.success) {
+                this.removeElementFromTable(doc.uuid);
+              }
+            })
           }
         }
-      });
-    }
-   })
+      })
   }
-  move(doc: any) {
-   this._docService.listFolders(this.selectedProjectId)
-   .subscribe()
+
+  move(doc: WizardTableElement) {
+    this._docService.listFolders(this.selectedProjectId)
+      .subscribe()
 
     return this._matDialog.open(DialogForMovingDocComponent, {
       data: {
         docToMoveUUId: doc.uuid
       }
     })
-    .afterClosed()
-    .subscribe(r => {
-      if (r) {
-        const index = this.tableElementsToRender.findIndex(d => d.uuid === doc.uuid);
-        if (index) {
-          this.tableElementsToRender.splice(index, 1);
-          this.dataSource = new MatTableDataSource<WizardTableElement>(this.tableElementsToRender);
+      .afterClosed()
+      .subscribe(r => {
+        if (r) {
+          this.removeElementFromTable(doc.uuid);
         }
-      }
-    })
+      })
   }
-  rename(doc: any) {
+
+  rename(tableElement: WizardTableElement) {
     this._dialogService.openDialogWithSingleInput_v2(
-      { 
-        title: 'Rename Document', 
-        labelText: 'Document Name',
-         value: doc.name, 
-         okBtnText: 'Rename',
-        placeholder: 'The name for your doc'
+      {
+        title: tableElement.isDocument ? 'Rename Document' : ' Rename Folder',
+        labelText: tableElement.isDocument ? 'Document Name' : 'Folder Name',
+        value: tableElement.name,
+        okBtnText: 'Rename',
+        placeholder: tableElement.isDocument ? 'The name for your doc' : 'The name for your Folder'
       })
       .afterClosed()
       .subscribe(result => {
-      if (result)
-        this._docService.update(doc.uuid, { name: result }).subscribe(r => {
-          if (r) {
-
-            const index = this.tableElementsToRender.findIndex(d => d.uuid === doc.uuid);
-            if (index) {
-              this.tableElementsToRender[index].name = result;
-              this.dataSource = new MatTableDataSource<WizardTableElement>(this.tableElementsToRender);
-              // this.dataSource.data;
-            }
-            if (index) {
-              this.dataSource.data[index].name = result;
-            }
+        if (result) {
+          if (tableElement.isDocument) {
+            this._docService.update(tableElement.uuid, { name: result }).subscribe(r => {
+              if (r) {
+                this.renameTableElement(tableElement.uuid, result)
+              }
+            });
+          } else {
+            this._docService.renameFolder(tableElement.uuid, result).subscribe(r => {
+              if (r) {
+                this.renameTableElement(tableElement.uuid, result)
+              }
+            });
           }
-        });
-    });
+        }
+      });
+  }
+
+  private removeElementFromTable(elementUUID: string) {
+    const index = this.tableElementsToRender.findIndex(d => d.uuid === elementUUID);
+    if (index >= 0) {
+      this.tableElementsToRender.splice(index, 1);
+      this.dataSource = new MatTableDataSource<WizardTableElement>(this.tableElementsToRender);
+    }
+  }
+
+  private renameTableElement(itemUUID: string, newName: string) {
+    const index = this.tableElementsToRender.findIndex(d => d.uuid === itemUUID);
+    if (index) {
+      this.tableElementsToRender[index].name = newName;
+      this.dataSource = new MatTableDataSource<WizardTableElement>(this.tableElementsToRender);
+      // this.dataSource.data;
+    }
   }
 }
