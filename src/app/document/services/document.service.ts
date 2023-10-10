@@ -40,6 +40,10 @@ export class DocumentService {
   private _newDocUpdate = new Subject<void>();
   newDocUpdate$ = this._newDocUpdate.asObservable();
 
+  // emit after a result for query the available folders
+  private _availableFolders = new BehaviorSubject<FolderDetailsDto[] | undefined>(undefined);
+  availableFolders$ = this._availableFolders.asObservable();
+
   /**
    * UUId of the selected document. This document is in edition mode.
    *
@@ -315,6 +319,56 @@ export class DocumentService {
     });
 
     return output;
+  }
+
+  /**
+  * Retrieve the list of folders from the server that match
+  * the given params.
+  *
+  * @param {number} blogProjectId
+  * @param {string} folderNamePartial Partial name of the folder to search
+  * @return {*} 
+  * @memberof DocumentService
+  */
+  listFolders(blogProjectId: number, folderNamePartial?: string): Observable<IRequestResponse<FolderDetailsDto[]>> {
+
+    let params = new HttpParams()
+      .set("blogProjectId", blogProjectId)
+     
+
+      if (folderNamePartial) {
+        params.set('folderNamePartial', folderNamePartial);
+      }
+
+
+    return this.http.get<IRequestResponse<FolderDetailsDto[]>>(this.baseUrl + '/list-folders', { params }).pipe(tap(r => {
+      if (r.success) {
+        this._availableFolders.next(r.data)
+      } else {
+        this._snackBar.open('Error', 'Report', {
+          duration: 1000,
+          panelClass: 'snack-error'
+        });
+      }
+    }))
+  }
+
+  moveDocToNewFolder(docUUId: string, folderUUID: string): Observable<IRequestResponse<boolean>> {
+    return this.http.put<IRequestResponse<boolean>>(`${this.baseUrl}/move-doc-to-folder/${docUUId}`, {
+      folderUUID
+    }).pipe(tap(r => {
+      if (r.success) {
+        this._snackBar.open('Document updated', undefined, {
+          duration: 1000,
+          panelClass: 'snack-success'
+        });
+      } else {
+        this._snackBar.open('Error', 'Report', {
+          duration: 1000,
+          panelClass: 'snack-error'
+        });
+      }
+    }))
   }
 
   // Properties

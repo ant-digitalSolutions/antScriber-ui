@@ -10,6 +10,9 @@ import { Location } from '@angular/common';
 import { WizardTableElement } from '../../dtos/wizard-table-element.dto';
 import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
 import { DialogService } from 'src/app/dialogs/dialog.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogForMovingDocComponent } from '../dialog-for-moving-doc/dialog-for-moving-doc.component';
+import { OptionField } from 'src/app/common/dto/option-field.dto';
 
 @Component({
   selector: 'app-document-list',
@@ -43,7 +46,8 @@ export class DocumentListComponent implements OnInit, OnDestroy {
     private router: Router,
     private _location: Location,
     private activeRoute: ActivatedRoute,
-    private _dialogService: DialogService,) { }
+    private _dialogService: DialogService,
+    public _matDialog: MatDialog) { }
 
   ngOnInit(): void {
     this.setListeners();
@@ -148,8 +152,25 @@ export class DocumentListComponent implements OnInit, OnDestroy {
     }
    })
   }
-  move(_t93: any) {
-    throw new Error('Method not implemented.');
+  move(doc: any) {
+   this._docService.listFolders(this.selectedProjectId)
+   .subscribe()
+
+    return this._matDialog.open(DialogForMovingDocComponent, {
+      data: {
+        docToMoveUUId: doc.uuid
+      }
+    })
+    .afterClosed()
+    .subscribe(r => {
+      if (r) {
+        const index = this.tableElementsToRender.findIndex(d => d.uuid === doc.uuid);
+        if (index) {
+          this.tableElementsToRender.splice(index, 1);
+          this.dataSource = new MatTableDataSource<WizardTableElement>(this.tableElementsToRender);
+        }
+      }
+    })
   }
   rename(doc: any) {
     this._dialogService.openDialogWithSingleInput_v2(

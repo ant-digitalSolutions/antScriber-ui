@@ -1,0 +1,32 @@
+<div mat-dialog-content>
+  <h4>Select the folder where to move the document</h4>
+
+  <ng-template *ngIf="isLoading; else folderSelector">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </ng-template>
+
+  <ng-template #folderSelector>
+  <mat-form-field class="w-100">
+    <mat-label>Select an option</mat-label>
+    <mat-select [(value)]="selectedFolder">
+      <mat-option
+        [value]="folder.value"
+        *ngFor="let folder of folderOptions"
+        >{{ folder.text }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+  </ng-template>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="undefined">Cancel</button>
+  <button
+    mat-button
+   (click)="moveDocument()"
+    cdkFocusInitial
+    class="btn-success"
+    [disabled]="!selectedFolder"
+  >
+    Move here
+  </button>
+</div>

@@ -13,7 +13,7 @@ import { DialogForConfirmationComponent } from './components/dialog-for-confirma
 @NgModule({
   declarations: [
     DialogWithSingleInputComponent,
-    DialogForConfirmationComponent
+    DialogForConfirmationComponent,
   ],
   imports: [
     CommonModule,
