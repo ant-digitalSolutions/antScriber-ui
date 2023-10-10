@@ -3,16 +3,16 @@ import { WizardCreatorHomeComponent } from './components/wizard-creator-home/wiz
 
 export const WizardCreatorRoutes: Routes = [
     {
-        path: '',
+        path: 'creator',
         children: [
             {
-                path: 'creator',
+                path: '',
                 component: WizardCreatorHomeComponent,
                 data: { breadcrumb: { skip: true } }
                 
             },
             {
-                path: 'creator/doc/:docId',
+                path: 'doc/:docId',
                 component: WizardCreatorHomeComponent,
                 data: { breadcrumb: { skip: true } }
             }
