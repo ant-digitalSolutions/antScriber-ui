@@ -4,9 +4,11 @@
       <mat-tab label="Creator">
         <app-wizard-creator-form></app-wizard-creator-form>
       </mat-tab>
-      <mat-tab label="Chat">
-        <app-chat></app-chat>
-      </mat-tab>
+      <ng-container *ngIf="isMobile">
+        <mat-tab label="Docs">
+          <app-document-home class="wizard-content col-12"></app-document-home>
+        </mat-tab>
+      </ng-container>
       <!-- <mat-tab label="Images"> Content 3 </mat-tab> -->
     </mat-tab-group>
   </div>
@@ -15,7 +17,9 @@
     <app-wizard-creator-editor></app-wizard-creator-editor>
   </div> -->
 
+  <ng-container *ngIf="!isMobile">
     <app-document-home
       class="wizard-content col-md-8 col-12 col-lg-8 col-xl-9"
     ></app-document-home>
+  </ng-container>
 </div>
