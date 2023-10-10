@@ -130,7 +130,7 @@ export class DocumentListComponent implements OnInit, OnDestroy {
     }
   }
 
-  delete(doc: WizardTableElement) {
+  openDeleteDialog(doc: WizardTableElement) {
     const dialogMessage = doc.isDocument ?
       'Are you sure you want to permanently delete this document?' :
       'Are you sure you want to delete this folder and its documents?'
@@ -160,7 +160,7 @@ export class DocumentListComponent implements OnInit, OnDestroy {
       })
   }
 
-  move(doc: WizardTableElement) {
+  openMoveDialog(doc: WizardTableElement) {
     this._docService.listFolders(this.selectedProjectId)
       .subscribe()
 
@@ -177,7 +177,7 @@ export class DocumentListComponent implements OnInit, OnDestroy {
       })
   }
 
-  rename(tableElement: WizardTableElement) {
+  openRenameDialog(tableElement: WizardTableElement) {
     this._dialogService.openDialogWithSingleInput_v2(
       {
         title: tableElement.isDocument ? 'Rename Document' : ' Rename Folder',
@@ -219,7 +219,6 @@ export class DocumentListComponent implements OnInit, OnDestroy {
     if (index) {
       this.tableElementsToRender[index].name = newName;
       this.dataSource = new MatTableDataSource<WizardTableElement>(this.tableElementsToRender);
-      // this.dataSource.data;
     }
   }
 }

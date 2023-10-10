@@ -165,13 +165,13 @@
             <mat-icon class="btn-mat-icon">more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="rename(doc)">
+            <button mat-menu-item (click)="openRenameDialog(doc)">
                <mat-icon fontSet="material-icons-outlined">edit</mat-icon>
               Rename</button>
-            <button mat-menu-item (click)="move(doc)" *ngIf="doc.isDocument">
+            <button mat-menu-item (click)="openMoveDialog(doc)" *ngIf="doc.isDocument">
                <mat-icon fontSet="material-icons-outlined">folder</mat-icon>
               Move</button>
-            <button mat-menu-item (click)="delete(doc)">
+            <button mat-menu-item (click)="openDeleteDialog(doc)">
               <mat-icon fontSet="material-icons-outlined">delete</mat-icon>
               Delete</button>
           </mat-menu>
