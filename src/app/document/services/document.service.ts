@@ -13,11 +13,14 @@ import { WizardTableElements } from '../dtos/wizard-table-elements.dto';
 import { WizardTableElement } from '../dtos/wizard-table-element.dto';
 import { FolderDetailsDto } from '../dtos/folder-details.dto';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FolderUpdateDto } from '../dtos/folder-update.dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DocumentService {
+
+
 
 
 
@@ -38,6 +41,10 @@ export class DocumentService {
   // emit when there is a new update on the current document
   private _newDocUpdate = new Subject<void>();
   newDocUpdate$ = this._newDocUpdate.asObservable();
+
+  // emit after a result for query the available folders
+  private _availableFolders = new BehaviorSubject<FolderDetailsDto[] | undefined>(undefined);
+  availableFolders$ = this._availableFolders.asObservable();
 
   /**
    * UUId of the selected document. This document is in edition mode.
@@ -113,8 +120,8 @@ export class DocumentService {
     }))
   }
 
-  update(doc: DocumentUpdateDto): Observable<IRequestResponse<DocumentDetailsDto>> {
-    return this.http.put<IRequestResponse<DocumentDetailsDto>>(`${this.baseUrl}/${this.documentInEditionId}`, doc).pipe(tap(r => {
+  update(docId: string, doc: DocumentUpdateDto): Observable<IRequestResponse<DocumentDetailsDto>> {
+    return this.http.put<IRequestResponse<DocumentDetailsDto>>(`${this.baseUrl}/${docId}`, doc).pipe(tap(r => {
       if (r.success) {
         this._snackBar.open('Document updated', undefined, {
           duration: 1000,
@@ -122,6 +129,22 @@ export class DocumentService {
         });
       } else {
         this._snackBar.open('Error','Report', {
+          duration: 1000,
+          panelClass: 'snack-error'
+        });
+      }
+    }))
+  }
+
+  deleteDoc(docId: string): Observable<IRequestResponse<boolean>> {
+    return this.http.delete<IRequestResponse<boolean>>(`${this.baseUrl}/${docId}`).pipe(tap(r => {
+      if (r.success) {
+        this._snackBar.open('Document deleted', undefined, {
+          duration: 1000,
+          panelClass: 'snack-success'
+        });
+      } else {
+        this._snackBar.open('Error deleting the document', 'Report', {
           duration: 1000,
           panelClass: 'snack-error'
         });
@@ -298,6 +321,92 @@ export class DocumentService {
     });
 
     return output;
+  }
+
+  /**
+  * Retrieve the list of folders from the server that match
+  * the given params.
+  *
+  * @param {number} blogProjectId
+  * @param {string} folderNamePartial Partial name of the folder to search
+  * @return {*} 
+  * @memberof DocumentService
+  */
+  listFolders(blogProjectId: number, folderNamePartial?: string): Observable<IRequestResponse<FolderDetailsDto[]>> {
+
+    let params = new HttpParams()
+      .set("blogProjectId", blogProjectId)
+     
+
+      if (folderNamePartial) {
+        params.set('folderNamePartial', folderNamePartial);
+      }
+
+
+    return this.http.get<IRequestResponse<FolderDetailsDto[]>>(this.baseUrl + '/list-folders', { params }).pipe(tap(r => {
+      if (r.success) {
+        this._availableFolders.next(r.data)
+      } else {
+        this._snackBar.open('Error', 'Report', {
+          duration: 1000,
+          panelClass: 'snack-error'
+        });
+      }
+    }))
+  }
+
+  moveDocToNewFolder(docUUId: string, folderUUID: string): Observable<IRequestResponse<boolean>> {
+    return this.http.put<IRequestResponse<boolean>>(`${this.baseUrl}/move-doc-to-folder/${docUUId}`, {
+      folderUUID
+    }).pipe(tap(r => {
+      if (r.success) {
+        this._snackBar.open('Document updated', undefined, {
+          duration: 1000,
+          panelClass: 'snack-success'
+        });
+      } else {
+        this._snackBar.open('Error', 'Report', {
+          duration: 1000,
+          panelClass: 'snack-error'
+        });
+      }
+    }))
+  }
+
+  deleteFolder(folderUUID: string) {
+    return this.http.delete<IRequestResponse<boolean>>(`${this.baseUrl}/delete-folder/${folderUUID}`).pipe(tap(r => {
+      if (r.success) {
+        this._snackBar.open('Folder deleted', undefined, {
+          duration: 1000,
+          panelClass: 'snack-success'
+        });
+      } else {
+        this._snackBar.open('Error deleting the folder', 'Report', {
+          duration: 1000,
+          panelClass: 'snack-error'
+        });
+      }
+    }))
+  }
+
+  renameFolder(folderUUID: string, newName: string): Observable<IRequestResponse<boolean>> {
+    const folderUpdate: FolderUpdateDto = {
+      uuid: folderUUID,
+      name: newName
+    }
+    return this.http.put<IRequestResponse<boolean>>(`${this.baseUrl}/update-folder/${folderUUID}`, folderUpdate).pipe(tap(r => {
+      if (r.success) {
+        this._snackBar.open('Folder updated', undefined, {
+          duration: 1000,
+          panelClass: 'snack-success'
+        });
+      } else {
+        this._snackBar.open('Error', 'Report', {
+          duration: 1000,
+          panelClass: 'snack-error'
+        });
+      }
+    }))
   }
 
   // Properties

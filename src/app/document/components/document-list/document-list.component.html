@@ -1,45 +1,54 @@
 <div class="docs-table-container">
   <div class="table-responsive docs-table-container">
-    <mat-table
-      #table
-      [dataSource]="dataSource"
-      *ngIf="tableElementsToRender"
-    >
+    <mat-table #table [dataSource]="dataSource" *ngIf="tableElementsToRender">
       <!-- Name Column -->
       <ng-container matColumnDef="name">
         <mat-header-cell
           *matHeaderCellDef
           class="f-w-600 mat-subtitle-1 f-s-14 wizard-mat-cell-large"
         >
-         Name
+          Name
         </mat-header-cell>
-        <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1 wizard-mat-cell-large" (click)="documentRowSelected(doc)">
-          <mat-icon class="m-r-10 folder-icon" *ngIf="doc.isDocument;else folderIcon">description</mat-icon>  
+        <mat-cell
+          class="table-cell-content"
+          *matCellDef="let doc"
+          class="mat-body-1 wizard-mat-cell-large"
+          (click)="documentRowSelected(doc)"
+        >
+          <mat-icon
+            class="m-r-10 folder-icon"
+            fontSet="material-icons-outlined"
+            *ngIf="doc.isDocument; else folderIcon"
+            >description</mat-icon
+          >
           <ng-template #folderIcon>
-            <mat-icon class="m-r-10">folder</mat-icon>
+            <mat-icon class="m-r-10" fontSet="material-icons-outlined">folder</mat-icon>
           </ng-template>
           {{ doc.name | slice : 0 : 50 }}...
-          </mat-cell
-        >
+        </mat-cell>
       </ng-container>
 
-        <!-- documentsCount Column -->
+      <!-- documentsCount Column -->
       <ng-container matColumnDef="documentsCount">
         <mat-header-cell
           *matHeaderCellDef
           class="f-w-600 mat-subtitle-1 f-s-14 wizard-mat-cell-small"
         >
-         Documents
+          Documents
         </mat-header-cell>
-        <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1 wizard-mat-cell-small">
-        <span
-            class="bg-light-accent text-primary rounded f-w-600 p-6 p-y-4 f-s-12" *ngIf="doc.documentsCount; else noWords"
+        <mat-cell
+          class="table-cell-content"
+          *matCellDef="let doc"
+          class="mat-body-1 wizard-mat-cell-small"
+        >
+          <span
+            class="bg-light-accent text-primary rounded f-w-600 p-6 p-y-4 f-s-12"
+            *ngIf="doc.documentsCount; else noWords"
             >{{ doc.documentsCount }}</span
           >
 
           <ng-template #noWords>-</ng-template>
-          </mat-cell
-        >
+        </mat-cell>
       </ng-container>
 
       <!--Primary Keyword Column -->
@@ -50,9 +59,14 @@
         >
           Words
         </mat-header-cell>
-        <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1 wizard-mat-cell-small">
+        <mat-cell
+          class="table-cell-content"
+          *matCellDef="let doc"
+          class="mat-body-1 wizard-mat-cell-small"
+        >
           <span
-            class="bg-light-primary text-primary rounded f-w-600 p-6 p-y-4 f-s-12" *ngIf="doc.wordsCount;else noWords"
+            class="bg-light-primary text-primary rounded f-w-600 p-6 p-y-4 f-s-12"
+            *ngIf="doc.wordsCount; else noWords"
             >{{ doc.wordsCount }}</span
           >
 
@@ -87,7 +101,11 @@
         >
           Modified At
         </mat-header-cell>
-        <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1 wizard-mat-cell-small">
+        <mat-cell
+          class="table-cell-content"
+          *matCellDef="let doc"
+          class="mat-body-1 wizard-mat-cell-small"
+        >
           {{ doc.updatedAt | timeago }}
         </mat-cell>
       </ng-container>
@@ -100,35 +118,71 @@
         >
           Favorite
         </mat-header-cell>
-        <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1 wizard-mat-cell-small">
-          <button class="btn-table wizard-is-favorite-btn" mat-mini-fab (click)="setAsFavorite(doc)" >
-            <mat-icon class="btn-mat-icon" [ngClass]="" [ngClass]="{'is-favorite': doc.isFavorite}">star</mat-icon>
+        <mat-cell
+          class="table-cell-content"
+          *matCellDef="let doc"
+          class="mat-body-1 wizard-mat-cell-small"
+        >
+          <button
+            class="btn-table wizard-is-favorite-btn"
+            mat-mini-fab
+            (click)="setAsFavorite(doc)"
+          >
+            <mat-icon
+              class="btn-mat-icon"
+              [ngClass]=""
+              [ngClass]="{ 'is-favorite': doc.isFavorite }"
+              fontSet="material-icons-outlined"
+              *ngIf="!doc.isFavorite;else favStar"
+              >grade</mat-icon
+            >
+            <ng-template #favStar>
+                <mat-icon
+              class="btn-mat-icon is-favorite"
+              [ngClass]=""
+              fontSet="material-icons-outlined"
+              *ngIf="doc.isFavorite;else favStar"
+              >star</mat-icon
+            >
+            </ng-template>
           </button>
         </mat-cell>
       </ng-container>
 
-            <!--StatusColumn -->
+      <!--StatusColumn -->
       <ng-container matColumnDef="menuDots">
         <mat-header-cell
           *matHeaderCellDef
           class="f-w-600 mat-subtitle-1 f-s-14 wizard-mat-cell-small"
         >
-          
         </mat-header-cell>
-        <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1 wizard-mat-cell-small">
-           <button class="btn-table" mat-mini-fab>
-            <mat-icon class="btn-mat-icon">menu</mat-icon>
+        <mat-cell
+          class="table-cell-content"
+          *matCellDef="let doc"
+          class="mat-body-1 wizard-mat-cell-small"
+        >
+          <button class="btn-table" mat-mini-fab [matMenuTriggerFor]="menu">
+            <mat-icon class="btn-mat-icon">more_vert</mat-icon>
           </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="openRenameDialog(doc)">
+               <mat-icon fontSet="material-icons-outlined">edit</mat-icon>
+              Rename</button>
+            <button mat-menu-item (click)="openMoveDialog(doc)" *ngIf="doc.isDocument">
+               <mat-icon fontSet="material-icons-outlined">folder</mat-icon>
+              Move</button>
+            <button mat-menu-item (click)="openDeleteDialog(doc)">
+              <mat-icon fontSet="material-icons-outlined">delete</mat-icon>
+              Delete</button>
+          </mat-menu>
         </mat-cell>
       </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true" >
-        <mat-row *matRowDef="let row; columns: displayedColumns" ></mat-row>
+      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true">
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
       </mat-header-row>
-      
-     
     </mat-table>
-<!-- 
+    <!-- 
      <mat-paginator
         #paginator
         [pageSize]="pageSize"
@@ -139,7 +193,4 @@
       >
       </mat-paginator> -->
   </div>
-  
 </div>
-
-

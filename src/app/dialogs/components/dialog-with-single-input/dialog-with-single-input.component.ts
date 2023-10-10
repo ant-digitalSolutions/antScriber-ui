@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DialogCustomData } from '../../dto/dialog-data';
+import { DialogCustomData_SingleInput } from '../../dto/dialog-data';
 
 @Component({
   selector: 'app-dialog-with-single-input',
@@ -11,7 +11,7 @@ export class DialogWithSingleInputComponent {
 
   constructor(
     public dialogRef: MatDialogRef<DialogWithSingleInputComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogCustomData,
+    @Inject(MAT_DIALOG_DATA) public data: DialogCustomData_SingleInput,
   ) { }
 
   onClose(): void {

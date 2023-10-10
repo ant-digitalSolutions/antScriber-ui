@@ -10,6 +10,7 @@ import { DocumentHomeNavbarComponent } from './components/document-home-navbar/d
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../common/shared.module';
 import { DocumentRouting } from './document.routing';
+import { DialogForMovingDocComponent } from './components/dialog-for-moving-doc/dialog-for-moving-doc.component';
 
 
 
@@ -18,7 +19,8 @@ import { DocumentRouting } from './document.routing';
     DocumentHomeComponent,
     DocumentEditorComponent,
     DocumentListComponent,
-    DocumentHomeNavbarComponent
+    DocumentHomeNavbarComponent,
+    DialogForMovingDocComponent
   ],
   imports: [
     CommonModule,

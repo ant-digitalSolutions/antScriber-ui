@@ -1,5 +1,5 @@
 import { Component, HostBinding, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subject, takeUntil, merge } from 'rxjs';
+import { Subject, takeUntil, merge, Subscription } from 'rxjs';
 import { DocumentDetailsDto } from '../../dtos/document-details.dto';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -9,6 +9,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { WizardTableElement } from '../../dtos/wizard-table-element.dto';
 import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
+import { DialogService } from 'src/app/dialogs/dialog.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogForMovingDocComponent } from '../dialog-for-moving-doc/dialog-for-moving-doc.component';
+import { OptionField } from 'src/app/common/dto/option-field.dto';
 
 @Component({
   selector: 'app-document-list',
@@ -16,6 +20,7 @@ import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
   styleUrls: ['./document-list.component.scss']
 })
 export class DocumentListComponent implements OnInit, OnDestroy {
+
 
   componentDestroyed$: Subject<boolean> = new Subject();
 
@@ -40,7 +45,9 @@ export class DocumentListComponent implements OnInit, OnDestroy {
     private _projectService: BlogProjectsService,
     private router: Router,
     private _location: Location,
-    private activeRoute: ActivatedRoute) { }
+    private activeRoute: ActivatedRoute,
+    private _dialogService: DialogService,
+    public _matDialog: MatDialog) { }
 
   ngOnInit(): void {
     this.setListeners();
@@ -53,9 +60,10 @@ export class DocumentListComponent implements OnInit, OnDestroy {
 
   setListeners() {
     this._docService.wizardTableElements$.pipe(takeUntil(this.componentDestroyed$)).subscribe(elements => {
-      if (elements)
-{      this.tableElementsToRender = elements;
-      this.dataSource = new MatTableDataSource<WizardTableElement>(this.tableElementsToRender);}
+      if (elements) {
+        this.tableElementsToRender = elements;
+        this.dataSource = new MatTableDataSource<WizardTableElement>(this.tableElementsToRender);
+      }
     });
 
     this._projectService.selectedProjectId$.pipe(takeUntil(this.componentDestroyed$)).subscribe(pId => {
@@ -106,9 +114,8 @@ export class DocumentListComponent implements OnInit, OnDestroy {
     });
   }
 
-  setAsFavorite(tableElement: WizardTableElement): void  {
-    if (tableElement.isDocument)
-    {
+  setAsFavorite(tableElement: WizardTableElement): void {
+    if (tableElement.isDocument) {
       const docIsFavorite = tableElement.isFavorite!;
 
       this._docService.setAsFavorite(tableElement.uuid, !docIsFavorite).subscribe(r => {
@@ -120,6 +127,98 @@ export class DocumentListComponent implements OnInit, OnDestroy {
           }
         }
       });
+    }
+  }
+
+  openDeleteDialog(doc: WizardTableElement) {
+    const dialogMessage = doc.isDocument ?
+      'Are you sure you want to permanently delete this document?' :
+      'Are you sure you want to delete this folder and its documents?'
+    this._dialogService.openConfirmationDialog({
+      okBtnText: 'Yes',
+      cancelBtnText: 'No',
+      message: dialogMessage
+    })
+      .afterClosed()
+      .subscribe(r => {
+        if (r) {
+          if (doc.isDocument) {
+            this._docService.deleteDoc(doc.uuid).subscribe(r => {
+              if (r.success) {
+                this.removeElementFromTable(doc.uuid)
+              }
+            });
+          }
+          else {
+            this._docService.deleteFolder(doc.uuid).subscribe(r => {
+              if (r.success) {
+                this.removeElementFromTable(doc.uuid);
+              }
+            })
+          }
+        }
+      })
+  }
+
+  openMoveDialog(doc: WizardTableElement) {
+    this._docService.listFolders(this.selectedProjectId)
+      .subscribe()
+
+    return this._matDialog.open(DialogForMovingDocComponent, {
+      data: {
+        docToMoveUUId: doc.uuid
+      }
+    })
+      .afterClosed()
+      .subscribe(r => {
+        if (r) {
+          this.removeElementFromTable(doc.uuid);
+        }
+      })
+  }
+
+  openRenameDialog(tableElement: WizardTableElement) {
+    this._dialogService.openDialogWithSingleInput_v2(
+      {
+        title: tableElement.isDocument ? 'Rename Document' : ' Rename Folder',
+        labelText: tableElement.isDocument ? 'Document Name' : 'Folder Name',
+        value: tableElement.name,
+        okBtnText: 'Rename',
+        placeholder: tableElement.isDocument ? 'The name for your doc' : 'The name for your Folder'
+      })
+      .afterClosed()
+      .subscribe(result => {
+        if (result) {
+          if (tableElement.isDocument) {
+            this._docService.update(tableElement.uuid, { name: result }).subscribe(r => {
+              if (r) {
+                this.renameTableElement(tableElement.uuid, result)
+              }
+            });
+          } else {
+            this._docService.renameFolder(tableElement.uuid, result).subscribe(r => {
+              if (r) {
+                this.renameTableElement(tableElement.uuid, result)
+              }
+            });
+          }
+        }
+      });
+  }
+
+  private removeElementFromTable(elementUUID: string) {
+    const index = this.tableElementsToRender.findIndex(d => d.uuid === elementUUID);
+    if (index >= 0) {
+      this.tableElementsToRender.splice(index, 1);
+      this.dataSource = new MatTableDataSource<WizardTableElement>(this.tableElementsToRender);
+    }
+  }
+
+  private renameTableElement(itemUUID: string, newName: string) {
+    const index = this.tableElementsToRender.findIndex(d => d.uuid === itemUUID);
+    if (index) {
+      this.tableElementsToRender[index].name = newName;
+      this.dataSource = new MatTableDataSource<WizardTableElement>(this.tableElementsToRender);
     }
   }
 }

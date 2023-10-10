@@ -86,12 +86,12 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   saveEditorChanges() {
-    this._docService.update({ content: this.documentContent }).subscribe();
+    this._docService.update(this.documentId,{ content: this.documentContent }).subscribe();
   }
 
   updateDocName() {
     if (this.docNameForm.valid)
-      this._docService.update({ name: this.docNameForm.value }).subscribe();
+      this._docService.update(this.documentId, { name: this.docNameForm.value }).subscribe();
     console.log('After blur')
   }
 
