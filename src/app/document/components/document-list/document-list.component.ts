@@ -1,5 +1,5 @@
 import { Component, HostBinding, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subject, takeUntil, merge } from 'rxjs';
+import { Subject, takeUntil, merge, Subscription } from 'rxjs';
 import { DocumentDetailsDto } from '../../dtos/document-details.dto';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -126,8 +126,27 @@ export class DocumentListComponent implements OnInit, OnDestroy {
     }
   }
 
-  delete(_t93: any) {
-    throw new Error('Method not implemented.');
+  delete(doc: any) {
+   this._dialogService.openConfirmationDialog({
+    okBtnText: 'Yes',
+    cancelBtnText: 'No',
+    message: 'Are you sure you want to permanently delete this document?'
+   })
+   .afterClosed()
+   .subscribe(r => {
+    if (r) {
+      this._docService.deleteDoc(doc.uuid).subscribe(r => {
+        if (r.success) {
+          const index = this.tableElementsToRender.findIndex(d => d.uuid === doc.uuid);
+          if (index) {
+             this.tableElementsToRender.splice(index, 1);
+            this.dataSource = new MatTableDataSource<WizardTableElement>(this.tableElementsToRender);
+            // this.dataSource.data;
+          }
+        }
+      });
+    }
+   })
   }
   move(_t93: any) {
     throw new Error('Method not implemented.');
@@ -144,7 +163,20 @@ export class DocumentListComponent implements OnInit, OnDestroy {
       .afterClosed()
       .subscribe(result => {
       if (result)
-        this._docService.update(doc.uuid, { name: result }).subscribe();
+        this._docService.update(doc.uuid, { name: result }).subscribe(r => {
+          if (r) {
+
+            const index = this.tableElementsToRender.findIndex(d => d.uuid === doc.uuid);
+            if (index) {
+              this.tableElementsToRender[index].name = result;
+              this.dataSource = new MatTableDataSource<WizardTableElement>(this.tableElementsToRender);
+              // this.dataSource.data;
+            }
+            if (index) {
+              this.dataSource.data[index].name = result;
+            }
+          }
+        });
     });
   }
 }

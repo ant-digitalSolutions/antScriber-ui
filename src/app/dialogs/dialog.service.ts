@@ -3,6 +3,8 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DialogWithSingleInputComponent } from './components/dialog-with-single-input/dialog-with-single-input.component';
 import { Subject } from 'rxjs';
 import { DialogCustomData_SingleInput } from './dto/dialog-data';
+import { DialogCustomData_Confirmation } from './dto/dialog-custom-data-confirmation';
+import { DialogForConfirmationComponent } from './components/dialog-for-confirmation/dialog-for-confirmation.component';
 
 @Injectable({
   providedIn: 'root'
@@ -73,5 +75,11 @@ export class DialogService {
     //   console.log('The dialog was closed');
     //   this._dialogResult.next(result);
     // });
+  }
+
+  openConfirmationDialog(data: DialogCustomData_Confirmation): MatDialogRef<any, any> {
+    return this.dialog.open(DialogForConfirmationComponent, {
+      data
+    })
   }
 }

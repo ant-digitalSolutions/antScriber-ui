@@ -130,6 +130,22 @@ export class DocumentService {
     }))
   }
 
+  deleteDoc(docId: string): Observable<IRequestResponse<boolean>> {
+    return this.http.delete<IRequestResponse<boolean>>(`${this.baseUrl}/${docId}`).pipe(tap(r => {
+      if (r.success) {
+        this._snackBar.open('Document deleted', undefined, {
+          duration: 1000,
+          panelClass: 'snack-success'
+        });
+      } else {
+        this._snackBar.open('Error deleting the document', 'Report', {
+          duration: 1000,
+          panelClass: 'snack-error'
+        });
+      }
+    }))
+  }
+
   setAsFavorite(docUUId: string, isFavorite: boolean): Observable<IRequestResponse<DocumentDetailsDto>> {
     const doc: DocumentUpdateDto = {
       isFavorite
