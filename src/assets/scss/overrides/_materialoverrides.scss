@@ -26,3 +26,18 @@
 @import "./table";
 
 @import "./list";
+
+
+.mat-mdc-menu-content {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+
+  .mat-mdc-button {
+        width: 100%;
+    align-self: start;
+    align-items: center;
+    justify-content: start;
+  }
+}
