@@ -6,7 +6,7 @@
   min-height: calc(100vh - $header-height);
   padding: 0;
   max-height:calc(100vh - $header-height);
-  overflow-y: hidden;
+  overflow-y: auto;
 }
 
 .mat-tab-group {
