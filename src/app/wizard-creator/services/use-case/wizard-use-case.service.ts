@@ -18,6 +18,7 @@ import { useCaseMeta_Marketing } from '../../data/use-cases/use-cases-marketing.
 import { useCaseMeta_Social } from '../../data/use-cases/use-cases-social.data';
 import { useCaseMeta_Coding } from '../../data/use-cases/use-cases-general-coding.data';
 import { useCaseMeta_Internal } from '../../data/use-cases/use-cases-general-internal.data';
+import { useCaseMeta_Learning } from '../../data/use-cases/use-cases-general-learning.data';
 
 @Injectable()
 export class WizardUseCaseService {
@@ -262,7 +263,8 @@ export class WizardUseCaseService {
       ...useCaseMeta_Marketing, 
       ...useCaseMeta_Social, 
       ...useCaseMeta_Coding,
-      ...useCaseMeta_Internal];
+      ...useCaseMeta_Internal,
+      ...useCaseMeta_Learning];
 
     const index = metaDataList.findIndex(m => m.useCaseName === useCase);
     if (index >= 0) {
