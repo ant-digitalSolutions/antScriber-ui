@@ -29,7 +29,7 @@ export class DocumentListComponent implements OnInit, OnDestroy {
   tableElementsToRender: WizardTableElement[] = [];
 
 
-  displayedColumns = ['name', 'documentsCount', 'words', 'updatedAt', 'isFavorite', 'menuDots'];
+  displayedColumns = ['name', 'words', 'updatedAt', 'isFavorite', 'menuDots'];
   dataSource: MatTableDataSource<WizardTableElement>;
 
   // @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator = Object.create(null);
@@ -39,6 +39,8 @@ export class DocumentListComponent implements OnInit, OnDestroy {
   pageSizeOptions = [5, 10, 25];
 
   selectedProjectId: number;
+
+  isMobile = false;
 
   constructor(
     private _docService: DocumentService,
@@ -51,6 +53,8 @@ export class DocumentListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.setListeners();
+    this.checkIfMobile();
+    window.addEventListener("resize", this.checkIfMobile.bind(this), false)
   }
 
   ngOnDestroy(): void {
@@ -204,6 +208,13 @@ export class DocumentListComponent implements OnInit, OnDestroy {
           }
         }
       });
+  }
+
+  checkIfMobile() {
+    this.isMobile = (window.innerWidth < 960);
+    if (this.isMobile) {
+      this.displayedColumns = ['name', 'words',  'menuDots'];
+    }
   }
 
   private removeElementFromTable(elementUUID: string) {

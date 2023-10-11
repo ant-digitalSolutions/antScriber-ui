@@ -24,12 +24,19 @@
           <ng-template #folderIcon>
             <mat-icon class="m-r-10" fontSet="material-icons-outlined">folder</mat-icon>
           </ng-template>
+          <div class="table-element-name d-flex flex-column justify-content-start align-items-start">
           {{ doc.name | slice : 0 : 50 }}...
+          <ng-container *ngIf="isMobile">
+            <span class="last-modified-mobile">
+              Modified {{ doc.updatedAt | date:'mediumDate'}}
+            </span>
+          </ng-container>
+          </div>
         </mat-cell>
       </ng-container>
 
       <!-- documentsCount Column -->
-      <ng-container matColumnDef="documentsCount">
+      <!-- <ng-container matColumnDef="documentsCount">
         <mat-header-cell
           *matHeaderCellDef
           class="f-w-600 mat-subtitle-1 f-s-14 wizard-mat-cell-small"
@@ -49,7 +56,7 @@
 
           <ng-template #noWords>-</ng-template>
         </mat-cell>
-      </ng-container>
+      </ng-container> -->
 
       <!--Primary Keyword Column -->
       <ng-container matColumnDef="words">
@@ -94,19 +101,19 @@
         </ng-container> -->
 
       <!--StatusColumn -->
-      <ng-container matColumnDef="updatedAt">
+      <ng-container matColumnDef="updatedAt" *ngIf="!isMobile">
         <mat-header-cell
           *matHeaderCellDef
           class="f-w-600 mat-subtitle-1 f-s-14 wizard-mat-cell-small"
         >
-          Modified At
+          Last Modified
         </mat-header-cell>
         <mat-cell
           class="table-cell-content"
           *matCellDef="let doc"
           class="mat-body-1 wizard-mat-cell-small"
         >
-          {{ doc.updatedAt | timeago }}
+          {{ doc.updatedAt | date:'short' }}
         </mat-cell>
       </ng-container>
 
@@ -165,14 +172,14 @@
             <mat-icon class="btn-mat-icon">more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="openRenameDialog(doc)">
-               <mat-icon fontSet="material-icons-outlined">edit</mat-icon>
+            <button mat-button (click)="openRenameDialog(doc)">
+               <mat-icon fontSet="material-icons-outlined" class="btn-mat-icon">edit</mat-icon>
               Rename</button>
-            <button mat-menu-item (click)="openMoveDialog(doc)" *ngIf="doc.isDocument">
-               <mat-icon fontSet="material-icons-outlined">folder</mat-icon>
+            <button mat-button (click)="openMoveDialog(doc)" *ngIf="doc.isDocument">
+               <mat-icon fontSet="material-icons-outlined" class="btn-mat-icon">folder</mat-icon>
               Move</button>
-            <button mat-menu-item (click)="openDeleteDialog(doc)">
-              <mat-icon fontSet="material-icons-outlined">delete</mat-icon>
+            <button mat-button (click)="openDeleteDialog(doc)">
+              <mat-icon fontSet="material-icons-outlined" class="btn-mat-icon">delete</mat-icon>
               Delete</button>
           </mat-menu>
         </mat-cell>

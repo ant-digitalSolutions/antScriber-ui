@@ -49,6 +49,7 @@ mat-header-cell {
   display: flex;
   align-items: center;
   justify-content: start;
+  min-width: 250px;
 }
 
 .wizard-is-favorite-btn {
@@ -71,4 +72,8 @@ mat-header-cell {
   top: auto;
   height: $paginator-height;
   z-index: 99;
+}
+
+.last-modified-mobile {
+  font-size: 0.6rem;
 }
