@@ -3,9 +3,9 @@
 
 .wizard-form-container,
 .wizard-content {
-  // min-height: calc(100vh - $header-height);
+  min-height: calc(100vh - $header-height);
   padding: 0;
-  // max-height:calc(100vh - $header-height);
+  max-height:calc(100vh - $header-height);
   overflow-y: hidden;
 }
 
