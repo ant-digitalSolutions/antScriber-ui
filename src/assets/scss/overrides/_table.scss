@@ -6,3 +6,7 @@
 .mdc-data-table__cell, .mdc-data-table__header-cell {
     border-bottom-color: $borderColor;
 }
+
+.mat-mdc-table .mdc-data-table__row {
+    height: 60px !important;
+}

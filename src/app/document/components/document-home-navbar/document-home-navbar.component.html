@@ -1,9 +1,9 @@
 <div class="doc-navbar-container align-items-center justify-content-between">
   <div
-    class="folder-tree-container d-flex align-items-center justify-content-around"
+    class="folder-tree-container d-flex align-items-center justify-content-start col-10 p-x-0"
   >
     <button
-      class="mini-fab-btn docs-navbar-btn-home m-r-10"
+      class="mini-fab-btn docs-navbar-btn-home p-x-0"
       mat-mini-fab
       (click)="goHome()"
       [disabled]="!selectedFoldername"
@@ -12,7 +12,7 @@
     </button>
 
     <ng-container *ngIf="selectedFoldername">
-      <span>
+      <span class="d-flex">
         <mat-icon class="btn-mat-icon btn-goback">chevron_right</mat-icon>
       </span>
       <span class="selected-folder-name">{{ selectedFoldername }}</span>
