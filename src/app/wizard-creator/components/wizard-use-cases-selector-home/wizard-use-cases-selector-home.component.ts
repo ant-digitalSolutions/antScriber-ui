@@ -16,6 +16,8 @@ import { WizardUseCaseService } from '../../services/use-case/wizard-use-case.se
 import { ActivatedRoute } from '@angular/router';
 import { QueryParamNames } from 'src/app/common/enum/query-params-names.enum';
 import { CacheService } from 'src/app/common/services/cache/cache.service';
+import { WizardCreatorUseCase } from '../../enums/wizard-creator-use-case.enum';
+import { WizardCreatorWebsiteUseCasesEnum } from '../../enums/wizard-creator-website-use-cases.enum';
 
 @Component({
   selector: 'app-wizard-use-cases-selector-home',
@@ -119,6 +121,9 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
         break;
       case WizardCreatorUseCaseGroup.Learning:
         this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorLearningUseCasesEnum);
+        break;
+        case WizardCreatorUseCaseGroup.WebsiteCopy:
+        this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorWebsiteUseCasesEnum);
         break;
 
       default:

@@ -36,6 +36,8 @@ import { WizardUseCaseSocialComponent } from './components/use-case-form-compone
 import { WizardUseCaseSocialInstagramComponent } from './components/use-case-form-components/social/use-cases/wizard-use-case-social-instagram.component';
 import { WizardUseCaseSocialLinkedinComponent } from './components/use-case-form-components/social/use-cases/wizard-use-case-social-linkedin.component';
 import { WizardUseCaseSocialTweetComponent } from './components/use-case-form-components/social/use-cases/wizard-use-case-social-tweet.component';
+import { WizardUseCaseWebsiteComponent } from './components/use-case-form-components/websites/wizard-use-case-website.component';
+import { WizardUseCaseWebsitesSectionCopyComponent } from './components/use-case-form-components/websites/use-cases/wizard-use-case-websites-section-copy.component';
 
 
 
@@ -66,7 +68,9 @@ import { WizardUseCaseSocialTweetComponent } from './components/use-case-form-co
     WizardUseCaseSocialInstagramComponent,
     WizardUseCaseSocialComponent,
     WizardUseCaseSocialLinkedinComponent,
-    WizardUseCaseSocialTweetComponent
+    WizardUseCaseSocialTweetComponent,
+    WizardUseCaseWebsiteComponent,
+    WizardUseCaseWebsitesSectionCopyComponent
   ],
   imports: [
     CommonModule,

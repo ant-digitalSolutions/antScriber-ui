@@ -39,11 +39,17 @@ mat-header-cell {
 
 .wizard-mat-cell-small {
   width: 15%;
-  max-width: 75px;
+  max-width: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &.wizard-mat-cell-options {
+    max-width: 75px;
+  }
 }
+
+
 
 .wizard-mat-cell-large {
   display: flex;

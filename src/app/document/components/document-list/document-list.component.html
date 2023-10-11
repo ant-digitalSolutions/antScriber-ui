@@ -166,7 +166,7 @@
         <mat-cell
           class="table-cell-content"
           *matCellDef="let doc"
-          class="mat-body-1 wizard-mat-cell-small"
+          class="mat-body-1 wizard-mat-cell-small wizard-mat-cell-options"
           
         >
           <button class="btn-table" mat-mini-fab [matMenuTriggerFor]="menu">
@@ -191,7 +191,7 @@
         <mat-row *matRowDef="let row; columns: displayedColumns" ></mat-row>
       </mat-header-row>
 
-    </mat-table>
+    </mat-table> 
     <!-- 
      <mat-paginator
         #paginator

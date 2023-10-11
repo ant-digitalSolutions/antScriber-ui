@@ -19,6 +19,8 @@ import { useCaseMeta_Social } from '../../data/use-cases/use-cases-social.data';
 import { useCaseMeta_Coding } from '../../data/use-cases/use-cases-general-coding.data';
 import { useCaseMeta_Internal } from '../../data/use-cases/use-cases-general-internal.data';
 import { useCaseMeta_Learning } from '../../data/use-cases/use-cases-general-learning.data';
+import { WizardCreatorWebsiteUseCasesEnum } from '../../enums/wizard-creator-website-use-cases.enum';
+import { useCaseMeta_Websites } from '../../data/use-cases/use-cases-general-websites.data';
 
 @Injectable()
 export class WizardUseCaseService {
@@ -74,6 +76,9 @@ export class WizardUseCaseService {
         break;
       case WizardCreatorUseCaseGroup.SocialMedia:
         this.updateWizardFormFieldsForGroup_Social();
+        break;
+      case WizardCreatorUseCaseGroup.WebsiteCopy:
+        this.updateWizardFormFieldsForGroup_Website();
         break;
       default:
         break;
@@ -222,6 +227,18 @@ export class WizardUseCaseService {
     }
   }
 
+  updateWizardFormFieldsForGroup_Website() {
+    switch (this._wizardUseCase) {
+      case WizardCreatorWebsiteUseCasesEnum.WebpageSectionCopy:
+        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'add');
+        this._wizardFormService.updateFormDefaultFieldsToRender([
+          WizardDefaultFieldNamesEnum.Instruction], 'del');
+        break;
+      default:
+        break;
+    }
+  }
+
   updateQueryParamsWithUseCase(useCase: string) {
     const queryParams = {
       ...this._activeRoute.snapshot.queryParams
@@ -264,7 +281,8 @@ export class WizardUseCaseService {
       ...useCaseMeta_Social, 
       ...useCaseMeta_Coding,
       ...useCaseMeta_Internal,
-      ...useCaseMeta_Learning];
+      ...useCaseMeta_Learning,
+      ...useCaseMeta_Websites];
 
     const index = metaDataList.findIndex(m => m.useCaseName === useCase);
     if (index >= 0) {
