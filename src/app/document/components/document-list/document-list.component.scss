@@ -39,7 +39,7 @@ mat-header-cell {
 
 .wizard-mat-cell-small {
   width: 15%;
-  max-width: 120px;
+  max-width: 75px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -82,4 +82,8 @@ mat-header-cell {
 
 .table-element-name {
   max-width: 175px;
+}
+
+.hide-table-header {
+  display: none;
 }

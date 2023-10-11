@@ -213,7 +213,7 @@ export class DocumentListComponent implements OnInit, OnDestroy {
   checkIfMobile() {
     this.isMobile = (window.innerWidth < 960);
     if (this.isMobile) {
-      this.displayedColumns = ['name', 'words',  'menuDots'];
+      this.displayedColumns = ['name',  'menuDots'];
     }
   }
 
