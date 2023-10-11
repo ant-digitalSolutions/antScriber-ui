@@ -25,24 +25,34 @@
   // margin-top: 50px;
   align-self: end;
   width: 100%;
-  height: 100px;
-  padding: 1.5rem;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+  height: 75px;
+  padding: 1.1rem;
+  padding-top: 1.1rem;
+  padding-bottom: 1.1rem;
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 
   .wizard-generate-btn {
-    width: 100%;
-    height: 55px;
+    width: 50%;
+    height: 50px;
     border-radius: 25px;
-    background-color: rgba(0, 128, 0, 0.8392156863);
+    background-color: $caribbean;
     font-size: 1.1rem;
     font-weight: 500;
 
     -webkit-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.58);
     -moz-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.58);
     box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.58);
+  }
+
+  &.mobile-view {
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    .wizard-generate-btn {
+      width: auto;
+      height: 40px;
+      padding: 20px 30px;
+    }
   }
 }
 

@@ -37,7 +37,7 @@ export class DocumentHomeComponent implements OnInit, OnDestroy {
 
 
   private setContainerHeight() {
-    this.windowHeight = `${window.innerHeight - configs_UI.main_navbar_height}px`
+    this.windowHeight = `${window.innerHeight - configs_UI.main_navbar_height - 10}px`
   }
 
   setListeners() {

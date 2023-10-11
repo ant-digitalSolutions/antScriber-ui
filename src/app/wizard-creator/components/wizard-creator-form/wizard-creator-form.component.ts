@@ -59,6 +59,8 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
    */
   useCaseSelected = false;
 
+  isMobile: boolean = false;
+
   constructor(
     private _wizardCreatorService: WizardCreatorService,
     private projectService: BlogProjectsService,
@@ -79,6 +81,9 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
     this.initGPTVersionOptions()
 
     this.dataReady = true;
+
+    this.checkIfMobile();
+    window.addEventListener("resize", this.checkIfMobile.bind(this), false)
   }
 
   ngOnDestroy(): void {
@@ -211,5 +216,9 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
 
   resetForm() {
     this._wizardFormService.resetFormData()
+  }
+
+  checkIfMobile() {
+    this.isMobile = (window.innerWidth < 960);
   }
 }

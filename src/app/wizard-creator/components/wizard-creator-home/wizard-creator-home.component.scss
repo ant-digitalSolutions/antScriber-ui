@@ -3,15 +3,15 @@
 
 .wizard-form-container,
 .wizard-content {
-  min-height: calc(100vh - $header-height);
+  // min-height: calc(100vh - $header-height);
   padding: 0;
-  max-height:calc(100vh - $header-height);
+  // max-height:calc(100vh - $header-height);
   overflow-y: hidden;
 }
 
 .mat-tab-group {
-  min-height: calc(100vh - $header-height );
-  background-color: #80808014;
+  // min-height: calc(100vh - $header-height );
+  background-color: $background;
 }
 
 .wizard-form-container {
@@ -19,11 +19,11 @@
 }
 
 :host ::ng-deep .mat-mdc-tab-header {
-  background-color: $gray-medium-light;
+  background-color: $gray-50;
 
   .mat-mdc-tab.mdc-tab--active .mdc-tab__ripple::before,
   .mat-mdc-tab.mdc-tab--active .mat-ripple-element {
-    background-color: $gray-medium-dark !important;
+    background-color: $gray-100 !important;
   }
 
   .mat-mdc-tab .mdc-tab-indicator__content--underline {

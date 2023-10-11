@@ -5,7 +5,7 @@ $font-family: 'Poppins', sans-serif;
 
 // light color variable
 $sidebarbg: white;
-$background: #eef5f9;
+$background: #fafafa;
 $cardbg: white;
 $toolbar: white;
 $cardshadow: 0px 5px 20px rgba(0,0,0,.05);
@@ -39,13 +39,24 @@ $inner-navbar-height: 48px !default;
 $borderColor: #e5eaef;
 $borderformColor: #dfe5ef;
 
-// custom
-$primary: #1e88e5;
-$accent: #26c6da;
-$warning: #ffb22b;
-$error: #fc4b6c;
-$success: #26c6da;
-$white: #ffffff;
+
+// custom colors
+$caribbean: #127475;
+$cinnabar: #F2542D;
+$dark-cyan: #0E9594;
+$plum:#8D3B72;
+$eminence: #542E71;
+$violet: #502F4C;
+$violet-chinese: #70587C;
+$violet-english:#5C415D;
+$violet-ultra: #565676;
+$purple: #6B0AB1;
+$red: #D90429;
+$space-cadet: #2B2D42;
+$turquoise: #72E1D1;
+
+$blue-dark: #044389;
+$blue-cornflower: #5995ED; 
 
 $light: #f2f6fa;
 
@@ -71,3 +82,16 @@ $text-dark: #423b3b;
 // documents area
 $editor-outer-container-bc: #f6f6f6;
 $editor-bc: #fff;
+
+
+
+
+
+
+// main colors
+$primary: $caribbean;
+$accent: #26c6da;
+$warning: #ffb22b;
+$error: #fc4b6c;
+$success: #26c6da;
+$white: #ffffff;
