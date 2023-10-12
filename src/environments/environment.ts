@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://serverd.antcreative.space:444/'
+    apiUrl: 'http://serverd.antcreative.space:81/'
 };
