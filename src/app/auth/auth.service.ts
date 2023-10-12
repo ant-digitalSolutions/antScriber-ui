@@ -4,6 +4,8 @@ import { UserLogin } from './dtos/login.dto';
 import { HttpClient } from '@angular/common/http';
 import { Observable, shareReplay, tap } from 'rxjs';
 import * as moment from 'moment';
+import { IRequestResponse } from '../common/dto/request-response.dto';
+import { UserRegisterDto } from './dtos/user-register.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +17,35 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(userLogin: UserLogin): Observable<any> {
-    const result = this.http.post<UserLogin>(this.baseUrl + 'auth/signin', userLogin)
+    const result = this.http.post<IRequestResponse<any>>(this.baseUrl + 'auth/signin', userLogin)
       .pipe(
-        tap(res => this.setSession(res)),
+        tap(res => {
+          if (res.success) {
+            this.setSession(res.data)
+          } else {
+            console.error('There is an issue with the Registration')
+            console.error(res.error);
+          }
+        }),
         shareReplay()
       );
     return result;
+  }
+
+  register(userData: UserRegisterDto): Observable<IRequestResponse<any>> {
+    return this.http.post<IRequestResponse<any>>(this.baseUrl + 'auth/register', userData)
+      .pipe(
+        tap(res => {
+        if (res.success)
+         {
+           this.setSession(res.data)
+          } else {
+            console.error('There is an issue with the Registration')
+            console.error(res.error);
+          }
+        }),
+        shareReplay()
+      );
   }
 
   private setSession(authResult: any) {
