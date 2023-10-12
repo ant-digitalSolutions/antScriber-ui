@@ -7,7 +7,7 @@
   </div>
 
   <div class="use-cases-container d-flex justify-content-center flex-column align-items-center" *ngIf="showUseCases">
-    <h3 class="align-self-start justfi-self-start">Choose the content to generate</h3>
+    <!-- <h3 class="align-self-start justfi-self-start">Choose the content to generate</h3> -->
     <mat-accordion class="w-100">
       <ng-container *ngFor="let group of useCasesGroups">
         <mat-expansion-panel
@@ -27,5 +27,8 @@
     </mat-accordion>
 
     <button class="m-t-10 btn-load-more" mat-button (click)="setUseCases(false)" *ngIf="showLoadMoreUseCasesBtn">show more</button>
+    <button mat-mini-fab class="btn-close-use-cases-dialog" (click)="showUseCases = false">
+      <mat-icon fontSet="material-icons-outlined">cancel</mat-icon>
+    </button>
   </div>
 </div>

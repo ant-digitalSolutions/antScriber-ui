@@ -33,3 +33,17 @@
 .mat-expansion-panel-body {
   padding: 10px !important;
 }
+
+.use-cases-container {
+  position: relative;
+
+  .btn-close-use-cases-dialog {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    bottom: auto;
+    left: auto;
+    background-color: transparent;
+    color: black;
+  }
+}
