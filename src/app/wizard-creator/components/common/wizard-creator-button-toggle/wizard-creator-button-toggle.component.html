@@ -1,8 +1,10 @@
-<div class="d-flex align-items-center justify-content-center m-b-20">
+<div class="align-items-center d-flex m-b-20">
+  <h5 class="align-self-start f-s-12 f-w-500">{{fieldData.fieldLabel}}</h5>
   <mat-button-toggle-group
     [name]="fieldData.dataName"
     [formControl]="form"
     class="wizard-button-group"
+    [matTooltip]="fieldData.tooltipText ? fieldData.tooltipText : ''"
   >
     <mat-button-toggle
       [value]="item.value"
