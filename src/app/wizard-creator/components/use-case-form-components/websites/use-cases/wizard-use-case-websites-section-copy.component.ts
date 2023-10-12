@@ -19,10 +19,21 @@ export class WizardUseCaseWebsitesSectionCopyComponent extends UseCaseFormBaseCo
       placeholder: 'E.g., antScribe Solutions',
       fieldLabel: 'Business/Product Name',
       fieldValue: '',
-      validators: [Validators.maxLength(50)],
+      validators: [Validators.maxLength(50), Validators.required],
       inputMaxLen: 50,
       dataName: 'businessOrProductName',
       tooltipText: 'Provide the name of your business or product. Maximum length: 50 characters.',
+      isLongText: false
+    });
+
+    fieldsData.push({
+      placeholder: 'E.g., Unleash the Power of AI',
+      fieldLabel: 'Section Name (Optional)',
+      fieldValue: '',
+      validators: [Validators.maxLength(100)],
+      inputMaxLen: 100,
+      dataName: 'sectionName',
+      tooltipText: 'Provide the name of the section.',
       isLongText: false
     });
 
@@ -52,8 +63,8 @@ export class WizardUseCaseWebsitesSectionCopyComponent extends UseCaseFormBaseCo
       placeholder: 'E.g., Young professionals aged 25-34 interested in tech solutions',
       fieldLabel: 'Target Audience Description',
       fieldValue: '',
-      validators: [Validators.maxLength(150)],
-      inputMaxLen: 150,
+      validators: [Validators.maxLength(400)],
+      inputMaxLen: 400,
       dataName: 'targetAudience',
       tooltipText: 'Define the primary audience for your content. Describe characteristics or interests to help tailor the output. Max: 150 characters.',
       isLongText: true

@@ -232,7 +232,12 @@ export class WizardUseCaseService {
       case WizardCreatorWebsiteUseCasesEnum.WebpageSectionCopy:
         this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'add');
         this._wizardFormService.updateFormDefaultFieldsToRender([
-          WizardDefaultFieldNamesEnum.Instruction], 'del');
+          WizardDefaultFieldNamesEnum.Instruction, WizardDefaultFieldNamesEnum.AmountOfVariants], 'del');
+        break;
+      case WizardCreatorWebsiteUseCasesEnum.WebpageOutline:
+        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'add');
+        this._wizardFormService.updateFormDefaultFieldsToRender([
+          WizardDefaultFieldNamesEnum.Instruction, WizardDefaultFieldNamesEnum.AmountOfVariants, WizardDefaultFieldNamesEnum.VoiceTone], 'del');
         break;
       default:
         break;

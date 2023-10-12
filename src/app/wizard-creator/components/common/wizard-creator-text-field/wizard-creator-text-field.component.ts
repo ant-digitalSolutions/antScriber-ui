@@ -67,7 +67,8 @@ export class WizardCreatorTextFieldComponent {
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe(data => {
         if (data.fieldName === this.fieldData.dataName) {
-         this.fieldForm.setValue(data.fieldValue)
+         this.fieldForm.setValue(data.fieldValue);
+         this.saveEdition();
         }
       });
 
