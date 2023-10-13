@@ -103,7 +103,7 @@ export class WizardFormService {
    */
   // TODO: Change name to checkDataError()
   checkAdditionalData(): boolean {
-    if (!this._additionalDataFormFields || this._additionalDataFormFields.length < 3) {
+    if (!this._additionalDataFormFields || this._additionalDataFormFields.length === 0) {
       return false;
     }
 

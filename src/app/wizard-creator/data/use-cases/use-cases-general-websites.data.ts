@@ -15,7 +15,7 @@ export const useCaseMeta_Websites: UseCaseMeta[] = [
     },
     {
         iconName: 'default',
-        useCaseName: WizardCreatorWebsiteUseCasesEnum.WebpageHeadlines,
+        useCaseName: WizardCreatorWebsiteUseCasesEnum.SEO,
         isAvailableForFreeUsers: true
     },
 ];

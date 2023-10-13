@@ -39,6 +39,8 @@ import { WizardUseCaseSocialTweetComponent } from './components/use-case-form-co
 import { WizardUseCaseWebsiteComponent } from './components/use-case-form-components/websites/wizard-use-case-website.component';
 import { WizardUseCaseWebsitesSectionCopyComponent } from './components/use-case-form-components/websites/use-cases/wizard-use-case-websites-section-copy.component';
 import { WizardUseCaseWebsitesWebpageOutlineComponent } from './components/use-case-form-components/websites/use-cases/wizard-use-case-websites-webpage-outline.component';
+import { WizardUseCaseWebsitesSeoComponent } from './components/use-case-form-components/websites/use-cases/wizard-use-case-websites-seo.component';
+
 
 
 
@@ -72,7 +74,8 @@ import { WizardUseCaseWebsitesWebpageOutlineComponent } from './components/use-c
     WizardUseCaseSocialTweetComponent,
     WizardUseCaseWebsiteComponent,
     WizardUseCaseWebsitesSectionCopyComponent,
-    WizardUseCaseWebsitesWebpageOutlineComponent
+    WizardUseCaseWebsitesWebpageOutlineComponent,
+    WizardUseCaseWebsitesSeoComponent
   ],
   imports: [
     CommonModule,
