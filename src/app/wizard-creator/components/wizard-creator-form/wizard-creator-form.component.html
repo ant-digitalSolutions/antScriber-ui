@@ -3,13 +3,13 @@
     <!-- ------------------------------------------------------------------------- -->
     <!-- Use Case Selector -->
     <!-- ------------------------------------------------------------------------- -->
-    <div class="use-case-selector-container field-container m-y-20 col-12">
+    <div class="use-case-selector-container field-container m-y-20 col-12 m-b-32">
       <app-wizard-use-cases-selector-home
         class="col-12"
       ></app-wizard-use-cases-selector-home>
     </div>
 
-    <div class="form-elements p-t-32" *ngIf="useCaseSelected" [ngClass]="{'mobile-view': isMobile }">
+    <div class="form-elements p-t-2" *ngIf="useCaseSelected" [ngClass]="{'mobile-view': isMobile }">
       <!-- ------------------------------------------------------------------------- -->
       <!-- Variable Input Container -->
       <!-- ------------------------------------------------------------------------- -->
@@ -95,7 +95,7 @@
         ></app-wizard-creator-selector-field>
       </div>
 
-      <div class="reset-form-container d-flex align-items-center justify-content-center">
+      <div class="reset-form-container d-flex align-items-center p-l-10">
         <button mat-button (click)="resetForm()" class="btn-small">Reset Form</button>
       </div>
     </div>

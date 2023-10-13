@@ -130,13 +130,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.blogProjectService.blogProjects$.pipe(takeUntil(this.componentDestroyed$)).subscribe(projects => {
-      this.blogProjects = projects;
-      if (!this.selectedBlogProjectId && projects.length > 0) {
-        this.selectedBlogProjectId = this.blogProjects.filter(p => p.isDefaultProject)[0].id;
-        this.blogProjectService.selectedProjectId = this.selectedBlogProjectId;
-      }
-    });
+  
   }
 
   ngOnDestroy() {
