@@ -57,7 +57,7 @@ export class WizardFormService {
   private _textFieldsToRender: TextFieldToRenderData[];
   private _checkboxFieldsToRender: CheckboxFieldToRenderData[];
   private _selectorFieldsToRender: SelectorFieldToRenderData[];
-  private _buttonToggleFieldToRender: SelectorFieldToRenderData;
+  private _buttonToggleFieldToRender?: SelectorFieldToRenderData;
 
   /**
    * Contains the list of names of the fields to render in the form of a given
@@ -158,6 +158,7 @@ export class WizardFormService {
     this._additionalDataFormFields = [];
     this._formAdditionalData = {};
     this._defaultFieldsToRenderOnForm = [];
+    this._buttonToggleFieldToRender = undefined;
     this._fieldsToShowUpdate.next();
     this._fieldNamesToRender.clear();
   }
@@ -359,7 +360,7 @@ export class WizardFormService {
     return output;
   }
 
-  public get buttonToggleFieldToRender(): SelectorFieldToRenderData {
+  public get buttonToggleFieldToRender(): SelectorFieldToRenderData | undefined {
     return this._buttonToggleFieldToRender;
   }
 

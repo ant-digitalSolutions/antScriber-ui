@@ -77,7 +77,7 @@ export class WizardUseCaseWebsitesSeoComponent extends UseCaseFormBaseComponent 
     const fieldsData = {
       dataName: 'typeOfContent',
       fieldLabel: 'Content Type',
-      fieldValue: '',
+      fieldValue: 'MetaDescription',
       tooltipText: 'Select the type of content.',
       values: [
         {

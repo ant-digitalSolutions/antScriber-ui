@@ -40,8 +40,8 @@ export class WizardUseCaseWebsitesWebpageOutlineComponent extends UseCaseFormBas
       placeholder: 'E.g., "antScribe, content generation, AI writing"',
       fieldLabel: 'Keywords',
       fieldValue: '',
-      validators: [Validators.maxLength(100)],
-      inputMaxLen: 100,
+      validators: [Validators.maxLength(250)],
+      inputMaxLen: 250,
       dataName: 'keywords',
       tooltipText: 'List relevant keywords that represent the webpage. Use commas to separate them. Keywords improve SEO and webpage visibility.',
       isLongText: false

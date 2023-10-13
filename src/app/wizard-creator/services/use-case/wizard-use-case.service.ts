@@ -242,7 +242,7 @@ export class WizardUseCaseService {
       case WizardCreatorWebsiteUseCasesEnum.SEO:
         this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'add');
         this._wizardFormService.updateFormDefaultFieldsToRender([
-          WizardDefaultFieldNamesEnum.Instruction], 'del');
+          WizardDefaultFieldNamesEnum.Instruction, WizardDefaultFieldNamesEnum.VoiceTone], 'del');
         break;
       default:
         break;

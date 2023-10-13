@@ -52,8 +52,8 @@ export class WizardUseCaseWebsitesSectionCopyComponent extends UseCaseFormBaseCo
       placeholder: 'E.g., antScribe, virtual assistant',
       fieldLabel: 'Section Keywords',
       fieldValue: '',
-      validators: [Validators.maxLength(100)],
-      inputMaxLen: 100,
+      validators: [Validators.maxLength(250)],
+      inputMaxLen: 250,
       dataName: 'keywords',
       tooltipText: 'Input relevant keywords for this section, separated by commas. This helps in SEO and searchability.',
       isLongText: false
