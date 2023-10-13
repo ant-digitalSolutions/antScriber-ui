@@ -1,11 +1,13 @@
+<div class="input-inner-container">
+ <mat-label class="d-block f-w-500 f-s-12  mat-subtitle-2 p-l-15">{{
+    fieldData.fieldLabel
+  }}</mat-label>
 <mat-form-field
   class="w-100 text-area-custom-element m-b-20"
   color="primary"
   [floatLabel]="labelType"
 >
-  <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block">{{
-    fieldData.fieldLabel
-  }}</mat-label>
+ 
   <input
     matInput
     type="text"
@@ -30,3 +32,4 @@
   <mat-hint align="end">{{ length }}/{{ maxLen }}</mat-hint>
   <mat-error *ngIf="fieldForm.invalid && showErrors">{{ getErrorMessage() }}</mat-error>
 </mat-form-field>
+</div>

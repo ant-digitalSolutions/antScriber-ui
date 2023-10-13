@@ -98,8 +98,9 @@ mat-tab-group {
   }
 
   .mat-mdc-form-field-infix {
-    min-height: 40px !important;
-    padding-top: 16px !important;
+    min-height: 30px !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
     // max-height: 40px !important;
 
     .mat-mdc-floating-label {
@@ -108,6 +109,10 @@ mat-tab-group {
 
     }
   }
+}
+
+.mat-subtitle-2 {
+  margin-bottom: 4px !important;
 }
 
 .mat-form-field-appearance-fill .mat-mdc-select-arrow-wrapper {
