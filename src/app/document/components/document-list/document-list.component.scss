@@ -67,8 +67,8 @@ mat-header-cell {
 }
 
 .docs-table-container {
-  // max-height: calc(100vh - $header-height - $inner-navbar-height); 
-  height: calc(100vh); 
+  // max-height: calc(100dvh - $header-height - $inner-navbar-height); 
+  height: calc(100dvh); 
 
     overflow: auto;
     position: relative;

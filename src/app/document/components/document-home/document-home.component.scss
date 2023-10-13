@@ -4,7 +4,7 @@
 
 .doc-home-outer-container {
         border-left: 1px solid $border-gray;
-    min-height: calc(100vh - $header-height);
+    min-height: calc(100dvh - $header-height);
 }
 
 .doc-list-container {
