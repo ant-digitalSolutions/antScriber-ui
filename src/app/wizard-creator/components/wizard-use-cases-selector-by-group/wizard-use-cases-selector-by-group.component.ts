@@ -31,7 +31,8 @@ export class WizardUseCasesSelectorByGroupComponent {
       this._useCaseService.setWizardUseCase(useCase);
     else {
       this._snackBar.open('The selected useCase is only for Premium', undefined, {
-        panelClass: 'use-case-for-premium-snack'
+        panelClass: 'use-case-for-premium-snack',
+        duration: 2000
       })
     }
   }
