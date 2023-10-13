@@ -3,15 +3,17 @@
 
 .wizard-form-container,
 .wizard-content {
-  height: calc(100dvh - $header-height);
+  // height: calc(100dvh - $header-height);
+  height: 100%;
   padding: 0;
   // max-height:calc(100dvh - $header-height);
   overflow-y: auto;
 }
 
 .mat-tab-group {
-  min-height: calc(100dvh - $header-height );
+  // min-height: calc(100dvh - $header-height );
   background-color: $background;
+  height: 100%;
 }
 
 .wizard-form-container {

@@ -49,11 +49,11 @@
     padding-top: 15px;
     padding-bottom: 20px;
     
-    position: absolute;
-    bottom: 0;
-    top: auto;
-    left: 0;
-    right: 0;
+    // position: absolute;
+    // bottom: 0;
+    // top: auto;
+    // left: 0;
+    // right: 0;
     z-index: 99;
     background-color: $btn-create-container-bc;
     .wizard-generate-btn {
@@ -70,7 +70,7 @@
   align-items: center;
   justify-content: center;
   flex: 1 1 0%;
-  height: calc(100vh - $inner-navbar-height - $header-height);
+  height: calc(100dvh - $inner-navbar-height - $header-height);
   // max-height: calc(100vh - $inner-navbar-height - $header-height);
   padding: 0 !important;
 
