@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://antcreative.space/api/v1/'
+    apiUrl: 'https://devbrain.adfluens.io/api/'
 };
