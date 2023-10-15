@@ -48,7 +48,7 @@
   &.mobile-view {
     padding-top: 15px;
     padding-bottom: 20px;
-    
+
     // position: absolute;
     // bottom: 0;
     // top: auto;
@@ -74,7 +74,11 @@
   // max-height: calc(100vh - $inner-navbar-height - $header-height);
   padding: 0 !important;
 
-
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 
   .wizard-form {
     flex-grow: 1;
@@ -82,11 +86,11 @@
     width: 100%;
     padding: 0 1rem;
 
-      &::-webkit-scrollbar {
-    display: none;
-  }
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
 
@@ -96,6 +100,5 @@
 
 .reset-form-container {
   .btn-small {
-
   }
 }
