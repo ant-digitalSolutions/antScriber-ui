@@ -74,11 +74,19 @@
   // max-height: calc(100vh - $inner-navbar-height - $header-height);
   padding: 0 !important;
 
+
+
   .wizard-form {
     flex-grow: 1;
     overflow: auto;
     width: 100%;
     padding: 0 1rem;
+
+      &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   }
 }
 
