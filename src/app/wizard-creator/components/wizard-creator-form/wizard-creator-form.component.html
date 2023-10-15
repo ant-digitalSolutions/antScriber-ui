@@ -106,6 +106,7 @@
   <!-- Action Buttons -->
   <!-- ------------------------------------------------------------------------- -->
 
+  <ng-container *ngIf="showGenerateBtn">
   <div
     class="wizard-generate-btn-container d-flex align-items-center justify-content-center"
     [ngClass]="{'mobile-view': isMobile }"
@@ -124,8 +125,9 @@
         <mat-spinner class="btn-loading-spinner"></mat-spinner>
       </ng-template>
 
-      Unleash the Magic
+      Unleash
     </button>
   </div>
+  </ng-container>
 </div>
 <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->

@@ -13,7 +13,7 @@ import { WizardCreatorLearningUseCasesEnum } from '../../enums/wizard-creator-le
 import { CacheService } from 'src/app/common/services/cache/cache.service';
 import { WizardSocialMediaUseCases } from '../../enums/wizard-creator-social-media-use-cases.enum';
 import { UseCaseMeta } from '../../interfaces/use-case-meta.interface';
-import {  useCaseMeta_GeneralWriting } from '../../data/use-cases/use-cases-general-writing.data';
+import { useCaseMeta_GeneralWriting } from '../../data/use-cases/use-cases-general-writing.data';
 import { useCaseMeta_Marketing } from '../../data/use-cases/use-cases-marketing.data';
 import { useCaseMeta_Social } from '../../data/use-cases/use-cases-social.data';
 import { useCaseMeta_Coding } from '../../data/use-cases/use-cases-general-coding.data';
@@ -32,6 +32,9 @@ export class WizardUseCaseService {
   private _wizardUseCaseGroupSubject = new ReplaySubject<string>();
   wizardUseCaseGroup$ = this._wizardUseCaseGroupSubject.asObservable();
   _wizardUseCaseGroup: string;
+
+  // indicate the user is seeing the use cases selector
+  showingUseCasesSelector: boolean = false;
 
   constructor(
     private _wizardFormService: WizardFormService,
@@ -153,7 +156,7 @@ export class WizardUseCaseService {
       case WizardCreatorMarketingUseCasesEnum.FacebookAds:
         this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'add');
         this._wizardFormService.updateFormDefaultFieldsToRender([
-          WizardDefaultFieldNamesEnum.Instruction, 
+          WizardDefaultFieldNamesEnum.Instruction,
           WizardDefaultFieldNamesEnum.AmountOfVariants
         ], 'del');
         break;
@@ -181,9 +184,9 @@ export class WizardUseCaseService {
       case WizardCreatorLearningUseCasesEnum.HowTo:
         this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'del');
         this._wizardFormService.updateFormDefaultFieldsToRender([
-          WizardDefaultFieldNamesEnum.GtpVersion, 
-          WizardDefaultFieldNamesEnum.ImaginationSelector, 
-          WizardDefaultFieldNamesEnum.Instruction, 
+          WizardDefaultFieldNamesEnum.GtpVersion,
+          WizardDefaultFieldNamesEnum.ImaginationSelector,
+          WizardDefaultFieldNamesEnum.Instruction,
           WizardDefaultFieldNamesEnum.OutputLang], 'add');
 
         break;
@@ -252,7 +255,7 @@ export class WizardUseCaseService {
   updateQueryParamsWithUseCase(useCase: string) {
     const queryParams = {
       ...this._activeRoute.snapshot.queryParams
-      };
+    };
 
     queryParams[QueryParamNames.UseCase] = useCase;
     queryParams[QueryParamNames.UseCageGroup] = this._wizardUseCaseGroup;
@@ -268,7 +271,7 @@ export class WizardUseCaseService {
 
   handleUseCaseCache(useCase: string, useCaseGroup: string) {
     this._cacheService.setUseCaseData(useCase, this._wizardUseCaseGroup)
-    
+
     const latestFormData = this._cacheService.getWizardDataByUseCase(useCase, useCaseGroup);
     if (latestFormData) {
       this._wizardFormService.setWizardFormData(latestFormData);
@@ -286,9 +289,9 @@ export class WizardUseCaseService {
    */
   useCaseMetaData(useCase: string): UseCaseMeta {
     const metaDataList = [
-      ...useCaseMeta_GeneralWriting, 
-      ...useCaseMeta_Marketing, 
-      ...useCaseMeta_Social, 
+      ...useCaseMeta_GeneralWriting,
+      ...useCaseMeta_Marketing,
+      ...useCaseMeta_Social,
       ...useCaseMeta_Coding,
       ...useCaseMeta_Internal,
       ...useCaseMeta_Learning,
@@ -305,6 +308,11 @@ export class WizardUseCaseService {
         useCaseName: 'default'
       }
     }
+  }
+
+
+  public get showGenerateBtn(): boolean {
+    return !this.showingUseCasesSelector;
   }
 
 

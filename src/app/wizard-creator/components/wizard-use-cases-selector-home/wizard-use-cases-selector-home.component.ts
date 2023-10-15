@@ -73,6 +73,7 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
       if (useCase) {
         this.selectedCase = useCase;
         this.showUseCases = false;
+        this._useCaseService.showingUseCasesSelector = false;
         this.selectedUseCaseGroup = '';
       }
     })
@@ -135,6 +136,7 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
 
   toggleUseCases() {
     this.showUseCases = !this.showUseCases;
+    this._useCaseService.showingUseCasesSelector = this.showUseCases;
   }
 
   /**

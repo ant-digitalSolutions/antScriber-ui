@@ -61,6 +61,8 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
 
   isMobile: boolean = false;
 
+// showGenerateBtn = false;
+
   constructor(
     private _wizardCreatorService: WizardCreatorService,
     private projectService: BlogProjectsService,
@@ -221,4 +223,10 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
   checkIfMobile() {
     this.isMobile = (window.innerWidth < 960);
   }
+
+  
+  public get showGenerateBtn() : boolean {
+    return this._useCaseService.showGenerateBtn;
+  }
+  
 }
