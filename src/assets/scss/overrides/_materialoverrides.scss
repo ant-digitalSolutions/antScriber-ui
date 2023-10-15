@@ -204,3 +204,11 @@ input.mat-input-element {
     }
   }
 }
+
+[mattooltipposition] {
+  touch-action: auto !important;
+}
+
+[mattooltip] {
+  touch-action: auto !important;
+}
