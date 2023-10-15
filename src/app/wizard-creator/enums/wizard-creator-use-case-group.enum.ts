@@ -8,17 +8,17 @@ import { OptionField } from "src/app/common/dto/option-field.dto";
  * @enum {number}
  */
 export enum WizardCreatorUseCaseGroup {
-    Coding = 'Coding',
-    WebsiteCopy = 'Website Copy',
-    InternalDev = 'Internal Dev', // contains use cases that will be used for us for internal porpuses. Remove when prod
+    SocialMedia = 'Social Media',
     AdsAndMarketing = 'Ads and Marketing',
-    GeneralWriting = 'General Writing',
     Learning = 'Learning',
-   SocialMedia = 'Social Media',
+    WebsiteCopy = 'Website Copy',
+    Coding = 'Coding',
+    InternalDev = 'Internal Dev', // contains use cases that will be used for us for internal porpuses. Remove when prod
+    GeneralWriting = 'General Writing',
    ArticlesAndBlog = 'Blogging & Articles',
    Ecommerce = 'E-Commerce',
-   Business = 'Business',
-   Design = 'Design',
+//    Business = 'Business',
+//    Design = 'Design',
 }
 
 export function wizardCreatorUseCaseGroupList(): string[] {
