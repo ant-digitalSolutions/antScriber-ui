@@ -26,7 +26,6 @@
     [placeholder]="fieldData.placeholder"
     (blur)="saveEdition()"
     *ngIf="fieldData.isLongText"
-    [matTooltip]="fieldData.tooltipText!"
     [required]="isRequired"
   ></textarea>
   <mat-hint align="end">{{ length }}/{{ maxLen }}</mat-hint>
