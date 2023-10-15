@@ -28,6 +28,8 @@
     (blur)="saveEdition()"
     *ngIf="fieldData.isLongText"
     [required]="isRequired"
+    [matTooltip]="fieldData.tooltipText!"
+    class="has-tooltip"
   ></textarea>
   <mat-hint align="end">{{ length }}/{{ maxLen }}</mat-hint>
   <mat-error *ngIf="fieldForm.invalid && showErrors">{{ getErrorMessage() }}</mat-error>

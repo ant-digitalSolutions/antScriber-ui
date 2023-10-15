@@ -1,7 +1,7 @@
  <mat-label class="d-block f-s-12 f-w-500  mat-subtitle-2 p-l-6">{{
     fieldData.fieldLabel
   }}</mat-label>
-<mat-form-field class="w-100" [matTooltip]="fieldData.tooltipText!">
+<mat-form-field class="w-100 has-tooltip" [matTooltip]="fieldData.tooltipText!">
   <mat-select [formControl]="form">
     <mat-option *ngFor="let item of fieldData.values" [value]="item.value">
       {{ item.text }}
