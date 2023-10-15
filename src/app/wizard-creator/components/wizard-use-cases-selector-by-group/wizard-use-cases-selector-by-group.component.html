@@ -3,6 +3,7 @@
         class="btn-use-case"
         (click)="selectUseCase(useCase.value)" 
         *ngFor="let useCase of useCases"
+        [disabled]="isDisabled(useCase.value)"
         >
         <img width="20" height="20" [src]="getIconUrl(useCase.value)" alt="use-case-icon"/>
         {{useCase.text}}</button>

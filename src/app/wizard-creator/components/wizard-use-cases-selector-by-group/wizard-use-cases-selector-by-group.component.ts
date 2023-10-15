@@ -42,5 +42,9 @@ export class WizardUseCasesSelectorByGroupComponent {
     return icons_getUrl(useCaseMeta.iconName);
   }
 
+  isDisabled(useCase: string): boolean {
+    const useCaseMeta = this._useCaseService.useCaseMetaData(useCase);
+    return !useCaseMeta.isAvailableForFreeUsers;
+  }
 
 }
