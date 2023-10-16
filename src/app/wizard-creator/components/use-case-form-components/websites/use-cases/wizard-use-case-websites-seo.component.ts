@@ -27,7 +27,7 @@ export class WizardUseCaseWebsitesSeoComponent extends UseCaseFormBaseComponent 
     });
 
     fieldsData.push({
-      placeholder: 'E.g., "antScribe Innovations"',
+      placeholder: `E.g., "${this.appName}"`,
       fieldLabel: 'Name of Business/Product (Optional)',
       fieldValue: '',
       validators: [Validators.maxLength(50)],
@@ -38,7 +38,7 @@ export class WizardUseCaseWebsitesSeoComponent extends UseCaseFormBaseComponent 
     });
 
     fieldsData.push({
-      placeholder: 'E.g., "antScribe assists in generating high-quality content effortlessly for businesses..."',
+      placeholder: `E.g., "${this.appName} assists in generating high-quality content effortlessly for businesses..."`,
       fieldLabel: 'Webpage Description',
       fieldValue: '',
       validators: [Validators.required, Validators.maxLength(600), Validators.minLength(20)],
@@ -49,7 +49,7 @@ export class WizardUseCaseWebsitesSeoComponent extends UseCaseFormBaseComponent 
     });
 
     fieldsData.push({
-      placeholder: 'E.g., "antScribe, content generation, AI writing"',
+      placeholder: `E.g., "${this.appName}, content generation, AI writing"`,
       fieldLabel: 'Keywords (Optional)',
       fieldValue: '',
       validators: [Validators.maxLength(100)],

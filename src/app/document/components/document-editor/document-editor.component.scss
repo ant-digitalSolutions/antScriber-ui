@@ -23,20 +23,7 @@
       align-items: center;
       width: 90%;
 
-      .name-editor-mat-field {
-        width: 100%;
-        min-width: 400px;
-        mat-form-field {
-          width: 100%;
-          font-size: 18px;
-          font-weight: 500;
-          height: 65px;
-        }
-
-        .mat-mdc-text-field-wrapper {
-          background-color: transparent;
-        }
-      }
+   
     }
 
     .options-container {

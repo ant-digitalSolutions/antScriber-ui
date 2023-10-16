@@ -29,7 +29,6 @@
 
 @import "src/assets/scss/_variables.scss";
 
-
 .mat-mdc-menu-content {
   display: flex;
   flex-direction: column;
@@ -223,17 +222,40 @@ input.mat-input-element {
 .mdc-text-field .mdc-text-field__input {
   &::placeholder {
     // color: red !important;
-  color: $placeholder-color !important;
-  // font-size: 0.8rem;
-
-
+    color: $placeholder-color !important;
+    // font-size: 0.8rem;
   }
 }
 
 // Field hints
 .mat-mdc-form-field-hint {
-    font-size: 0.60rem !important;
+  font-size: 0.6rem !important;
 
-    font-weight: 600 !important;
+  font-weight: 600 !important;
+}
 
+// document name editor
+
+.name-editor-mat-field {
+  max-width: 500px;
+  width: 100%;
+  margin-top: 2px;
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none !important;
+  }
+
+  .mat-mdc-form-field-infix {
+    padding: 0 !important;
+  }
+
+  .mat-mdc-form-field {
+    height: 24px !important;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .mat-mdc-text-field-wrapper {
+    background-color: transparent;
+  }
 }
