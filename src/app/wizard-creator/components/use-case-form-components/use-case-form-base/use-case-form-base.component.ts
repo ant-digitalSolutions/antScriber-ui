@@ -5,6 +5,7 @@ import { CheckboxFieldToRenderData } from 'src/app/common/interfaces/checkbox-fi
 import { TextFieldToRenderData } from 'src/app/common/interfaces/textfield-to-render-data';
 import { WizardUseCaseService } from 'src/app/wizard-creator/services/use-case/wizard-use-case.service';
 import { WizardFormService } from 'src/app/wizard-creator/services/wizard-form.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-use-case-form-base',
@@ -13,6 +14,8 @@ import { WizardFormService } from 'src/app/wizard-creator/services/wizard-form.s
 })
 export class UseCaseFormBaseComponent {
   componentDestroyed$: Subject<boolean> = new Subject();
+
+  appName = environment.appName;
 
   constructor(
     public _wizardFormService: WizardFormService) {

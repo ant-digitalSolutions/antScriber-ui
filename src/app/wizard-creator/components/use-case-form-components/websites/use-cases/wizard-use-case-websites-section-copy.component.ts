@@ -16,7 +16,7 @@ export class WizardUseCaseWebsitesSectionCopyComponent extends UseCaseFormBaseCo
     const fieldsData: TextFieldToRenderData[] = [];
 
     fieldsData.push({
-      placeholder: 'E.g., antScribe Solutions',
+      placeholder: `E.g., ${this.appName}`,
       fieldLabel: 'Business/Product Name',
       fieldValue: '',
       validators: [Validators.maxLength(50), Validators.required],
@@ -38,7 +38,7 @@ export class WizardUseCaseWebsitesSectionCopyComponent extends UseCaseFormBaseCo
     });
 
     fieldsData.push({
-      placeholder: 'E.g., antScribe is an innovative platform assisting users in crafting high-quality content effortlessly...',
+      placeholder: `E.g., ${this.appName} is an innovative platform assisting users in crafting high-quality content effortlessly...`,
       fieldLabel: 'Section Description',
       fieldValue: '',
       validators: [Validators.required, Validators.maxLength(600), Validators.minLength(20)],
@@ -49,7 +49,7 @@ export class WizardUseCaseWebsitesSectionCopyComponent extends UseCaseFormBaseCo
     });
 
     fieldsData.push({
-      placeholder: 'E.g., antScribe, virtual assistant',
+      placeholder: `E.g., ${this.appName}, virtual assistant`,
       fieldLabel: 'Section Keywords',
       fieldValue: '',
       validators: [Validators.maxLength(250)],
