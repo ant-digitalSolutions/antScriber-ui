@@ -32,6 +32,6 @@
     class="has-tooltip"
   ></textarea>
   <mat-hint align="end">{{ length }}/{{ maxLen }}</mat-hint>
-  <mat-error *ngIf="fieldForm.invalid && showErrors">{{ getErrorMessage() }}</mat-error>
+  <mat-error *ngIf="showErrors">{{ getErrorMessage() }}</mat-error>
 </mat-form-field>
 </div>

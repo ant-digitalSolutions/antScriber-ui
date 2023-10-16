@@ -35,7 +35,7 @@ export class WizardCreatorService {
     formData.data = this._wizardForm.additionalData;
 
     if (!this._wizardForm.checkAdditionalData()) {
-      this._snackBar.open('Please check the data',undefined,{
+      this._snackBar.open(`Oops, something's not right in the form.Please review your inputs.`,undefined,{
         duration: 2000,
         panelClass: 'snack-warning'
       });

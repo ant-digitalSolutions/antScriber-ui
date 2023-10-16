@@ -31,8 +31,6 @@ export class WizardCreatorTextFieldComponent {
 
   isRequired = false;
 
-  showErrors = false;
-
   constructor(private toastr: ToastrService,
     private _wizardFormService: WizardFormService) {
   }
@@ -58,8 +56,8 @@ export class WizardCreatorTextFieldComponent {
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe(fieldName => {
         if (fieldName === this.fieldData.dataName) {
+          this.fieldForm.markAsTouched();
           this.fieldForm.markAsDirty();
-          this.showErrors = true;
         }
       });
 
@@ -93,18 +91,18 @@ export class WizardCreatorTextFieldComponent {
 
   getErrorMessage() {
     if (this.fieldForm.hasError('required')) {
-      return 'Please enter a value.';
+      return `Don't leave me hangin'! Required input.`;
     }
     if (this.fieldForm.hasError('min')) {
       return 'The value entered is too small. Provide more context';
     }
     if (this.fieldForm.hasError('minlength')) {
-      return`Please provide more context. The minimum length is: ${this.fieldForm.getError('minlength').requiredLength}`;
+      return`Oops, it's a bit short! Please expand to at least ${this.fieldForm.getError('minlength').requiredLength} chars`;
     }
     if (this.fieldForm.hasError('maxlength')) {
-      return `Your context is too long. The maximum length allowed is: ${this.fieldForm.getError('maxlength').requiredLength}`;
+      return `Please limit your input length to: ${this.fieldForm.getError('maxlength').requiredLength} chars.`;
     }
-    return 'An error occurred with your input.';
+    return 'Please check your input.';
   }
 
 
@@ -115,6 +113,10 @@ export class WizardCreatorTextFieldComponent {
 
   public get maxLen(): number {
     return this.fieldData.inputMaxLen;
+  }
+
+  public get showErrors(): boolean {
+    return this.fieldForm.invalid && this.fieldForm.dirty;
   }
 
 
