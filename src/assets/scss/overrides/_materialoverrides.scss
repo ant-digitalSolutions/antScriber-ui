@@ -67,6 +67,11 @@ mat-tab-group {
   }
 }
 
+.mat-mdc-form-field-error {
+    color: $error;
+    font-size: 0.7rem;
+}
+
 .mat-mdc-form-field {
   background-color: transparent;
 

@@ -117,7 +117,12 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
     this._useCaseService.wizardUseCase$.pipe(takeUntil(this.componentDestroyed$))
     .subscribe(() => {
       this.useCaseSelected = true;
-    })
+    });
+
+    this._wizardFormService
+    .additionalDataFieldWithError$.pipe(takeUntil(this.componentDestroyed$))
+    .subscribe(() => this.scrollToWizardInputWithError())
+
 
   }
 
@@ -222,6 +227,11 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
 
   checkIfMobile() {
     this.isMobile = (window.innerWidth < 960);
+  }
+
+  scrollToWizardInputWithError() {
+    const element = document.querySelector('.wizard-field-with-error') as HTMLElement;
+    element.scrollIntoView();
   }
 
   
