@@ -52,6 +52,7 @@ $violet-english:#5C415D;
 $violet-ultra: #565676;
 $purple: #6B0AB1;
 $red: #D90429;
+$red-dark: #721c24;
 $space-cadet: #2B2D42;
 $turquoise: #72E1D1;
 
@@ -92,6 +93,9 @@ $btn-create-container-bc: $background;
 
 // input fields
 $placeholder-color: lighten($textPrimary, 40%);
+$error-container-bc: #f8d7da;
+$error-font-color: $red-dark;
+$error-container-border-color: #f5c6cb;
 
 
 

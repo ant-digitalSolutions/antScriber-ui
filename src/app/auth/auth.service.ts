@@ -23,8 +23,8 @@ export class AuthService {
           if (res.success) {
             this.setSession(res.data)
           } else {
-            console.error('There is an issue with the Registration')
-            console.error(res.error);
+            // console.error('There is an issue with the Registration')
+            // console.error(res.error);
           }
         }),
         shareReplay()

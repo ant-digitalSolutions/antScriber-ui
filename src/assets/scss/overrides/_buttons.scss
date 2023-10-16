@@ -41,6 +41,13 @@
   flex-direction: column;
 }
 
+.mdc-button__label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
 .btn-small {
   height: 25px;
   padding: 8;

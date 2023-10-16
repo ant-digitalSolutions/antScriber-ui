@@ -11,6 +11,7 @@ import { ForgotPassComponent } from './forgot-pass/forgot-pass.component';
 import { AuthRoutes } from './auth.routing';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
+import {  MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 
@@ -30,6 +31,7 @@ import { LoginComponent } from './login/login.component';
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
+    MatProgressSpinnerModule
   ]
 })
 export class AuthModule { }

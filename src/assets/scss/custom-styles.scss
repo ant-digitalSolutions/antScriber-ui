@@ -1,0 +1,15 @@
+@import "src/assets/scss/_variables.scss";
+
+// Error styles
+.error-message-container {
+  p {
+    border: 1px solid $error-container-border-color;
+    background-color: $error-container-bc;
+    color: $error-font-color;
+    font-size: 0.8rem;
+    text-align: center;
+        padding: 6px 5px;
+    border-radius: 5px;
+
+  }
+}
