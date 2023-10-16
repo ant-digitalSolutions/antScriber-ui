@@ -17,7 +17,7 @@ export class LoginComponent {
   constructor(private settings: CoreService, private router: Router, private authService: AuthService) { }
 
   form = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    email: new FormControl('', [Validators.required, Validators.minLength(6),Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
 

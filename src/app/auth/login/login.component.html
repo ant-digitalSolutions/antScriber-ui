@@ -81,7 +81,7 @@
 
             <form class="m-t-30" [formGroup]="form" (ngSubmit)="submit()">
               <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-                >Username</mat-label
+                >Email</mat-label
               >
               <mat-form-field
                 class="w-100"
@@ -96,13 +96,19 @@
                     class="text-error"
                     *ngIf="f['email'].errors && f['email'].errors['required']"
                   >
-                    Name is required.
+                    Email is required.
                   </div>
                   <div
                     class="text-error"
                     *ngIf="f['email'].errors && f['email'].errors['minlength']"
                   >
-                    Name should be 6 character.
+                    Email should be 6 character.
+                  </div>
+                    <div
+                    class="text-error"
+                    *ngIf="f['email'].errors && f['email'].errors['email']"
+                  >
+                    The email is not valid.
                   </div>
                 </mat-hint>
               </mat-form-field>
