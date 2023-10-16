@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms'
 import { Router } from '@angular/router';
@@ -15,6 +16,8 @@ export class RegisterComponent implements OnInit {
   form: FormGroup;
   isLoading = false;
   hasInvalidCredentials = false;
+
+  appName = environment.appName;
 
   constructor(
     private settings: CoreService,

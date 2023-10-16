@@ -1,4 +1,5 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://devbrain.adfluens.io/api/'
+    apiUrl: 'https://devbrain.adfluens.io/api/',
+    appName: 'adFluens'
 };

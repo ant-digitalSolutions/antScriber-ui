@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { CoreService } from 'src/app/services/core.service';
 import { AuthService } from '../auth.service';
 import { UserLogin } from '../dtos/login.dto';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,8 @@ export class LoginComponent {
   hasInvalidCredentials = false;
 
   isLoading = false;
+
+  appName = environment.appName;
 
   constructor(private settings: CoreService, private router: Router, private authService: AuthService) { }
 
