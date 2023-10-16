@@ -16,7 +16,7 @@ export class LoginComponent {
 
   hasInvalidCredentials = false;
 
-  isLoading = true;
+  isLoading = false;
 
   constructor(private settings: CoreService, private router: Router, private authService: AuthService) { }
 
