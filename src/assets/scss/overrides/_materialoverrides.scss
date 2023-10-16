@@ -70,11 +70,6 @@ mat-tab-group {
 .mat-mdc-form-field {
   background-color: transparent;
 
-  &.mat-form-field-invalid {
-    .mdc-text-field {
-      border: 1px solid rgb(141, 26, 26) !important;
-    }
-  }
   .mat-input-element {
     color: slategray;
     font-weight: 500;
@@ -95,6 +90,14 @@ mat-tab-group {
     border: 1px solid $borderColor;
     border-radius: 40px;
     background-color: #fff !important;
+
+    &.mdc-text-field--focused {
+       border: 1px solid $primary;
+    }
+
+    &.mdc-text-field--invalid {
+      border: 1px solid $error;
+    }
   }
 
   .mat-mdc-form-field-infix {
@@ -115,7 +118,7 @@ mat-tab-group {
 }
 
 .mat-form-field-appearance-fill .mat-mdc-select-arrow-wrapper {
-  transform: translateY(-3px) !important;
+  transform: translateY(0px) !important;
 }
 
 /* Border */
