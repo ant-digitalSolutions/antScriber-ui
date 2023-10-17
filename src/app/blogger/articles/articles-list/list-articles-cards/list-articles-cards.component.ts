@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { IArticleDetailsDto } from 'src/app/blogger/dto/article-details.dto';
 import { ArticleService } from 'src/app/blogger/services/article.service';
-import { environment } from 'src/environments/environment';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
 
 @Component({
   selector: 'app-list-articles-cards',
@@ -58,7 +58,7 @@ export class ListArticlesCardsComponent implements OnChanges {
   }
 
   imageFullPath(article: IArticleDetailsDto): string {
-    return environment.apiUrl + article.featureImagePath;
+    return getBaseApiURL() + article.featureImagePath;
   }
 
 

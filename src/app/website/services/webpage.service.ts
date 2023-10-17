@@ -9,13 +9,14 @@ import { WebpageSectionDto } from '../dtos/webpage-section.dto';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 import { WebpageSectionContentGeneratorDto } from '../dtos/webpage-section-generator.dto';
 import { ToastrService } from 'ngx-toastr';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
 
 @Injectable()
 export class WebpageService {
 
 
 
-  baseUrl = environment.apiUrl;
+  baseUrl = getBaseApiURL();
 
   private _webpageSectionsSubject = new ReplaySubject<WebpageSectionDto>();
   webpageSection$ = this._webpageSectionsSubject.asObservable();

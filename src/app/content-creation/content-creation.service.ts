@@ -1,17 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { ICompletionText } from './dto/ICompletionText.dto';
 import { Observable } from 'rxjs';
 import { IOpenAiMessage } from './dto/openAi-choice.dto';
 import { ArticleGenerationParamsDto } from './dto/generate-article.dto';
 import { IArticleFromAiResponseDto } from './article/dtos/article-from-ai.dto';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
 
 @Injectable()
 export class ContentCreationService {
 
 
-  baseUrl: string = environment.apiUrl;
+  baseUrl: string = getBaseApiURL();
 
   constructor(private http: HttpClient) { }
 

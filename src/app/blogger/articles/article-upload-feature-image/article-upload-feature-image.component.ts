@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { ArticleService } from '../../services/article.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
 
 @Component({
   selector: 'app-article-upload-feature-image',
@@ -63,7 +63,7 @@ export class ArticleUploadFeatureImageComponent implements OnInit, OnDestroy {
 
   
   public get imagePath() : string {
-   return environment.apiUrl + this.featureImagePath;
+   return getBaseApiURL() + this.featureImagePath;
   }
   
 }

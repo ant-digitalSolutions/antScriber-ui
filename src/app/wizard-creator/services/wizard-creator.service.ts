@@ -9,17 +9,15 @@ import { DocumentService } from 'src/app/document/services/document.service';
 import { WizardFormService } from './wizard-form.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CacheService } from 'src/app/common/services/cache/cache.service';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
 
 @Injectable()
 export class WizardCreatorService {
 
-
-  baseUrl = environment.apiUrl + 'wizard-creator';
+  baseUrl = getBaseApiURL() + 'wizard-creator';
 
   private _wizardCreatedContent = new ReplaySubject<string | null>();
   wizardCreatedContent$ = this._wizardCreatedContent.asObservable();
-
- 
 
   constructor(
     private http: HttpClient,
@@ -35,7 +33,7 @@ export class WizardCreatorService {
     formData.data = this._wizardForm.additionalData;
 
     if (!this._wizardForm.checkAdditionalData()) {
-      this._snackBar.open(`Oops, something's not right in the form.Please review your inputs.`,undefined,{
+      this._snackBar.open(`Oops, something's not right in the form.Please review your inputs.`, undefined, {
         duration: 2000,
         panelClass: 'snack-warning'
       });
@@ -43,7 +41,7 @@ export class WizardCreatorService {
     }
 
     // this.saveDataOnCache(formData.data, formData.data.useCase, formData.data.useCaseGroup);
-   
+
 
     return this.http.post<IRequestResponse<string>>(this.baseUrl + '/generate', formData)
       .pipe(tap(r => {

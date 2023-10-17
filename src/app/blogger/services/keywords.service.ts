@@ -4,11 +4,12 @@ import { BlogProjectsService } from './blog-projects.service';
 import { Observable, ReplaySubject, Subject, tap } from 'rxjs';
 import { KeywordDetailsDto } from '../dto/keywords/keyword-details.dto';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
 
 @Injectable()
 export class KeywordsService {
 
-  baseUrl = environment.apiUrl + 'keywords/';
+  baseUrl = getBaseApiURL() + 'keywords/';
   selectedProjectId: number;
 
   private _keywordSearchResult = new ReplaySubject<KeywordDetailsDto[]>();

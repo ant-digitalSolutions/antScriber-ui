@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { UserLogin } from './dtos/login.dto';
 import { HttpClient } from '@angular/common/http';
 import { Observable, shareReplay, tap } from 'rxjs';
 import * as moment from 'moment';
 import { IRequestResponse } from '../common/dto/request-response.dto';
 import { UserRegisterDto } from './dtos/user-register.dto';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  baseUrl: string = environment.apiUrl;
+  baseUrl: string = getBaseApiURL();
 
   constructor(private http: HttpClient) { }
 
