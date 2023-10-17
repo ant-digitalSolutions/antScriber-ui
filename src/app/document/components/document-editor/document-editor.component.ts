@@ -1,3 +1,4 @@
+import { InlineEditor } from '@ckeditor/ckeditor5-editor-inline';
 import { AfterViewInit, Component, HostListener, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { DocumentService } from '../../services/document.service';
 import { DocumentDetailsDto } from '../../dtos/document-details.dto';
@@ -12,6 +13,7 @@ import { P } from '@angular/cdk/keycodes';
 import { configs_UI } from 'src/app/common/configs/ui.config';
 
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
+import dxHtmlEditor from 'devextreme/ui/html_editor';
 
 
 @Component({
@@ -34,7 +36,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
 
 
 
-  public Editor = Editor as {create: any};
+  public editor = Editor;
 
 
   componentDestroyed$: Subject<boolean> = new Subject();
@@ -49,6 +51,8 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
   docNameForm: FormControl;
 
   editorHeight: string;
+
+  _editor: InlineEditor;
 
 
 
@@ -71,7 +75,16 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   ngAfterViewInit(): void {
-    this.setScrollListener()
+    this.setScrollListener();
+
+    //Editor.create(document.getElementById('editor')!, defaultConfig)
+
+    const ed = this.editor.create(document.getElementById('editor')!, defaultConfig)
+      .then(editor => {
+        // editor.execute('horizontalLine');
+        editor.setData(this.documentContent)
+        this._editor = editor;
+      });
   }
 
   setListerners() {
@@ -83,13 +96,15 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
       })
 
     this._docService.newDocUpdate$.pipe(takeUntil(this.componentDestroyed$))
-      .subscribe(() => {
-        this.newContentAmount++;
+      .subscribe((newContent) => {
+      this.handleNewContent(newContent);
       })
   }
 
+
+
   saveEditorChanges() {
-    this._docService.update(this.documentId,{ content: this.documentContent }).subscribe();
+    this._docService.update(this.documentId,{ content: this._editor.getData() }).subscribe();
   }
 
   updateDocName() {
@@ -159,7 +174,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
 
 
   setEditorHeight() {
-    this.editorHeight = `${window.innerHeight - configs_UI.main_navbar_height - configs_UI.internal_navbar_height}px`;
+   // this.editorHeight = `${window.innerHeight - configs_UI.main_navbar_height - configs_UI.internal_navbar_height}px`;
   }
 
   newContentNotificationClick() {
@@ -175,6 +190,42 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
 
   dismissNewContentNoti() {
     this.newContentAmount = 0;
+  }
+
+  handleNewContent(newContent: string): void {
+    // separator logic
+    const editor = document.querySelector('#editor')!;
+    const newContentSeparator = editor.querySelector('.new-content');
+    let currentData = this._editor.getData();
+
+
+    if (!newContentSeparator) {
+      currentData += '<p class="new-content"></p>';
+    }
+
+    //  this._docService.documentInEdition!.content += newContent;
+    currentData += newContent;
+    this._editor.setData(currentData);
+    this.newContentAmount++;
+  }
+
+  editor_addNewContentRedLine() {
+    // this._editor.execute('horizontalLine');
+    
+    const editor = document.querySelector('#editor')!;
+    const newContentSeparator = editor.querySelector('.new-content');
+
+    if (!newContentSeparator) {
+      let currentData = this._editor.getData();
+      currentData += '<div class="new-content"></div>';
+      this._editor.setData(currentData);
+    }
+    // const ed = this.editor.create(document.getElementById('editor')!, defaultConfig)
+    // .then(editor => {
+    //   editor.execute('horizontalLine')
+    // });
+    // Editor.exc
+    
   }
 
 
@@ -193,4 +244,62 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
 
 
 
+}
+
+const defaultConfig = {
+  toolbar: {
+    items: [
+      'heading',
+      '|',
+      'bold',
+      'italic',
+      'link',
+      'bulletedList',
+      'numberedList',
+      'todoList',
+      '|',
+      'outdent',
+      'indent',
+      '|',
+      // 'horizontalLine',
+      'code',
+      'codeBlock',
+      'blockQuote',
+      'insertTable',
+      'htmlEmbed',
+      'undo',
+      'redo'
+    ]
+  },
+  language: 'en',
+  table: {
+    contentToolbar: [
+      'tableColumn',
+      'tableRow',
+      'mergeTableCells'
+    ]
+  },
+  htmlSupport: {
+    allow: [
+      {
+        name: 'p',
+        classes: ['new-content', 'not-seen']
+      },
+    ]
+  }, 
+  autosave: {
+    waitingTime: 500, // in ms
+    save(editor: any) {
+      return saveData(editor.getData());
+    }
+  },
+};
+
+function saveData(data:any) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      console.log('Saved', data);
+
+    });
+  });
 }

@@ -34,7 +34,7 @@ export class DocumentService {
   wizardTableElements$ = this._wizardTableElements.asObservable();
 
   // emit when there is a new update on the current document
-  private _newDocUpdate = new Subject<void>();
+  private _newDocUpdate = new Subject<string>();
   newDocUpdate$ = this._newDocUpdate.asObservable();
 
   // emit after a result for query the available folders
@@ -258,9 +258,9 @@ export class DocumentService {
     if (!this.documentInEditionId) {
       this.create(creatorDescription, newContent).subscribe();
     } else {
-      this._documentInEditionData!.content += '<p>---</p>'
-      this._documentInEditionData!.content += newContent;
-      this._newDocUpdate.next();
+      // this._documentInEditionData!.content += '<div class="new-content">-/-/-</div>'
+      // this._documentInEditionData!.content += newContent;
+      this._newDocUpdate.next(newContent);
     }
   }
 

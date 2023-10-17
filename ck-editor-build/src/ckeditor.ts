@@ -5,25 +5,26 @@
 
 import { InlineEditor } from '@ckeditor/ckeditor5-editor-inline';
 
-import { Autosave } from '@ckeditor/ckeditor5-autosave';
-import {
-	Bold,
-	Code,
-	Italic,
-	Strikethrough,
-	Subscript,
-	Superscript
-} from '@ckeditor/ckeditor5-basic-styles';
+import { Autoformat } from '@ckeditor/ckeditor5-autoformat';
+import { Bold, Code, Italic } from '@ckeditor/ckeditor5-basic-styles';
 import { BlockQuote } from '@ckeditor/ckeditor5-block-quote';
 import { CodeBlock } from '@ckeditor/ckeditor5-code-block';
 import { Essentials } from '@ckeditor/ckeditor5-essentials';
 import { Heading } from '@ckeditor/ckeditor5-heading';
 import { HorizontalLine } from '@ckeditor/ckeditor5-horizontal-line';
-import { DataFilter, GeneralHtmlSupport } from '@ckeditor/ckeditor5-html-support';
+import { HtmlEmbed } from '@ckeditor/ckeditor5-html-embed';
+import { GeneralHtmlSupport, HtmlComment } from '@ckeditor/ckeditor5-html-support';
+import {
+	Image,
+	ImageCaption,
+	ImageStyle,
+	ImageToolbar,
+	ImageUpload
+} from '@ckeditor/ckeditor5-image';
 import { Indent } from '@ckeditor/ckeditor5-indent';
 import { Link } from '@ckeditor/ckeditor5-link';
 import { List, TodoList } from '@ckeditor/ckeditor5-list';
-import { Markdown } from '@ckeditor/ckeditor5-markdown-gfm';
+import { MediaEmbed } from '@ckeditor/ckeditor5-media-embed';
 import { Paragraph } from '@ckeditor/ckeditor5-paragraph';
 import { PasteFromOffice } from '@ckeditor/ckeditor5-paste-from-office';
 import { Style } from '@ckeditor/ckeditor5-style';
@@ -36,27 +37,30 @@ import { WordCount } from '@ckeditor/ckeditor5-word-count';
 
 class Editor extends InlineEditor {
 	public static override builtinPlugins = [
-		Autosave,
+		Autoformat,
 		BlockQuote,
 		Bold,
 		Code,
 		CodeBlock,
-		DataFilter,
 		Essentials,
 		GeneralHtmlSupport,
 		Heading,
 		HorizontalLine,
+		HtmlComment,
+		HtmlEmbed,
+		Image,
+		ImageCaption,
+		ImageStyle,
+		ImageToolbar,
+		ImageUpload,
 		Indent,
 		Italic,
 		Link,
 		List,
-		Markdown,
+		MediaEmbed,
 		Paragraph,
 		PasteFromOffice,
-		Strikethrough,
 		Style,
-		Subscript,
-		Superscript,
 		Table,
 		TableToolbar,
 		TextTransformation,
@@ -74,20 +78,29 @@ class Editor extends InlineEditor {
 				'link',
 				'bulletedList',
 				'numberedList',
-				'todoList',
 				'|',
 				'outdent',
 				'indent',
 				'|',
-				'code',
-				'codeBlock',
+				'imageUpload',
 				'blockQuote',
 				'insertTable',
+				'mediaEmbed',
 				'undo',
-				'redo'
+				'redo',
+				'codeBlock'
 			]
 		},
 		language: 'en',
+		image: {
+			toolbar: [
+				'imageTextAlternative',
+				'toggleImageCaption',
+				'imageStyle:inline',
+				'imageStyle:block',
+				'imageStyle:side'
+			]
+		},
 		table: {
 			contentToolbar: [
 				'tableColumn',
