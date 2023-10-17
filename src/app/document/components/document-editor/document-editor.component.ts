@@ -8,8 +8,11 @@ import { Validators } from 'ngx-editor';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { P } from '@angular/cdk/keycodes';
-import BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
+// import BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import { configs_UI } from 'src/app/common/configs/ui.config';
+
+import Editor from 'ckeditor5-custom-build/build/ckeditor';
+
 
 @Component({
   selector: 'app-document-editor',
@@ -31,7 +34,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
 
 
 
-  public Editor = BalloonEditor;
+  public Editor = Editor as {create: any};
 
 
   componentDestroyed$: Subject<boolean> = new Subject();
