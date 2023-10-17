@@ -76,7 +76,7 @@
 
 // CK EDitor Styles
 
-ckeditor {
+#editor-element-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -89,8 +89,26 @@ ckeditor {
     padding: 25px 5% !important;
     padding-bottom: 50px !important;
     min-height: calc(100dvh - $header-height - $inner-navbar-height);
-        border: none !important;
+    border: none !important;
     box-shadow: none;
     background-color: $editor-bc;
+
+    .new-content {
+      border-top: solid 2px indianred;
+      position: relative;
+      // padding-right: 20px;
+      // margin-left: 60px;
+      span {
+        position: absolute;
+        left: 0;
+        right: auto;
+        top: -12px;
+        font-weight: 600;
+        z-index: 99;
+            background-color: $editor-bc;
+
+        padding-right: 10px;
+      }
+    }
   }
 }

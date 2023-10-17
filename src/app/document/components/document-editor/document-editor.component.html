@@ -1,9 +1,6 @@
 <div class="doc-editor-outer-container">
-
   <div class="editor-navbar-container">
-    
     <div class="btn-and-name-editor-container">
-      
       <button class="mini-fab-btn btn-goback" mat-mini-fab (click)="goback()">
         <mat-icon class="btn-mat-icon">arrow_back</mat-icon>
       </button>
@@ -11,46 +8,57 @@
       <div class="name-editor-mat-field">
         <!-- Incorporating Angular Material's mat-form-field component -->
         <mat-form-field class="full-width">
-          <input matInput placeholder="Enter document name" [formControl]="docNameForm" (blur)="updateDocName()">
+          <input
+            matInput
+            placeholder="Enter document name"
+            [formControl]="docNameForm"
+            (blur)="updateDocName()"
+          />
         </mat-form-field>
       </div>
-
     </div>
 
     <div class="options-container">
       <button class="mini-fab-btn" mat-mini-fab>
-        <mat-icon class="btn-mat-icon" fontSet="material-icons-outlined">more_vert</mat-icon>
+        <mat-icon class="btn-mat-icon" fontSet="material-icons-outlined"
+          >more_vert</mat-icon
+        >
       </button>
     </div>
-    
   </div>
 
   <div id="doc-editor-inner-container">
-
     <div class="new-content-noti-container" *ngIf="newContentAmount > 0">
-      <button mat-flat-button (click)="newContentNotificationClick()" color="primary" class="btn-noti btn-new-content">
-        <mat-icon >arrow_downward</mat-icon>
+      <button
+        mat-flat-button
+        (click)="newContentNotificationClick()"
+        color="primary"
+        class="btn-noti btn-new-content"
+      >
+        <mat-icon>arrow_downward</mat-icon>
         <!-- <mat-icon>step_into</mat-icon> -->
- <span id="new-content-amount">{{newContentAmount}}&nbsp;</span>
+        <span id="new-content-amount">{{ newContentAmount }}&nbsp;</span>
         new
-        <span *ngIf="newContentAmount === 1">creation</span> 
+        <span *ngIf="newContentAmount === 1">creation</span>
 
-        <span *ngIf="newContentAmount > 1">creations</span> 
-       
+        <span *ngIf="newContentAmount > 1">creations</span>
       </button>
-      <button mat-flat-button class="btn-noti btn-dismiss" color="primary" (click)="dismissNewContentNoti()">
+      <button
+        mat-flat-button
+        class="btn-noti btn-dismiss"
+        color="primary"
+        (click)="dismissNewContentNoti()"
+      >
         <mat-icon>close</mat-icon>
       </button>
     </div>
 
-    <div id="editor-element-container" [ngStyle]="{'height': [editorHeight]}">
-  <!-- <ckeditor [editor]="editor" [(ngModel)]="documentContent" (blur)="saveEditorChanges()" id="editor" ></ckeditor> -->
-  <!-- <ckeditor [editor]="Editor" [data]="documentContent" (blur)="saveEditorChanges()" id="editor" ></ckeditor> -->
-  <div id="editor" ></div>
-
-  </div>
+    <div id="editor-element-container" [ngStyle]="{ height: [editorHeight] }">
+      <!-- <ckeditor [editor]="editor" [(ngModel)]="documentContent" (blur)="saveEditorChanges()" id="editor" ></ckeditor> -->
+      <!-- <ckeditor [editor]="Editor" [data]="documentContent" (blur)="saveEditorChanges()" id="editor" ></ckeditor> -->
+      <div id="document-editor"></div>
+    </div>
   </div>
 
   <!-- <div [innerHTML]="documentContent"></div> -->
-
 </div>

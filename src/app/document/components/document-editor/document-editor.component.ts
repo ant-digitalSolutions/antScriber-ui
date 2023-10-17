@@ -1,19 +1,15 @@
 import { InlineEditor } from '@ckeditor/ckeditor5-editor-inline';
 import { AfterViewInit, Component, HostListener, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { DocumentService } from '../../services/document.service';
-import { DocumentDetailsDto } from '../../dtos/document-details.dto';
 import { Subject, take, takeUntil } from 'rxjs';
-import { WizardCreatorService } from 'src/app/wizard-creator/services/wizard-creator.service';
 import { FormControl } from '@angular/forms';
 import { Validators } from 'ngx-editor';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
-import { P } from '@angular/cdk/keycodes';
 // import BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import { configs_UI } from 'src/app/common/configs/ui.config';
-
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
-import dxHtmlEditor from 'devextreme/ui/html_editor';
+
+
 
 
 @Component({
@@ -52,7 +48,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
 
   editorHeight: string;
 
-  _editor: InlineEditor;
+  _editor: any;
 
 
 
@@ -79,7 +75,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
 
     //Editor.create(document.getElementById('editor')!, defaultConfig)
 
-    const ed = this.editor.create(document.getElementById('editor')!, defaultConfig)
+    const ed = this.editor.create(document.getElementById('document-editor')!, defaultConfig)
       .then(editor => {
         // editor.execute('horizontalLine');
         editor.setData(this.documentContent)
@@ -97,14 +93,20 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
 
     this._docService.newDocUpdate$.pipe(takeUntil(this.componentDestroyed$))
       .subscribe((newContent) => {
-      this.handleNewContent(newContent);
+        this.handleNewContent(newContent);
+      })
+
+    this._docService.documentInEdition$.pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(d => {
+        if (d)
+          this._editor.setData(d.content);
       })
   }
 
 
 
   saveEditorChanges() {
-    this._docService.update(this.documentId,{ content: this._editor.getData() }).subscribe();
+    this._docService.update(this.documentId, { content: this._editor.getData() }).subscribe();
   }
 
   updateDocName() {
@@ -161,7 +163,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
    */
   checkIfScrollTillBottom() {
     var editorContainer = document.getElementById("editor-element-container");
-    var docEditor = document.getElementById("doc-editor");
+    var docEditor = document.getElementById("document-editor");
 
     const scrollTop = editorContainer!.scrollTop + editorContainer!.clientHeight;
     const height = docEditor!.clientHeight;
@@ -174,7 +176,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
 
 
   setEditorHeight() {
-   // this.editorHeight = `${window.innerHeight - configs_UI.main_navbar_height - configs_UI.internal_navbar_height}px`;
+    this.editorHeight = `${window.innerHeight - 45 - configs_UI.main_navbar_height - configs_UI.internal_navbar_height}px`;
   }
 
   newContentNotificationClick() {
@@ -194,13 +196,15 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
 
   handleNewContent(newContent: string): void {
     // separator logic
-    const editor = document.querySelector('#editor')!;
+    const editor = document.querySelector('#document-editor')!;
     const newContentSeparator = editor.querySelector('.new-content');
     let currentData = this._editor.getData();
 
 
     if (!newContentSeparator) {
-      currentData += '<p class="new-content"></p>';
+      currentData += '<div class="new-content"><span>New Content</span></div>';
+    } else {
+      currentData += `<p>---</p>`
     }
 
     //  this._docService.documentInEdition!.content += newContent;
@@ -211,13 +215,13 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
 
   editor_addNewContentRedLine() {
     // this._editor.execute('horizontalLine');
-    
-    const editor = document.querySelector('#editor')!;
+
+    const editor = document.querySelector('#document-editor')!;
     const newContentSeparator = editor.querySelector('.new-content');
 
     if (!newContentSeparator) {
       let currentData = this._editor.getData();
-      currentData += '<div class="new-content"></div>';
+      currentData += '<div class="new-content"><span>New Content</span></div>';
       this._editor.setData(currentData);
     }
     // const ed = this.editor.create(document.getElementById('editor')!, defaultConfig)
@@ -225,7 +229,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
     //   editor.execute('horizontalLine')
     // });
     // Editor.exc
-    
+
   }
 
 
@@ -282,11 +286,14 @@ const defaultConfig = {
   htmlSupport: {
     allow: [
       {
-        name: 'p',
+        name: 'div',
+        classes: ['new-content', 'not-seen']
+      }, {
+        name: 'span',
         classes: ['new-content', 'not-seen']
       },
     ]
-  }, 
+  },
   autosave: {
     waitingTime: 500, // in ms
     save(editor: any) {
@@ -295,7 +302,7 @@ const defaultConfig = {
   },
 };
 
-function saveData(data:any) {
+function saveData(data: any) {
   return new Promise(resolve => {
     setTimeout(() => {
       console.log('Saved', data);

@@ -41,11 +41,11 @@
     }
   }
 
-  ckeditor {
+  #document-editor {
     // Styles for the ckeditor if required
+      min-height: calc(100dvh - 50px - 45px);
 
     .ck-content {
-      min-height: calc(100dvh - 50px - 45px);
     }
   }
 }
@@ -91,5 +91,6 @@
 
   #editor-element-container {
     overflow-y: auto;
+    margin-top: 40px;
   }
 }
