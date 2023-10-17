@@ -14,19 +14,14 @@ import { WizardTableElement } from '../dtos/wizard-table-element.dto';
 import { FolderDetailsDto } from '../dtos/folder-details.dto';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FolderUpdateDto } from '../dtos/folder-update.dto';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
 
 @Injectable({
   providedIn: 'root'
 })
 export class DocumentService {
 
-
-
-
-
-
-
-  baseUrl = environment.apiUrl + 'document';
+  baseUrl = getBaseApiURL() + 'document';
   selectedProjectId: any;
 
   private _documentResponse = new BehaviorSubject<DocumentDetailsDto | null>(null);

@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { BlogProjectCreateDto } from './dto/blog-project-create.dto';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { BlogProjectDetailsDto } from './dto/blog-project-details.dto';
 import { tap } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
 
 @Injectable({
   providedIn: 'root'
 })
 export class BloggerService {
 
-  baseUrl = environment.apiUrl;
+  baseUrl = getBaseApiURL();
 
   blogProjects: BlogProjectDetailsDto[];
 

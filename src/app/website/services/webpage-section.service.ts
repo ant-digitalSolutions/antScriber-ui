@@ -8,11 +8,12 @@ import { ToastrService } from 'ngx-toastr';
 import { P } from '@angular/cdk/keycodes';
 import { WebpageSectionContentGeneratorDto } from '../dtos/webpage-section-generator.dto';
 import { WebpageGenerateParams } from '../dtos/webpage-generator-params.dto';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
 
 @Injectable()
 export class WebpageSectionService {
 
-  baseUrl = environment.apiUrl + 'webpage-sections'
+  baseUrl = getBaseApiURL() + 'webpage-sections'
 
   private _updatedWebpageSection = new Subject<WebpageSectionDto>();
   updatedWebpageSection$ = this._updatedWebpageSection.asObservable();

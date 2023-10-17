@@ -4,13 +4,13 @@ import { ArticleGenerationParamsDto } from '../../content-creation/dto/generate-
 import { HttpClient, HttpEvent, HttpParams, HttpRequest } from '@angular/common/http';
 import { IArticleFromAiResponseDto } from '../../content-creation/article/dtos/article-from-ai.dto';
 import { BehaviorSubject, Observable, ReplaySubject, tap } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { ArticleIdeasParamsDto } from '../../content-creation/dto/generate-articles-ideas-params.dto';
 import { ArticleIdeasResponse } from '../../content-creation/article/dtos/article-ideas-from-ai.dto';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 import { IArticleDetailsDto } from '../dto/article-details.dto';
 import { Router } from '@angular/router';
 import { ISimpleGeneratorResultDto } from 'src/app/common/dto/simple-generator-response.dto';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class ArticleService {
 
 
 
-  baseUrl: string = environment.apiUrl + 'articles/';
+  baseUrl: string = getBaseApiURL() + 'articles/';
 
   selectedProjectId: number;
 

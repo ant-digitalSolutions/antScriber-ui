@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { IArticleFromAiResponseDto } from '../../../content-creation/article/dtos/article-from-ai.dto';
 import { IArticleDetailsDto } from 'src/app/blogger/dto/article-details.dto';
-import { environment } from 'src/environments/environment';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
 
 @Component({
   selector: 'app-article-render',
@@ -26,7 +26,7 @@ export class ArticleRenderComponent {
   }
 
   imageFullPath(): string {
-    return environment.apiUrl + this.articleToRender.featureImagePath;
+    return getBaseApiURL() + this.articleToRender.featureImagePath;
   }
   saveArticleChanges(article: IArticleDetailsDto) {
     this.articleToRender = article;

@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, take, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { BlogProjectCreateDto } from '../dto/blog-project-create.dto';
 import { BlogProjectDetailsDto } from '../dto/blog-project-details.dto';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { BlogProjectDetailsDto } from '../dto/blog-project-details.dto';
 export class BlogProjectsService {
 
 
-  baseUrl = environment.apiUrl;
+  baseUrl = getBaseApiURL();
 
   private _blogProjects = new BehaviorSubject<BlogProjectDetailsDto[]>([]);
   blogProjects$ = this._blogProjects.asObservable();

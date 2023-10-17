@@ -4,6 +4,7 @@ import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.serv
 import { environment } from 'src/environments/environment';
 import { ArticleIdea, ArticleIdeasResponse } from '../dtos/article-ideas-from-ai.dto';
 import { BehaviorSubject, tap } from 'rxjs';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { BehaviorSubject, tap } from 'rxjs';
 export class ArticleIdeasService {
 
 
-  baseUrl = environment.apiUrl;
+  baseUrl = getBaseApiURL();
 
   selectedProjectId: number;
 
