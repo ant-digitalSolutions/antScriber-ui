@@ -50,6 +50,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
 
   @ViewChild('documentEditor') documentEditorRef: ElementRef;
 
+  _docMarginTopNumber = 0;
 
   constructor(
     private _docService: DocumentService,
@@ -106,7 +107,14 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
       })
   }
 
+  documentEditorFocusEvent() {
+    this._docMarginTopNumber = 40;
+  }
 
+  documentEditorOnBlurEvent() {
+    this._docMarginTopNumber = 0;
+    this.saveEditorChanges();
+  }
 
   saveEditorChanges() {
     let editorData = this._editor.getData() as string;
@@ -144,7 +152,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
 
 
   setEditorHeight() {
-    this.editorHeight = `${window.innerHeight - 45 - configs_UI.main_navbar_height - configs_UI.internal_navbar_height}px`;
+    this.editorHeight = `${window.innerHeight - this._docMarginTopNumber - configs_UI.main_navbar_height - configs_UI.internal_navbar_height}px`;
   }
 
   newContentNotificationClick() {
@@ -206,21 +214,6 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
       }
     }
   }
-
-  // public get documentContent(): string {
-  //   if (this._docService.documentInEdition) {
-  //     return this._docService.documentInEdition!.content;
-  //   } else {
-  //     return '';
-  //   }
-  // }
-
-
-  // public set documentContent(v: string) {
-  //   this._docService.documentInEdition!.content = v;
-  // }
-
-
 
 }
 

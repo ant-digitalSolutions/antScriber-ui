@@ -53,10 +53,10 @@
       </button>
     </div>
 
-    <div id="editor-element-container" [ngStyle]="{ height: [editorHeight] }">
+    <div id="editor-element-container" [ngStyle]="{ height: [editorHeight], 'margin-top': _docMarginTopNumber + 'px'}">
       <!-- <ckeditor [editor]="editor" [(ngModel)]="documentContent" (blur)="saveEditorChanges()" id="editor" ></ckeditor> -->
       <!-- <ckeditor [editor]="Editor" [data]="documentContent" (blur)="saveEditorChanges()" id="editor" ></ckeditor> -->
-      <div #documentEditor id="document-editor" (blur)="saveEditorChanges()"></div>
+      <div #documentEditor id="document-editor" (blur)="documentEditorOnBlurEvent()" (focus)="documentEditorFocusEvent()"></div>
     </div>
   </div>
 
