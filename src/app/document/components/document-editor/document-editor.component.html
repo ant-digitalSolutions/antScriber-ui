@@ -56,7 +56,7 @@
     <div id="editor-element-container" [ngStyle]="{ height: [editorHeight] }">
       <!-- <ckeditor [editor]="editor" [(ngModel)]="documentContent" (blur)="saveEditorChanges()" id="editor" ></ckeditor> -->
       <!-- <ckeditor [editor]="Editor" [data]="documentContent" (blur)="saveEditorChanges()" id="editor" ></ckeditor> -->
-      <div id="document-editor" (blur)="saveEditorChanges()"></div>
+      <div #documentEditor id="document-editor" (blur)="saveEditorChanges()"></div>
     </div>
   </div>
 
