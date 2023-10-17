@@ -1,7 +1,7 @@
 import { InlineEditor } from '@ckeditor/ckeditor5-editor-inline';
 import { AfterViewInit, Component, HostListener, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { DocumentService } from '../../services/document.service';
-import { Subject, take, takeUntil } from 'rxjs';
+import { Subject, Subscription, take, takeUntil } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { Validators } from 'ngx-editor';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -29,6 +29,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
    */
   newContentAmount: number = 0;
 
+  private scrollSubscription: Subscription | null;
 
 
 
@@ -49,6 +50,8 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
   editorHeight: string;
 
   _editor: any;
+  scrollListener: void | undefined;
+  newContentSeparatorElement = '<div class="new-content"><span>New Content</span></div>';
 
 
 
@@ -71,7 +74,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   ngAfterViewInit(): void {
-    this.setScrollListener();
+    // this.setScrollListener();
 
     //Editor.create(document.getElementById('editor')!, defaultConfig)
 
@@ -106,7 +109,9 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
 
 
   saveEditorChanges() {
-    this._docService.update(this.documentId, { content: this._editor.getData() }).subscribe();
+    let editorData = this._editor.getData() as string;
+    editorData = editorData.replace(this.newContentSeparatorElement, '');
+    this._docService.update(this.documentId, { content: editorData }).subscribe();
   }
 
   updateDocName() {
@@ -136,42 +141,36 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
   onWindowResize() {
     this.setEditorHeight();
   }
+  // /**
+  //  * Event to listen to the scroll event of the doc-editor container
+  //  *
+  //  * @memberof DocumentEditorComponent
+  //  */
+  // setScrollListener() {
+  //   var editorContainer = document.getElementById("document-editor");
+  //   if (editorContainer)
+  //     editorContainer!.addEventListener("scroll", this.checkIfScrollTillBottom.bind(this), false)
+  // }
 
-  @HostListener('body:scroll')
-  innerScroll() {
-    console.log('inside scroll')
-  }
+  // /**
+  //  * Check if the user reach the bottom of the screen
+  //  * 
+  //  * TODO: in the future this should be improved by checking if the new content inserted
+  //  * in the docEditor has entered the screen
+  //  *
+  //  * @memberof DocumentEditorComponent
+  //  */
+  // checkIfScrollTillBottom() {
+  //   var editorContainer = document.getElementById("editor-element-container");
+  //   var docEditor = document.getElementById("document-editor");
 
-  /**
-   * Event to listen to the scroll event of the doc-editor container
-   *
-   * @memberof DocumentEditorComponent
-   */
-  setScrollListener() {
-    var editorContainer = document.getElementById("editor-element-container");
-    if (editorContainer)
-      editorContainer!.addEventListener("scroll", this.checkIfScrollTillBottom.bind(this), false)
-  }
-
-  /**
-   * Check if the user reach the bottom of the screen
-   * 
-   * TODO: in the future this should be improved by checking if the new content inserted
-   * in the docEditor has entered the screen
-   *
-   * @memberof DocumentEditorComponent
-   */
-  checkIfScrollTillBottom() {
-    var editorContainer = document.getElementById("editor-element-container");
-    var docEditor = document.getElementById("document-editor");
-
-    const scrollTop = editorContainer!.scrollTop + editorContainer!.clientHeight;
-    const height = docEditor!.clientHeight;
-    const totalHeight = height - configs_UI.internal_navbar_height - configs_UI.main_navbar_height - 100;
-    if (scrollTop >= totalHeight) {
-      this.newContentAmount = 0;
-    }
-  }
+  //   const scrollTop = editorContainer!.scrollTop + editorContainer!.clientHeight;
+  //   const height = docEditor!.clientHeight;
+  //   const totalHeight = height - configs_UI.internal_navbar_height - configs_UI.main_navbar_height - 100;
+  //   if (scrollTop >= totalHeight) {
+  //     this.newContentAmount = 0;
+  //   }
+  // }
 
 
 
@@ -185,9 +184,12 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   scrollToBottom() {
-    window.scrollTo(0, document.body.scrollHeight);
-    const element = document.getElementById('editor-element-container')!;
-    element.scrollTop = element.scrollHeight;
+    const newContentElement = document.querySelector('#document-editor .new-content');
+    if (newContentElement) {
+      newContentElement.scrollIntoView()
+    }
+
+
   }
 
   dismissNewContentNoti() {
@@ -202,7 +204,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
 
 
     if (!newContentSeparator) {
-      currentData += '<div class="new-content"><span>New Content</span></div>';
+      currentData += this.newContentSeparatorElement;
     } else {
       currentData += `<p>---</p>`
     }
@@ -211,27 +213,29 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
     currentData += newContent;
     this._editor.setData(currentData);
     this.newContentAmount++;
+
+    this.setEditorScrollEvent();
   }
 
-  editor_addNewContentRedLine() {
-    // this._editor.execute('horizontalLine');
+  setEditorScrollEvent() {
+    const editorRef = document.getElementById('document-editor');
+    this.scrollListener = editorRef?.addEventListener('scroll', () => this.removeNewContentIndicator());
+  }
 
-    const editor = document.querySelector('#document-editor')!;
-    const newContentSeparator = editor.querySelector('.new-content');
-
-    if (!newContentSeparator) {
-      let currentData = this._editor.getData();
-      currentData += '<div class="new-content"><span>New Content</span></div>';
-      this._editor.setData(currentData);
+  removeNewContentIndicator() {
+    const newContentElement = document.querySelector('.new-content');
+    if (newContentElement) {
+      const elementRect = newContentElement.getBoundingClientRect();
+      const toRemove = elementRect.top <= (configs_UI.internal_navbar_height + configs_UI.main_navbar_height + 40 + 100);
+      if (toRemove) {
+        setTimeout(() => {
+          let editorData = this._editor.getData() as string;
+          editorData = editorData.replace(this.newContentSeparatorElement, '')
+          this._editor.setData(editorData);
+        }, 5000)
+      }
     }
-    // const ed = this.editor.create(document.getElementById('editor')!, defaultConfig)
-    // .then(editor => {
-    //   editor.execute('horizontalLine')
-    // });
-    // Editor.exc
-
   }
-
 
   public get documentContent(): string {
     if (this._docService.documentInEdition) {

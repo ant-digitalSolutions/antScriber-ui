@@ -94,18 +94,19 @@
     background-color: $editor-bc;
 
     .new-content {
-      border-top: solid 2px indianred;
+      border-bottom: solid 2px indianred;
       position: relative;
-     margin-top: 50px;
-    margin-bottom: 25px;
+      margin-top: 50px;
+      margin-bottom: 25px;
+      height: 25px;
       span {
         position: absolute;
         left: 0;
         right: auto;
-        top: -12px;
+        top: 12px;
         font-weight: 600;
         z-index: 99;
-            background-color: $editor-bc;
+        background-color: $editor-bc;
 
         padding-right: 10px;
       }
