@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
 import { WizardFormService } from '../wizard-form.service';
 import { WizardCreatorUseCaseGroup } from '../../enums/wizard-creator-use-case-group.enum';
 import { WizardCreatorCodingUseCasesEnum } from '../../enums/wizard-creator-coding-use-cases.enum';
@@ -32,6 +32,11 @@ export class WizardUseCaseService {
   private _wizardUseCaseGroupSubject = new ReplaySubject<string>();
   wizardUseCaseGroup$ = this._wizardUseCaseGroupSubject.asObservable();
   _wizardUseCaseGroup: string;
+
+  // emits when the use case selector should be closed.
+  // Right now it will emit after a click outside the selector area
+  private _closeSelectorSubject = new Subject<void>();
+  closeSelectorEvent$ = this._closeSelectorSubject.asObservable();
 
   // indicate the user is seeing the use cases selector
   showingUseCasesSelector: boolean = false;
@@ -308,6 +313,10 @@ export class WizardUseCaseService {
         useCaseName: 'default'
       }
     }
+  }
+
+  closeSelector(): void {
+    this._closeSelectorSubject.next();
   }
 
 

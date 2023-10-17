@@ -77,10 +77,17 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
         this.selectedUseCaseGroup = '';
       }
     })
+
+    this._useCaseService.closeSelectorEvent$
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(() => {
+        if (this.showUseCases)
+          this.toggleUseCases();
+      });
   }
 
   setUseCases(initialElements: boolean = true) {
-   this.setInitialGroupOptions(initialElements)
+    this.setInitialGroupOptions(initialElements)
 
     if (!initialElements) {
       this.showLoadMoreUseCasesBtn = false;
@@ -97,7 +104,7 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
   selectUseCaseGroup(selectedGroup: string) {
     this._useCaseService.setWizardUseCaseGroup(selectedGroup);
     this._wizardForm.updateAdditionalData('useCaseGroup', selectedGroup);
-    
+
     switch (selectedGroup) {
       case WizardCreatorUseCaseGroup.GeneralWriting:
         this.selectGroupUseCases = mapEnumNameAndValue(WizardGeneralWritingUseCases);
@@ -123,7 +130,7 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
       case WizardCreatorUseCaseGroup.Learning:
         this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorLearningUseCasesEnum);
         break;
-        case WizardCreatorUseCaseGroup.WebsiteCopy:
+      case WizardCreatorUseCaseGroup.WebsiteCopy:
         this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorWebsiteUseCasesEnum);
         break;
 
@@ -195,7 +202,7 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
       this.setUseCases()
     }
 
-  
+
   }
 
   /**

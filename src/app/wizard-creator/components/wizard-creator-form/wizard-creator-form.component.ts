@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {Subject, takeUntil, tap } from 'rxjs';
 import { WizardCreatorService } from '../../services/wizard-creator.service';
 import {Validators } from '@angular/forms';
@@ -19,7 +19,7 @@ import { WizardDefaultFieldNamesEnum } from '../../enums/wizard-default-fields-n
   templateUrl: './wizard-creator-form.component.html',
   styleUrls: ['./wizard-creator-form.component.scss']
 })
-export class WizardCreatorFormComponent implements OnDestroy, OnInit {
+export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewInit {
 
   MAX_AMOUNT_OPTIONS = 5;
 
@@ -63,12 +63,17 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
 
 // showGenerateBtn = false;
 
+  @ViewChild('formElements') formElements: ElementRef;
+
   constructor(
     private _wizardCreatorService: WizardCreatorService,
     private projectService: BlogProjectsService,
     private _wizardFormService: WizardFormService,
     private _useCaseService: WizardUseCaseService) {
 
+  }
+  ngAfterViewInit(): void {
+    this.formElements.nativeElement.addEventListener('click', this.onClick.bind(this));
   }
 
   ngOnInit(): void {
@@ -86,6 +91,8 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
 
     this.checkIfMobile();
     window.addEventListener("resize", this.checkIfMobile.bind(this), false)
+
+    
   }
 
   ngOnDestroy(): void {
@@ -232,6 +239,12 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit {
   scrollToWizardInputWithError() {
     const element = document.querySelector('.wizard-field-with-error') as HTMLElement;
     element.scrollIntoView();
+  }
+
+  // event that the element was clicked. To we should close the use
+  // case selector
+  onClick(event: Event) {
+    this._useCaseService.closeSelector();
   }
 
   

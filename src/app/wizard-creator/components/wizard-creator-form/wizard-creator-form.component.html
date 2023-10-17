@@ -9,7 +9,7 @@
       ></app-wizard-use-cases-selector-home>
     </div>
 
-    <div class="form-elements p-t-2" *ngIf="useCaseSelected" [ngClass]="{'mobile-view': isMobile }">
+    <div #formElements id="formElements" class="form-elements p-t-2" *ngIf="useCaseSelected" [ngClass]="{'mobile-view': isMobile }">
       <!-- ------------------------------------------------------------------------- -->
       <!-- Variable Input Container -->
       <!-- ------------------------------------------------------------------------- -->
