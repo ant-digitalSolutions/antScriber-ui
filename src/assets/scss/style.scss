@@ -94,21 +94,22 @@
     background-color: $editor-bc;
 
     .new-content {
-      border-bottom: solid 2px indianred;
+      border-bottom: solid 1px $red;
       position: relative;
       margin-top: 50px;
       margin-bottom: 25px;
       height: 25px;
       span {
-        position: absolute;
-        left: 0;
-        right: auto;
-        top: 12px;
-        font-weight: 600;
-        z-index: 99;
-        background-color: $editor-bc;
-
-        padding-right: 10px;
+       position: absolute;
+    left: 0;
+    right: auto;
+    top: 12px;
+    font-weight: 500;
+    z-index: 99;
+    background-color: #fff;
+    padding-right: 5px;
+    color: $red;
+    font-size: 12px;
       }
     }
   }

@@ -44,7 +44,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
   editorHeight: string;
 
   _editor: Editor;
-  newContentSeparatorElement = '<div class="new-content"><span>New Content</span></div>';
+  newContentSeparatorElement = '<div class="new-content"><span>New</span></div>';
 
   _documentContent: string;
 
@@ -163,8 +163,19 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
   scrollToBottom() {
     const newContentElement = document.querySelector('#document-editor .new-content');
     if (newContentElement) {
-      newContentElement.scrollIntoView()
+      // newContentElement.scrollIntoView()
+      // this.documentEditorRef.nativeElement.scrollTop = newContentElement.offsetTop;
+      const parentElement = this.documentEditorRef.nativeElement;
+      const newContentElement = parentElement.querySelector('.new-content');
+      parentElement.scrollTo({
+        top: newContentElement.offsetTop,
+        behavior: 'smooth'
+      });
     }
+
+    // const parentElement = this.documentEditorRef.nativeElement;
+    // // const newContentElement = parentElement.querySelector('.new-content');
+    // parentElement.scrollTop = 
 
 
   }
@@ -206,6 +217,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
       const elementRect = newContentElement.getBoundingClientRect();
       const toRemove = elementRect.top <= (configs_UI.internal_navbar_height + configs_UI.main_navbar_height + 40 + 100);
       if (toRemove) {
+        this.newContentAmount = 0;
         setTimeout(() => {
           let editorData = this._editor.getData() as string;
           editorData = editorData.replace(this.newContentSeparatorElement, '')
