@@ -102,8 +102,7 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
 
 
   selectUseCaseGroup(selectedGroup: string) {
-    this._useCaseService.setWizardUseCaseGroup(selectedGroup);
-    this._wizardForm.updateAdditionalData('useCaseGroup', selectedGroup);
+    this._useCaseService.useCaseGroupOpened = selectedGroup;
 
     switch (selectedGroup) {
       case WizardCreatorUseCaseGroup.GeneralWriting:
@@ -190,7 +189,7 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
     const useCaseData = this._cacheService.getLatestWizardUseCase();
 
     if (useCaseData) {
-      this.selectUseCaseGroup(useCaseData.useCaseGroup);
+      this._useCaseService.setWizardUseCaseGroup(useCaseData.useCaseGroup);
       this._useCaseService.setWizardUseCase(useCaseData.useCase);
 
       // if the cache contains the latest data for this use case, set the form data
