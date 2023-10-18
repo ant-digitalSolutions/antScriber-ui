@@ -1,33 +1,23 @@
 @import "/src/app/common/styles/colors.scss";
+@import "src/assets/scss/_variables.scss";
 
 #btn-use-case-selector {
-  min-height: 50px;
-  background-color: #fff;
+  min-height: $btn-uc-selector-height;
+  background-color: $btn-uc-selector-bc;
   font-weight: 500;
-  // font-size: 1.04rem;
-  // color: black;
-  border-radius: 30px;
-  border: 2px solid $border-gray;
-
-  flex-direction: row-reverse;
-
-  mat-icon {
-    position: absolute;
-    left: auto;
-    right: 20px;
-    font-size: 25px;
-    top: auto;
-    bottom: auto;
-    transform: translateY(-3px);
-    color: $gray-medium-dark;
-  }
+  border-radius: $border-radius;
+  // border: 2px solid $btn-uc-selector-border-color;
+  color: $btn-uc-selector-color;
+  -webkit-box-shadow: $btn-shadow;
+  -moz-box-shadow: $btn-shadow;
+  box-shadow: $btn-shadow;
 }
 
 .btn-load-more {
   max-width: 100px;
   font-weight: 500;
   text-decoration: underline;
-  color: $gray-medium-dark
+  color: $gray-medium-dark;
 }
 
 .mat-expansion-panel-body {
@@ -46,4 +36,12 @@
     background-color: transparent;
     color: black;
   }
+}
+
+#select-use-case-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
 }

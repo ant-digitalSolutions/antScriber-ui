@@ -36,6 +36,7 @@ $sidenav-mini: 80px !default;
 //BorderColor
 $borderColor: #e5eaef;
 $borderformColor: #dfe5ef;
+$border-radius: 30px;
 
 
 // custom colors
@@ -103,6 +104,12 @@ $header-icon-color: $white;
 $btn-create-container-bc: $background;
 $btn-create-color: $primary;
 
+// = use case btn selector
+$btn-uc-selector-height: 30px;
+$btn-uc-selector-bc: $eminence;
+$btn-uc-selector-border-color: $gray-50;
+$btn-uc-selector-color: #fff;
+
 
 // input fields
 $placeholder-color: lighten($textPrimary, 40%);
@@ -114,3 +121,6 @@ $error-container-border-color: #f5c6cb;
 $label-fs: 0.75rem;
 $label-fw: 400;
 $label-fc: $gray-davy;
+
+// btns
+$btn-shadow: 1px 2px 5px 1px rgb(0 0 0 / 38%);

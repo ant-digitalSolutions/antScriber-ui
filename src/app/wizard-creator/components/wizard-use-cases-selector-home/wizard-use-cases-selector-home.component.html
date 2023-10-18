@@ -1,12 +1,23 @@
 <div class="wizard-use-case-outer-container">
-  <div class="selected-use-case-btn-container w-100" *ngIf="!showUseCases">
-    <button mat-raised-button (click)="toggleUseCases()" class="w-100" id="btn-use-case-selector">
+  <div id="select-use-case-container" class="w-100" *ngIf="!showUseCases">
+    <h2 id="selected-use-case-heading">{{ selectedCase }}</h2>
+    <button
+      mat-raised-button
+      (click)="toggleUseCases()"
+      id="btn-use-case-selector"
+    >
+      Spell Selector
+    </button>
+    <!-- <button mat-raised-button (click)="toggleUseCases()" class="w-100" id="btn-use-case-selector">
       {{ selectedCase }}
       <mat-icon>arrow_drop_down</mat-icon>
-    </button>
+    </button> -->
   </div>
 
-  <div class="use-cases-container d-flex justify-content-center flex-column align-items-center" *ngIf="showUseCases">
+  <div
+    class="use-cases-container d-flex justify-content-center flex-column align-items-center"
+    *ngIf="showUseCases"
+  >
     <!-- <h3 class="align-self-start justfi-self-start">Choose the content to generate</h3> -->
     <mat-accordion class="w-100">
       <ng-container *ngFor="let group of useCasesGroups">
@@ -26,7 +37,14 @@
       </ng-container>
     </mat-accordion>
 
-    <button class="m-t-10 btn-load-more" mat-button (click)="setUseCases(false)" *ngIf="showLoadMoreUseCasesBtn">show more</button>
+    <button
+      class="m-t-10 btn-load-more"
+      mat-button
+      (click)="setUseCases(false)"
+      *ngIf="showLoadMoreUseCasesBtn"
+    >
+      show more
+    </button>
     <!-- <button mat-mini-fab class="btn-close-use-cases-dialog" (click)="toggleUseCases()">
       <mat-icon fontSet="material-icons-outlined">cancel</mat-icon>
     </button> -->

@@ -1,9 +1,9 @@
-<div class="align-items-center d-flex m-b-20">
-  <h5 class="align-self-start f-s-12 f-w-500">{{fieldData.fieldLabel}}</h5>
+<div class="align-items-center d-flex m-b-20 p-l-12">
+  <h5 class="align-self-start f-s-12 f-w-500 p-r-12">{{fieldData.fieldLabel}}</h5>
   <mat-button-toggle-group
     [name]="fieldData.dataName"
     [formControl]="form"
-    class="wizard-button-group"
+    class="wizard-button-group w-100"
     [matTooltip]="fieldData.tooltipText ? fieldData.tooltipText : ''"
      class="has-tooltip"
   >
