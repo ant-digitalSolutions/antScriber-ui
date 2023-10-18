@@ -1,5 +1,7 @@
 html .topbar {
-  background-color: $header-bc;
+  // background-color: $header-bc;
+  background: $header-background;
+  background: $header-background-gradient;
   position: sticky;
   top: 0;
   z-index: 2;

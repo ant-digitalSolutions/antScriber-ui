@@ -49,7 +49,8 @@ $violet: #502F4C;
 $violet-chinese: #70587C;
 $violet-english:#5C415D;
 $violet-ultra: #565676;
-$purple: #6B0AB1;
+$purple: #602B62;
+$purple-vivid: rgba(161,60,164,1);
 $red: #D90429;
 $red-dark: #721c24;
 $space-cadet: #2B2D42;
@@ -87,7 +88,7 @@ $editor-outer-container-bc: #f6f6f6;
 $editor-bc: #fff;
 
 // main colors
-$primary: $violet-english;
+$primary: $purple;
 $accent: #26c6da;
 $warning: #ffb22b;
 $error: #fc4b6c;
@@ -99,10 +100,12 @@ $header-height: 50px !default;
 $inner-navbar-height: 48px !default;
 $header-bc: $primary;
 $header-icon-color: $white;
+$header-background: rgb(96,43,98);
+$header-background-gradient:linear-gradient(180deg, rgba(96,43,98,1) 6%, rgba(161,60,164,1) 100%);
 
 // wizard creator
 $btn-create-container-bc: $background;
-$btn-create-color: $primary;
+$btn-create-color: $purple;
 
 // = use case btn selector
 $btn-uc-selector-height: 30px;
