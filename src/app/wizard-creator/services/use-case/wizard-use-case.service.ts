@@ -330,6 +330,12 @@ export class WizardUseCaseService {
     return !this.showingUseCasesSelector;
   }
 
+  
+  public get selectedUseCaseGroup() : string {
+    return this._wizardUseCaseGroup;
+  }
+  
+
 
 
 

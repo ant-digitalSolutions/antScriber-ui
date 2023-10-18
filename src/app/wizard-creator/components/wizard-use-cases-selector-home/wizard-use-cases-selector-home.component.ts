@@ -83,15 +83,14 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         if (this.showUseCases)
           this.toggleUseCases();
+
+        // reset the current group
+        this.selectedUseCaseGroup = this._useCaseService.selectedUseCaseGroup;
       });
   }
 
   setUseCases(initialElements: boolean = true) {
     this.setInitialGroupOptions(initialElements)
-
-    if (!initialElements) {
-      this.showLoadMoreUseCasesBtn = false;
-    }
 
     this.showUseCases = true;
 
@@ -103,6 +102,7 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
 
   selectUseCaseGroup(selectedGroup: string) {
     this._useCaseService.useCaseGroupOpened = selectedGroup;
+    this.selectedUseCaseGroup = selectedGroup;
 
     switch (selectedGroup) {
       case WizardCreatorUseCaseGroup.GeneralWriting:
@@ -212,6 +212,21 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
    */
   private setInitialGroupOptions(initialValues: boolean): void {
     const values = mapEnumNameAndValue(WizardCreatorUseCaseGroup);
-    this.useCasesGroups = initialValues ? values.slice(0, 3) : values;
+    const GROUPS_TO_SHOW = 3;
+
+    let selectedGroupIndex = -1;
+    if (this.selectedUseCaseGroup)
+    {
+      selectedGroupIndex = values.findIndex(g => g.value === this.selectedUseCaseGroup)
+    }
+
+    if (initialValues && selectedGroupIndex < GROUPS_TO_SHOW) {
+      this.useCasesGroups = values.slice(0, GROUPS_TO_SHOW);
+      this.showLoadMoreUseCasesBtn = true;
+    } else {
+      this.useCasesGroups = values;
+      this.showLoadMoreUseCasesBtn = false;
+    }
+    this.useCasesGroups = initialValues && selectedGroupIndex < GROUPS_TO_SHOW  ? values.slice(0, GROUPS_TO_SHOW) : values;
   }
 }
