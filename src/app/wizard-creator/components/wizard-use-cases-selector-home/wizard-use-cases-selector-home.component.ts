@@ -74,7 +74,7 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
         this.selectedCase = useCase;
         this.showUseCases = false;
         this._useCaseService.showingUseCasesSelector = false;
-        this.selectedUseCaseGroup = '';
+        // this.selectedUseCaseGroup = '';
       }
     })
 
