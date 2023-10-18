@@ -1,4 +1,4 @@
-const defaultApiURL = 'https://brain.adfluens.io/api';
+const defaultApiURL = 'https://brain.adfluens.io/api/';
 
 function determineApiUrl(): string {
     switch (window.location.host) {
