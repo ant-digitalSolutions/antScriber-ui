@@ -1,6 +1,8 @@
 <div class="wizard-use-case-outer-container">
-  <div id="select-use-case-container" class="w-100" *ngIf="!showUseCases">
+  <div id="select-use-case-container" class="w-100" *ngIf="!showUseCases" [ngClass]="{'align-content-center': !selectedCase}">
+    <ng-container *ngIf="selectedCase">
     <h2 id="selected-use-case-heading">{{ selectedCase }}</h2>
+    </ng-container>
     <button
       mat-raised-button
       (click)="toggleUseCases()"

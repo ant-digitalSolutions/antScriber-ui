@@ -68,8 +68,8 @@ mat-tab-group {
 }
 
 .mat-mdc-form-field-error {
-    color: $error;
-    font-size: 0.7rem;
+  color: $error;
+  font-size: 0.7rem;
 }
 
 .mat-mdc-form-field {
@@ -97,7 +97,7 @@ mat-tab-group {
     background-color: #fff !important;
 
     &.mdc-text-field--focused {
-       border: 1px solid $primary;
+      border: 1px solid $primary;
     }
 
     &.mdc-text-field--invalid {
@@ -265,5 +265,38 @@ input.mat-input-element {
 
   .mat-mdc-text-field-wrapper {
     background-color: transparent;
+  }
+}
+
+// tabs
+.mat-mdc-tab-header {
+  background-color: $tab-header-bc;
+  border-bottom: 1px solid $gray-50;
+
+  .mdc-tab {
+    background-color: $tab-header-bc;
+  }
+
+  .mdc-tab__text-label {
+    color: $tab-header-color;
+    font-weight: $tab-header-fw;
+  }
+
+  .mat-mdc-tab.mdc-tab--active .mdc-tab__ripple::before,
+  .mat-mdc-tab.mdc-tab--active .mat-ripple-element {
+    background-color: $primary !important;
+  }
+
+  .mat-mdc-tab .mdc-tab-indicator__content--underline {
+    border-color: $primary;
+  }
+
+  .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+    color: $tab-header-color;
+    font-weight: $tab-header-selected-fw;
+  }
+
+  .mat-mdc-tab.mdc-tab--active:focus .mdc-tab-indicator__content--underline {
+    border-color: $gray-medium-dark !important;
   }
 }
