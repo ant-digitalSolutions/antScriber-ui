@@ -238,8 +238,7 @@ input.mat-input-element {
 // Field hints
 .mat-mdc-form-field-hint {
   font-size: 0.6rem !important;
-
-  font-weight: 600 !important;
+  font-weight: 400 !important;
 }
 
 // document name editor
@@ -261,10 +260,13 @@ input.mat-input-element {
     width: 100%;
     font-size: 1rem;
     font-weight: 500;
+    border: none !important;
+
   }
 
   .mat-mdc-text-field-wrapper {
     background-color: transparent;
+    border: none !important;
   }
 }
 

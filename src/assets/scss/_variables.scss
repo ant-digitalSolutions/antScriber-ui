@@ -106,13 +106,14 @@ $btn-create-color: $primary;
 
 // = use case btn selector
 $btn-uc-selector-height: 30px;
-$btn-uc-selector-bc: $eminence;
-$btn-uc-selector-border-color: $gray-50;
-$btn-uc-selector-color: #fff;
+$btn-uc-selector-width: 115px;
+$btn-uc-selector-bc: $white;
+$btn-uc-selector-border: none;
+$btn-uc-selector-color: $eminence;
 
 
 // input fields
-$placeholder-color: lighten($textPrimary, 40%);
+$placeholder-color: transparentize($textPrimary, 0.6);
 $error-container-bc: #f8d7da;
 $error-font-color: $red-dark;
 $error-container-border-color: #f5c6cb;
@@ -123,7 +124,7 @@ $label-fw: 400;
 $label-fc: $gray-davy;
 
 // btns
-$btn-shadow: 1px 2px 5px 1px rgb(0 0 0 / 38%);
+$btn-shadow: 1px 2px 5px 1px rgb(0 0 0 / 30%);
 
 // tabs
 $tab-header-bc: $white;
