@@ -72,6 +72,7 @@
     .btn-noti {
       height: 25px;
       padding: 8;
+      z-index: 99;
     }
     .btn-dismiss {
       border-radius: 0 15px 15px 0;
@@ -80,12 +81,16 @@
       padding: 2px;
       align-items: center;
       padding-left: 7px;
+      z-index: 99;
     }
 
     .btn-new-content {
       border-radius: 15px 0 0 15px;
       padding-left: 15px;
       padding-right: 15px;
+z-index: 99;
+
+
     }
   }
 

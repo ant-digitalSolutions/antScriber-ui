@@ -38,6 +38,16 @@ export class WizardUseCaseCodingImplementCodeComponent extends UseCaseFormBaseCo
     })
 
     fields.push({
+      placeholder: 'E.g., "Generate a function that sorts an array in descending order"',
+      fieldLabel: 'Instruction',
+      fieldValue: '',
+      validators: [Validators.required(), Validators.minLength(10), Validators.maxLength(800)],
+      inputMaxLen: 4000,
+      dataName: 'instruction',
+      isLongText: true
+    });
+
+    fields.push({
       placeholder: 'Any pre-existing code that needs to be incorporated or considered.',
       fieldLabel: 'Additional Code',
       fieldValue: '',
@@ -47,15 +57,7 @@ export class WizardUseCaseCodingImplementCodeComponent extends UseCaseFormBaseCo
       isLongText: true
     })
 
-    fields.push({
-      placeholder: 'E.g., "Generate a function that sorts an array in descending order"',
-      fieldLabel: 'Instruction',
-      fieldValue: '',
-      validators: [Validators.required(), Validators.minLength(10), Validators.maxLength(4000)],
-      inputMaxLen: 4000,
-      dataName: 'instruction',
-      isLongText: true
-    });
+  
     
 
     this._wizardFormService.updateFormDefaultField_Text(fields);

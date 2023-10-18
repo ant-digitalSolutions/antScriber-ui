@@ -5,7 +5,7 @@ $font-family: 'Poppins', sans-serif;
 
 // light color variable
 $sidebarbg: white;
-$background: #fafafa;
+$background: #fff;
 $cardbg: white;
 $toolbar: white;
 $cardshadow: 0px 5px 20px rgba(0,0,0,.05);
@@ -30,9 +30,7 @@ $darkthemelightsuccess: #1B3C48;
 $sidenav-desktop: 270px !default;
 $sidenav-mini: 80px !default;
 
-// navbars
-$header-height: 50px !default;
-$inner-navbar-height: 48px !default;
+
 
 
 //BorderColor
@@ -63,6 +61,7 @@ $light: #f2f6fa;
 
 $gray-100:  #7c8fac;
 $gray-50: #e2e2e2;
+$gray-davy: #635D5C;
 
 $light-primary: #ecf6ff;
 $light-accent: #e8f7ff;
@@ -86,9 +85,23 @@ $text-dark: #423b3b;
 $editor-outer-container-bc: #f6f6f6;
 $editor-bc: #fff;
 
+// main colors
+$primary: $violet-english;
+$accent: #26c6da;
+$warning: #ffb22b;
+$error: #fc4b6c;
+$success: #26c6da;
+$white: #ffffff;
+
+// navbars
+$header-height: 50px !default;
+$inner-navbar-height: 48px !default;
+$header-bc: $darksidebarbg;
+$header-icon-color: $white;
 
 // wizard creator
 $btn-create-container-bc: $background;
+$btn-create-color: $primary;
 
 
 // input fields
@@ -97,12 +110,7 @@ $error-container-bc: #f8d7da;
 $error-font-color: $red-dark;
 $error-container-border-color: #f5c6cb;
 
-
-
-// main colors
-$primary: $caribbean;
-$accent: #26c6da;
-$warning: #ffb22b;
-$error: #fc4b6c;
-$success: #26c6da;
-$white: #ffffff;
+//inputs
+$label-fs: 0.75rem;
+$label-fw: 400;
+$label-fc: $gray-davy;

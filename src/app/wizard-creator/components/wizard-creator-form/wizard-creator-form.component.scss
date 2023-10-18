@@ -31,12 +31,15 @@
   padding-bottom: 1.1rem;
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
+    -webkit-box-shadow: -3px 3px 5px 0px rgba(0, 0, 0, 0.58);
+    -moz-box-shadow: -3px 3px 5px 0px rgba(0, 0, 0, 0.58);
+    box-shadow: -3px 3px 5px 0px rgba(0, 0, 0, 0.58);
 
   .wizard-generate-btn {
     width: 50%;
     height: 50px;
     border-radius: 25px;
-    background-color: $caribbean;
+    background-color: $btn-create-color;
     font-size: 1.1rem;
     font-weight: 500;
 
@@ -46,8 +49,8 @@
   }
 
   &.mobile-view {
-    padding-top: 15px;
-    padding-bottom: 20px;
+    padding-top: 5px;
+    padding-bottom: 15px;
 
     // position: absolute;
     // bottom: 0;

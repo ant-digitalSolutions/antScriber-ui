@@ -76,14 +76,13 @@ $darkbluetheme: mat.define-dark-theme(
   )
 );
 
-.bg-primary,
-.topbar {
+.bg-primary {
   background: mat.get-color-from-palette($theme-primary, 500) !important;
 }
 
 .topbar .mat-mdc-icon-button,
 .topbar .mat-mdc-button {
-  color: $white !important;
+  color: $header-icon-color !important;
 }
 
 .horizontal-navbar .parentBox.pactive > a,

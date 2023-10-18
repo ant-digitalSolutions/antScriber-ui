@@ -40,9 +40,11 @@ $theme-typography: mat.define-typography-config(
 }
 
 .mat-subtitle-1 {
-  @include mat.typography-level($theme-typography, "subtitle-1");
+  // @include mat.typography-level($theme-typography, "subtitle-1");
   margin: 0;
-  color: $textPrimary;
+  color: $label-fc;
+  font-size: $label-fs;
+  font-weight: $label-fw;
 }
 
 .mat-body-1 {
@@ -61,4 +63,11 @@ $theme-typography: mat.define-typography-config(
 .mat-drawer-container,
 .mat-drawer {
   color: $textPrimary;
+}
+
+.mat-label {
+  margin: 0;
+  color: $label-fc;
+  font-size: $label-fs;
+  font-weight: $label-fw;
 }
