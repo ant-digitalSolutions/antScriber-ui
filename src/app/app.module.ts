@@ -67,7 +67,7 @@ export function HttpLoaderFactory(http: HttpClient): any {
     }),
     BreadcrumbModule,
     TimeagoModule.forRoot(),
-    NgxGoogleAnalyticsModule.forRoot('G-XQVZWP9SRY')
+    NgxGoogleAnalyticsModule.forRoot(window.location.href.indexOf('app.') >= 0 ? 'G-XQVZWP9SRY' : '')
 
   ],
   exports: [TablerIconsModule],
