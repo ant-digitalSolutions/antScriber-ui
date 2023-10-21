@@ -16,7 +16,7 @@ export enum WizardCreatorUseCaseGroup {
     ArticlesAndBlog = 'Blogging & Articles',
     Ecommerce = 'E-Commerce',
     GeneralWriting = 'General Writing',
-    // InternalDev = 'Internal Dev',
+    InternalDev = 'Internal Dev',
     //    Business = 'Business',
     //    Design = 'Design',
 }

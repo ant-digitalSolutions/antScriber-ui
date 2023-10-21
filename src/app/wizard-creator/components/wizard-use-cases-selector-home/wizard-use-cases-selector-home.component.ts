@@ -211,12 +211,17 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
    * @memberof WizardUseCasesSelectorHomeComponent
    */
   private setInitialGroupOptions(initialValues: boolean): void {
-    const values = mapEnumNameAndValue(WizardCreatorUseCaseGroup);
+    let values = mapEnumNameAndValue(WizardCreatorUseCaseGroup);
+
+    if (window.location.href.indexOf('app.') >= 0) {
+      const internalDevIndex = values.findIndex(g => g.value === WizardCreatorUseCaseGroup.InternalDev);
+      values.splice(internalDevIndex, 1);
+    }
+
     const GROUPS_TO_SHOW = 3;
 
     let selectedGroupIndex = -1;
-    if (this.selectedUseCaseGroup)
-    {
+    if (this.selectedUseCaseGroup) {
       selectedGroupIndex = values.findIndex(g => g.value === this.selectedUseCaseGroup)
     }
 
@@ -227,6 +232,6 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
       this.useCasesGroups = values;
       this.showLoadMoreUseCasesBtn = false;
     }
-    this.useCasesGroups = initialValues && selectedGroupIndex < GROUPS_TO_SHOW  ? values.slice(0, GROUPS_TO_SHOW) : values;
+    this.useCasesGroups = initialValues && selectedGroupIndex < GROUPS_TO_SHOW ? values.slice(0, GROUPS_TO_SHOW) : values;
   }
 }
