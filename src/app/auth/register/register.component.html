@@ -61,10 +61,9 @@
             <ng-container *ngIf="hasInvalidCredentials">
               <div class="error-message-container">
                 <p>
-                  Great to have you on board! You're just one email away from
-                  accessing our beta features. Reach out to us at
-                  <a href="mailto:hello@adfluens.io">hello@adfluens.io</a> , and
-                  we'll send you the code pronto!
+                  Oops! We encountered an issue creating your account. 
+                  Please double-check if you already have an account or contact us via email to
+                  <a href="mailto:hello@adfluens.io">hello@adfluens.io</a> for assistance.
                 </p>
               </div>
             </ng-container>
@@ -177,29 +176,6 @@
                   </div>
                   <div class="text-error" *ngIf="passMatchError">
                     Passwords don't match
-                  </div>
-                </mat-hint>
-              </mat-form-field>
-
-              <!-- SECURITY CODE -->
-              <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-                >Security Code</mat-label
-              >
-              <mat-form-field class="w-100" color="primary">
-                <input matInput formControlName="registerCode" />
-                <mat-hint
-                  *ngIf="f['registerCode'].touched && f['registerCode'].invalid"
-                  class="m-b-16 error-msg"
-                >
-                  <div
-                    class="text-error"
-                    *ngIf="
-                      f['registerCode'].errors &&
-                      f['registerCode'].errors['required']
-                    "
-                  >
-                    You're almost in, but you forgot the secret handshake. Give
-                    it a shot!
                   </div>
                 </mat-hint>
               </mat-form-field>
