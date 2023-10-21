@@ -8,15 +8,15 @@ import { OptionField } from "src/app/common/dto/option-field.dto";
  * @enum {number}
  */
 export enum WizardCreatorUseCaseGroup {
+    SocialMedia = 'Social Media',
+    Learning = 'Learning',
     AdsAndMarketing = 'Ads and Marketing',
-    ArticlesAndBlog = 'Blogging & Articles',
     Coding = 'Coding',
+    WebsiteCopy = 'Website Copy',
+    ArticlesAndBlog = 'Blogging & Articles',
     Ecommerce = 'E-Commerce',
     GeneralWriting = 'General Writing',
-    InternalDev = 'Internal Dev',
-    Learning = 'Learning',
-    SocialMedia = 'Social Media',
-    WebsiteCopy = 'Website Copy',
+    // InternalDev = 'Internal Dev',
     //    Business = 'Business',
     //    Design = 'Design',
 }
