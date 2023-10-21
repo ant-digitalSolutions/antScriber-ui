@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/fo
 import { Router } from '@angular/router';
 import { CoreService } from 'src/app/services/core.service';
 import { AuthService } from '../auth.service';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 
 @Component({
   selector: 'app-register',
@@ -22,11 +23,14 @@ export class RegisterComponent implements OnInit {
   constructor(
     private settings: CoreService,
     private router: Router,
-    private _authService: AuthService) { }
+    private _authService: AuthService,
+    protected $gaService: GoogleAnalyticsService) { }
 
 
   ngOnInit(): void {
     this.initForm();
+    this.$gaService.event('user_initialization', 'page_on_init', 'register_page');
+
   }
 
   initForm() {
@@ -54,9 +58,12 @@ export class RegisterComponent implements OnInit {
         this.isLoading = false;
         if (r.success) {
           this.router.navigate(['/wizard/creator']);
+          this.$gaService.event('user_initialization', 'user_created', 'successful');
 
         } else {
           this.hasInvalidCredentials = true;
+          this.$gaService.event('user_initialization', 'user_register_invalid_request', r.error);
+
         }
       })
     }

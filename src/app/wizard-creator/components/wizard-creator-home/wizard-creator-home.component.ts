@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { WizardCreatorService } from '../../services/wizard-creator.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 
 @Component({
   selector: 'app-wizard-creator-home',
@@ -17,7 +18,8 @@ export class WizardCreatorHomeComponent {
 
   constructor(
     private _wizard: WizardCreatorService,
-    private breakpointObserver: BreakpointObserver) {
+    private breakpointObserver: BreakpointObserver,
+    protected $gaService: GoogleAnalyticsService,) {
 
   }
 
@@ -30,7 +32,10 @@ export class WizardCreatorHomeComponent {
 
     this.setListeners();
     this.checkIfMobile();
-    window.addEventListener("resize", this.checkIfMobile.bind(this), false)
+    window.addEventListener("resize", this.checkIfMobile.bind(this), false);
+
+    this.$gaService.event('user_wizard_engagement', 'page_on_init', 'wizard_home_page');
+
   }
 
   setListeners() {

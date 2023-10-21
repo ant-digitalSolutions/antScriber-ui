@@ -21,6 +21,8 @@ import { useCaseMeta_Internal } from '../../data/use-cases/use-cases-general-int
 import { useCaseMeta_Learning } from '../../data/use-cases/use-cases-general-learning.data';
 import { WizardCreatorWebsiteUseCasesEnum } from '../../enums/wizard-creator-website-use-cases.enum';
 import { useCaseMeta_Websites } from '../../data/use-cases/use-cases-general-websites.data';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { Location } from '@angular/common';
 
 @Injectable()
 export class WizardUseCaseService {
@@ -49,9 +51,16 @@ export class WizardUseCaseService {
     private _wizardFormService: WizardFormService,
     private _router: Router,
     private _activeRoute: ActivatedRoute,
-    private _cacheService: CacheService) { }
+    private _cacheService: CacheService,
+    protected $gaService: GoogleAnalyticsService) { }
 
 
+  /**
+   * When the user selects a use case, run some logic
+   *
+   * @param {string} v
+   * @memberof WizardUseCaseService
+   */
   setWizardUseCase(v: string) {
     this.setWizardUseCaseGroup(this.useCaseGroupOpened);
     this._wizardUseCaseSubject.next(v);
@@ -59,6 +68,14 @@ export class WizardUseCaseService {
     this.updateWizardFormFields();
     this.updateQueryParamsWithUseCase(v);
     this._wizardFormService.updateAdditionalData('useCase', v);
+
+    // log GA
+    this.$gaService.pageView(`/wizard/${this._wizardUseCaseGroup}/${v}`, 
+    'Wizard_Creator',
+     window.location.href
+     );
+
+     this.$gaService.event('wizard_use_case_selection', this._wizardUseCaseGroup, v, 1, true);
 
     // this._cacheService.setUseCaseData(v, this._wizardUseCaseGroup);
   }

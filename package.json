@@ -39,6 +39,7 @@
     "moment": "^2.29.4",
     "ng-apexcharts": "1.7.6",
     "ngx-editor": "^16.0.1",
+    "ngx-google-analytics": "^14.0.1",
     "ngx-pagination": "^6.0.1",
     "ngx-permissions": "^13.0.1",
     "ngx-scrollbar": "^11.0.0",

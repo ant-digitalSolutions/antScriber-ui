@@ -31,6 +31,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { HeaderMainComponent } from './layouts/header-main/header-main.component';
 import { LayoutWizardComponent } from './layouts/layout-wizard/layout-wizard.component';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
 
 export function HttpLoaderFactory(http: HttpClient): any {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -66,6 +67,7 @@ export function HttpLoaderFactory(http: HttpClient): any {
     }),
     BreadcrumbModule,
     TimeagoModule.forRoot(),
+    NgxGoogleAnalyticsModule.forRoot('G-XQVZWP9SRY')
 
   ],
   exports: [TablerIconsModule],

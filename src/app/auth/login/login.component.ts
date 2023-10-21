@@ -6,6 +6,7 @@ import { CoreService } from 'src/app/services/core.service';
 import { AuthService } from '../auth.service';
 import { UserLogin } from '../dtos/login.dto';
 import { environment } from 'src/environments/environment';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,7 @@ export class LoginComponent {
 
   appName = environment.appName;
 
-  constructor(private settings: CoreService, private router: Router, private authService: AuthService) { }
+  constructor(private settings: CoreService, private router: Router, private authService: AuthService, protected $gaService: GoogleAnalyticsService) { }
 
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.minLength(6), Validators.email]),
@@ -43,8 +44,11 @@ export class LoginComponent {
         this.isLoading = false;
         if (r.success) {
           this.router.navigateByUrl('/');
+          this.$gaService.event('user_login', 'user_logged_in', 'successful');
         } else {
           this.hasInvalidCredentials = true;
+          this.$gaService.event('user_login', 'credential_error', r.error);
+
         }
       }
     );
