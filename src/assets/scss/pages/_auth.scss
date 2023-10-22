@@ -1,5 +1,7 @@
 .blank-layout-container {
+  height: 100dvh;
   height: 100vh;
+overflow-x: auto;
   display: flex;
   background-size: cover;
   align-items: center;
