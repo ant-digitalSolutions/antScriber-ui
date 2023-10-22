@@ -1,26 +1,43 @@
 <div class="blank-layout-container justify-content-center">
   <div class="position-relative row w-100 h-100">
-    <div class="col-lg-7 col-xl-8 bg-gredient p-0">
-      <div class="p-24 h-100">
-        <div
-          class="align-items-center justify-content-center img-height d-none d-lg-flex"
-        >
-          <img
-            src="/assets/images/outer-space.png"
-            alt="login"
-            style="max-width: 500px"
-          />
+    <ng-container *ngIf="bigScreen; else smallScreenImage">
+      <div class="col-lg-7 col-xl-8 bg-gredient p-0">
+        <div class="p-24 h-100">
+          <div
+            class="align-items-center justify-content-center img-height d-flex"
+          >
+            <img
+              src="/assets/images/outer-space.png"
+              alt="login"
+              style="max-width: 500px"
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </ng-container>
+    <ng-template #smallScreenImage>
+      <div class="col-12 p-0">
+        <div class="p-6 p-b-0">
+          <div
+            class="align-items-center justify-content-center d-flex"
+          >
+            <img
+              src="/assets/images/outer-space.png"
+              alt="login"
+              class="small-image"
+            />
+          </div>
+        </div>
+      </div>
+    </ng-template>
     <div class="col-lg-5 col-xl-4 p-0">
       <div
         class="p-32 d-flex align-items-start align-items-lg-center justify-content-center h-100"
       >
         <div class="row justify-content-center w-100">
           <div class="col-lg-9 max-width-form">
-            <h4 class="f-w-700 f-s-24 m-0">Welcome to {{appName}}</h4>
-            <span class="f-s-14 d-block mat-body-1 m-t-8"
+            <h4 class="f-w-700 f-s-24 m-0 text-center">Welcome to {{appName}}</h4>
+            <span class="f-s-14 d-block mat-body-1 m-t-8 text-center"
               >Your Creative Assistant</span
             >
 

@@ -79,6 +79,12 @@ export class RegisterComponent implements OnInit {
   }
 
 
+  public get bigScreen(): boolean {
+    return (window.innerWidth > 1200);
+  }
+
+
+
   public get passMatchError(): boolean {
     return this.form.errors &&
       this.form.errors['match_error'] &&

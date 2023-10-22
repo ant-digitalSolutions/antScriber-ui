@@ -44,6 +44,11 @@
   height: calc(100vh - 83px);
 }
 
+.small-image {
+  max-width: 125px;
+  height: 100%;
+}
+
 .custom-row {
   &.row {
     margin-right: -8px;

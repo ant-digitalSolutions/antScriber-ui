@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CoreService } from 'src/app/services/core.service';
@@ -13,7 +13,7 @@ import { GoogleAnalyticsService } from 'ngx-google-analytics';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   options = this.settings.getOptions();
 
   hasInvalidCredentials = false;
@@ -22,7 +22,13 @@ export class LoginComponent {
 
   appName = environment.appName;
 
+  bigScreen = true;
+
   constructor(private settings: CoreService, private router: Router, private authService: AuthService, protected $gaService: GoogleAnalyticsService) { }
+
+  ngOnInit(): void {
+    this.checkIfMobile();
+  }
 
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.minLength(6), Validators.email]),
@@ -52,5 +58,9 @@ export class LoginComponent {
         }
       }
     );
+  }
+
+  checkIfMobile() {
+    this.bigScreen = (window.innerWidth > 1200);
   }
 }
