@@ -14,6 +14,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class AuthService {
 
   baseUrl: string = getBaseApiURL();
+  redirectedUser: boolean = false;
 
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
@@ -86,7 +87,15 @@ export class AuthService {
     this.cookieService.set('activeUser', 'true', this.getExpiration().hours());
   }
 
-  hasUserBeenActive() {
+  private hasUserBeenActive() {
     return this.cookieService.get('activeUser') === 'true';
+  }
+
+  setUserRedirectedFromRegisterPageToLoginPage() {
+    this.redirectedUser = true;
+  }
+
+  shouldRedirectUserFromRegisterPageToLoginPage() {
+    return this.hasUserBeenActive() && !this.redirectedUser;
   }
 }
