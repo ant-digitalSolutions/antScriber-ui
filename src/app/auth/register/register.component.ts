@@ -28,9 +28,11 @@ export class RegisterComponent implements OnInit {
 
 
   ngOnInit(): void {
+    if (document.referrer === 'https://adfluens.io/' &&
+    this._authService.hasUserBeenActive())
+      this.router.navigate(['/auth/login']);
     this.initForm();
     this.$gaService.event('user_initialization', 'page_on_init', 'register_page');
-
   }
 
   initForm() {

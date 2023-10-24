@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { IRequestResponse } from '../common/dto/request-response.dto';
 import { UserRegisterDto } from './dtos/user-register.dto';
 import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class AuthService {
 
   baseUrl: string = getBaseApiURL();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   login(userLogin: UserLogin): Observable<any> {
     const result = this.http.post<IRequestResponse<any>>(this.baseUrl + 'auth/signin', userLogin)
@@ -22,6 +23,7 @@ export class AuthService {
         tap(res => {
           if (res.success) {
             this.setSession(res.data)
+            this.registerUserActivity()
           } else {
             // console.error('There is an issue with the Registration')
             // console.error(res.error);
@@ -39,6 +41,7 @@ export class AuthService {
         if (res.success)
          {
            this.setSession(res.data)
+           this.registerUserActivity()
           } else {
             console.error('There is an issue with the Registration')
             console.error(res.error);
@@ -77,5 +80,13 @@ export class AuthService {
     }
 
     return moment().subtract(1, 'days');
+  }
+
+  private registerUserActivity() {
+    this.cookieService.set('activeUser', 'true', this.getExpiration().hours());
+  }
+
+  hasUserBeenActive() {
+    return this.cookieService.get('activeUser') === 'true';
   }
 }
