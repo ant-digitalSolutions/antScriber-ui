@@ -9,9 +9,7 @@ export class UseCaseGitHubIssue extends UseCaseMetaAbstract {
 
     defaultTypeOfIssue = 'featureRequest';
 
-    override useCaseName = WizardCreatorCodingUseCasesEnum.GithubIssue;
-    override useCaseGroup = WizardCreatorUseCaseGroup.Coding;
-    override isAvailable = true;
+
 
 
     constructor() {
@@ -19,6 +17,9 @@ export class UseCaseGitHubIssue extends UseCaseMetaAbstract {
         // this.useCaseGroup = WizardCreatorUseCaseGroup.Coding;
         super();
         this.iconName = 'code';
+        this.useCaseName = WizardCreatorCodingUseCasesEnum.GithubIssue;
+        this.useCaseGroup = WizardCreatorUseCaseGroup.Coding;
+        this.isAvailable = true;
     }
 
     override toggleButtonUpdateActions(buttonToggleName: string): void {

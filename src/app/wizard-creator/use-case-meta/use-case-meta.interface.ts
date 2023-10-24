@@ -21,14 +21,32 @@ export interface IUseCaseMeta {
     iconName: string;
 
     /**
-     * True if the use case is selectable; otherwise false.
+    * True if the use case is selectable; otherwise false.
+    *
+    * @type {boolean}
+    * @memberof IUseCaseMeta
+    */
+    isAvailable: boolean;
+
+    /**
+      * The name of the use case.
+      *
+      * @type {string}
+      * @memberof IUseCaseMeta
+      */
+    useCaseName: string;
+
+    /**
+     * The name of the group that this use case belongs to.
      *
-     * @type {boolean}
+     * @type {string}
      * @memberof IUseCaseMeta
      */
-    // isAvailable: boolean;
+    useCaseGroup: string;
 
- 
+    _wizardFormService: WizardFormService;
+
+
 
     /**
      * The actions to execute after the user select
