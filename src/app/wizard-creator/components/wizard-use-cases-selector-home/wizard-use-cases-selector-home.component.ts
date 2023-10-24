@@ -18,6 +18,7 @@ import { QueryParamNames } from 'src/app/common/enum/query-params-names.enum';
 import { CacheService } from 'src/app/common/services/cache/cache.service';
 import { WizardCreatorUseCase } from '../../enums/wizard-creator-use-case.enum';
 import { WizardCreatorWebsiteUseCasesEnum } from '../../enums/wizard-creator-website-use-cases.enum';
+import { IUseCaseMeta } from '../../use-case-meta/use-case-meta.interface';
 
 @Component({
   selector: 'app-wizard-use-cases-selector-home',
@@ -40,9 +41,9 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
 
   componentDestroyed$: Subject<boolean> = new Subject();
 
-  useCasesGroups: OptionField<WizardCreatorUseCaseGroup>[];
+  useCasesGroups: string[];
 
-  selectGroupUseCases: OptionField<string>[];
+  selectGroupUseCases: IUseCaseMeta[];
 
   selectedCase = 'Select the Use Case';
 
@@ -95,7 +96,7 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
     this.showUseCases = true;
 
     if (initialElements)
-      this.selectUseCaseGroup(this.useCasesGroups[0].value);
+      this.selectUseCaseGroup(this.useCasesGroups[0]);
   }
 
 
@@ -104,38 +105,40 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
     this._useCaseService.useCaseGroupOpened = selectedGroup;
     this.selectedUseCaseGroup = selectedGroup;
 
-    switch (selectedGroup) {
-      case WizardCreatorUseCaseGroup.GeneralWriting:
-        this.selectGroupUseCases = mapEnumNameAndValue(WizardGeneralWritingUseCases);
-        break;
-      case WizardCreatorUseCaseGroup.SocialMedia:
-        this.selectGroupUseCases = mapEnumNameAndValue(WizardSocialMediaUseCases);
-        break;
-      case WizardCreatorUseCaseGroup.ArticlesAndBlog:
-        this.selectGroupUseCases = mapEnumNameAndValue(WizardBlogAndArticlesUseCases);
-        break;
-      case WizardCreatorUseCaseGroup.Ecommerce:
-        this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorEcommerceUseCasesEnum);
-        break;
-      case WizardCreatorUseCaseGroup.AdsAndMarketing:
-        this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorMarketingUseCasesEnum);
-        break;
-      case WizardCreatorUseCaseGroup.Coding:
-        this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorCodingUseCasesEnum);
-        break;
-      case WizardCreatorUseCaseGroup.InternalDev:
-        this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorInternalDevUseCasesEnum);
-        break;
-      case WizardCreatorUseCaseGroup.Learning:
-        this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorLearningUseCasesEnum);
-        break;
-      case WizardCreatorUseCaseGroup.WebsiteCopy:
-        this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorWebsiteUseCasesEnum);
-        break;
+    this.selectGroupUseCases = this._useCaseService.listUseCasesByGroup(selectedGroup);
 
-      default:
-        break;
-    }
+    // switch (selectedGroup) {
+    //   case WizardCreatorUseCaseGroup.GeneralWriting:
+    //     this.selectGroupUseCases = mapEnumNameAndValue(WizardGeneralWritingUseCases);
+    //     break;
+    //   case WizardCreatorUseCaseGroup.SocialMedia:
+    //     this.selectGroupUseCases = mapEnumNameAndValue(WizardSocialMediaUseCases);
+    //     break;
+    //   case WizardCreatorUseCaseGroup.ArticlesAndBlog:
+    //     this.selectGroupUseCases = mapEnumNameAndValue(WizardBlogAndArticlesUseCases);
+    //     break;
+    //   case WizardCreatorUseCaseGroup.Ecommerce:
+    //     this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorEcommerceUseCasesEnum);
+    //     break;
+    //   case WizardCreatorUseCaseGroup.AdsAndMarketing:
+    //     this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorMarketingUseCasesEnum);
+    //     break;
+    //   case WizardCreatorUseCaseGroup.Coding:
+    //     this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorCodingUseCasesEnum);
+    //     break;
+    //   case WizardCreatorUseCaseGroup.InternalDev:
+    //     this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorInternalDevUseCasesEnum);
+    //     break;
+    //   case WizardCreatorUseCaseGroup.Learning:
+    //     this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorLearningUseCasesEnum);
+    //     break;
+    //   case WizardCreatorUseCaseGroup.WebsiteCopy:
+    //     this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorWebsiteUseCasesEnum);
+    //     break;
+
+    //   default:
+    //     break;
+    // }
 
     this.selectedUseCaseGroup = selectedGroup;
   }
@@ -211,27 +214,30 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
    * @memberof WizardUseCasesSelectorHomeComponent
    */
   private setInitialGroupOptions(initialValues: boolean): void {
-    let values = mapEnumNameAndValue(WizardCreatorUseCaseGroup);
+    const useCaseGroups = this._useCaseService.listUseCaseGroups;
+    
 
     if (window.location.href.indexOf('app.') >= 0) {
-      const internalDevIndex = values.findIndex(g => g.value === WizardCreatorUseCaseGroup.InternalDev);
-      values.splice(internalDevIndex, 1);
+      const internalDevIndex = useCaseGroups.findIndex(g => g === WizardCreatorUseCaseGroup.InternalDev);
+
+      if (internalDevIndex >= 0)
+        useCaseGroups.splice(internalDevIndex, 1);
     }
 
     const GROUPS_TO_SHOW = 3;
 
     let selectedGroupIndex = -1;
     if (this.selectedUseCaseGroup) {
-      selectedGroupIndex = values.findIndex(g => g.value === this.selectedUseCaseGroup)
+      selectedGroupIndex = useCaseGroups.findIndex(g => g === this.selectedUseCaseGroup)
     }
 
     if (initialValues && selectedGroupIndex < GROUPS_TO_SHOW) {
-      this.useCasesGroups = values.slice(0, GROUPS_TO_SHOW);
+      this.useCasesGroups = useCaseGroups.slice(0, GROUPS_TO_SHOW);
       this.showLoadMoreUseCasesBtn = true;
     } else {
-      this.useCasesGroups = values;
+      this.useCasesGroups = useCaseGroups;
       this.showLoadMoreUseCasesBtn = false;
     }
-    this.useCasesGroups = initialValues && selectedGroupIndex < GROUPS_TO_SHOW ? values.slice(0, GROUPS_TO_SHOW) : values;
+    this.useCasesGroups = initialValues && selectedGroupIndex < GROUPS_TO_SHOW ? useCaseGroups.slice(0, GROUPS_TO_SHOW) : useCaseGroups;
   }
 }

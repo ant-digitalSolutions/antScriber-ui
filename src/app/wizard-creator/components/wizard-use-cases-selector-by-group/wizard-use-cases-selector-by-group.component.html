@@ -1,10 +1,10 @@
 <div class="wizard-use-cases-container">
         <button mat-stroked-button 
         class="btn-use-case"
-        (click)="selectUseCase(useCase.value)" 
+        (click)="selectUseCase(useCase)" 
         *ngFor="let useCase of useCases"
-        [disabled]="isDisabled(useCase.value)"
+        [disabled]="!useCase.isAvailable"
         >
-        <img width="20" height="20" [src]="getIconUrl(useCase.value)" alt="use-case-icon"/>
-        {{useCase.text}}</button>
+        <img width="20" height="20" [src]="getIconUrl(useCase)" alt="use-case-icon"/>
+        {{useCase.useCaseName}}</button>
 </div>
