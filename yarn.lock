@@ -5868,6 +5868,13 @@ ng-apexcharts@1.7.6:
   dependencies:
     tslib "^2.0.0"
 
+ngx-cookie-service@^16.0.1:
+  version "16.0.1"
+  resolved "https://registry.yarnpkg.com/ngx-cookie-service/-/ngx-cookie-service-16.0.1.tgz#8e821d7d5c0d3d245d7a908c7f28c06686cca73c"
+  integrity sha512-q8i5eX2b6SIIZcu9wy+lvOU65cLJhHD9EVz5TGGkKi8Y7X/aZbUyQ9U4CgNOfKDWtPUDFOMD8IW/cijoVKe59Q==
+  dependencies:
+    tslib "^2.0.0"
+
 ngx-editor@^16.0.1:
   version "16.0.1"
   resolved "https://registry.yarnpkg.com/ngx-editor/-/ngx-editor-16.0.1.tgz#3fe56e706637385320a101ea26f4f2d56e11bbc3"
