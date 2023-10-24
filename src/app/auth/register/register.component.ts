@@ -1,7 +1,7 @@
 import { environment } from 'src/environments/environment';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms'
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CoreService } from 'src/app/services/core.service';
 import { AuthService } from '../auth.service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
@@ -22,6 +22,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private settings: CoreService,
+    private route: ActivatedRoute,
     private router: Router,
     private _authService: AuthService,
     protected $gaService: GoogleAnalyticsService) { }
@@ -30,7 +31,8 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     if (this._authService.shouldRedirectUserFromRegisterPageToLoginPage()) {
       this._authService.setUserRedirectedFromRegisterPageToLoginPage();
-      this.router.navigate(['/auth/login']);
+      const queryParams = this.route.snapshot.queryParams;
+      this.router.navigate(['/auth/login'], { queryParams });
     }
     this.initForm();
     this.$gaService.event('user_initialization', 'page_on_init', 'register_page');
