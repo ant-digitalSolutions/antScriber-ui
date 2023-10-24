@@ -23,6 +23,9 @@ import { WizardCreatorWebsiteUseCasesEnum } from '../../enums/wizard-creator-web
 import { useCaseMeta_Websites } from '../../data/use-cases/use-cases-general-websites.data';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Location } from '@angular/common';
+import { UseCaseMetaAbstract } from '../../use-case-meta/use-case-meta.abastract';
+import { useCaseIndex } from '../../use-case-meta/use-case-register';
+import { UseCaseHandle as UseCaseMetaHandle } from '../../use-case-meta/use-case-handle';
 
 @Injectable()
 export class WizardUseCaseService {
@@ -47,12 +50,21 @@ export class WizardUseCaseService {
   // At this point, the user hasn't selected a use case yet.
   useCaseGroupOpened: string;
 
+
+  _useCaseMetaHandle: UseCaseMetaHandle;
+
+
   constructor(
     private _wizardFormService: WizardFormService,
     private _router: Router,
     private _activeRoute: ActivatedRoute,
     private _cacheService: CacheService,
-    protected $gaService: GoogleAnalyticsService) { }
+    protected $gaService: GoogleAnalyticsService) {
+
+    this._useCaseMetaHandle = new UseCaseMetaHandle();
+  }
+
+
 
 
   /**
@@ -70,12 +82,12 @@ export class WizardUseCaseService {
     this._wizardFormService.updateAdditionalData('useCase', v);
 
     // log GA
-    this.$gaService.pageView(`/wizard/${this._wizardUseCaseGroup}/${v}`, 
-    'Wizard_Creator',
-     window.location.href
-     );
+    this.$gaService.pageView(`/wizard/${this._wizardUseCaseGroup}/${v}`,
+      'Wizard_Creator',
+      window.location.href
+    );
 
-     this.$gaService.event('wizard_use_case_selection', this._wizardUseCaseGroup, v, 1, true);
+    this.$gaService.event('wizard_use_case_selection', this._wizardUseCaseGroup, v, 1, true);
 
     // this._cacheService.setUseCaseData(v, this._wizardUseCaseGroup);
   }
@@ -338,6 +350,32 @@ export class WizardUseCaseService {
     }
   }
 
+  /**
+ * Return the list of use cases that belongs to the given group.
+ * 
+ * It returns the meta_class that represents the use case.
+ *
+ * @param {string} useCaseGroup
+ * @return {*}  {UseCaseMetaAbstract[]}
+ * @memberof UseCaseHandle
+ */
+  listUseCasesByGroup(useCaseGroup: string): UseCaseMetaAbstract[] {
+    return this._useCaseMetaHandle.listUseCasesByGroup(useCaseGroup);
+  }
+
+
+  /**
+   * Return the list of available use case groups.
+   *
+   * @readonly
+   * @type {string[]}
+   * @memberof WizardUseCaseService
+   */
+  public get useCaseGroups(): string[] {
+    return this._useCaseMetaHandle.useCaseGroups;
+  }
+
+
   closeSelector(): void {
     this._closeSelectorSubject.next();
   }
@@ -347,13 +385,8 @@ export class WizardUseCaseService {
     return !this.showingUseCasesSelector;
   }
 
-  
-  public get selectedUseCaseGroup() : string {
+
+  public get selectedUseCaseGroup(): string {
     return this._wizardUseCaseGroup;
   }
-  
-
-
-
-
 }
