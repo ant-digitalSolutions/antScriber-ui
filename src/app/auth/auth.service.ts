@@ -96,6 +96,8 @@ export class AuthService {
   }
 
   shouldRedirectUserFromRegisterPageToLoginPage() {
-    return this.hasUserBeenActive() && !this.redirectedUser;
+    return document.referrer === 'https://adfluens.io/' &&
+     this.hasUserBeenActive() &&
+     !this.redirectedUser;
   }
 }
