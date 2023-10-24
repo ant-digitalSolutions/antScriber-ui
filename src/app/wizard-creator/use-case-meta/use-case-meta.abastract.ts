@@ -3,6 +3,7 @@ import { CheckboxFieldToRenderData } from "src/app/common/interfaces/checkbox-fi
 import { TextFieldToRenderData } from "src/app/common/interfaces/textfield-to-render-data";
 import { WizardFormService } from "../services/wizard-form.service";
 import { IUseCaseMeta } from "./use-case-meta.interface";
+import { WizardDefaultFieldNamesEnum } from "../enums/wizard-default-fields-names.enum";
 
 export abstract class UseCaseMetaAbstract implements IUseCaseMeta {
     /**
@@ -27,7 +28,7 @@ export abstract class UseCaseMetaAbstract implements IUseCaseMeta {
      * @type {boolean}
      * @memberof IUseCaseMeta
      */
-     isAvailable: boolean;
+    isAvailable: boolean;
 
     /**
       * The name of the use case.
@@ -35,7 +36,7 @@ export abstract class UseCaseMetaAbstract implements IUseCaseMeta {
       * @type {string}
       * @memberof IUseCaseMeta
       */
-     useCaseName: string;
+    useCaseName: string;
 
     /**
      * The name of the group that this use case belongs to.
@@ -43,7 +44,7 @@ export abstract class UseCaseMetaAbstract implements IUseCaseMeta {
      * @type {string}
      * @memberof IUseCaseMeta
      */
-     useCaseGroup: string;
+    useCaseGroup: string;
 
     _wizardFormService: WizardFormService;
 
@@ -51,7 +52,7 @@ export abstract class UseCaseMetaAbstract implements IUseCaseMeta {
      *
      */
     constructor() {
-        
+
     }
 
     /**
@@ -61,7 +62,7 @@ export abstract class UseCaseMetaAbstract implements IUseCaseMeta {
      * @param {WizardFormService} wizardFormService
      * @memberof IUseCaseMeta
      */
-    toggleButtonUpdateActions(buttonToggleName: string): void {}
+    toggleButtonUpdateActions(buttonToggleName: string): void { }
 
     /**
      * Initialize the data of the fields that conforms the form for the current
@@ -71,10 +72,12 @@ export abstract class UseCaseMetaAbstract implements IUseCaseMeta {
      */
     initFields(_wizardFormService: WizardFormService): void {
         this._wizardFormService = _wizardFormService;
+        this.cleanFormData();
         this.setCheckboxFieldsData();
         this.setSelectorFieldsData();
         this.setTextFieldsData();
         this.setButtonToggleData();
+        this.setDefaultFieldsToUse();
     }
 
     /**
@@ -82,27 +85,37 @@ export abstract class UseCaseMetaAbstract implements IUseCaseMeta {
      *
      * @memberof IUseCaseMeta
      */
-    setTextFieldsData(): void{}
+    setTextFieldsData(): void { }
 
     /**
      * Init the checkbox fields.
      *
      * @memberof IUseCaseMeta
      */
-    setCheckboxFieldsData(): void{}
+    setCheckboxFieldsData(): void { }
 
     /**
      * Init the select fields.
      *
      * @memberof IUseCaseMeta
      */
-    setSelectorFieldsData(): void{}
+    setSelectorFieldsData(): void { }
 
     /**
      * Init the toggle button.
      *
      * @memberof IUseCaseMeta
      */
-    setButtonToggleData(): void{}
+    setButtonToggleData(): void { }
+
+    cleanFormData(): void {
+        this._wizardFormService.cleanData();
+    }
+
+    setDefaultFieldsToUse(): void {
+        this._wizardFormService.updateFormDefaultFieldsToRender([
+            WizardDefaultFieldNamesEnum.ALL,
+        ], 'add');
+    }
 
 }

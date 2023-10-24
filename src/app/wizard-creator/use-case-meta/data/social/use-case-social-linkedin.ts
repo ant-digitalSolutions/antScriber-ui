@@ -4,6 +4,7 @@ import { TextFieldToRenderData } from "src/app/common/interfaces/textfield-to-re
 import { WizardCreatorUseCaseGroup } from "src/app/wizard-creator/enums/wizard-creator-use-case-group.enum";
 import { WizardSocialMediaUseCases } from "src/app/wizard-creator/enums/wizard-creator-social-media-use-cases.enum";
 import { SelectorFieldToRenderData } from "src/app/common/interfaces/button-toggle-to-render-data";
+import { WizardDefaultFieldNamesEnum } from "src/app/wizard-creator/enums/wizard-default-fields-names.enum";
 
 export class UseCase_Social_LinkedinPost extends UseCaseMetaAbstract {
 
@@ -94,5 +95,11 @@ export class UseCase_Social_LinkedinPost extends UseCaseMetaAbstract {
         });
 
         this._wizardFormService.updateFormDefaultField_Selectors(fieldsData);
+    }
+
+    override setDefaultFieldsToUse(): void {
+        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'add');
+        this._wizardFormService.updateFormDefaultFieldsToRender([
+            WizardDefaultFieldNamesEnum.Instruction], 'del');
     }
 }

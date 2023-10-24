@@ -77,15 +77,17 @@ export class WizardUseCaseService {
     this.setWizardUseCaseGroup(this.useCaseGroupOpened);
     this._wizardUseCaseSubject.next(v);
     this._wizardUseCase = v;
-    this.updateWizardFormFields();
+    // this.updateWizardFormFields();
     this.updateQueryParamsWithUseCase(v);
     this._wizardFormService.updateAdditionalData('useCase', v);
 
+    this._useCaseMetaHandle.initUseCaseFields(this._wizardFormService, this.useCaseGroupOpened, v);
+
     // log GA
-    this.$gaService.pageView(`/wizard/${this._wizardUseCaseGroup}/${v}`,
-      'Wizard_Creator',
-      window.location.href
-    );
+    // this.$gaService.pageView(`/wizard/${this._wizardUseCaseGroup}/${v}`,
+    //   'Wizard_Creator',
+    //   window.location.href
+    // );
 
     this.$gaService.event('wizard_use_case_selection', this._wizardUseCaseGroup, v, 1, true);
 
@@ -101,9 +103,6 @@ export class WizardUseCaseService {
 
   updateWizardFormFields() {
     switch (this._wizardUseCaseGroup) {
-      case WizardCreatorUseCaseGroup.Coding:
-        this.updateWizardFormFieldsForGroup_Coding()
-        break;
       case WizardCreatorUseCaseGroup.GeneralWriting:
         this.updateWizardFormFieldsForGroup_GeneralWriting();
         break;
@@ -116,9 +115,6 @@ export class WizardUseCaseService {
         break;
       case WizardCreatorUseCaseGroup.Learning:
         this.updateWizardFormFieldsForGroup_Learning();
-        break;
-      case WizardCreatorUseCaseGroup.SocialMedia:
-        this.updateWizardFormFieldsForGroup_Social();
         break;
       case WizardCreatorUseCaseGroup.WebsiteCopy:
         this.updateWizardFormFieldsForGroup_Website();
@@ -163,29 +159,7 @@ export class WizardUseCaseService {
         break;
     }
   }
-
-
-  updateWizardFormFieldsForGroup_Coding() {
-    switch (this._wizardUseCase) {
-      case WizardCreatorCodingUseCasesEnum.GithubIssue:
-        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'del');
-        this._wizardFormService.updateFormDefaultFieldsToRender([
-          WizardDefaultFieldNamesEnum.GtpVersion,
-          WizardDefaultFieldNamesEnum.ImaginationSelector
-        ], 'add');
-        break;
-      case WizardCreatorCodingUseCasesEnum.ImplementFunction:
-        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'del');
-        this._wizardFormService.updateFormDefaultFieldsToRender([
-          WizardDefaultFieldNamesEnum.GtpVersion,
-          WizardDefaultFieldNamesEnum.ImaginationSelector
-        ], 'add');
-        break;
-
-      default:
-        break;
-    }
-  }
+  
 
   updateWizardFormFieldsForGroup_Marketing() {
     switch (this._wizardUseCase) {
@@ -241,34 +215,7 @@ export class WizardUseCaseService {
     }
   }
 
-  updateWizardFormFieldsForGroup_Social() {
-    switch (this._wizardUseCase) {
-      case WizardSocialMediaUseCases.InstagramCaption:
-        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'add');
-        this._wizardFormService.updateFormDefaultFieldsToRender([
-          WizardDefaultFieldNamesEnum.Instruction], 'del');
-        break;
-      case WizardSocialMediaUseCases.FacebookPost:
-        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'add');
-        this._wizardFormService.updateFormDefaultFieldsToRender([
-          WizardDefaultFieldNamesEnum.Instruction], 'del');
-        break;
-      case WizardSocialMediaUseCases.LinkedinPost:
-        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'add');
-        this._wizardFormService.updateFormDefaultFieldsToRender([
-          WizardDefaultFieldNamesEnum.Instruction], 'del');
-        break;
 
-      case WizardSocialMediaUseCases.TwitterThread:
-        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'add');
-        this._wizardFormService.updateFormDefaultFieldsToRender([
-          WizardDefaultFieldNamesEnum.Instruction, WizardDefaultFieldNamesEnum.AmountOfVariants], 'del');
-        break;
-
-      default:
-        break;
-    }
-  }
 
   updateWizardFormFieldsForGroup_Website() {
     switch (this._wizardUseCase) {
@@ -371,7 +318,7 @@ export class WizardUseCaseService {
    * @type {string[]}
    * @memberof WizardUseCaseService
    */
-  public get useCaseGroups(): string[] {
+  public get listUseCaseGroups(): string[] {
     return this._useCaseMetaHandle.useCaseGroups;
   }
 

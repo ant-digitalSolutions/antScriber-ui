@@ -5,6 +5,7 @@ import { TextFieldToRenderData } from "src/app/common/interfaces/textfield-to-re
 import { WizardCreatorUseCaseGroup } from "src/app/wizard-creator/enums/wizard-creator-use-case-group.enum";
 import { WizardCreatorCodingUseCasesEnum } from "src/app/wizard-creator/enums/wizard-creator-coding-use-cases.enum";
 import { CheckboxFieldToRenderData } from "src/app/common/interfaces/checkbox-field-to-render-data";
+import { WizardDefaultFieldNamesEnum } from "src/app/wizard-creator/enums/wizard-default-fields-names.enum";
 
 export class UseCase_Coding_ImplementCode extends UseCaseMetaAbstract {
 
@@ -78,5 +79,12 @@ export class UseCase_Coding_ImplementCode extends UseCaseMetaAbstract {
         })
 
         this._wizardFormService.updateFormDefaultField_Checkboxes(fields);
+    }
+
+    override setDefaultFieldsToUse(): void {
+        this._wizardFormService.updateFormDefaultFieldsToRender([
+            WizardDefaultFieldNamesEnum.GtpVersion,
+            WizardDefaultFieldNamesEnum.ImaginationSelector
+        ], 'add');
     }
 }

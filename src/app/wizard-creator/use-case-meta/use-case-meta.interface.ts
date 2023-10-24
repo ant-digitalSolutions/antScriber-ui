@@ -92,4 +92,18 @@ export interface IUseCaseMeta {
      * @memberof IUseCaseMeta
      */
     setButtonToggleData(): void;
+
+    /**
+     * Clean all the data in the form.
+     *
+     * @memberof IUseCaseMeta
+     */
+    cleanFormData(): void;
+
+    /**
+     * Set the default fields of the form to use with the current use case.
+     *
+     * @memberof IUseCaseMeta
+     */
+    setDefaultFieldsToUse(): void;
 }

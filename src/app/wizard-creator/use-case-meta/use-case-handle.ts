@@ -74,7 +74,7 @@ export class UseCaseHandle {
      * @memberof UseCaseHandle
      */
     public get useCaseGroups() : string[] {
-        return Object.keys(this._useCaseByGroup);
+        return Array.from(this._useCaseByGroup.keys());
     }
     
     

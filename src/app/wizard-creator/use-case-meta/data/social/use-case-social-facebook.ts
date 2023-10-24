@@ -7,6 +7,7 @@ import { WizardCreatorCodingUseCasesEnum } from "src/app/wizard-creator/enums/wi
 import { CheckboxFieldToRenderData } from "src/app/common/interfaces/checkbox-field-to-render-data";
 import { WizardSocialMediaUseCases } from "src/app/wizard-creator/enums/wizard-creator-social-media-use-cases.enum";
 import { SelectorFieldToRenderData } from "src/app/common/interfaces/button-toggle-to-render-data";
+import { WizardDefaultFieldNamesEnum } from "src/app/wizard-creator/enums/wizard-default-fields-names.enum";
 
 export class UseCase_Social_FacebookPost extends UseCaseMetaAbstract {
 
@@ -73,5 +74,11 @@ export class UseCase_Social_FacebookPost extends UseCaseMetaAbstract {
         });
 
         this._wizardFormService.updateFormDefaultField_Selectors(fieldsData);
+    }
+
+    override setDefaultFieldsToUse(): void {
+        this._wizardFormService.updateFormDefaultFieldsToRender([WizardDefaultFieldNamesEnum.ALL], 'add');
+        this._wizardFormService.updateFormDefaultFieldsToRender([
+            WizardDefaultFieldNamesEnum.Instruction], 'del');
     }
 }
