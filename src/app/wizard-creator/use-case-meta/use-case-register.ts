@@ -8,11 +8,17 @@ import { UseCase_Social_FacebookPost } from "./data/social/use-case-social-faceb
 import { UseCase_Social_InstagramCaption } from "./data/social/use-case-social-instagram";
 import { UseCase_Social_LinkedinPost } from "./data/social/use-case-social-linkedin";
 import { UseCase_Social_TwitterThread } from "./data/social/use-case-social-twitter-thread";
+import { UseCase_Website_SEO } from "./data/website/use-case-website-seo";
+import { UseCase_Website_PageOutline } from "./data/website/use-case-website-website-outline";
+import { UseCase_Website_SectionCopy } from "./data/website/use-case-website-website-section";
 import { UseCaseMetaAbstract } from "./use-case-meta.abastract";
 
 export const useCaseIndex: UseCaseMetaAbstract[] = [
+    // coding
     new UseCase_Coding_GitHubIssue(),
     new UseCase_Coding_ImplementCode(),
+
+    // social
     new UseCase_Social_LinkedinPost(),
     new UseCase_Social_FacebookPost(),
     new UseCase_Social_InstagramCaption(),
@@ -22,5 +28,10 @@ export const useCaseIndex: UseCaseMetaAbstract[] = [
     new UseCase_Marketing_Facebook(),
     new UseCase_Marketing_SMS(),
     new UseCase_Marketing_Email(),
-    new UseCase_Marketing_GoogleAds()
+    new UseCase_Marketing_GoogleAds(),
+
+    //website
+    new UseCase_Website_SEO(),
+    new UseCase_Website_SectionCopy(),
+    new UseCase_Website_PageOutline()
 ]
