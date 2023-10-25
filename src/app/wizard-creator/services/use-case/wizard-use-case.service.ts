@@ -50,7 +50,12 @@ export class WizardUseCaseService {
   // At this point, the user hasn't selected a use case yet.
   useCaseGroupOpened: string;
 
-
+  /**
+   * Handle the logic on the use case meta.
+   *
+   * @type {UseCaseMetaHandle}
+   * @memberof WizardUseCaseService
+   */
   _useCaseMetaHandle: UseCaseMetaHandle;
 
 
@@ -74,6 +79,11 @@ export class WizardUseCaseService {
    * @memberof WizardUseCaseService
    */
   setWizardUseCase(v: string) {
+    // destroy the listeners of the current use case.
+    if (this._wizardUseCaseGroup && this._wizardUseCase) {
+      this._useCaseMetaHandle.destroyUseCase(this._wizardUseCaseGroup, this._wizardUseCase);
+    }
+
     this.setWizardUseCaseGroup(this.useCaseGroupOpened);
     this._wizardUseCaseSubject.next(v);
     this._wizardUseCase = v;
@@ -159,7 +169,7 @@ export class WizardUseCaseService {
         break;
     }
   }
-  
+
 
   updateWizardFormFieldsForGroup_Marketing() {
     switch (this._wizardUseCase) {

@@ -1,5 +1,6 @@
 import { WizardFormService } from "../services/wizard-form.service";
 import { UseCaseMetaAbstract } from "./use-case-meta.abastract";
+import { IUseCaseMeta } from "./use-case-meta.interface";
 import { useCaseIndex } from "./use-case-register";
 
 export class UseCaseHandle {
@@ -37,7 +38,7 @@ export class UseCaseHandle {
      * @memberof UseCaseHandle
      */
     initUseCaseFields(_wizardFormService: WizardFormService, useCaseGroup: string, useCase: string): void {
-        const useCaseMeta = this._useCaseByGroup.get(useCaseGroup)?.find(uc => uc.useCaseName === useCase);
+        const useCaseMeta = this.findUseCaseMeta(useCaseGroup, useCase);
 
         if (!useCaseMeta) {
             throw new Error('The given use case is not defined')
@@ -63,6 +64,18 @@ export class UseCaseHandle {
         }
 
         return output;
+    }
+
+    findUseCaseMeta(useCaseGroup: string, useCase: string): IUseCaseMeta | undefined {
+        return this._useCaseByGroup.get(useCaseGroup)?.find(uc => uc.useCaseName === useCase);
+    }
+
+    destroyUseCase(useCaseGroup: string, useCase: string): void {
+        const useCaseMeta = this.findUseCaseMeta(useCaseGroup, useCase);
+
+        if (useCaseMeta) {
+            useCaseMeta.destroy();
+        }
     }
 
     

@@ -4,6 +4,7 @@ import { TextFieldToRenderData } from "src/app/common/interfaces/textfield-to-re
 import { WizardFormService } from "../services/wizard-form.service";
 import { IUseCaseMeta } from "./use-case-meta.interface";
 import { WizardDefaultFieldNamesEnum } from "../enums/wizard-default-fields-names.enum";
+import { Subject, takeUntil } from "rxjs";
 
 export abstract class UseCaseMetaAbstract implements IUseCaseMeta {
     /**
@@ -48,6 +49,8 @@ export abstract class UseCaseMetaAbstract implements IUseCaseMeta {
 
     _wizardFormService: WizardFormService;
 
+    _classDestroyed$: Subject<boolean> = new Subject();
+
     /**
      *
      */
@@ -73,11 +76,19 @@ export abstract class UseCaseMetaAbstract implements IUseCaseMeta {
     initFields(_wizardFormService: WizardFormService): void {
         this._wizardFormService = _wizardFormService;
         this.cleanFormData();
+        this.setDefaultFieldsToUse();
         this.setCheckboxFieldsData();
         this.setSelectorFieldsData();
         this.setTextFieldsData();
         this.setButtonToggleData();
-        this.setDefaultFieldsToUse();
+        this.setListeners();
+    }
+
+    setListeners() {
+        this._wizardFormService.buttonToggleUpdate$.pipe(takeUntil(this._classDestroyed$))
+            .subscribe(buttonToggleName => {
+                this.toggleButtonUpdateActions(buttonToggleName);
+            })
     }
 
     /**
@@ -116,6 +127,10 @@ export abstract class UseCaseMetaAbstract implements IUseCaseMeta {
         this._wizardFormService.updateFormDefaultFieldsToRender([
             WizardDefaultFieldNamesEnum.ALL,
         ], 'add');
+    }
+
+    destroy(): void {
+        this._classDestroyed$.next(true);
     }
 
 }
