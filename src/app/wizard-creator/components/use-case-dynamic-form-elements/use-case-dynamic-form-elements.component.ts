@@ -8,11 +8,11 @@ import { WizardFormService } from 'src/app/wizard-creator/services/wizard-form.s
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-use-case-form-base',
-  templateUrl: './use-case-form-base.component.html',
-  styleUrls: ['./use-case-form-base.component.scss']
+  selector: 'use-case-dynamic-form-elements',
+  templateUrl: './use-case-dynamic-form-elements.component.html',
+  styleUrls: ['./use-case-dynamic-form-elements.component.scss']
 })
-export class UseCaseFormBaseComponent {
+export class UseCaseDynamicFormElementsComponent {
   componentDestroyed$: Subject<boolean> = new Subject();
 
   appName = environment.appName;

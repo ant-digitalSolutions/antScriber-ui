@@ -18,7 +18,7 @@ import { WizardCreatorButtonToggleComponent } from './components/common/wizard-c
 import { WizardCreatorSelectorFieldComponent } from './components/common/wizard-creator-selector-field/wizard-creator-selector-field.component';
 import { WizardUseCaseService } from './services/use-case/wizard-use-case.service';
 import { WizardFormService } from './services/wizard-form.service';
-import { UseCaseFormBaseComponent } from './components/use-case-form-components/use-case-form-base/use-case-form-base.component';
+import { UseCaseDynamicFormElementsComponent } from './components/use-case-dynamic-form-elements/use-case-dynamic-form-elements.component';
 
 
 
@@ -33,7 +33,7 @@ import { UseCaseFormBaseComponent } from './components/use-case-form-components/
     WizardCreatorCheckboxFieldComponent,
     WizardCreatorButtonToggleComponent,
     WizardCreatorSelectorFieldComponent,
-    UseCaseFormBaseComponent,
+    UseCaseDynamicFormElementsComponent,
   ],
   imports: [
     CommonModule,
