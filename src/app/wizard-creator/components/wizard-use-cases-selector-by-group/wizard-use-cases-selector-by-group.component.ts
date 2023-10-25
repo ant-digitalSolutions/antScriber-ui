@@ -30,7 +30,6 @@ export class WizardUseCasesSelectorByGroupComponent {
 
     // TODO: check the subscription type of the current user.
     if (useCaseMeta.isAvailable) { 
-      
       this._useCaseService.setWizardUseCase(useCaseMeta.useCaseName); 
     }
     else {
@@ -45,10 +44,4 @@ export class WizardUseCasesSelectorByGroupComponent {
     // const useCaseMeta = this._useCaseService.useCaseMetaData(useCase);
     return icons_getUrl(useCaseMeta.iconName);
   }
-
-  isDisabled(useCase: string): boolean {
-    const useCaseMeta = this._useCaseService.useCaseMetaData(useCase);
-    return !useCaseMeta.isAvailableForFreeUsers;
-  }
-
 }
