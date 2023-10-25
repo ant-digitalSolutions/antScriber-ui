@@ -12,12 +12,9 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { WizardUseCasesSelectorHomeComponent } from './components/wizard-use-cases-selector-home/wizard-use-cases-selector-home.component';
 import { WizardUseCasesSelectorByGroupComponent } from './components/wizard-use-cases-selector-by-group/wizard-use-cases-selector-by-group.component';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { WizardCreatorFormDynamicElementsComponent } from './components/wizard-creator-form-dynamic-elements/wizard-creator-form-dynamic-elements.component';
 import { WizardCreatorTextFieldComponent } from './components/common/wizard-creator-text-field/wizard-creator-text-field.component';
 import { WizardCreatorCheckboxFieldComponent } from './components/common/wizard-creator-checkbox-field/wizard-creator-checkbox-field.component';
 import { WizardCreatorButtonToggleComponent } from './components/common/wizard-creator-button-toggle/wizard-creator-button-toggle.component';
-import { WizardUseCaseGeneralWritingFormComponent } from './components/use-case-form-components/general-writing/wizard-use-case-general-writing-form.component';
-import { WizardUseCaseGeneralWritingFormMessageComponent } from './components/use-case-form-components/general-writing/wizard-use-case-general-writing-form-message/wizard-use-case-general-writing-form-message.component';
 import { WizardCreatorSelectorFieldComponent } from './components/common/wizard-creator-selector-field/wizard-creator-selector-field.component';
 import { WizardUseCaseService } from './services/use-case/wizard-use-case.service';
 import { WizardFormService } from './services/wizard-form.service';
@@ -33,11 +30,8 @@ import { UseCaseFormBaseComponent } from './components/use-case-form-components/
     WizardUseCasesSelectorHomeComponent,
     WizardUseCasesSelectorByGroupComponent,
     WizardCreatorTextFieldComponent,
-    WizardCreatorFormDynamicElementsComponent,
     WizardCreatorCheckboxFieldComponent,
     WizardCreatorButtonToggleComponent,
-    WizardUseCaseGeneralWritingFormComponent,
-    WizardUseCaseGeneralWritingFormMessageComponent,
     WizardCreatorSelectorFieldComponent,
     UseCaseFormBaseComponent,
   ],
