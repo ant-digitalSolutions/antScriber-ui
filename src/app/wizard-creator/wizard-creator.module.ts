@@ -24,10 +24,6 @@ import { WizardFormService } from './services/wizard-form.service';
 import { UseCaseFormBaseComponent } from './components/use-case-form-components/use-case-form-base/use-case-form-base.component';
 import { WizardUseCaseInternalCustomComponentComponent } from './components/use-case-form-components/interal-dev/children/wizard-use-case-internal-custom-component.component';
 import { WizardUseCaseInternalDevFormComponent } from './components/use-case-form-components/interal-dev/wizard-use-case-internal-dev-form.component';
-import { WizardUseCaseWebsiteComponent } from './components/use-case-form-components/websites/wizard-use-case-website.component';
-import { WizardUseCaseWebsitesSectionCopyComponent } from './components/use-case-form-components/websites/use-cases/wizard-use-case-websites-section-copy.component';
-import { WizardUseCaseWebsitesWebpageOutlineComponent } from './components/use-case-form-components/websites/use-cases/wizard-use-case-websites-webpage-outline.component';
-import { WizardUseCaseWebsitesSeoComponent } from './components/use-case-form-components/websites/use-cases/wizard-use-case-websites-seo.component';
 
 
 
@@ -48,10 +44,6 @@ import { WizardUseCaseWebsitesSeoComponent } from './components/use-case-form-co
     UseCaseFormBaseComponent,
     WizardUseCaseInternalCustomComponentComponent,
     WizardUseCaseInternalDevFormComponent,
-    WizardUseCaseWebsiteComponent,
-    WizardUseCaseWebsitesSectionCopyComponent,
-    WizardUseCaseWebsitesWebpageOutlineComponent,
-    WizardUseCaseWebsitesSeoComponent
   ],
   imports: [
     CommonModule,
