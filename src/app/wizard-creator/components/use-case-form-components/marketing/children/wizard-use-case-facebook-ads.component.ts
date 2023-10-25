@@ -37,18 +37,18 @@ export class WizardUseCaseFacebookAdsComponent extends UseCaseFormBaseComponent 
     });
 
     fieldsData.push({
-      placeholder: 'Enter Occasion',
-      fieldLabel: 'Occasion',
+      placeholder: 'E.g: Try it now on https://app.adfluens.io',
+      fieldLabel: 'Call to Action',
       fieldValue: '',
       validators: [Validators.maxLength(100)],
       inputMaxLen: 100,
-      dataName: 'occasion',
-      tooltipText: 'Enter the occasion for the ad',
+      dataName: 'cta',
+      tooltipText: 'Enter the desired Call to Action (CTA)',
       isLongText: false
     });
 
     fieldsData.push({
-      placeholder: 'Enter Promotion',
+      placeholder: 'E.g: 10% OFF',
       fieldLabel: 'Promotion',
       fieldValue: '',
       validators: [Validators.maxLength(100)],
