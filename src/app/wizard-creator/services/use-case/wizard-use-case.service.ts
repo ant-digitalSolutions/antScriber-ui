@@ -84,6 +84,10 @@ export class WizardUseCaseService {
       this._useCaseMetaHandle.destroyUseCase(this._wizardUseCaseGroup, this._wizardUseCase);
     }
 
+    // init use case data
+    this._useCaseMetaHandle.initUseCaseFields(this._wizardFormService, this.useCaseGroupOpened, v);
+
+
     this.setWizardUseCaseGroup(this.useCaseGroupOpened);
     this._wizardUseCaseSubject.next(v);
     this._wizardUseCase = v;
@@ -91,7 +95,6 @@ export class WizardUseCaseService {
     this.updateQueryParamsWithUseCase(v);
     this._wizardFormService.updateAdditionalData('useCase', v);
 
-    this._useCaseMetaHandle.initUseCaseFields(this._wizardFormService, this.useCaseGroupOpened, v);
 
     // log GA
     // this.$gaService.pageView(`/wizard/${this._wizardUseCaseGroup}/${v}`,
