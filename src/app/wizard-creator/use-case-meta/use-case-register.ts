@@ -1,5 +1,6 @@
 import { UseCaseGitHubIssue as UseCase_Coding_GitHubIssue } from "./data/coding/use-case-github-issue";
 import { UseCase_Coding_ImplementCode } from "./data/coding/use-case-implement-code";
+import { UseCase_Internal_UseCaseMeta } from "./data/internal-dev/use-case-internal-use-case-meta";
 import { UseCase_Marketing_Email } from "./data/marketing/use-case-marketing-email";
 import { UseCase_Marketing_Facebook } from "./data/marketing/use-case-marketing-facebook";
 import { UseCase_Marketing_GoogleAds } from "./data/marketing/use-case-marketing-google-ads";
@@ -33,5 +34,8 @@ export const useCaseIndex: UseCaseMetaAbstract[] = [
     //website
     new UseCase_Website_SEO(),
     new UseCase_Website_SectionCopy(),
-    new UseCase_Website_PageOutline()
+    new UseCase_Website_PageOutline(),
+
+    // internal
+    new UseCase_Internal_UseCaseMeta()
 ]
