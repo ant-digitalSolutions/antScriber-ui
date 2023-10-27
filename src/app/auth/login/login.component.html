@@ -41,9 +41,9 @@
               >Your Creative Assistant</span
             >
 
-            <!-- <div class="row m-t-24">
+            <div class="row m-t-24">
               <div class="col-12 col-sm-6">
-                <button mat-stroked-button class="w-100">
+                <button mat-stroked-button class="w-100" (click)="redirectToGoogleSignIn()">
                   <div class="d-flex align-items-center">
                     <img
                       src="/assets/images/svgs/google-icon.svg"
@@ -59,6 +59,7 @@
                 <button
                   mat-stroked-button
                   class="w-100 d-flex align-items-center"
+                  (click)="redirectToFacebookSignIn()"
                 >
                   <div class="d-flex align-items-center">
                     <img
@@ -71,9 +72,9 @@
                   </div>
                 </button>
               </div>
-            </div> -->
+            </div> 
 
-            <!-- <div class="or-border m-t-30">or sign in with</div> -->
+           <div class="or-border m-t-30">or sign in with</div> 
 
             <ng-container *ngIf="hasInvalidCredentials">
               <div class="error-message-container">

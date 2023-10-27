@@ -52,7 +52,7 @@ export class AuthService {
       );
   }
 
-  private setSession(authResult: any) {
+  setSession(authResult: any) {
     const expiresAt = moment(authResult.expiresAt);
 
     localStorage.setItem('id_token', authResult.access_token);
@@ -62,6 +62,8 @@ export class AuthService {
   logout() {
     localStorage.removeItem("id_token");
     localStorage.removeItem("expires_at");
+    this.cookieService.delete('access_token');
+    document.cookie = `access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
   }
 
   public isLoggedIn() {

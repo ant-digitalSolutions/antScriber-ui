@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CoreService } from 'src/app/services/core.service';
 import { AuthService } from '../auth.service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 
 @Component({
   selector: 'app-register',
@@ -12,6 +13,7 @@ import { GoogleAnalyticsService } from 'ngx-google-analytics';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+
   options = this.settings.getOptions();
 
   form: FormGroup;
@@ -36,6 +38,26 @@ export class RegisterComponent implements OnInit {
     }
     this.initForm();
     this.$gaService.event('user_initialization', 'page_on_init', 'register_page');
+    this.initGoogle();
+  }
+
+  initGoogle() {
+    // @ts-ignore
+    google.accounts.id.initialize({
+      client_id: "977644342225-rqall5tsjucmaahqs9oa4boj6vo7alnd.apps.googleusercontent.com",
+      callback: this.onSignGoogleIn.bind(this),
+      auto_select: false,
+      cancel_on_tap_outside: true,
+
+    });
+    // @ts-ignore
+    google.accounts.id.renderButton(
+      // @ts-ignore
+      document.getElementById("google-button"),
+      { theme: "outline", size: "large", width: "100%" }
+    );
+    // @ts-ignore
+    google.accounts.id.prompt((notification: PromptMomentNotification) => { });
   }
 
   initForm() {
@@ -83,6 +105,14 @@ export class RegisterComponent implements OnInit {
 
   }
 
+  onSignGoogleIn(googleUser: any) {
+    var profile = googleUser.getBasicProfile();
+    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    console.log('Name: ' + profile.getName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+  }
+
 
   public get bigScreen(): boolean {
     return (window.innerWidth > 1200);
@@ -97,4 +127,20 @@ export class RegisterComponent implements OnInit {
       this.f['passConfirmation'].valid;
   }
 
+  redirectToGoogleSignIn() {
+    window.location.href = getBaseApiURL() + 'auth/google'
+  }
+
+  redirectToFacebookSignIn() {
+    window.location.href = getBaseApiURL() + 'auth/facebook'
+  }
+
+}
+
+function onSignGoogleIn(googleUser: any) {
+  var profile = googleUser.getBasicProfile();
+  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log('Name: ' + profile.getName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
 }

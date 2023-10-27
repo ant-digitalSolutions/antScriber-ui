@@ -40,10 +40,12 @@
             <span class="f-s-14 d-block mat-body-1 m-t-8 text-center"
               >Your Creative Assistant</span
             >
+            <!-- <div class="g-signin2" data-onsuccess="onSignGoogleIn"></div>
+            <div class="" id="google-button"></div> -->
 
-            <!-- <div class="row m-t-24">
+            <div class="row m-t-24">
               <div class="col-12 col-sm-6">
-                <button mat-stroked-button class="w-100">
+                <button mat-stroked-button class="w-100" (click)="redirectToGoogleSignIn()">
                   <div class="d-flex align-items-center">
                     <img
                       src="/assets/images/svgs/google-icon.svg"
@@ -59,6 +61,7 @@
                 <button
                   mat-stroked-button
                   class="w-100 d-flex align-items-center"
+                  (click)="redirectToFacebookSignIn()"
                 >
                   <div class="d-flex align-items-center">
                     <img
@@ -71,7 +74,7 @@
                   </div>
                 </button>
               </div>
-            </div> -->
+            </div>
 
             <!-- <div class="or-border m-t-30">or sign up with</div> -->
 

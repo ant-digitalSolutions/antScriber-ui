@@ -1,12 +1,14 @@
 import { Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CoreService } from 'src/app/services/core.service';
 import { AuthService } from '../auth.service';
 import { UserLogin } from '../dtos/login.dto';
 import { environment } from 'src/environments/environment';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { CookieService } from 'ngx-cookie-service';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 
 @Component({
   selector: 'app-login',
@@ -24,10 +26,17 @@ export class LoginComponent implements OnInit {
 
   bigScreen = true;
 
-  constructor(private settings: CoreService, private router: Router, private authService: AuthService, protected $gaService: GoogleAnalyticsService) { }
+  constructor(
+    private settings: CoreService,
+    private router: Router, 
+    private activatedRoute: ActivatedRoute,
+    private cookieService: CookieService,
+    private authService: AuthService, 
+    protected $gaService: GoogleAnalyticsService) { }
 
   ngOnInit(): void {
     this.checkIfMobile();
+    this.checkIfIsLogged();
   }
 
   form = new FormGroup({
@@ -37,6 +46,22 @@ export class LoginComponent implements OnInit {
 
   get f() {
     return this.form.controls;
+  }
+
+  checkIfIsLogged() {
+    const token = this.activatedRoute.snapshot.paramMap.get('token');
+
+    const access_token_raw = this.cookieService.get('access_token');
+    
+    if (access_token_raw)
+    {
+      const access_token = JSON.parse(access_token_raw.replace('j:', ''));
+      this.authService.setSession(access_token);
+
+      if (this.authService.isLoggedIn()) {
+        this.router.navigate(['/'])
+      }
+    }
   }
 
   submit() {
@@ -58,6 +83,14 @@ export class LoginComponent implements OnInit {
         }
       }
     );
+  }
+
+  redirectToGoogleSignIn() {
+    window.location.href = getBaseApiURL() + 'auth/google'
+  }
+
+  redirectToFacebookSignIn() {
+    window.location.href = getBaseApiURL() + 'auth/facebook'
   }
 
   checkIfMobile() {
