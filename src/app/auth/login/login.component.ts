@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { CookieService } from 'ngx-cookie-service';
 import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
+import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 
 @Component({
   selector: 'app-login',
@@ -32,7 +33,8 @@ export class LoginComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private cookieService: CookieService,
     private authService: AuthService, 
-    protected $gaService: GoogleAnalyticsService) { }
+    protected $gaService: GoogleAnalyticsService,
+    private _projectService: BlogProjectsService) { }
 
   ngOnInit(): void {
     this.checkIfMobile();
@@ -49,10 +51,12 @@ export class LoginComponent implements OnInit {
   }
 
   checkIfIsLogged() {
+    this.isLoading = true;
     const qParams = this.activatedRoute.snapshot.queryParams;
 
     const access_token = qParams['access_token'];
     const expiresAt = qParams['expires_at'];
+    const provider = qParams['provider']
 
     const session = {
       access_token, 
@@ -67,9 +71,13 @@ export class LoginComponent implements OnInit {
       this.authService.setSession(session);
 
       if (this.authService.isLoggedIn()) {
-        this.router.navigate(['/'])
+        this._projectService.refreshProjects().then(() => {
+          this.router.navigateByUrl('/');
+        })
+        this.$gaService.event('user_login', 'user_logged_in', provider);
       }
     }
+    this.isLoading = false;
   }
 
   submit() {
@@ -82,8 +90,10 @@ export class LoginComponent implements OnInit {
       (r) => {
         this.isLoading = false;
         if (r.success) {
-          this.router.navigateByUrl('/');
-          this.$gaService.event('user_login', 'user_logged_in', 'successful');
+          this._projectService.refreshProjects().then(() => {
+            this.router.navigateByUrl('/');
+          })
+          this.$gaService.event('user_login', 'user_logged_in', 'provider_password');
         } else {
           this.hasInvalidCredentials = true;
           this.$gaService.event('user_login', 'credential_error', r.error);
