@@ -6,6 +6,7 @@ import { CoreService } from 'src/app/services/core.service';
 import { AuthService } from '../auth.service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
+import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 
 @Component({
   selector: 'app-register',
@@ -27,7 +28,8 @@ export class RegisterComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private _authService: AuthService,
-    protected $gaService: GoogleAnalyticsService) { }
+    protected $gaService: GoogleAnalyticsService,
+    private _projectService: BlogProjectsService) { }
 
 
   ngOnInit(): void {
@@ -37,27 +39,7 @@ export class RegisterComponent implements OnInit {
       this.router.navigate(['/auth/login'], { queryParams });
     }
     this.initForm();
-    this.$gaService.event('user_initialization', 'page_on_init', 'register_page');
-    this.initGoogle();
-  }
-
-  initGoogle() {
-    // @ts-ignore
-    google.accounts.id.initialize({
-      client_id: "977644342225-rqall5tsjucmaahqs9oa4boj6vo7alnd.apps.googleusercontent.com",
-      callback: this.onSignGoogleIn.bind(this),
-      auto_select: false,
-      cancel_on_tap_outside: true,
-
-    });
-    // @ts-ignore
-    google.accounts.id.renderButton(
-      // @ts-ignore
-      document.getElementById("google-button"),
-      { theme: "outline", size: "large", width: "100%" }
-    );
-    // @ts-ignore
-    google.accounts.id.prompt((notification: PromptMomentNotification) => { });
+    this.$gaService.event('register_intent', 'page_on_init', 'register_page');
   }
 
   initForm() {
@@ -84,12 +66,14 @@ export class RegisterComponent implements OnInit {
       this._authService.register(this.form.value).subscribe(r => {
         this.isLoading = false;
         if (r.success) {
-          this.router.navigate(['/wizard/creator']);
-          this.$gaService.event('user_initialization', 'user_created', 'successful');
+          this._projectService.refreshProjects().then(() => {
+            this.router.navigateByUrl('/');
+          })
+          this.$gaService.event('user_register', 'user_created', 'provider_pass');
 
         } else {
           this.hasInvalidCredentials = true;
-          this.$gaService.event('user_initialization', 'user_register_invalid_request', r.error);
+          this.$gaService.event('user_initialization_failed', 'user_register_invalid_request', r.error);
 
         }
       })
@@ -105,20 +89,9 @@ export class RegisterComponent implements OnInit {
 
   }
 
-  onSignGoogleIn(googleUser: any) {
-    var profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-  }
-
-
   public get bigScreen(): boolean {
     return (window.innerWidth > 1200);
   }
-
-
 
   public get passMatchError(): boolean {
     return this.form.errors &&
@@ -128,10 +101,12 @@ export class RegisterComponent implements OnInit {
   }
 
   redirectToGoogleSignIn() {
+    this.$gaService.event('user_register', 'third_party_provider', 'provider_google');
     window.location.href = getBaseApiURL() + 'auth/google'
   }
 
   redirectToFacebookSignIn() {
+    this.$gaService.event('user_register', 'third_party_provider', 'provider_facebook');
     window.location.href = getBaseApiURL() + 'auth/facebook'
   }
 
