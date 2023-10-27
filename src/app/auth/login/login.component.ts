@@ -49,14 +49,22 @@ export class LoginComponent implements OnInit {
   }
 
   checkIfIsLogged() {
-    const token = this.activatedRoute.snapshot.paramMap.get('token');
+    const qParams = this.activatedRoute.snapshot.queryParams;
 
-    const access_token_raw = this.cookieService.get('access_token');
+    const access_token = qParams['access_token'];
+    const expiresAt = qParams['expires_at'];
+
+    const session = {
+      access_token, 
+      expiresAt
+    }
+
+    // const access_token_raw = this.cookieService.get('access_token');
     
-    if (access_token_raw)
+    if (access_token && expiresAt)
     {
-      const access_token = JSON.parse(access_token_raw.replace('j:', ''));
-      this.authService.setSession(access_token);
+      // const access_token = JSON.parse(access_token_raw.replace('j:', ''));
+      this.authService.setSession(session);
 
       if (this.authService.isLoggedIn()) {
         this.router.navigate(['/'])
