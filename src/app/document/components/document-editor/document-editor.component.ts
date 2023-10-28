@@ -44,7 +44,11 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
   editorHeight: string;
 
   _editor: Editor;
+
   newContentSeparatorElement = '<div class="new-content"><span>New</span></div>';
+
+  editorContentSeparatorElement = '<div class="content-separator"></div>';
+
 
   _documentContent: string;
 
@@ -79,6 +83,8 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
       const ed = Editor.create(this.documentEditorRef.nativeElement, defaultConfig)
         .then(editor => {
           editor.setData(this._documentContent ? this._documentContent : '')
+          this._editor = editor;
+          editor.on('changed', this.saveEditorChanges);
           this._editor = editor;
         });
     }
@@ -171,6 +177,8 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
         top: newContentElement.offsetTop,
         behavior: 'smooth'
       });
+
+      this.removeNewContentIndicator();
     }
 
     // const parentElement = this.documentEditorRef.nativeElement;
@@ -194,11 +202,11 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
     if (!newContentSeparator) {
       currentData += this.newContentSeparatorElement;
     } else {
-      currentData += `<p>---</p>`
+      currentData += this.editorContentSeparatorElement; 
     }
 
     //  this._docService.documentInEdition!.content += newContent;
-    currentData += newContent;
+    currentData += this.newContentWrapper(newContent);
     this._editor.setData(currentData);
     this.newContentAmount++;
 
@@ -208,26 +216,39 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
   setEditorScrollEvent() {
     const editorRef = document.getElementById('document-editor');
     if (editorRef)
-      editorRef.addEventListener('scroll', () => this.removeNewContentIndicator());
+      editorRef.addEventListener('scroll', () => this.listenScrollToRemoveNewContentIndicator());
   }
 
-  removeNewContentIndicator() {
+  listenScrollToRemoveNewContentIndicator() {
     const newContentElement = document.querySelector('.new-content');
     if (newContentElement) {
       const elementRect = newContentElement.getBoundingClientRect();
       const toRemove = elementRect.top <= (configs_UI.internal_navbar_height + configs_UI.main_navbar_height + 40 + 100);
       if (toRemove) {
-        this.newContentAmount = 0;
-        setTimeout(() => {
-          let editorData = this._editor.getData() as string;
-          editorData = editorData.replace(this.newContentSeparatorElement, '')
-          this._editor.setData(editorData);
-        }, 5000)
+      this.removeNewContentIndicator()
       }
     }
   }
 
+  removeNewContentIndicator() {
+    this.newContentAmount = 0;
+    setTimeout(() => {
+      let editorData = this._editor.getData() as string;
+      editorData = editorData.replace(this.newContentSeparatorElement, this.editorContentSeparatorElement)
+      this._editor.setData(editorData);
+    }, 5000)
+  }
+
+  newContentWrapper(newContent: string): string {
+    return `
+    <div class="editor-generated-content">
+    ${newContent}
+    </div>
+    `
+  }
 }
+
+
 
 const defaultConfig = {
   toolbar: {
@@ -262,7 +283,7 @@ const defaultConfig = {
     allow: [
       {
         name: 'div',
-        classes: ['new-content', 'not-seen']
+        classes: ['new-content', 'not-seen', 'content-separator', 'editor-generated-content']
       }, {
         name: 'span',
         classes: ['new-content', 'not-seen']
