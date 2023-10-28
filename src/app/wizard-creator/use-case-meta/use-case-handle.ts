@@ -1,8 +1,12 @@
+import { Injectable } from "@angular/core";
 import { WizardFormService } from "../services/wizard-form.service";
 import { UseCaseMetaAbstract } from "./use-case-meta.abastract";
 import { IUseCaseMeta } from "./use-case-meta.interface";
 import { useCaseIndex } from "./use-case-register";
 
+@Injectable({
+    providedIn: 'root'
+})
 export class UseCaseHandle {
 
     _useCaseByGroup = new Map<string, UseCaseMetaAbstract[]>();
@@ -41,7 +45,8 @@ export class UseCaseHandle {
         const useCaseMeta = this.findUseCaseMeta(useCaseGroup, useCase);
 
         if (!useCaseMeta) {
-            throw new Error('The given use case is not defined')
+            return;
+            // throw new Error('The given use case is not defined')
         }
 
         useCaseMeta.initFields(_wizardFormService);

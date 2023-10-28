@@ -50,23 +50,14 @@ export class WizardUseCaseService {
   // At this point, the user hasn't selected a use case yet.
   useCaseGroupOpened: string;
 
-  /**
-   * Handle the logic on the use case meta.
-   *
-   * @type {UseCaseMetaHandle}
-   * @memberof WizardUseCaseService
-   */
-  _useCaseMetaHandle: UseCaseMetaHandle;
-
-
   constructor(
     private _wizardFormService: WizardFormService,
     private _router: Router,
     private _activeRoute: ActivatedRoute,
     private _cacheService: CacheService,
-    protected $gaService: GoogleAnalyticsService) {
+    protected $gaService: GoogleAnalyticsService,
+    private _useCaseMetaHandle: UseCaseMetaHandle) {
 
-    this._useCaseMetaHandle = new UseCaseMetaHandle();
   }
 
 
