@@ -106,40 +106,6 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
     this.selectedUseCaseGroup = selectedGroup;
 
     this.selectGroupUseCases = this._useCaseService.listUseCasesByGroup(selectedGroup);
-
-    // switch (selectedGroup) {
-    //   case WizardCreatorUseCaseGroup.GeneralWriting:
-    //     this.selectGroupUseCases = mapEnumNameAndValue(WizardGeneralWritingUseCases);
-    //     break;
-    //   case WizardCreatorUseCaseGroup.SocialMedia:
-    //     this.selectGroupUseCases = mapEnumNameAndValue(WizardSocialMediaUseCases);
-    //     break;
-    //   case WizardCreatorUseCaseGroup.ArticlesAndBlog:
-    //     this.selectGroupUseCases = mapEnumNameAndValue(WizardBlogAndArticlesUseCases);
-    //     break;
-    //   case WizardCreatorUseCaseGroup.Ecommerce:
-    //     this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorEcommerceUseCasesEnum);
-    //     break;
-    //   case WizardCreatorUseCaseGroup.AdsAndMarketing:
-    //     this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorMarketingUseCasesEnum);
-    //     break;
-    //   case WizardCreatorUseCaseGroup.Coding:
-    //     this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorCodingUseCasesEnum);
-    //     break;
-    //   case WizardCreatorUseCaseGroup.InternalDev:
-    //     this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorInternalDevUseCasesEnum);
-    //     break;
-    //   case WizardCreatorUseCaseGroup.Learning:
-    //     this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorLearningUseCasesEnum);
-    //     break;
-    //   case WizardCreatorUseCaseGroup.WebsiteCopy:
-    //     this.selectGroupUseCases = mapEnumNameAndValue(WizardCreatorWebsiteUseCasesEnum);
-    //     break;
-
-    //   default:
-    //     break;
-    // }
-
     this.selectedUseCaseGroup = selectedGroup;
   }
 
@@ -177,7 +143,7 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
       }
     } else {
       // If the user doesn't have the use case in the query parameters, try to get them from the cache
-      this.setWizardDataFromStorage();
+      // this.setWizardDataFromStorage();
     }
   }
 
@@ -192,7 +158,7 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
     const useCaseData = this._cacheService.getLatestWizardUseCase();
 
     if (useCaseData) {
-      this._useCaseService.setWizardUseCaseGroup(useCaseData.useCaseGroup);
+      this.selectUseCaseGroup(useCaseData.useCaseGroup);
       this._useCaseService.setWizardUseCase(useCaseData.useCase);
 
       // if the cache contains the latest data for this use case, set the form data
