@@ -65,6 +65,9 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
 
   @ViewChild('formElements') formElements: ElementRef;
 
+  // indicate if we already bound the click event on the form elements
+  formClickEventSet = false;
+
   constructor(
     private _wizardCreatorService: WizardCreatorService,
     private projectService: BlogProjectsService,
@@ -73,7 +76,8 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
 
   }
   ngAfterViewInit(): void {
-    this.formElements.nativeElement.addEventListener('click', this.onClick.bind(this));
+   this.setFormEventClick();
+
   }
 
   ngOnInit(): void {
@@ -92,7 +96,6 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
     this.checkIfMobile();
     window.addEventListener("resize", this.checkIfMobile.bind(this), false)
 
-    
   }
 
   ngOnDestroy(): void {
@@ -124,6 +127,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
     this._useCaseService.wizardUseCase$.pipe(takeUntil(this.componentDestroyed$))
     .subscribe(() => {
       this.useCaseSelected = true;
+    this.setFormEventClick();
     });
 
     this._wizardFormService
@@ -245,6 +249,15 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
   // case selector
   onClick(event: Event) {
     this._useCaseService.closeSelector();
+  }
+
+  setFormEventClick() {
+    setTimeout(() => {
+      if (!this.formClickEventSet && this.formElements) {
+        this.formElements.nativeElement.addEventListener('click', this.onClick.bind(this));
+        this.formClickEventSet = true;
+      }
+    }, 3000)
   }
 
   
