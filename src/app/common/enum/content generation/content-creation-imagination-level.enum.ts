@@ -8,11 +8,11 @@ import { OptionField } from "../../dto/option-field.dto";
  * @enum {number}
  */
 export enum ContentCreationCreativityLevel {
-    Zen = 'Zen Master (Optimal Creativity)',
-    Low = 'Gentle Nudge (Low Creativity)',
+    Zen = 'Zen Master (Optimal Imagination)',
+    Low = 'Gentle Nudge (Low Imagination)',
     Medium = 'Inspired Flow (Balanced)',
-    High = 'Vivid Imagination (High Creativity)',
-    Max = 'Boundless Artistry (Max Creativity)',
+    High = 'Vivid Imagination (High Imagination)',
+    Max = 'Boundless Artistry (Max Imagination)',
 }
 
 export function creativityLevelList(): string[] {

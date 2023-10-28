@@ -162,7 +162,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
 
   initGPTVersionOptions() {
     this.selectorFields.push({
-      fieldLabel: 'Sorcery Level',
+      fieldLabel: 'GTP Version',
       fieldValue: OpenAiGPTVersionEnum.GPT3,
       dataName: WizardDefaultFieldNamesEnum.GtpVersion,
       tooltipText: 'GPT version to use.',
@@ -182,7 +182,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
 
   initCreativityLevelOptions() {
     this.selectorFields.push({
-      fieldLabel: 'Creative Level',
+      fieldLabel: 'Imagination Level',
       fieldValue: ContentCreationCreativityLevel.Zen,
       dataName: WizardDefaultFieldNamesEnum.ImaginationSelector,
       tooltipText: 'How much imagination to apply?',
@@ -200,7 +200,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
     });
 
     this.selectorFields.push({
-      fieldLabel: '# of Spells',
+      fieldLabel: '# of Results',
       fieldValue: 1,
       dataName: WizardDefaultFieldNamesEnum.AmountOfVariants,
       tooltipText: '# of variants to generate.',
