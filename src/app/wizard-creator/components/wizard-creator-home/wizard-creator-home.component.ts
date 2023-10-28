@@ -3,6 +3,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { WizardCreatorService } from '../../services/wizard-creator.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 
 @Component({
   selector: 'app-wizard-creator-home',
@@ -19,7 +20,8 @@ export class WizardCreatorHomeComponent {
   constructor(
     private _wizard: WizardCreatorService,
     private breakpointObserver: BreakpointObserver,
-    protected $gaService: GoogleAnalyticsService,) {
+    protected $gaService: GoogleAnalyticsService,
+    private _projectService: BlogProjectsService) {
 
   }
 
@@ -29,6 +31,7 @@ export class WizardCreatorHomeComponent {
   }
 
   ngOnInit(): void {
+    this._projectService.refreshProjects();
 
     this.setListeners();
     this.checkIfMobile();
