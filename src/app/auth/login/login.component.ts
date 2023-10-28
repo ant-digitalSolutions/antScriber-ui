@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
         this._projectService.refreshProjects().then(() => {
           this.router.navigateByUrl('/');
         })
-        this.$gaService.event('user_login', 'user_logged_in', provider);
+        this.$gaService.event('user_login', 'user_logged_in',`provider_${provider}`);
       }
     }
     this.isLoading = false;

@@ -7,6 +7,8 @@ import { IRequestResponse } from '../common/dto/request-response.dto';
 import { UserRegisterDto } from './dtos/user-register.dto';
 import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
 import { CookieService } from 'ngx-cookie-service';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,11 @@ export class AuthService {
   baseUrl: string = getBaseApiURL();
   redirectedUser: boolean = false;
 
-  constructor(private http: HttpClient, private cookieService: CookieService) { }
+  constructor(
+    private http: HttpClient, 
+    private cookieService: CookieService,
+    protected $gaService: GoogleAnalyticsService,
+    private _router: Router) { }
 
   login(userLogin: UserLogin): Observable<any> {
     const result = this.http.post<IRequestResponse<any>>(this.baseUrl + 'auth/signin', userLogin)
@@ -64,6 +70,8 @@ export class AuthService {
     localStorage.removeItem("expires_at");
     this.cookieService.delete('access_token');
     document.cookie = `access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
+    this.$gaService.event('user_logout',  `manually_logged_out`);
+    this._router.navigate(['/auth/login']);
   }
 
   public isLoggedIn() {

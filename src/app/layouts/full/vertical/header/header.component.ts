@@ -11,7 +11,7 @@ import { CoreService } from 'src/app/services/core.service';
 import { MatDialog } from '@angular/material/dialog';
 import { navItems } from '../sidebar/sidebar-data';
 import { TranslateService } from '@ngx-translate/core';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { FormsModule } from '@angular/forms';
@@ -123,7 +123,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private translate: TranslateService,
     private authService: AuthService,
-    private router: Router,
     private blogProjectService: BlogProjectsService,
   ) {
     translate.setDefaultLang('en');
@@ -153,7 +152,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   signOut() {
     this.authService.logout();
-    this.router.navigate(['/auth/login'])
   }
 
   selectCurrentProject(selectedProject: number) {
