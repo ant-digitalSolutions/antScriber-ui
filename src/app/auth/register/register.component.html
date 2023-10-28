@@ -1,10 +1,10 @@
 
 
-<div class="blank-layout-container justify-content-center align-items-center">
+<div class="blank-layout-container justify-content-center align-items-center bg-gredient">
   <div
-    class="position-relative row w-100 h-100 bg-gredient justify-content-center"
+    class="position-relative row w-100 h-100 justify-content-center"
   >
-    <div class="col-lg-4 d-flex align-items-center p-y-16">
+    <div class="col-lg-4 d-flex align-items-center p-t-16 p-b-48">
       <mat-card class="cardWithShadow boxed-auth">
         <mat-card-content class="p-32">
           <div class="col-12 p-0">
@@ -17,7 +17,7 @@
                 />
               </div>
             </div>
-               <h4 class="f-w-700 f-s-24 m-0 text-center">
+               <h4 class="f-w-500 f-s-24 m-0 text-center p-t-30">
               {{ appName }}
             </h4>
             <span class="f-s-14 d-block mat-body-1 m-t-8 text-center"
@@ -25,8 +25,8 @@
             >
           </div>
 
-          <div class="row m-t-24">
-            <div class="col-12 col-sm-6">
+          <div class="row m-y-48 align-items-center justify-content-center">
+            <div class="col-12">
               <button
                 mat-stroked-button
                 class="w-100"
@@ -62,7 +62,7 @@
             </div> -->
           </div>
 
-          <div class="or-border m-t-30">or sign up with Password</div>
+          <div class="or-border m-t-30">OR</div>
 
           <ng-container *ngIf="hasInvalidCredentials">
             <div class="error-message-container">
