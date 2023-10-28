@@ -1,231 +1,218 @@
-<div class="blank-layout-container justify-content-center">
-  <div class="position-relative row w-100 h-100">
-    <ng-container *ngIf="bigScreen; else smallScreenImage">
-      <div class="col-lg-7 col-xl-8 bg-gredient p-0">
-        <div class="p-24 h-100">
-          <div
-            class="align-items-center justify-content-center img-height d-flex"
-          >
-            <img
-              src="/assets/images/outer-space.png"
-              alt="login"
-              style="max-width: 500px"
-            />
-          </div>
-        </div>
-      </div>
-    </ng-container>
-    <ng-template #smallScreenImage>
-      <div class="col-12 p-0">
-        <div class="p-24 p-b-0">
-          <div
-            class="align-items-center justify-content-center d-flex"
-          >
-            <img
-              src="/assets/images/outer-space.png"
-              alt="login"
-              class="small-image"
-            />
-          </div>
-        </div>
-      </div>
-    </ng-template>
-    <div class="col-lg-5 col-xl-4 p-0">
-      <div
-        class="p-24 p-t-6 d-flex align-items-start align-items-lg-center justify-content-center h-100"
-      >
-        <div class="row justify-content-center w-100">
-          <div class="col-lg-9 max-width-form">
-            <h4 class="f-w-700 f-s-24 m-0 text-center">Welcome to {{appName}}</h4>
-            <span class="f-s-14 d-block mat-body-1 m-t-8 text-center"
-              >Your Creative Assistant</span
-            >
-            <!-- <div class="g-signin2" data-onsuccess="onSignGoogleIn"></div>
-            <div class="" id="google-button"></div> -->
 
-            <div class="row m-t-24">
-              <div class="col-12 col-sm-6">
-                <button mat-stroked-button class="w-100" (click)="redirectToGoogleSignIn()">
-                  <div class="d-flex align-items-center">
-                    <img
-                      src="/assets/images/svgs/google-icon.svg"
-                      alt="google"
-                      width="16"
-                      class="m-r-8"
-                    />
-                    Sign in with Google
-                  </div>
-                </button>
-              </div>
-              <div class="col-12 col-sm-6">
-                <button
-                  mat-stroked-button
-                  class="w-100 d-flex align-items-center"
-                  (click)="redirectToFacebookSignIn()"
-                >
-                  <div class="d-flex align-items-center">
-                    <img
-                      src="/assets/images/svgs/facebook-icon.svg"
-                      alt="facebook"
-                      width="40"
-                      class="m-r-4"
-                    />
-                    Sign in with FB
-                  </div>
-                </button>
+
+<div class="blank-layout-container justify-content-center align-items-center">
+  <div
+    class="position-relative row w-100 h-100 bg-gredient justify-content-center"
+  >
+    <div class="col-lg-4 d-flex align-items-center">
+      <mat-card class="cardWithShadow boxed-auth">
+        <mat-card-content class="p-32">
+          <div class="col-12 p-0">
+            <div class="p-24 p-b-0">
+              <div class="align-items-center justify-content-center d-flex">
+                <img
+                  src="/assets/images/outer-space.png"
+                  alt="login"
+                  class="small-image"
+                />
               </div>
             </div>
-
-            <!-- <div class="or-border m-t-30">or sign up with</div> -->
-
-            <ng-container *ngIf="hasInvalidCredentials">
-              <div class="error-message-container">
-                <p>
-                  Oops! We encountered an issue creating your account. 
-                  Please double-check if you already have an account or contact us via email to
-                  <a href="mailto:hello@adfluens.io">hello@adfluens.io</a> for assistance.
-                </p>
-              </div>
-            </ng-container>
-
-            <form class="m-t-30" [formGroup]="form" (ngSubmit)="submit()">
-              <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-                >Name</mat-label
-              >
-              <mat-form-field class="w-100" color="primary">
-                <input matInput formControlName="firstName" />
-                <mat-hint
-                  *ngIf="f['firstName'].touched && f['firstName'].invalid"
-                  class="m-b-16 error-msg"
-                >
-                  <div
-                    class="text-error"
-                    *ngIf="
-                      f['firstName'].errors && f['firstName'].errors['required']
-                    "
-                  >
-                    Name is required.
-                  </div>
-                </mat-hint>
-              </mat-form-field>
-              <!-- email -->
-              <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-                >Email</mat-label
-              >
-              <mat-form-field class="w-100" color="primary">
-                <input matInput type="email" formControlName="email" />
-                <mat-hint
-                  *ngIf="f['email'].touched && f['email'].invalid"
-                  class="m-b-16 error-msg"
-                >
-                  <div
-                    class="text-error"
-                    *ngIf="f['email'].errors && f['email'].errors['required']"
-                  >
-                    Email is required.
-                  </div>
-                  <div
-                    class="text-error"
-                    *ngIf="f['email'].errors && f['email'].errors['email']"
-                  >
-                    Email is not valid.
-                  </div>
-                </mat-hint>
-              </mat-form-field>
-              <!-- password -->
-              <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-                >Password</mat-label
-              >
-              <mat-form-field class="w-100" color="primary">
-                <input matInput type="password" formControlName="password" />
-                <mat-hint
-                  *ngIf="f['password'].touched && f['password'].invalid"
-                  class="m-b-16 error-msg"
-                >
-                  <div
-                    class="text-error"
-                    *ngIf="
-                      f['password'].errors && f['password'].errors['required']
-                    "
-                  >
-                    Password is required.
-                  </div>
-                  <div
-                    class="text-error"
-                    *ngIf="
-                      f['password'].errors && f['password'].errors['minlength']
-                    "
-                  >
-                    Password should be between 8-50 chars.
-                  </div>
-                  <div
-                    class="text-error"
-                    *ngIf="
-                      f['password'].errors && f['password'].errors['pattern']
-                    "
-                  >
-                    Make sure your password has 1 number and 1 symbol.
-                  </div>
-                </mat-hint>
-              </mat-form-field>
-
-                 <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-                >Re-Type Password</mat-label
-              >
-              <mat-form-field class="w-100" color="primary">
-                <input
-                  matInput
-                  type="password"
-                  formControlName="passConfirmation"
-                />
-                <mat-hint
-                  *ngIf="
-                    f['passConfirmation'].touched &&
-                    (f['passConfirmation'].invalid || form.invalid)
-                  "
-                  class="m-b-16 error-msg"
-                >
-                  <div
-                    class="text-error"
-                    *ngIf="
-                      f['passConfirmation'].errors &&
-                      f['passConfirmation'].errors['required']
-                    "
-                  >
-                    Password Confirmation is required.
-                  </div>
-                  <div class="text-error" *ngIf="passMatchError">
-                    Passwords don't match
-                  </div>
-                </mat-hint>
-              </mat-form-field>
-
-              <button
-                mat-flat-button
-                color="primary"
-                class="w-100"
-                [disabled]="!form.valid"
-              >
-                <ng-container *ngIf="isLoading">
-                  <mat-spinner class="btn-loading-spinner"></mat-spinner>
-                </ng-container>
-                Sign Up
-              </button>
-              <!-- input -->
-            </form>
-            <span class="d-block f-w-500 d-block m-t-24"
-              >Already have an Account?
-
-              <a
-                [routerLink]="['/auth/login']"
-                class="text-decoration-none text-primary f-w-500 f-s-14"
-              >
-                Sign In</a
-              >
-            </span>
+               <h4 class="f-w-700 f-s-24 m-0 text-center">
+              {{ appName }}
+            </h4>
+            <span class="f-s-14 d-block mat-body-1 m-t-8 text-center"
+              >Your AI-Powered Creative Assistant</span
+            >
           </div>
-        </div>
-      </div>
+
+          <div class="row m-t-24">
+            <div class="col-12 col-sm-6">
+              <button
+                mat-stroked-button
+                class="w-100"
+                (click)="redirectToGoogleSignIn()"
+              >
+                <div class="d-flex align-items-center">
+                  <img
+                    src="/assets/images/svgs/google-icon.svg"
+                    alt="google"
+                    width="16"
+                    class="m-r-8"
+                  />
+                  Sign Up with Google
+                </div>
+              </button>
+            </div>
+            <!-- <div class="col-12 col-sm-6">
+              <button
+                mat-stroked-button
+                class="w-100 d-flex align-items-center"
+                (click)="redirectToFacebookSignIn()"
+              >
+                <div class="d-flex align-items-center">
+                  <img
+                    src="/assets/images/svgs/facebook-icon.svg"
+                    alt="facebook"
+                    width="40"
+                    class="m-r-4"
+                  />
+                  Register with FB
+                </div>
+              </button>
+            </div> -->
+          </div>
+
+          <div class="or-border m-t-30">or sign up with Password</div>
+
+          <ng-container *ngIf="hasInvalidCredentials">
+            <div class="error-message-container">
+              <p>
+                Oops! We encountered an issue creating your account. Please
+                double-check if you already have an account or contact us via
+                email to
+                <a href="mailto:hello@adfluens.io">hello@adfluens.io</a> for
+                assistance.
+              </p>
+            </div>
+          </ng-container>
+
+          <form class="m-t-30" [formGroup]="form" (ngSubmit)="submit()">
+            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+              >Name</mat-label
+            >
+            <mat-form-field class="w-100" color="primary">
+              <input matInput formControlName="firstName" />
+              <mat-hint
+                *ngIf="f['firstName'].touched && f['firstName'].invalid"
+                class="m-b-16 error-msg"
+              >
+                <div
+                  class="text-error"
+                  *ngIf="
+                    f['firstName'].errors && f['firstName'].errors['required']
+                  "
+                >
+                  Name is required.
+                </div>
+              </mat-hint>
+            </mat-form-field>
+            <!-- email -->
+            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+              >Email</mat-label
+            >
+            <mat-form-field class="w-100" color="primary">
+              <input matInput type="email" formControlName="email" />
+              <mat-hint
+                *ngIf="f['email'].touched && f['email'].invalid"
+                class="m-b-16 error-msg"
+              >
+                <div
+                  class="text-error"
+                  *ngIf="f['email'].errors && f['email'].errors['required']"
+                >
+                  Email is required.
+                </div>
+                <div
+                  class="text-error"
+                  *ngIf="f['email'].errors && f['email'].errors['email']"
+                >
+                  Email is not valid.
+                </div>
+              </mat-hint>
+            </mat-form-field>
+            <!-- password -->
+            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+              >Password</mat-label
+            >
+            <mat-form-field class="w-100" color="primary">
+              <input matInput type="password" formControlName="password" />
+              <mat-hint
+                *ngIf="f['password'].touched && f['password'].invalid"
+                class="m-b-16 error-msg"
+              >
+                <div
+                  class="text-error"
+                  *ngIf="
+                    f['password'].errors && f['password'].errors['required']
+                  "
+                >
+                  Password is required.
+                </div>
+                <div
+                  class="text-error"
+                  *ngIf="
+                    f['password'].errors && f['password'].errors['minlength']
+                  "
+                >
+                  Password should be between 8-50 chars.
+                </div>
+                <div
+                  class="text-error"
+                  *ngIf="
+                    f['password'].errors && f['password'].errors['pattern']
+                  "
+                >
+                  Make sure your password has 1 number and 1 symbol.
+                </div>
+              </mat-hint>
+            </mat-form-field>
+
+            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+              >Re-Type Password</mat-label
+            >
+            <mat-form-field class="w-100" color="primary">
+              <input
+                matInput
+                type="password"
+                formControlName="passConfirmation"
+              />
+              <mat-hint
+                *ngIf="
+                  f['passConfirmation'].touched &&
+                  (f['passConfirmation'].invalid || form.invalid)
+                "
+                class="m-b-16 error-msg"
+              >
+                <div
+                  class="text-error"
+                  *ngIf="
+                    f['passConfirmation'].errors &&
+                    f['passConfirmation'].errors['required']
+                  "
+                >
+                  Password Confirmation is required.
+                </div>
+                <div class="text-error" *ngIf="passMatchError">
+                  Passwords don't match
+                </div>
+              </mat-hint>
+            </mat-form-field>
+
+            <button
+              mat-flat-button
+              color="primary"
+              class="w-100"
+              [disabled]="!form.valid"
+            >
+              <ng-container *ngIf="isLoading">
+                <mat-spinner class="btn-loading-spinner"></mat-spinner>
+              </ng-container>
+              Sign Up
+            </button>
+            <!-- input -->
+          </form>
+          <span class="d-block f-w-300 d-block m-t-24"
+            >Already have an Account?
+
+            <a
+              [routerLink]="['/auth/login']"
+              class="text-decoration-none text-primary f-w-500 f-s-14"
+            >
+              Sign In</a
+            >
+          </span>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </div>
