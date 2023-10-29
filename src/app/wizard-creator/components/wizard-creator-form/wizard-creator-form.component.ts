@@ -162,7 +162,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
 
   initGPTVersionOptions() {
     this.selectorFields.push({
-      fieldLabel: 'GTP Version',
+      fieldLabel: 'GPT Version',
       fieldValue: OpenAiGPTVersionEnum.GPT3,
       dataName: WizardDefaultFieldNamesEnum.GtpVersion,
       tooltipText: 'GPT version to use.',
