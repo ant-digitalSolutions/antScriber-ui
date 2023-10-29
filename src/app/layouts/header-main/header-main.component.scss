@@ -1,0 +1,15 @@
+.update-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #602b62;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .update-button:hover {
+    background-color: #0056b3;
+  }

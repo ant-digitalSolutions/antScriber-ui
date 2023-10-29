@@ -14,6 +14,8 @@ import { MaterialModule } from 'src/app/material.module';
 import { AppSearchDialogComponent } from '../full/vertical/header/header.component';
 import { BrandingComponent } from '../full/vertical/sidebar/branding.component';
 import { HeaderMenuItemsComponent } from './header-menu-items/header-menu-items.component';
+import { PaymentService } from 'src/app/payment/services/payment.service';
+import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
 
 @Component({
   selector: 'app-header-main',
@@ -28,6 +30,8 @@ export class HeaderMainComponent {
   @Output() toggleMobileNav = new EventEmitter<void>();
   @Output() toggleMobileFilterNav = new EventEmitter<void>();
   @Output() toggleCollapsed = new EventEmitter<void>();
+
+  permanentAdfluensProductLink: string;
 
   componentDestroyed$: Subject<boolean> = new Subject()
 
@@ -75,13 +79,15 @@ export class HeaderMainComponent {
     private authService: AuthService,
     private router: Router,
     private blogProjectService: BlogProjectsService,
-    private _loadingService: LoadingService
+    private _loadingService: LoadingService,
+    private paymentService: PaymentService
   ) {
     translate.setDefaultLang('en');
   }
 
   ngOnInit(): void {
     this.setListeners()
+    this.retrieveAdfluencePermanentProductLink();
   }
 
   ngOnDestroy() {
@@ -108,6 +114,21 @@ export class HeaderMainComponent {
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+
+  retrieveAdfluencePermanentProductLink() {
+    this.paymentService.getAdfluentsProductPermanentLink()
+    .subscribe((response: IRequestResponse<string>) => {
+      if(response.success) {
+        this.permanentAdfluensProductLink = response.data || '';
+      }
+    }, (error) => {console.log(error);}
+  );
+  }
+
+ onClickSubscribeButton()  {
+    window.location.href = this.permanentAdfluensProductLink;
+    this.retrieveAdfluencePermanentProductLink();
   }
 
   changeLanguage(lang: any): void {
