@@ -7,12 +7,12 @@ import { MaterialModule } from '../material.module';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { FormsModule } from '@angular/forms';
+import { PaymentModule } from '../payment/payment.module';
 
 
 
 @NgModule({
   declarations: [
-
   ],
   imports: [
     CommonModule,
@@ -20,7 +20,8 @@ import { FormsModule } from '@angular/forms';
     RouterModule,
     NgScrollbarModule,
      TablerIconsModule,
-     FormsModule
+     FormsModule,
+     PaymentModule
   ]
 })
 export class LayoutsModule { }
