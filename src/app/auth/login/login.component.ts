@@ -29,16 +29,18 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private settings: CoreService,
-    private router: Router, 
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     private cookieService: CookieService,
-    private authService: AuthService, 
+    private authService: AuthService,
     protected $gaService: GoogleAnalyticsService,
     private _projectService: BlogProjectsService) { }
 
   ngOnInit(): void {
     this.checkIfMobile();
-    this.checkIfIsLogged();
+
+    if (!this.checkSameDomain())
+      this.checkIfIsLogged();
   }
 
   form = new FormGroup({
@@ -59,14 +61,13 @@ export class LoginComponent implements OnInit {
     const provider = qParams['provider']
 
     const session = {
-      access_token, 
+      access_token,
       expiresAt
     }
 
     // const access_token_raw = this.cookieService.get('access_token');
-    
-    if (access_token && expiresAt)
-    {
+
+    if (access_token && expiresAt) {
       // const access_token = JSON.parse(access_token_raw.replace('j:', ''));
       this.authService.setSession(session);
 
@@ -74,7 +75,7 @@ export class LoginComponent implements OnInit {
         this._projectService.refreshProjects().then(() => {
           this.router.navigateByUrl('/');
         })
-        this.$gaService.event('user_login', 'user_logged_in',`provider_${provider}`);
+        this.$gaService.event('user_login', 'user_logged_in', `provider_${provider}`);
       }
     }
     this.isLoading = false;
@@ -113,5 +114,17 @@ export class LoginComponent implements OnInit {
 
   checkIfMobile() {
     this.bigScreen = (window.innerWidth > 1200);
+  }
+
+  // Check if document.referer and window.location.href contains the same domain
+  checkSameDomain() {
+    const referer = document.referrer;
+    const currentUrl = window.location.href;
+    if (referer && currentUrl) {
+      const refererDomain = new URL(referer).hostname;
+      const currentDomain = new URL(currentUrl).hostname;
+      return refererDomain === currentDomain;
+    }
+    return false;
   }
 }
