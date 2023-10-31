@@ -44,7 +44,7 @@ export class WizardUseCaseService {
   closeSelectorEvent$ = this._closeSelectorSubject.asObservable();
 
   // indicate the user is seeing the use cases selector
-  showingUseCasesSelector: boolean = false;
+  showingUseCasesSelector: boolean = true;
 
   // The value of the latest use case group selected by the user.
   // At this point, the user hasn't selected a use case yet.
