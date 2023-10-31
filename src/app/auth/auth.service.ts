@@ -83,6 +83,19 @@ export class AuthService {
     this._router.navigate(['/auth/login']);
   }
 
+  /**
+   * to log out the user programmatically. It won't redirect the user.
+   *
+   * @memberof AuthService
+   */
+  logout_in_silence() {
+    localStorage.removeItem("id_token");
+    localStorage.removeItem("expires_at");
+    this.cookieService.delete('access_token');
+    document.cookie = `access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
+    this.$gaService.event('user_logout', `programmatically_logged_out`);
+  }
+
   public isLoggedIn() {
     const result = moment().isBefore(this.getExpiration());
     return result;

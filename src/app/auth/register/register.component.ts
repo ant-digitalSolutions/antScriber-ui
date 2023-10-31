@@ -44,9 +44,7 @@ export class RegisterComponent implements OnInit {
     this.initForm();
     this.$gaService.event('register_intent', 'page_on_init', 'register_page');
 
-    if (this.isLoggedIn) {
-      this.showForm = false;
-    }
+    this.checkUserStatus();
   }
 
   initForm() {
@@ -70,6 +68,7 @@ export class RegisterComponent implements OnInit {
   submit() {
     if (this.form.valid) {
       this.isLoading = true;
+      this._authService.logout_in_silence();
       this._authService.register(this.form.value).subscribe(r => {
         this.isLoading = false;
         if (r.success) {
@@ -108,11 +107,15 @@ export class RegisterComponent implements OnInit {
   }
 
   redirectToGoogleSignIn() {
+    this._authService.logout_in_silence();
+
     this.$gaService.event('user_register', 'third_party_provider', 'provider_google');
     window.location.href = getBaseApiURL() + 'auth/google'
   }
 
   redirectToFacebookSignIn() {
+    this._authService.logout_in_silence();
+
     this.$gaService.event('user_register', 'third_party_provider', 'provider_facebook');
     window.location.href = getBaseApiURL() + 'auth/facebook'
   }
@@ -125,6 +128,18 @@ export class RegisterComponent implements OnInit {
     this.showForm = true;
 
     return false;
+  }
+
+  checkUserStatus() {
+    const queryParams = this.route.snapshot.queryParams;
+    const loginForceDisplayForm = queryParams['loginForceDisplayForm'];
+
+    if (this.isLoggedIn) {
+      this.showForm = false;
+    }
+    if (loginForceDisplayForm) {
+      this.showForm = true;
+    }
   }
 
 
