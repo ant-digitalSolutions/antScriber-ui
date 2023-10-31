@@ -15,6 +15,7 @@ import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.serv
 })
 export class RegisterComponent implements OnInit {
 
+
   options = this.settings.getOptions();
 
   form: FormGroup;
@@ -22,6 +23,8 @@ export class RegisterComponent implements OnInit {
   hasInvalidCredentials = false;
 
   appName = environment.appName;
+
+  showForm = true;
 
   constructor(
     private settings: CoreService,
@@ -40,6 +43,10 @@ export class RegisterComponent implements OnInit {
     }
     this.initForm();
     this.$gaService.event('register_intent', 'page_on_init', 'register_page');
+
+    if (this.isLoggedIn) {
+      this.showForm = false;
+    }
   }
 
   initForm() {
@@ -109,6 +116,27 @@ export class RegisterComponent implements OnInit {
     this.$gaService.event('user_register', 'third_party_provider', 'provider_facebook');
     window.location.href = getBaseApiURL() + 'auth/facebook'
   }
+
+  continue() {
+    this.router.navigate(['/']);
+  }
+
+  signUpAsDifferentPerson() {
+    this.showForm = true;
+
+    return false;
+  }
+
+
+  public get isLoggedIn(): boolean {
+    return this._authService.isLoggedIn();
+  }
+
+
+  public get userEmail(): string | null {
+    return this._authService.userEmail;
+  }
+
 
 }
 

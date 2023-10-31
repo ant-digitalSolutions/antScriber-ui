@@ -1,9 +1,7 @@
-
-
-<div class="blank-layout-container justify-content-center align-items-center bg-gredient ">
-  <div
-    class="position-relative row w-100 h-100 justify-content-center "
-  >
+<div
+  class="blank-layout-container justify-content-center align-items-center bg-gredient"
+>
+  <div class="position-relative row w-100 h-100 justify-content-center">
     <div class="col-lg-4 d-flex align-items-center p-t-16 p-b-48">
       <mat-card class="cardWithShadow boxed-auth">
         <mat-card-content class="p-32">
@@ -17,7 +15,7 @@
                 />
               </div>
             </div>
-               <h4 class="f-w-500 f-s-24 m-0 text-center p-t-30">
+            <h4 class="f-w-500 f-s-24 m-0 text-center p-t-30">
               {{ appName }}
             </h4>
             <span class="f-s-14 d-block mat-body-1 m-t-8 text-center"
@@ -26,7 +24,25 @@
           </div>
 
           <div class="row m-y-48 align-items-center justify-content-center">
-            <div class="col-12">
+            <div class="logged-in-message-container" *ngIf="isLoggedIn && !showForm">
+              <p class="text-center">
+                You are currently logged in as
+                <span class="f-w-500"> {{ userEmail }}</span>
+              </p>
+
+              <button
+                mat-stroked-button
+                class="w-100 btn-login-continue"
+                (click)="continue()"
+              >
+                Continue
+              </button>
+
+              <a class="d-block f-w-300 d-block m-t-24 text-center" (click)="signUpAsDifferentPerson()"  [routerLink]="['/auth/register']"
+                >Sign Up as a different person?
+              </a>
+            </div>
+            <div class="col-12" *ngIf="showForm">
               <button
                 mat-stroked-button
                 class="w-100"
@@ -62,7 +78,7 @@
             </div> -->
           </div>
 
-          <div class="or-border m-t-30">OR</div>
+          <div class="or-border m-t-30" *ngIf="showForm">OR</div>
 
           <ng-container *ngIf="hasInvalidCredentials">
             <div class="error-message-container">
@@ -76,7 +92,12 @@
             </div>
           </ng-container>
 
-          <form class="m-t-30" [formGroup]="form" (ngSubmit)="submit()">
+          <form
+            class="m-t-30"
+            [formGroup]="form"
+            (ngSubmit)="submit()"
+            *ngIf="showForm"
+          >
             <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
               >Name</mat-label
             >
@@ -201,7 +222,7 @@
             </button>
             <!-- input -->
           </form>
-          <span class="d-block f-w-300 d-block m-t-24"
+          <span class="d-block f-w-300 d-block m-t-24" *ngIf="showForm"
             >Already have an Account?
 
             <a

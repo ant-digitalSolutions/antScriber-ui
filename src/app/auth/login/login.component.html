@@ -167,9 +167,10 @@
             >
           </span>
           <span class="d-block f-w-300 text-center m-t-24" *ngIf="isLoggedIn"
-            >Sign Up with a different User
+            >Sign Up as a different Person?
             <a
               [routerLink]="['/auth/register']"
+              [queryParams]="{forceForm: 'true'}"
               class="text-decoration-none text-primary f-w-500 f-s-14"
             >
               Sign Up</a

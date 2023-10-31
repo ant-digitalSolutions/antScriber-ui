@@ -32,7 +32,6 @@ export class LoginComponent implements OnInit {
     private settings: CoreService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private cookieService: CookieService,
     private authService: AuthService,
     protected $gaService: GoogleAnalyticsService,
     private _projectService: BlogProjectsService) { }
@@ -74,6 +73,7 @@ export class LoginComponent implements OnInit {
 
       if (this.authService.isLoggedIn()) {
         this._projectService.refreshProjects().then(() => {
+          window.history.replaceState(null, '', '/auth/login')
           this.router.navigateByUrl('/');
         })
         this.$gaService.event('user_login', 'user_logged_in', `provider_${provider}`);
