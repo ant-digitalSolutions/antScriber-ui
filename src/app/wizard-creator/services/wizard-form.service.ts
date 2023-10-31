@@ -104,6 +104,9 @@ export class WizardFormService {
   // TODO: Change name to checkDataError()
   checkAdditionalData(): boolean {
     if (!this._additionalDataFormFields || this._additionalDataFormFields.length === 0) {
+      if (this._fieldNamesToRender.has(WizardDefaultFieldNamesEnum.Instruction)) {
+        return true;
+      }
       return false;
     }
 

@@ -2,6 +2,8 @@ import { UseCaseGitHubIssue as UseCase_Coding_GitHubIssue } from "./data/coding/
 import { UseCase_Coding_ImplementCode } from "./data/coding/use-case-implement-code";
 import { UseCase_General_Message } from "./data/general/use-case-general-message";
 import { UseCase_Internal_UseCaseMeta } from "./data/internal-dev/use-case-internal-use-case-meta";
+import { UseCase_Learning_Explain } from "./data/learning/use-case-learning-explain";
+import { UseCase_Learning_HowTo } from "./data/learning/use-case-learning-howTo";
 import { UseCase_Marketing_Email } from "./data/marketing/use-case-marketing-email";
 import { UseCase_Marketing_Facebook } from "./data/marketing/use-case-marketing-facebook";
 import { UseCase_Marketing_GoogleAds } from "./data/marketing/use-case-marketing-google-ads";
@@ -42,4 +44,8 @@ export const useCaseIndex: UseCaseMetaAbstract[] = [
 
     // general
     new UseCase_General_Message(),
+
+    //learning
+    new UseCase_Learning_HowTo(),
+    new UseCase_Learning_Explain()
 ]
