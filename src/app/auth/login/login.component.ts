@@ -17,6 +17,7 @@ import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.serv
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
   options = this.settings.getOptions();
 
   hasInvalidCredentials = false;
@@ -39,8 +40,8 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.checkIfMobile();
 
-    if (!this.checkSameDomain())
-      this.checkIfIsLogged();
+    if (!this.isLoggedIn)
+      this.checkJwtInQueryParams();
   }
 
   form = new FormGroup({
@@ -52,7 +53,7 @@ export class LoginComponent implements OnInit {
     return this.form.controls;
   }
 
-  checkIfIsLogged() {
+  checkJwtInQueryParams() {
     this.isLoading = true;
     const qParams = this.activatedRoute.snapshot.queryParams;
 
@@ -116,15 +117,19 @@ export class LoginComponent implements OnInit {
     this.bigScreen = (window.innerWidth > 1200);
   }
 
-  // Check if document.referer and window.location.href contains the same domain
-  checkSameDomain() {
-    const referer = document.referrer;
-    const currentUrl = window.location.href;
-    if (referer && currentUrl) {
-      const refererDomain = new URL(referer).hostname;
-      const currentDomain = new URL(currentUrl).hostname;
-      return refererDomain === currentDomain;
-    }
-    return false;
+  continue() {
+    this.router.navigate(['/']);
   }
+
+  
+  public get isLoggedIn() : boolean {
+    return this.authService.isLoggedIn();
+  }
+
+  
+  public get userEmail() : string | null {
+    return this.authService.userEmail;
+  }
+  
+  
 }

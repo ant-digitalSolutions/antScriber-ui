@@ -9,6 +9,8 @@ import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
 import { CookieService } from 'ngx-cookie-service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { IJwtData } from '../common/dto/jwt-data.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +20,16 @@ export class AuthService {
   baseUrl: string = getBaseApiURL();
   redirectedUser: boolean = false;
 
+  _jwtData: IJwtData | null;
+
+  JWT_STORAGE_KEY = 'user_jwt_data';
+
   constructor(
     private http: HttpClient, 
     private cookieService: CookieService,
     protected $gaService: GoogleAnalyticsService,
-    private _router: Router) { }
+    private _router: Router,
+    private _jwtHelper: JwtHelperService,) { }
 
   login(userLogin: UserLogin): Observable<any> {
     const result = this.http.post<IRequestResponse<any>>(this.baseUrl + 'auth/signin', userLogin)
@@ -63,6 +70,8 @@ export class AuthService {
 
     localStorage.setItem('id_token', authResult.access_token);
     localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
+
+    this.decodeJwt();
   }
 
   logout() {
@@ -110,4 +119,54 @@ export class AuthService {
      this.hasUserBeenActive() &&
      !this.redirectedUser;
   }
+
+  
+  public get getJwt() : string | null {
+    if (this.isLoggedIn())
+      return localStorage.getItem('id_token');
+    else 
+      return null;
+  }
+
+
+  decodeJwt(): void {
+    const jwt = this.getJwt;
+
+    if (!jwt) {
+      return;
+    }
+
+    this._jwtData = this._jwtHelper.decodeToken(jwt);
+    localStorage.setItem(this.JWT_STORAGE_KEY, JSON.stringify(this._jwtData))
+  }
+
+  public get userDisplayName(): string | null {
+    const jwtData = this.userJwtData;
+    return jwtData ? jwtData.displayName : null;
+  }
+
+
+  public get userEmail(): string | null {
+    const jwtData = this.userJwtData;
+    return jwtData ? jwtData.email : null;
+  }
+
+
+  public get userLastLoginProvider(): string | null {
+    const jwtData = this.userJwtData;
+    return jwtData ? jwtData.lastLoginProvider : null;
+  }
+
+  
+  public get userJwtData() : IJwtData | null {
+    const data = localStorage.getItem(this.JWT_STORAGE_KEY);
+
+    if (data) {
+      return JSON.parse(data);
+    }
+
+    return null;
+  }
+  
+  
 }

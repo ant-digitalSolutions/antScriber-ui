@@ -1,7 +1,7 @@
 <div
   class="blank-layout-container justify-content-center align-items-center bg-gredient h-100"
 >
-  <div class="position-relative row w-100 h-100 justify-content-center ">
+  <div class="position-relative row w-100 h-100 justify-content-center">
     <div class="col-lg-4 d-flex align-items-center p-t-16 p-b-48">
       <mat-card class="cardWithShadow boxed-auth">
         <mat-card-content class="p-32">
@@ -26,7 +26,21 @@
           <div
             class="row m-y-48 custom-row align-items-center justify-content-center"
           >
-            <div class="col-12">
+            <div class="logged-in-message-container" *ngIf="isLoggedIn">
+              <p class="text-center">
+                You are currently logged in as
+                <span class="f-w-500"> {{ userEmail }}</span>
+              </p>
+
+              <button
+                mat-stroked-button
+                class="w-100 btn-login-continue"
+                (click)="continue()"
+              >
+                Continue
+              </button>
+            </div>
+            <div class="col-12" *ngIf="!isLoggedIn">
               <button
                 mat-stroked-button
                 class="w-100"
@@ -61,9 +75,14 @@
             </div> -->
           </div>
 
-          <div class="or-border m-y-48">OR</div>
+          <div class="or-border m-y-48" *ngIf="!isLoggedIn">OR</div>
 
-          <form class="m-t-30" [formGroup]="form" (ngSubmit)="submit()">
+          <form
+            class="m-t-30"
+            [formGroup]="form"
+            (ngSubmit)="submit()"
+            *ngIf="!isLoggedIn"
+          >
             <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
               >Email</mat-label
             >
@@ -138,13 +157,22 @@
             </button>
             <!-- input -->
           </form>
-          <span class="d-block f-w-300 text-center m-t-24"
+          <span class="d-block f-w-300 text-center m-t-24" *ngIf="!isLoggedIn"
             >New to Adfluens?
             <a
               [routerLink]="['/auth/register']"
               class="text-decoration-none text-primary f-w-500 f-s-14"
             >
               Create an account</a
+            >
+          </span>
+          <span class="d-block f-w-300 text-center m-t-24" *ngIf="isLoggedIn"
+            >Sign Up with a different User
+            <a
+              [routerLink]="['/auth/register']"
+              class="text-decoration-none text-primary f-w-500 f-s-14"
+            >
+              Sign Up</a
             >
           </span>
         </mat-card-content>

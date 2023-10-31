@@ -27,11 +27,9 @@ import { httpInterceptorProviders } from './interceptors';
 
 import { BreadcrumbModule } from 'xng-breadcrumb';
 import { RouterModule } from '@angular/router';
-import { LayoutModule } from '@angular/cdk/layout';
-import { HeaderMainComponent } from './layouts/header-main/header-main.component';
-import { LayoutWizardComponent } from './layouts/layout-wizard/layout-wizard.component';
-import { NgScrollbarModule } from 'ngx-scrollbar';
 import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
+
+import { JwtModule } from "@auth0/angular-jwt";
 
 export function HttpLoaderFactory(http: HttpClient): any {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -48,6 +46,13 @@ export function HttpLoaderFactory(http: HttpClient): any {
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['devbrain.adfluens.io', 'brain.adfluens.io', 'localhost:3000'],
+        // disallowedRoutes: ["http://example.com/examplebadroute/"],
+      },
+    }),
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
@@ -77,3 +82,7 @@ export function HttpLoaderFactory(http: HttpClient): any {
   ]
 })
 export class AppModule {}
+
+function tokenGetter() {
+  return localStorage.getItem('id_token');
+}
