@@ -30,6 +30,7 @@ import { RouterModule } from '@angular/router';
 import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
 
 import { JwtModule } from "@auth0/angular-jwt";
+import { WalkthroughToursModule } from './walkthrough-tours/walkthrough-tours.module';
 
 export function HttpLoaderFactory(http: HttpClient): any {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -72,7 +73,8 @@ export function HttpLoaderFactory(http: HttpClient): any {
     }),
     BreadcrumbModule,
     TimeagoModule.forRoot(),
-    NgxGoogleAnalyticsModule.forRoot(window.location.href.indexOf('app.') >= 0 ? 'G-XQVZWP9SRY' : '')
+    NgxGoogleAnalyticsModule.forRoot(window.location.href.indexOf('app.') >= 0 ? 'G-XQVZWP9SRY' : ''),
+    WalkthroughToursModule
 
   ],
   exports: [TablerIconsModule],
