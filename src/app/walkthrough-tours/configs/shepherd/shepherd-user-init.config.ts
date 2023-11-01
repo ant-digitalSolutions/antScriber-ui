@@ -267,7 +267,7 @@ Once you've adjusted the needed parameters for your task, unleash the assistant'
     {
         id: UserInitializationWalkthroughTourStepsEnum.RenderAssistantResults,
         attachTo: {
-            element: '.doc-home-outer-container',
+            element: '#document-editor > p',
             on: 'left'
         },
         buttons: [
@@ -349,7 +349,7 @@ Organize your content seamlessly with our intuitive File System. Create, edit, a
                 type: 'back'
             },
             {
-                classes: 'shepherd-button-primary',
+                classes: 'shepherd-button-primary  shepherd-button-gotit',
                 text: 'Got It',
                 type: 'next'
             }
@@ -411,18 +411,9 @@ export const userInitializationShepherdStep_mobile: any = [
             enabled: true
         },
         classes: 'ui-intro-box',
-        // highlightClass: 'highlight',
         scrollTo: false,
         title: 'Welcome to Adfluens!',
         text: ['Adfluens is your AI-powered creative assistant designed to enhance productivity. To get the most out of our platform, would you like a guided walkthrough of our key features?'],
-        // when: {
-        //     show: () => {
-        //         console.log('show step');
-        //     },
-        //     hide: () => {
-        //         console.log('hide step');
-        //     }
-        // }
     },
     // select use case group
     {
@@ -431,34 +422,20 @@ export const userInitializationShepherdStep_mobile: any = [
             element: '.use-cases-container',
             on: 'top'
         },
-        // buttons: [
-        //     {
-        //         classes: 'shepherd-button-secondary',
-        //         text: 'Prev',
-        //         type: 'back'
-        //     },
-        //     {
-        //         classes: 'shepherd-button-primary',
-        //         text: 'Next',
-        //         type: 'next'
-        //     }
-        // ],
+        buttons: [
+            {
+                classes: 'shepherd-button-primary',
+                text: 'Next',
+                type: 'next'
+            }
+        ],
         cancelIcon: {
             enabled: true
         },
         classes: 'ui-intro-box',
-        // highlightClass: 'highlight',
         scrollTo: false,
         title: `Choose Your Task Group`,
         text: ['Adfluens is equipped with a variety of task groups tailored to your needs. Select a group to explore specific tasks that Adfluens can assist you with..'],
-        // when: {
-        //     show: () => {
-        //         console.log('show step');
-        //     },
-        //     hide: () => {
-        //         console.log('hide step');
-        //     }
-        // }
     },
     // select use case
     {
@@ -483,23 +460,14 @@ export const userInitializationShepherdStep_mobile: any = [
             enabled: true
         },
         classes: 'ui-intro-box',
-        // highlightClass: 'highlight',
         scrollTo: false,
         title: `Choose Your Desired Task`,
         text: ['Select a specific task you need assistant with.'],
-        // when: {
-        //     show: () => {
-        //         console.log('show step');
-        //     },
-        //     hide: () => {
-        //         console.log('hide step');
-        //     }
-        // },
         beforeShowPromise: function () {
             return new Promise<void>(function (resolve) {
                 setTimeout(function () {
                     resolve();
-                }, 300);
+                }, 500);
             });
         }
     },
@@ -527,23 +495,14 @@ export const userInitializationShepherdStep_mobile: any = [
             enabled: true
         },
         classes: 'ui-intro-box',
-        // highlightClass: 'highlight',
         scrollTo: false,
         title: `Tailor Your Request`,
         text: ['For Adfluens to generate the most relevant and accurate responses, provide specific details related to your chosen task.'],
-        // when: {
-        //     show: () => {
-        //         console.log('show step');
-        //     },
-        //     hide: () => {
-        //         console.log('hide step');
-        //     }
-        // },
         beforeShowPromise: function () {
             return new Promise<void>(function (resolve) {
                 setTimeout(function () {
                     resolve();
-                }, 300);
+                }, 500);
             });
         }
     },
@@ -553,7 +512,7 @@ export const userInitializationShepherdStep_mobile: any = [
     //         id: UserInitializationWalkthroughTourStepsEnum.SelectGtpVersion,
     //         attachTo: {
     //             element: '.gpt-version-selector',
-    //             on: 'top'
+    //             on: 'right'
     //         },
     //         buttons: [
     //             {
@@ -602,7 +561,7 @@ export const userInitializationShepherdStep_mobile: any = [
     //         id: UserInitializationWalkthroughTourStepsEnum.SelectImagination,
     //         attachTo: {
     //             element: '.imagination-selector',
-    //             on: 'top'
+    //             on: 'right'
     //         },
     //         buttons: [
     //             {
@@ -649,6 +608,8 @@ export const userInitializationShepherdStep_mobile: any = [
     //         }
     //     },
 
+
+
     // unleash btn
     {
         id: UserInitializationWalkthroughTourStepsEnum.UnleashAssistant,
@@ -672,34 +633,18 @@ export const userInitializationShepherdStep_mobile: any = [
             enabled: true
         },
         classes: 'ui-intro-box',
-        // highlightClass: 'highlight',
         scrollTo: false,
         title: `Generate Responses`,
         text: [`
 Once you've adjusted the needed parameters for your task, unleash the assistant's creative answers`],
-        // when: {
-        //     show: () => {
-        //         console.log('show step');
-        //     },
-        //     hide: () => {
-        //         console.log('hide step');
-        //     }
-        // },
-        beforeShowPromise: function () {
-            return new Promise<void>(function (resolve) {
-                setTimeout(function () {
-                    resolve();
-                }, 300);
-            });
-        }
     },
 
-    // Documents area
+    // Output Results
     {
-        id: UserInitializationWalkthroughTourStepsEnum.DocumentsArea,
+        id: UserInitializationWalkthroughTourStepsEnum.RenderAssistantResults,
         attachTo: {
-            element: '.doc-home-outer-container',
-            on: 'left'
+            element: '#document-editor > p',
+            on: 'bottom'
         },
         buttons: [
             {
@@ -717,19 +662,85 @@ Once you've adjusted the needed parameters for your task, unleash the assistant'
             enabled: true
         },
         classes: 'ui-intro-box',
-        // highlightClass: 'highlight',
+        scrollTo: false,
+        title: `Managing the Assistant Output`,
+        text: [`
+<p>Once the assistant generates a response, you have full control to modify it as you see fit.</p>
+
+<p>All changes you make within the document are saved automatically for your convenience.</p>`],
+
+        beforeShowPromise: function () {
+            return new Promise<void>(function (resolve) {
+                setTimeout(function () {
+                    resolve();
+                }, 3000);
+            });
+        },
+        useModalOverlay: false,
+    },
+
+    // Documents area
+    {
+        id: UserInitializationWalkthroughTourStepsEnum.DocumentsArea,
+        attachTo: {
+            element: '.doc-home-outer-container',
+            on: 'right'
+        },
+        buttons: [
+            {
+                classes: 'shepherd-button-secondary',
+                text: 'Prev',
+                type: 'back'
+            },
+            {
+                classes: 'shepherd-button-primary',
+                text: 'Next',
+                type: 'next'
+            }
+        ],
+        cancelIcon: {
+            enabled: true
+        },
+        classes: 'ui-intro-box',
         scrollTo: false,
         title: `Organize Your Content`,
         text: [`
 Organize your content seamlessly with our intuitive File System. Create, edit, and manage all in one place`],
-        // when: {
-        //     show: () => {
-        //         console.log('show step');
-        //     },
-        //     hide: () => {
-        //         console.log('hide step');
-        //     }
-        // },
+        beforeShowPromise: function () {
+            return new Promise<void>(function (resolve) {
+                setTimeout(function () {
+                    resolve();
+                }, 300);
+            });
+        }
+    },
+
+    // Final Message
+    {
+        id: UserInitializationWalkthroughTourStepsEnum.FinalMessage,
+
+        buttons: [
+            {
+                classes: 'shepherd-button-secondary',
+                text: 'Prev',
+                type: 'back'
+            },
+            {
+                classes: 'shepherd-button-primary shepherd-button-gotit',
+                text: 'Got It',
+                type: 'next'
+            }
+        ],
+        cancelIcon: {
+            enabled: true
+        },
+        classes: 'ui-intro-box',
+        scrollTo: false,
+        title: `Boost Your Creativity`,
+        text: [`
+<p>As you navigate and create, remember that our AI-powered assistant is here to amplify your potential.</p>
+
+<p> We're excited to be part of your creative process. Wishing you endless inspiration and success!</p>`],
         beforeShowPromise: function () {
             return new Promise<void>(function (resolve) {
                 setTimeout(function () {

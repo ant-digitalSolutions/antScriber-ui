@@ -18,7 +18,6 @@
 .shepherd-element {
   background-color: $blue-sky !important;
   color: #fff !important;
-  margin: 10px;
 
   .shepherd-arrow::before {
   background-color: $blue-sky !important;
@@ -48,6 +47,11 @@
 
     &.shepherd-button-secondary {
       color: #a7c6f9 !important;
+    }
+
+    &.shepherd-button-gotit {
+      min-width: 80px;
+      padding: 15px;
     }
   }
 }
