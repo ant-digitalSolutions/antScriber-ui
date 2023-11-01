@@ -1,4 +1,4 @@
 
-  <mat-checkbox [(ngModel)]="checkBoxValue" (ngModelChange)="valueChange()" class="wizard-checkbox m-b-20">
+  <mat-checkbox [(ngModel)]="checkBoxValue" (ngModelChange)="valueChange()" class="wizard-checkbox m-b-20" [class]="fieldData.className ? fieldData.className : ''">
     {{ fieldData.fieldLabel }}
   </mat-checkbox>

@@ -1,10 +1,15 @@
- <mat-label class="d-block mat-label  mat-subtitle-2 p-l-6">{{
+<div [class]="fieldData.className ? fieldData.className : ''">
+  <mat-label class="d-block mat-label mat-subtitle-2 p-l-6">{{
     fieldData.fieldLabel
   }}</mat-label>
-<mat-form-field class="w-100 has-tooltip" [matTooltip]="fieldData.tooltipText!">
-  <mat-select [formControl]="form">
-    <mat-option *ngFor="let item of fieldData.values" [value]="item.value">
-      {{ item.text }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+  <mat-form-field
+    class="w-100 has-tooltip"
+    [matTooltip]="fieldData.tooltipText!"
+  >
+    <mat-select [formControl]="form">
+      <mat-option *ngFor="let item of fieldData.values" [value]="item.value">
+        {{ item.text }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

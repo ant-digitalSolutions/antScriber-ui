@@ -1,37 +1,40 @@
-<div class="input-inner-container" [ngClass]="{'wizard-field-with-error': showErrors}">
- <mat-label class="d-block mat-label p-l-6">{{
+<div
+  class="input-inner-container"
+  [ngClass]="{ 'wizard-field-with-error': showErrors }"
+  [class]="fieldData.className ? fieldData.className : ''"
+>
+  <mat-label class="d-block mat-label p-l-6">{{
     fieldData.fieldLabel
   }}</mat-label>
-<mat-form-field
-  class="w-100 text-area-custom-element m-b-20"
-  color="primary"
-  [floatLabel]="labelType"
->
- 
-  <input
-    matInput
-    type="text"
-    [formControl]="fieldForm"
-    [placeholder]="fieldData.placeholder"
-    (blur)="saveEdition()"
-    *ngIf="!fieldData.isLongText"
-    [matTooltip]="fieldData.tooltipText!"
-    [required]="isRequired"
-    class="has-tooltip"
-  />
+  <mat-form-field
+    class="w-100 text-area-custom-element m-b-20"
+    color="primary"
+    [floatLabel]="labelType"
+  >
+    <input
+      matInput
+      type="text"
+      [formControl]="fieldForm"
+      [placeholder]="fieldData.placeholder"
+      (blur)="saveEdition()"
+      *ngIf="!fieldData.isLongText"
+      [matTooltip]="fieldData.tooltipText!"
+      [required]="isRequired"
+      class="has-tooltip"
+    />
 
-  <textarea
-    matInput
-    rows="5"
-    [formControl]="fieldForm"
-    [placeholder]="fieldData.placeholder"
-    (blur)="saveEdition()"
-    *ngIf="fieldData.isLongText"
-    [required]="isRequired"
-    [matTooltip]="fieldData.tooltipText!"
-    class="has-tooltip"
-  ></textarea>
-  <mat-hint align="end">{{ length }}/{{ maxLen }}</mat-hint>
-  <mat-error *ngIf="showErrors">{{ getErrorMessage() }}</mat-error>
-</mat-form-field>
+    <textarea
+      matInput
+      rows="5"
+      [formControl]="fieldForm"
+      [placeholder]="fieldData.placeholder"
+      (blur)="saveEdition()"
+      *ngIf="fieldData.isLongText"
+      [required]="isRequired"
+      [matTooltip]="fieldData.tooltipText!"
+      class="has-tooltip"
+    ></textarea>
+    <mat-hint align="end">{{ length }}/{{ maxLen }}</mat-hint>
+    <mat-error *ngIf="showErrors">{{ getErrorMessage() }}</mat-error>
+  </mat-form-field>
 </div>
