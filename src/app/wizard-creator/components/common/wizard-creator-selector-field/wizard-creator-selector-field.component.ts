@@ -36,7 +36,7 @@ export class WizardCreatorSelectorFieldComponent {
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe(v => this.valueChange(v));
 
-    this.valueChange(this.fieldData.fieldValue);
+    this.form.setValue(this.fieldData.fieldValue)
     this.setListeners();
 
   }
