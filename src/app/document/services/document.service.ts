@@ -118,10 +118,10 @@ export class DocumentService {
   update(docId: string, doc: DocumentUpdateDto): Observable<IRequestResponse<DocumentDetailsDto>> {
     return this.http.put<IRequestResponse<DocumentDetailsDto>>(`${this.baseUrl}/${docId}`, doc).pipe(tap(r => {
       if (r.success) {
-        this._snackBar.open('Document updated', undefined, {
-          duration: 1000,
-          panelClass: 'snack-success'
-        });
+        // this._snackBar.open('Document updated', undefined, {
+        //   duration: 1000,
+        //   panelClass: 'snack-success'
+        // });
       } else {
         this._snackBar.open('Error','Report', {
           duration: 1000,

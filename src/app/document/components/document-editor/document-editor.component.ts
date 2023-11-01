@@ -9,6 +9,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { configs_UI } from 'src/app/common/configs/ui.config';
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import { el } from 'date-fns/locale';
+import { UserInitTourService } from 'src/app/walkthrough-tours/user-init-tour.service';
+import { UserInitializationWalkthroughTourStepsEnum } from 'src/app/walkthrough-tours/enums/walkthrough-tour-user-initialization-steps-id.enum';
+import { WalkthroughTourIdEnum } from 'src/app/walkthrough-tours/enums/walktrough-tour-id.enum';
 
 
 
@@ -59,7 +62,8 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
   constructor(
     private _docService: DocumentService,
     private router: Router,
-    private _route: ActivatedRoute) { }
+    private _route: ActivatedRoute,
+    private _userInitTour: UserInitTourService) { }
 
 
   ngOnInit(): void {
@@ -111,6 +115,16 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
           else
             this._documentContent = d.content
       })
+
+    if (this._userInitTour.isActive && this._userInitTour.tourId === WalkthroughTourIdEnum.UserInitialization) {
+
+      this._userInitTour.walkthroughTouStepHideEvent$.pipe(takeUntil(this.componentDestroyed$), takeUntil(this._userInitTour.walkthroughTourEnded$))
+        .subscribe(stepId => {
+          if (stepId === UserInitializationWalkthroughTourStepsEnum.RenderAssistantResults) {
+            this.goback();
+          }
+        })
+    }
   }
 
   documentEditorFocusEvent() {
@@ -211,6 +225,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
     this.newContentAmount++;
 
     this.setEditorScrollEvent();
+    this.saveEditorChanges();
   }
 
   setEditorScrollEvent() {

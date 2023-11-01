@@ -13,3 +13,41 @@
 
   }
 }
+
+// shepherd styles
+.shepherd-element {
+  background-color: $blue-sky !important;
+  color: #fff !important;
+  margin: 10px;
+
+  .shepherd-arrow::before {
+  background-color: $blue-sky !important;
+  background: $blue-sky !important;
+
+  border-color: $blue-sky !important;
+  }
+
+  .shepherd-header, .shepherd-title, .shepherd-cancel-icon, .shepherd-text  {
+      background-color: $blue-sky !important;
+  color: #fff !important;
+  }
+
+  .shepherd-text, .shepherd-step-counter {
+    font-weight: 300 !important;
+    font-size: 14px !important;
+  }
+
+  .shepherd-step-counter {
+      color: #a7c6f9 !important;
+    font-size: 13px !important;
+  }
+
+  .shepherd-button {
+      background-color: transparent !important;
+      text-transform: uppercase;
+
+    &.shepherd-button-secondary {
+      color: #a7c6f9 !important;
+    }
+  }
+}

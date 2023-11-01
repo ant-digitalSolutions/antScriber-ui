@@ -7,5 +7,6 @@ export enum UserInitializationWalkthroughTourStepsEnum {
     SelectImagination = 'select-imagination',
     UnleashAssistant = 'unleash-assistant',
     RenderAssistantResults = 'render-assistant-results',
-    DocumentsArea = 'documents-area'
+    DocumentsArea = 'documents-area',
+    FinalMessage = 'final-message'
 }

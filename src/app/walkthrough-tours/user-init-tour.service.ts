@@ -41,14 +41,9 @@ export class UserInitTourService {
       setTimeout(() => this.show(), 500)
     })
 
-    this._shepherdService.tourObject.steps
-    .find(s => s.id === UserInitializationWalkthroughTourStepsEnum.UnleashAssistant)?.on("hide", 
-    () => this._shepherdHideStepSubject.next(UserInitializationWalkthroughTourStepsEnum.UnleashAssistant));
-
-    this._shepherdService.tourObject.on('hide', () => {
-      console.log('hide event');
-      this.shepherdHideEvent()
-    })
+    this._shepherdService.tourObject.steps.forEach(step => {
+      step.on('hide', () => this.shepherdHideEvent(step))
+    });
 
     this.start();
 
@@ -76,12 +71,8 @@ export class UserInitTourService {
     return this._shepherdService;
   }
 
-  shepherdHideEvent() {
-    const currentStep = this._shepherdService.tourObject.getCurrentStep();
-
-    const stepId = currentStep?.id;
-    if (stepId)
-      this._shepherdHideStepSubject.next(stepId);
+  shepherdHideEvent(step:any) {
+      this._shepherdHideStepSubject.next(step.id);
   }
 
   show() {
@@ -97,6 +88,7 @@ export class UserInitTourService {
     progress.style.alignSelf = 'center';
     progress.style.justifySelf = 'start';
     progress.style.width = '100%';
+    progress.classList.add('shepherd-step-counter')
     // progress.style.marginRight = '315px';
     if (currentStep)
       progress.innerText = `${this._shepherdService.tourObject.steps.indexOf(currentStep) + 1}/${this._shepherdService.tourObject.steps.length}`;
