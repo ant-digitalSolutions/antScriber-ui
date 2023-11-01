@@ -1,3 +1,4 @@
+import { WalkthroughTourIdEnum } from '../../../walkthrough-tours/enums/walktrough-tour-id.enum';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { OptionField } from 'src/app/common/dto/option-field.dto';
@@ -18,6 +19,9 @@ import { QueryParamNames } from 'src/app/common/enum/query-params-names.enum';
 import { CacheService } from 'src/app/common/services/cache/cache.service';
 import { WizardCreatorUseCase } from '../../enums/wizard-creator-use-case.enum';
 import { WizardCreatorWebsiteUseCasesEnum } from '../../enums/wizard-creator-website-use-cases.enum';
+import { UserInitTourService } from 'src/app/walkthrough-tours/user-init-tour.service';
+import { UserInitializationWalkthroughTourStepsEnum } from 'src/app/walkthrough-tours/enums/walkthrough-tour-user-initialization-steps-id.enum';
+import { WizardUseCasesSelectorByGroupComponent } from '../wizard-use-cases-selector-by-group/wizard-use-cases-selector-by-group.component';
 import { IUseCaseMeta } from '../../use-case-meta/use-case-meta.interface';
 
 @Component({
@@ -55,7 +59,8 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
     private _wizardForm: WizardFormService,
     private _useCaseService: WizardUseCaseService,
     private _activeRoute: ActivatedRoute,
-    private _cacheService: CacheService) {
+    private _cacheService: CacheService,
+    private _userInitTour: UserInitTourService) {
   }
 
   ngOnInit(): void {
@@ -75,7 +80,6 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
         this.selectedCase = useCase;
         this.showUseCases = false;
         this._useCaseService.showingUseCasesSelector = false;
-        // this.selectedUseCaseGroup = '';
       }
     })
 
@@ -88,6 +92,15 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
         // reset the current group
         this.selectedUseCaseGroup = this._useCaseService.selectedUseCaseGroup;
       });
+
+      if (this._userInitTour.isActive && this._userInitTour.tourId === WalkthroughTourIdEnum.UserInitialization) {
+        this._userInitTour.walkthroughTouStepShowEvent$.pipe(takeUntil(this.componentDestroyed$), takeUntil(this._userInitTour.walkthroughTourEnded$))
+        .subscribe(stepId => {
+          if (stepId === UserInitializationWalkthroughTourStepsEnum.SelectSpecificTask) {
+            this.selectUseCaseGroup(WizardCreatorUseCaseGroup.SocialMedia);
+          }
+        })
+      }
   }
 
   setUseCases(initialElements: boolean = true) {

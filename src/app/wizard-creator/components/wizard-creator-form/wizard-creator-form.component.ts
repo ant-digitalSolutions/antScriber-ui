@@ -13,6 +13,10 @@ import { SelectorFieldToRenderData } from 'src/app/common/interfaces/button-togg
 import { TextFieldToRenderData } from 'src/app/common/interfaces/textfield-to-render-data';
 import { WizardUseCaseService } from '../../services/use-case/wizard-use-case.service';
 import { WizardDefaultFieldNamesEnum } from '../../enums/wizard-default-fields-names.enum';
+import { UserInitTourService } from 'src/app/walkthrough-tours/user-init-tour.service';
+import { UserInitializationWalkthroughTourStepsEnum } from 'src/app/walkthrough-tours/enums/walkthrough-tour-user-initialization-steps-id.enum';
+import { WalkthroughTourIdEnum } from 'src/app/walkthrough-tours/enums/walktrough-tour-id.enum';
+import { WizardSocialMediaUseCases } from '../../enums/wizard-creator-social-media-use-cases.enum';
 
 @Component({
   selector: 'app-wizard-creator-form',
@@ -72,7 +76,8 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
     private _wizardCreatorService: WizardCreatorService,
     private projectService: BlogProjectsService,
     private _wizardFormService: WizardFormService,
-    private _useCaseService: WizardUseCaseService) {
+    private _useCaseService: WizardUseCaseService,
+    private _userInitTour: UserInitTourService) {
 
   }
   ngAfterViewInit(): void {
@@ -134,6 +139,24 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
     .additionalDataFieldWithError$.pipe(takeUntil(this.componentDestroyed$))
     .subscribe(() => this.scrollToWizardInputWithError())
 
+    if (this._userInitTour.isActive && this._userInitTour.tourId === WalkthroughTourIdEnum.UserInitialization) {
+      this._userInitTour.walkthroughTouStepShowEvent$.pipe(takeUntil(this.componentDestroyed$), takeUntil(this._userInitTour.walkthroughTourEnded$))
+        .subscribe(stepId => {
+          if (stepId === UserInitializationWalkthroughTourStepsEnum.UnleashAssistant) {
+            this._wizardFormService.updateAdditionalData('postThemeIdea', `I found a new tool to boost my productivity, Adfluens. Check it out now and start for free: https://adfluens.io.` )
+            const postThemeIdea = this._wizardFormService._additionalDataFormFields.find(f => f.fieldName === 'postThemeIdea')
+            postThemeIdea?.formControl.setValue(`I found a new tool to boost my productivity, Adfluens. Check it out now and start for free: https://adfluens.io.`)
+          }
+        })
+
+      this._userInitTour.walkthroughTouStepHideEvent$.pipe(takeUntil(this.componentDestroyed$), takeUntil(this._userInitTour.walkthroughTourEnded$))
+        .subscribe(stepId => {
+          if (stepId === UserInitializationWalkthroughTourStepsEnum.UnleashAssistant) {
+           this.generateContent();
+          }
+        })
+    }
+
 
   }
 
@@ -166,7 +189,8 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
       fieldValue: OpenAiGPTVersionEnum.GPT3,
       dataName: WizardDefaultFieldNamesEnum.GtpVersion,
       tooltipText: 'GPT version to use.',
-      values: mapEnumNameAndValue(OpenAiGPTVersionEnum)
+      values: mapEnumNameAndValue(OpenAiGPTVersionEnum),
+      className: 'gpt-version-selector'
     });
   }
 
@@ -186,7 +210,8 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
       fieldValue: ContentCreationCreativityLevel.Zen,
       dataName: WizardDefaultFieldNamesEnum.ImaginationSelector,
       tooltipText: 'How much imagination to apply?',
-      values: creativityLevelOptionFields()
+      values: creativityLevelOptionFields(),
+      className: 'imagination-selector'
     });
   }
 

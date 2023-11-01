@@ -8,7 +8,7 @@
       (click)="toggleUseCases()"
       id="btn-use-case-selector"
     >
-      Case Selector
+      Task Selector
     </button>
     <!-- <button mat-raised-button (click)="toggleUseCases()" class="w-100" id="btn-use-case-selector">
       {{ selectedCase }}
@@ -26,6 +26,7 @@
         <mat-expansion-panel
           (opened)="selectUseCaseGroup(group)"
           [expanded]="selectedUseCaseGroup === group"
+          class="use-cases-panel"
         >
           <mat-expansion-panel-header>
             <mat-panel-title> {{ group }} </mat-panel-title>

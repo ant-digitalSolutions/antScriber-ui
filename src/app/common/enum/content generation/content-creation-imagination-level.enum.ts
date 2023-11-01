@@ -12,7 +12,7 @@ export enum ContentCreationCreativityLevel {
     Low = 'Gentle Nudge (Low Imagination)',
     Medium = 'Inspired Flow (Balanced)',
     High = 'Vivid Imagination (High Imagination)',
-    Max = 'Boundless Artistry (Max Imagination)',
+    // Max = 'Boundless Artistry (Max Imagination)',
 }
 
 export function creativityLevelList(): string[] {

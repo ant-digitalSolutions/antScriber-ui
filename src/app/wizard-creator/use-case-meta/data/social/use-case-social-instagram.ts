@@ -40,7 +40,7 @@ export class UseCase_Social_InstagramCaption extends UseCaseMetaAbstract {
 
         fieldsData.push({
             fieldLabel: 'Words Count',
-            fieldValue: '',
+            fieldValue: '30-60 words',
             dataName: 'wordsRange',
             tooltipText: 'Choose a word count range for your Instagram caption.',
             values: [

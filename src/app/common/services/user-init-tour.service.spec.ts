@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { UserInitTourService } from './user-init-tour.service';
+import { UserInitTourService } from '../../walkthrough-tours/user-init-tour.service';
 
 describe('UserInitTourService', () => {
   let service: UserInitTourService;
