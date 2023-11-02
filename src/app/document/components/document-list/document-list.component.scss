@@ -81,11 +81,15 @@ mat-header-cell {
 }
 
 .last-modified-mobile {
-  font-size: 0.6rem;
+  font-size: 0.7rem;
 }
 
 .table-element-name {
   max-width: 175px;
+
+  .doc-text-name {
+    font-size: 1rem;
+  }
 }
 
 .hide-table-header {
