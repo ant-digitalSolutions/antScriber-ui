@@ -45,11 +45,9 @@ mat-header-cell {
   justify-content: center;
 
   &.wizard-mat-cell-options {
-    max-width: 75px;
+    justify-content: flex-end;
   }
 }
-
-
 
 .wizard-mat-cell-large {
   display: flex;
@@ -67,11 +65,11 @@ mat-header-cell {
 }
 
 .docs-table-container {
-  // max-height: calc(100dvh - $header-height - $inner-navbar-height); 
-  height: calc(100dvh); 
+  // max-height: calc(100dvh - $header-height - $inner-navbar-height);
+  height: calc(100dvh);
 
-    overflow: auto;
-    position: relative;
+  overflow: auto;
+  position: relative;
 }
 
 .docs-table-paginator {

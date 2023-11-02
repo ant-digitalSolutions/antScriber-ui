@@ -39,7 +39,7 @@ $walkthrough-user-initialization-text-secondary: #e4a1cf;
   .shepherd-text,
   .shepherd-step-counter {
     font-weight: 300 !important;
-    font-size: 14px !important;
+    font-size: 15px !important;
   }
 
   .shepherd-step-counter {
@@ -66,4 +66,11 @@ $walkthrough-user-initialization-text-secondary: #e4a1cf;
       padding: 15px;
     }
   }
+}
+
+// helpers
+.btn-success {
+  background-color: $primary !important;
+  color: $white !important;
+  font-weight: 500 !important;
 }
