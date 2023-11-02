@@ -1,22 +1,20 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subject, takeUntil, tap } from 'rxjs';
-import { WizardCreatorService } from '../../services/wizard-creator.service';
 import { Validators } from '@angular/forms';
-import { ContentTone, contentToneOptionFields } from 'src/app/common/enum/content generation/content-tone.enum';
-import { langEnumOptionFields } from 'src/app/common/enum/lang-options.enum';
-import { ContentCreationCreativityLevel, creativityLevelOptionFields } from 'src/app/common/enum/content generation/content-creation-imagination-level.enum';
+import { Subject, takeUntil } from 'rxjs';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
-import { mapEnumNameAndValue } from 'src/app/common/functions/name-and-values-of-enum.function';
+import { ContentCreationCreativityLevel, creativityLevelOptionFields } from 'src/app/common/enum/content generation/content-creation-imagination-level.enum';
+import { ContentTone, contentToneOptionFields } from 'src/app/common/enum/content generation/content-tone.enum';
 import { OpenAiGPTVersionEnum } from 'src/app/common/enum/content generation/openai-gtp-version.enum';
-import { WizardFormService } from '../../services/wizard-form.service';
+import { langEnumOptionFields } from 'src/app/common/enum/lang-options.enum';
+import { mapEnumNameAndValue } from 'src/app/common/functions/name-and-values-of-enum.function';
 import { SelectorFieldToRenderData } from 'src/app/common/interfaces/button-toggle-to-render-data';
 import { TextFieldToRenderData } from 'src/app/common/interfaces/textfield-to-render-data';
-import { WizardUseCaseService } from '../../services/use-case/wizard-use-case.service';
-import { WizardDefaultFieldNamesEnum } from '../../enums/wizard-default-fields-names.enum';
-import { UserInitTourService } from 'src/app/walkthrough-tours/user-init-tour.service';
 import { UserInitializationWalkthroughTourStepsEnum } from 'src/app/walkthrough-tours/enums/walkthrough-tour-user-initialization-steps-id.enum';
-import { WalkthroughTourIdEnum } from 'src/app/walkthrough-tours/enums/walktrough-tour-id.enum';
-import { WizardSocialMediaUseCases } from '../../enums/wizard-creator-social-media-use-cases.enum';
+import { UserInitTourService } from 'src/app/walkthrough-tours/user-init-tour.service';
+import { WizardDefaultFieldNamesEnum } from '../../enums/wizard-default-fields-names.enum';
+import { WizardUseCaseService } from '../../services/use-case/wizard-use-case.service';
+import { WizardCreatorService } from '../../services/wizard-creator.service';
+import { WizardFormService } from '../../services/wizard-form.service';
 
 @Component({
   selector: 'app-wizard-creator-form',
@@ -127,7 +125,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
       }
     });
 
-    this._wizardCreatorService.wizardCreatedContent$.pipe(takeUntil(this.componentDestroyed$)).subscribe(r => {
+    this._wizardCreatorService.wizardCreatedContent$.pipe(takeUntil(this.componentDestroyed$)).subscribe(() => {
       this.isLoading = false;
     })
 
@@ -272,7 +270,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
 
   // event that the element was clicked. To we should close the use
   // case selector
-  onClick(event: Event) {
+  onClick(_event: Event) {
     this._useCaseService.closeSelector();
   }
 

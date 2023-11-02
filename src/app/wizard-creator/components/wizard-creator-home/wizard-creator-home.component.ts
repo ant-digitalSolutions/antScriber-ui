@@ -1,11 +1,9 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
-import { WizardCreatorService } from '../../services/wizard-creator.service';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { Subject, takeUntil } from 'rxjs';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
-import { UserService } from 'src/app/user/services/user.service';
 import { UserInitTourService } from 'src/app/walkthrough-tours/user-init-tour.service';
+import { WizardCreatorService } from '../../services/wizard-creator.service';
 
 @Component({
   selector: 'app-wizard-creator-home',
@@ -21,11 +19,11 @@ export class WizardCreatorHomeComponent implements OnDestroy, OnInit, AfterViewI
 
   constructor(
     private _wizard: WizardCreatorService,
-    private breakpointObserver: BreakpointObserver,
     protected $gaService: GoogleAnalyticsService,
     private _projectService: BlogProjectsService,
     private _userWalkthroughTours: UserInitTourService,
-    private _userService: UserService) {
+    // private _userService: UserService,
+  ) {
 
   }
 
@@ -73,7 +71,7 @@ export class WizardCreatorHomeComponent implements OnDestroy, OnInit, AfterViewI
 
   checkAndRenderInitialWalkthrough() {
     // if (this._userService.showInitialTour)
-      this._userWalkthroughTours.initShepherd_userInitialization()
+    this._userWalkthroughTours.initShepherd_userInitialization()
   }
 
 }

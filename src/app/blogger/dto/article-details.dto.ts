@@ -1,11 +1,10 @@
-import { environment } from "src/environments/environment";
 import { KeywordDetailsDto } from "./keywords/keyword-details.dto";
 
 export class IArticleDetailsDto {
     id: number;
 
     title: string;
-    
+
     body: string;
 
     primaryKeyword?: KeywordDetailsDto;

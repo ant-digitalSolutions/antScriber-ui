@@ -1,18 +1,16 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  ChangeDetectorRef,
-  OnChanges,
-} from '@angular/core';
-import { navItems } from './sidebar-data';
-import { Router } from '@angular/router';
-import { NavService } from '../../../../services/nav.service';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit
+} from '@angular/core';
+import { Router } from '@angular/router';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { MaterialModule } from 'src/app/material.module';
-import { CommonModule } from '@angular/common';
+import { NavService } from '../../../../services/nav.service';
 import { AppHorizontalNavItemComponent } from './nav-item/nav-item.component';
+import { navItems } from './sidebar-data';
 
 @Component({
   selector: 'app-horizontal-sidebar',
@@ -41,5 +39,5 @@ export class AppHorizontalSidebarComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

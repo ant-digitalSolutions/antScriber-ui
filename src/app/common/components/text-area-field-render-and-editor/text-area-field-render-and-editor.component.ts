@@ -1,6 +1,5 @@
-import { contentToneOptionFields } from 'src/app/common/enum/content generation/content-tone.enum';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { FloatLabelType } from '@angular/material/form-field';
 import { ToastrService } from 'ngx-toastr';
 
@@ -58,7 +57,7 @@ export class TextAreaFieldRenderAndEditorComponent implements OnChanges, OnInit 
    */
   @Input()
   showActions = true
-  
+
   /**
    * Indicate if after a blur or save event, the field should be closed
    * and the content rendered in a <p> tag.
@@ -116,11 +115,11 @@ export class TextAreaFieldRenderAndEditorComponent implements OnChanges, OnInit 
       return 'The value is too short.';
     }
     if (this.fieldForm.hasError('minlength')) {
-      return   `Please, provide more context. The min length is: ${this.fieldForm.getError('minlength').requiredLength}`
+      return `Please, provide more context. The min length is: ${this.fieldForm.getError('minlength').requiredLength}`
     }
     if (this.fieldForm.hasError('maxlength')) {
       return `Your context is too long. The max length is: ${this.fieldForm.getError('maxlength').requiredLength}`
-      
+
     }
 
     return 'There is an error in your input'

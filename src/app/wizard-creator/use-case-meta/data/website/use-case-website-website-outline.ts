@@ -1,12 +1,11 @@
-import { UseCaseMetaAbstract } from "../../use-case-meta.abastract";
 import { Validators } from "ngx-editor";
+import { CheckboxFieldToRenderData } from "src/app/common/interfaces/checkbox-field-to-render-data";
 import { TextFieldToRenderData } from "src/app/common/interfaces/textfield-to-render-data";
 import { WizardCreatorUseCaseGroup } from "src/app/wizard-creator/enums/wizard-creator-use-case-group.enum";
-import { SelectorFieldToRenderData } from "src/app/common/interfaces/button-toggle-to-render-data";
+import { WizardCreatorWebsiteUseCasesEnum } from "src/app/wizard-creator/enums/wizard-creator-website-use-cases.enum";
 import { WizardDefaultFieldNamesEnum } from "src/app/wizard-creator/enums/wizard-default-fields-names.enum";
 import { environment } from "src/environments/environment";
-import { WizardCreatorWebsiteUseCasesEnum } from "src/app/wizard-creator/enums/wizard-creator-website-use-cases.enum";
-import { CheckboxFieldToRenderData } from "src/app/common/interfaces/checkbox-field-to-render-data";
+import { UseCaseMetaAbstract } from "../../use-case-meta.abastract";
 
 export class UseCase_Website_PageOutline extends UseCaseMetaAbstract {
 

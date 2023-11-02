@@ -1,17 +1,15 @@
-import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { WizardCreatorCreateDto } from '../dtos/wizard-creator-create-dto';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { ToastrService } from 'ngx-toastr';
 import { ReplaySubject, of, tap } from 'rxjs';
+import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
 import { DocumentService } from 'src/app/document/services/document.service';
-import { WizardFormService } from './wizard-form.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { CacheService } from 'src/app/common/services/cache/cache.service';
-import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
+import { WizardCreatorCreateDto } from '../dtos/wizard-creator-create-dto';
 import { WizardUseCaseService } from './use-case/wizard-use-case.service';
+import { WizardFormService } from './wizard-form.service';
 
 @Injectable()
 export class WizardCreatorService {
@@ -27,7 +25,6 @@ export class WizardCreatorService {
     private _docService: DocumentService,
     private _wizardForm: WizardFormService,
     private _snackBar: MatSnackBar,
-    private _cacheService: CacheService,
     protected $gaService: GoogleAnalyticsService,
     private _useCaseService: WizardUseCaseService) { }
 
@@ -44,7 +41,6 @@ export class WizardCreatorService {
       return of({});
     }
 
-    // this.saveDataOnCache(formData.data, formData.data.useCase, formData.data.useCaseGroup);
 
     // log event in GA
     // this.$gaService.event('wizard_create_request','request_to_server', `${this._useCaseService._wizardUseCaseGroup}<->${this._useCaseService._wizardUseCase}`, 100);
@@ -72,20 +68,5 @@ export class WizardCreatorService {
         this.$gaService.event('wizard_create_request', 'request_to_server', `${this._useCaseService._wizardUseCaseGroup}<->${this._useCaseService._wizardUseCase}`, wizardRequestElapsedTime / 1000);
         this.$gaService.event('request_to_server_timing', `wizard_${this._useCaseService._wizardUseCaseGroup}<->${this._useCaseService._wizardUseCase}`, `${wizardRequestElapsedTime / 1000}`);
       }))
-  }
-
-  /**
-   * Save the wizard form data to the cache, so users can continue
-   * with their work
-   *
-   * @private
-   * @param {*} data
-   * @param {string} useCase
-   * @param {string} useCaseGroup
-   * @memberof WizardCreatorService
-   */
-  private saveDataOnCache(data: any, useCase: string, useCaseGroup: string): void {
-    this._cacheService.setUseCaseData(useCase, useCaseGroup)
-    this._cacheService.storeWizardForm(data);
   }
 }

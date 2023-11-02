@@ -1,8 +1,6 @@
-import { Subscription } from 'rxjs';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { IArticleFromAiResponseDto } from '../../../content-creation/article/dtos/article-from-ai.dto';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Editor, Toolbar, Validators } from 'ngx-editor';
-import { FormGroup, FormControl } from '@angular/forms';
 import { IArticleDetailsDto } from 'src/app/blogger/dto/article-details.dto';
 import { ArticleService } from '../../services/article.service';
 
@@ -33,7 +31,7 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
   @Input()
   articleToEdit: IArticleDetailsDto;
 
-  constructor(private articleService: ArticleService) {}
+  constructor(private articleService: ArticleService) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -56,7 +54,7 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
     this.articleToEdit.title = formData.title;
     this.articleToEdit.body = formData.articleBody;
     const dtoToEdit = {
-      id: this.articleToEdit.id, 
+      id: this.articleToEdit.id,
       body: this.articleToEdit.body,
       title: this.articleToEdit.title
     }

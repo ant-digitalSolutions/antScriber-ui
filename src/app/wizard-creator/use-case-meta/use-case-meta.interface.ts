@@ -1,7 +1,4 @@
-import { SelectorFieldToRenderData } from "src/app/common/interfaces/button-toggle-to-render-data";
-import { TextFieldToRenderData } from "src/app/common/interfaces/textfield-to-render-data";
 import { WizardFormService } from "../services/wizard-form.service";
-import { CheckboxFieldToRenderData } from "src/app/common/interfaces/checkbox-field-to-render-data";
 
 export interface IUseCaseMeta {
   /**

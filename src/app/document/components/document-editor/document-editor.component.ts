@@ -1,17 +1,14 @@
-import { InlineEditor } from '@ckeditor/ckeditor5-editor-inline';
-import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { DocumentService } from '../../services/document.service';
-import { Subject, Subscription, take, takeUntil } from 'rxjs';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Validators } from 'ngx-editor';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Validators } from 'ngx-editor';
+import { Subject, takeUntil } from 'rxjs';
+import { DocumentService } from '../../services/document.service';
 // import BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
-import { configs_UI } from 'src/app/common/configs/ui.config';
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
-import { el } from 'date-fns/locale';
-import { UserInitTourService } from 'src/app/walkthrough-tours/user-init-tour.service';
+import { configs_UI } from 'src/app/common/configs/ui.config';
 import { UserInitializationWalkthroughTourStepsEnum } from 'src/app/walkthrough-tours/enums/walkthrough-tour-user-initialization-steps-id.enum';
-import { WalkthroughTourIdEnum } from 'src/app/walkthrough-tours/enums/walktrough-tour-id.enum';
+import { UserInitTourService } from 'src/app/walkthrough-tours/user-init-tour.service';
 
 
 
@@ -84,7 +81,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
 
   initEditor() {
     if (this.documentEditorRef.nativeElement) {
-      const ed = Editor.create(this.documentEditorRef.nativeElement, defaultConfig)
+      Editor.create(this.documentEditorRef.nativeElement, defaultConfig)
         .then(editor => {
           editor.setData(this._documentContent ? this._documentContent : '')
           this._editor = editor;
@@ -117,12 +114,12 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
       })
 
 
-      this._userInitTour.walkthroughTouStepHideEvent$.pipe(takeUntil(this.componentDestroyed$), takeUntil(this._userInitTour.walkthroughTourEnded$))
-        .subscribe(stepId => {
-          if (stepId === UserInitializationWalkthroughTourStepsEnum.RenderAssistantResults) {
-            this.goback();
-          }
-        })
+    this._userInitTour.walkthroughTouStepHideEvent$.pipe(takeUntil(this.componentDestroyed$), takeUntil(this._userInitTour.walkthroughTourEnded$))
+      .subscribe(stepId => {
+        if (stepId === UserInitializationWalkthroughTourStepsEnum.RenderAssistantResults) {
+          this.goback();
+        }
+      })
   }
 
   documentEditorFocusEvent() {
@@ -214,7 +211,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
     if (!newContentSeparator) {
       currentData += this.newContentSeparatorElement;
     } else {
-      currentData += this.editorContentSeparatorElement; 
+      currentData += this.editorContentSeparatorElement;
     }
 
     //  this._docService.documentInEdition!.content += newContent;
@@ -238,7 +235,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
       const elementRect = newContentElement.getBoundingClientRect();
       const toRemove = elementRect.top <= (configs_UI.internal_navbar_height + configs_UI.main_navbar_height + 40 + 100);
       if (toRemove) {
-      this.removeNewContentIndicator()
+        this.removeNewContentIndicator()
       }
     }
   }
@@ -312,7 +309,7 @@ const defaultConfig = {
 };
 
 function saveData(data: any) {
-  return new Promise(resolve => {
+  return new Promise(() => {
     setTimeout(() => {
       console.log('Saved', data);
 

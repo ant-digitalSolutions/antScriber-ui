@@ -1,4 +1,3 @@
-import { KeywordTypeEnum } from "../../enums/keyword-type.enum";
 
 export class KeywordDetailsDto {
     id: number;

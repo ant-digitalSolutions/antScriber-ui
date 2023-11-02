@@ -1,14 +1,13 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { CoreService } from 'src/app/services/core.service';
-import { MatDialog } from '@angular/material/dialog';
-import { navItems } from '../../vertical/sidebar/sidebar-data';
-import { TranslateService } from '@ngx-translate/core';
-import { MaterialModule } from 'src/app/material.module';
-import { RouterModule } from '@angular/router';
-import { TablerIconsModule } from 'angular-tabler-icons';
-import { FormsModule } from '@angular/forms';
-import { BrandingComponent } from '../../vertical/sidebar/branding.component';
 import { NgFor, NgForOf, NgIf } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { RouterModule } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { TablerIconsModule } from 'angular-tabler-icons';
+import { MaterialModule } from 'src/app/material.module';
+import { BrandingComponent } from '../../vertical/sidebar/branding.component';
+import { navItems } from '../../vertical/sidebar/sidebar-data';
 
 interface notifications {
   id: number;
@@ -97,7 +96,6 @@ export class AppHorizontalHeaderComponent {
   ];
 
   constructor(
-    private vsidenav: CoreService,
     public dialog: MatDialog,
     private translate: TranslateService
   ) {

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MagicEditionService } from '../../services/content-magic-edition.service';
 import { IRequestResponse } from '../../dto/request-response.dto';
 import { MagicActionEnum } from '../../enum/content generation/magic-action.enum';
+import { MagicEditionService } from '../../services/content-magic-edition.service';
 
 @Component({
   selector: 'app-content-edition-magic-actions',
@@ -39,7 +39,6 @@ export class ContentEditionMagicActionsComponent {
     if (this.contentToEdit) {
       this.isLoading = true;
       this.applyingMagic.emit(true);
-      const textToApplyMagic = this.editedContent ? this.editedContent : this.contentToEdit;
       this.magicEditionService.applyMagic(this.contentToEdit, action).subscribe(r => this.processMagicEditionResult(r))
     }
   }
@@ -62,11 +61,11 @@ export class ContentEditionMagicActionsComponent {
     this.editedContent = undefined;
   }
 
-  
-  public get MagicActions() : typeof MagicActionEnum {
+
+  public get MagicActions(): typeof MagicActionEnum {
     return MagicActionEnum;
   }
-  
+
 
 
 }

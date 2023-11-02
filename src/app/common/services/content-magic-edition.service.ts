@@ -1,11 +1,10 @@
-import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { IRequestResponse } from '../dto/request-response.dto';
+import { Observable } from 'rxjs';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 import { MagicEditionParamsDto } from '../dto/magic-edition-params.dto';
+import { IRequestResponse } from '../dto/request-response.dto';
 import { MagicActionEnum } from '../enum/content generation/magic-action.enum';
-import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
 
 @Injectable()
 export class MagicEditionService {

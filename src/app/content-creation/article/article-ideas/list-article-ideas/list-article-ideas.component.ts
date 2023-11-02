@@ -1,9 +1,9 @@
-import { ArticleIdea, ArticleIdeasResponse } from './../../dtos/article-ideas-from-ai.dto';
 import { Component } from '@angular/core';
-import { ArticleIdeasService } from '../article-ideas.service';
+import { MatSelectChange } from '@angular/material/select';
 import { Subject, takeUntil } from 'rxjs';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
-import { MatSelectChange } from '@angular/material/select';
+import { ArticleIdeasService } from '../article-ideas.service';
+import { ArticleIdea } from './../../dtos/article-ideas-from-ai.dto';
 
 @Component({
   selector: 'app-list-article-ideas',
@@ -38,14 +38,14 @@ export class ListArticleIdeasComponent {
   }
 
   getAllArticleIdeasForCurrentProject(projectId: number) {
-   this.articleIdeasService.listArticleIdeasForCurrentProject(projectId).subscribe();
+    this.articleIdeasService.listArticleIdeasForCurrentProject(projectId).subscribe();
   }
 
-  applySearchFilter($event: KeyboardEvent) {
+  applySearchFilter() {
     this.articleIdeas = this.articleIdeasService.filterArticleIdeasBySearch(this.searchTerm);
   }
   changePrimaryKeySelection($event: MatSelectChange) {
-   this.articleIdeas = this.articleIdeasService.getArticleIdeasByPrimaryKeyword($event.value)
+    this.articleIdeas = this.articleIdeasService.getArticleIdeasByPrimaryKeyword($event.value)
   }
 
   ngOnDestroy() {

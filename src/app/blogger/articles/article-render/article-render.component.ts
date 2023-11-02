@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { IArticleFromAiResponseDto } from '../../../content-creation/article/dtos/article-from-ai.dto';
 import { IArticleDetailsDto } from 'src/app/blogger/dto/article-details.dto';
-import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 
 @Component({
   selector: 'app-article-render',

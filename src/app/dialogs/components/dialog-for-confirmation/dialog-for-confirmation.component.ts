@@ -1,8 +1,7 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DialogCustomData_SingleInput } from '../../dto/dialog-data';
-import { DialogWithSingleInputComponent } from '../dialog-with-single-input/dialog-with-single-input.component';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DialogCustomData_Confirmation } from '../../dto/dialog-custom-data-confirmation';
+import { DialogWithSingleInputComponent } from '../dialog-with-single-input/dialog-with-single-input.component';
 
 @Component({
   selector: 'app-dialog-for-confirmation',

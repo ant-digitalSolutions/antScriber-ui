@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { BlogProjectsService } from './blog-projects.service';
-import { Observable, ReplaySubject, Subject, tap } from 'rxjs';
-import { KeywordDetailsDto } from '../dto/keywords/keyword-details.dto';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
+import { Injectable } from '@angular/core';
+import { Observable, ReplaySubject, Subject, tap } from 'rxjs';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
+import { KeywordDetailsDto } from '../dto/keywords/keyword-details.dto';
+import { BlogProjectsService } from './blog-projects.service';
 
 @Injectable()
 export class KeywordsService {
@@ -42,7 +41,7 @@ export class KeywordsService {
     }
     this._primaryKeywordForArticleEdition.next(keyword);
   }
-  
+
   addSecondaryKeywordForArticleEdition(keyword: KeywordDetailsDto) {
     if (!keyword.blogProjectId) {
       keyword.blogProjectId = this.selectedProjectId

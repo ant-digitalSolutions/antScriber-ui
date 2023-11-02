@@ -1,16 +1,13 @@
-import { Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CoreService } from 'src/app/services/core.service';
-import { AuthService } from '../auth.service';
-import { UserLogin } from '../dtos/login.dto';
-import { environment } from 'src/environments/environment';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
-import { CookieService } from 'ngx-cookie-service';
-import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
+import { CoreService } from 'src/app/services/core.service';
 import { UserService } from 'src/app/user/services/user.service';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
+import { environment } from 'src/environments/environment';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -93,7 +90,7 @@ export class LoginComponent implements OnInit {
       email: this.form.value.email!,
       password: this.form.value.password!
     };
-    const result = this.authService.login(userLogin).subscribe(
+    this.authService.login(userLogin).subscribe(
       (r) => {
         this.isLoading = false;
         if (r.success) {
@@ -126,15 +123,15 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
-  
-  public get isLoggedIn() : boolean {
+
+  public get isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }
 
-  
-  public get userEmail() : string | null {
+
+  public get userEmail(): string | null {
     return this.authService.userEmail;
   }
-  
-  
+
+
 }

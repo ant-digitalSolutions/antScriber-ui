@@ -1,12 +1,12 @@
-import { environment } from 'src/environments/environment';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms'
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CoreService } from 'src/app/services/core.service';
-import { AuthService } from '../auth.service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
-import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
+import { CoreService } from 'src/app/services/core.service';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
+import { environment } from 'src/environments/environment';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-register',
@@ -153,12 +153,4 @@ export class RegisterComponent implements OnInit {
   }
 
 
-}
-
-function onSignGoogleIn(googleUser: any) {
-  var profile = googleUser.getBasicProfile();
-  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-  console.log('Name: ' + profile.getName());
-  console.log('Image URL: ' + profile.getImageUrl());
-  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
 }

@@ -1,27 +1,13 @@
-import { WalkthroughTourIdEnum } from '../../../walkthrough-tours/enums/walktrough-tour-id.enum';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
-import { OptionField } from 'src/app/common/dto/option-field.dto';
-import { mapEnumNameAndValue } from 'src/app/common/functions/name-and-values-of-enum.function';
-import { WizardCreatorUseCaseGroup } from '../../enums/wizard-creator-use-case-group.enum';
-import { WizardGeneralWritingUseCases } from '../../enums/wizard-creator-general-writing-use-cases.enum';
-import { WizardSocialMediaUseCases } from '../../enums/wizard-creator-social-media-use-cases.enum';
-import { WizardBlogAndArticlesUseCases } from '../../enums/wizard-creator-blog-and-articles-use-cases.enum';
-import { WizardCreatorEcommerceUseCasesEnum } from '../../enums/wizard-creator-ecommerce-use-cases.enum';
-import { WizardCreatorMarketingUseCasesEnum } from '../../enums/wizard-creator-marketing-use-cases.enum';
-import { WizardCreatorCodingUseCasesEnum } from '../../enums/wizard-creator-coding-use-cases.enum';
-import { WizardCreatorInternalDevUseCasesEnum } from '../../enums/wizard-creator-internal-dev-use-cases.enum';
-import { WizardCreatorLearningUseCasesEnum } from '../../enums/wizard-creator-learning-use-cases.enum';
-import { WizardFormService } from '../../services/wizard-form.service';
-import { WizardUseCaseService } from '../../services/use-case/wizard-use-case.service';
 import { ActivatedRoute } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { QueryParamNames } from 'src/app/common/enum/query-params-names.enum';
 import { CacheService } from 'src/app/common/services/cache/cache.service';
-import { WizardCreatorUseCase } from '../../enums/wizard-creator-use-case.enum';
-import { WizardCreatorWebsiteUseCasesEnum } from '../../enums/wizard-creator-website-use-cases.enum';
-import { UserInitTourService } from 'src/app/walkthrough-tours/user-init-tour.service';
 import { UserInitializationWalkthroughTourStepsEnum } from 'src/app/walkthrough-tours/enums/walkthrough-tour-user-initialization-steps-id.enum';
-import { WizardUseCasesSelectorByGroupComponent } from '../wizard-use-cases-selector-by-group/wizard-use-cases-selector-by-group.component';
+import { UserInitTourService } from 'src/app/walkthrough-tours/user-init-tour.service';
+import { WizardCreatorUseCaseGroup } from '../../enums/wizard-creator-use-case-group.enum';
+import { WizardUseCaseService } from '../../services/use-case/wizard-use-case.service';
+import { WizardFormService } from '../../services/wizard-form.service';
 import { IUseCaseMeta } from '../../use-case-meta/use-case-meta.interface';
 
 @Component({
@@ -93,12 +79,12 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
         this.selectedUseCaseGroup = this._useCaseService.selectedUseCaseGroup;
       });
 
-        this._userInitTour.walkthroughTouStepShowEvent$.pipe(takeUntil(this.componentDestroyed$), takeUntil(this._userInitTour.walkthroughTourEnded$))
-        .subscribe(stepId => {
-          if (stepId === UserInitializationWalkthroughTourStepsEnum.SelectSpecificTask) {
-            this.selectUseCaseGroup(WizardCreatorUseCaseGroup.SocialMedia);
-          }
-        })
+    this._userInitTour.walkthroughTouStepShowEvent$.pipe(takeUntil(this.componentDestroyed$), takeUntil(this._userInitTour.walkthroughTourEnded$))
+      .subscribe(stepId => {
+        if (stepId === UserInitializationWalkthroughTourStepsEnum.SelectSpecificTask) {
+          this.selectUseCaseGroup(WizardCreatorUseCaseGroup.SocialMedia);
+        }
+      })
   }
 
   setUseCases(initialElements: boolean = true) {
@@ -192,7 +178,7 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
    */
   private setInitialGroupOptions(initialValues: boolean): void {
     const useCaseGroups = this._useCaseService.listUseCaseGroups;
-    
+
 
     if (window.location.href.indexOf('app.') >= 0) {
       const internalDevIndex = useCaseGroups.findIndex(g => g === WizardCreatorUseCaseGroup.InternalDev);

@@ -1,4 +1,3 @@
-import { StepperOptions } from '@angular/cdk/stepper';
 import { UserInitializationWalkthroughTourStepsEnum } from '../../enums/walkthrough-tour-user-initialization-steps-id.enum';
 
 export const userInitializationTour_defaultStepOptions = {
@@ -17,7 +16,7 @@ export const userInitializationTour_defaultStepOptions = {
             }, 150);
         });
     }
-  
+
 };
 
 
@@ -338,7 +337,7 @@ Effortlessly Create, Edit, and Delete your folders and documents, ensuring your 
     // Final Message
     {
         id: UserInitializationWalkthroughTourStepsEnum.FinalMessage,
-      
+
         buttons: [
             {
                 classes: 'shepherd-button-secondary',

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { OptionField } from '../../dto/option-field.dto';
 
@@ -7,7 +7,7 @@ import { OptionField } from '../../dto/option-field.dto';
   templateUrl: './option-field-render-and-editor.component.html',
   styleUrls: ['./option-field-render-and-editor.component.scss']
 })
-export class OptionFieldRenderAndEditorComponent  {
+export class OptionFieldRenderAndEditorComponent {
 
   @Input()
   options: OptionField<any>[];

@@ -1,27 +1,26 @@
+import { NgFor, NgForOf, NgIf } from '@angular/common';
 import {
   Component,
-  Output,
   EventEmitter,
   Input,
-  ViewEncapsulation,
-  OnInit,
   OnDestroy,
+  OnInit,
+  Output,
+  ViewEncapsulation,
 } from '@angular/core';
-import { CoreService } from 'src/app/services/core.service';
-import { MatDialog } from '@angular/material/dialog';
-import { navItems } from '../sidebar/sidebar-data';
-import { TranslateService } from '@ngx-translate/core';
-import { RouterModule } from '@angular/router';
-import { MaterialModule } from 'src/app/material.module';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { FormsModule } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { RouterModule } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { TablerIconsModule } from 'angular-tabler-icons';
 import { NgScrollbarModule } from 'ngx-scrollbar';
-import { BrandingComponent, } from '../sidebar/branding.component';
-import { NgFor, NgForOf, NgIf } from '@angular/common';
+import { Subject } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
-import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 import { BlogProjectDetailsDto } from 'src/app/blogger/dto/blog-project-details.dto';
-import { Subject, takeUntil } from 'rxjs';
+import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
+import { MaterialModule } from 'src/app/material.module';
+import { BrandingComponent, } from '../sidebar/branding.component';
+import { navItems } from '../sidebar/sidebar-data';
 
 interface notifications {
   id: number;
@@ -119,7 +118,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ];
 
   constructor(
-    private vsidenav: CoreService,
     public dialog: MatDialog,
     private translate: TranslateService,
     private authService: AuthService,
@@ -129,7 +127,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-  
+
   }
 
   ngOnDestroy() {

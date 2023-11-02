@@ -1,11 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { FloatLabelType } from '@angular/material/form-field';
-import { Validators } from 'ngx-editor';
-import { ToastrService } from 'ngx-toastr';
-import { TextFieldToRenderData } from 'src/app/common/interfaces/textfield-to-render-data';
 import { Subject, takeUntil } from 'rxjs';
-import { WizardCreatorService } from 'src/app/wizard-creator/services/wizard-creator.service';
+import { TextFieldToRenderData } from 'src/app/common/interfaces/textfield-to-render-data';
 import { WizardFormService } from 'src/app/wizard-creator/services/wizard-form.service';
 
 @Component({
@@ -31,7 +28,7 @@ export class WizardCreatorTextFieldComponent {
 
   isRequired = false;
 
-  constructor(private toastr: ToastrService,
+  constructor(
     private _wizardFormService: WizardFormService) {
   }
 
@@ -65,16 +62,16 @@ export class WizardCreatorTextFieldComponent {
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe(data => {
         if (data.fieldName === this.fieldData.dataName) {
-         this.fieldForm.setValue(data.fieldValue);
-         this.saveEdition();
+          this.fieldForm.setValue(data.fieldValue);
+          this.saveEdition();
         }
       });
 
     this._wizardFormService.resetFieldsToDefault$
       .pipe(takeUntil(this.componentDestroyed$))
-      .subscribe(data => {
-       this.fieldForm.setValue(this.fieldData.fieldValue);
-       this.saveEdition();
+      .subscribe(() => {
+        this.fieldForm.setValue(this.fieldData.fieldValue);
+        this.saveEdition();
       });
   }
 
@@ -85,8 +82,8 @@ export class WizardCreatorTextFieldComponent {
    * @memberof WizardCreatorTextFieldComponent
    */
   saveEdition() {
-      this.valueEditedEvent.emit(this.fieldForm.value);
-      this._wizardFormService.updateAdditionalData(this.fieldData.dataName, this.fieldForm.value);
+    this.valueEditedEvent.emit(this.fieldForm.value);
+    this._wizardFormService.updateAdditionalData(this.fieldData.dataName, this.fieldForm.value);
   }
 
   getErrorMessage() {
@@ -97,7 +94,7 @@ export class WizardCreatorTextFieldComponent {
       return 'The value entered is too small. Provide more context';
     }
     if (this.fieldForm.hasError('minlength')) {
-      return`Oops, it's a bit short! Please expand to at least ${this.fieldForm.getError('minlength').requiredLength} chars`;
+      return `Oops, it's a bit short! Please expand to at least ${this.fieldForm.getError('minlength').requiredLength} chars`;
     }
     if (this.fieldForm.hasError('maxlength')) {
       return `Please limit your input length to: ${this.fieldForm.getError('maxlength').requiredLength} chars.`;

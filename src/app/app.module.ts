@@ -1,9 +1,9 @@
-import { TimeagoModule } from 'ngx-timeago';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { TimeagoModule } from 'ngx-timeago';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,21 +13,20 @@ import { TablerIconsModule } from 'angular-tabler-icons';
 import * as TablerIcons from 'angular-tabler-icons/icons';
 
 //Import all material modules
-import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from './material.module';
 
 import { FilterPipe } from './pipe/filter.pipe';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 import { ToastrModule } from 'ngx-toastr';
 import { httpInterceptorProviders } from './interceptors';
 
-import { BreadcrumbModule } from 'xng-breadcrumb';
 import { RouterModule } from '@angular/router';
 import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
+import { BreadcrumbModule } from 'xng-breadcrumb';
 
 import { JwtModule } from "@auth0/angular-jwt";
 import { WalkthroughToursModule } from './walkthrough-tours/walkthrough-tours.module';
@@ -83,7 +82,7 @@ export function HttpLoaderFactory(http: HttpClient): any {
     httpInterceptorProviders
   ]
 })
-export class AppModule {}
+export class AppModule { }
 
 function tokenGetter() {
   return localStorage.getItem('id_token');

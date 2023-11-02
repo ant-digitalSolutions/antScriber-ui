@@ -1,9 +1,7 @@
-import { ContentCreationModule } from './content-creation/content-creation.module';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BlankComponent } from './layouts/blank/blank.component';
-import { FullComponent } from './layouts/full/full.component';
 import { authGuard } from './auth/guards/auth.guard';
+import { BlankComponent } from './layouts/blank/blank.component';
 import { LayoutWizardComponent } from './layouts/layout-wizard/layout-wizard.component';
 
 const routes: Routes = [
@@ -29,7 +27,7 @@ const routes: Routes = [
   //   path: '',
   //   component: FullComponent,
   //   children: [
-     
+
 
   //     {
   //       path: 'content',
@@ -110,7 +108,7 @@ const routes: Routes = [
     path: 'auth',
     component: BlankComponent,
     children: [
-   
+
 
       // template
       // {
@@ -144,4 +142,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

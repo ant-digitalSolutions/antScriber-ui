@@ -1,20 +1,18 @@
-import { DocumentUpdateDto } from './../dtos/document-update.dto';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, ReplaySubject, Subject, tap } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { DocumentCreateDto } from '../dtos/document-create.dto';
-import { DocumentDetailsDto } from '../dtos/document-details.dto';
-import { ToastrService } from 'ngx-toastr';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
-import { ActivatedRoute, Router } from '@angular/router';
-import { WizardTableElements } from '../dtos/wizard-table-elements.dto';
-import { WizardTableElement } from '../dtos/wizard-table-element.dto';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
+import { DocumentCreateDto } from '../dtos/document-create.dto';
+import { DocumentDetailsDto } from '../dtos/document-details.dto';
 import { FolderDetailsDto } from '../dtos/folder-details.dto';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { FolderUpdateDto } from '../dtos/folder-update.dto';
-import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
+import { WizardTableElement } from '../dtos/wizard-table-element.dto';
+import { WizardTableElements } from '../dtos/wizard-table-elements.dto';
+import { DocumentUpdateDto } from './../dtos/document-update.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -72,7 +70,6 @@ export class DocumentService {
 
   constructor(
     private http: HttpClient,
-    private toastr: ToastrService,
     private blogProjectService: BlogProjectsService,
     private _route: ActivatedRoute,
     private _router: Router,
@@ -101,13 +98,13 @@ export class DocumentService {
 
         // navigate to the edition view after creating a new doc
         this.navigateToDocumentEditionView(r.data!.uuid);
-        this._snackBar.open('Document created',undefined, {
+        this._snackBar.open('Document created', undefined, {
           duration: 1000,
           panelClass: 'snack-success'
         });
 
       } else {
-        this._snackBar.open('Error','Report', {
+        this._snackBar.open('Error', 'Report', {
           duration: 1000,
           panelClass: 'snack-error'
         });
@@ -123,7 +120,7 @@ export class DocumentService {
         //   panelClass: 'snack-success'
         // });
       } else {
-        this._snackBar.open('Error','Report', {
+        this._snackBar.open('Error', 'Report', {
           duration: 1000,
           panelClass: 'snack-error'
         });
@@ -158,7 +155,7 @@ export class DocumentService {
           panelClass: 'snack-success'
         });
       } else {
-        this._snackBar.open('Error','Report', {
+        this._snackBar.open('Error', 'Report', {
           duration: 1000,
           panelClass: 'snack-error'
         });
@@ -179,17 +176,17 @@ export class DocumentService {
    * @memberof DocumentService
    */
   listDocsForTable(blogProjectId: number, currentPage: number = 0, pageSize: number = 10) {
-  
+
     let params = new HttpParams()
       .set("blogProjectId", blogProjectId)
       .set('pageSize', pageSize)
       .set('pageIndex', currentPage)
       .set('onlyFavorites', this._showFavorites);
 
-      // if the user has a selected folder, 
-      //the retrieve the documents that belongs to that folder.
+    // if the user has a selected folder, 
+    //the retrieve the documents that belongs to that folder.
     if (this._currentFolderId) {
-     params = params.set('folderId', this._currentFolderId);
+      params = params.set('folderId', this._currentFolderId);
     }
 
     return this.http.get<IRequestResponse<WizardTableElements>>(this.baseUrl + '/list', { params }).pipe(tap(r => {
@@ -203,7 +200,7 @@ export class DocumentService {
           this._currentFolderData = r.data!.folderData;
         }
       } else {
-        this._snackBar.open('Error','Report', {
+        this._snackBar.open('Error', 'Report', {
           duration: 1000,
           panelClass: 'snack-error'
         });
@@ -220,10 +217,10 @@ export class DocumentService {
           this._documentResponse.next(r.data!);
           this._documentInEditionData = r.data!;
         } else {
-          this._snackBar.open('Error','Report', {
-          duration: 1000,
-          panelClass: 'snack-error'
-        });
+          this._snackBar.open('Error', 'Report', {
+            duration: 1000,
+            panelClass: 'snack-error'
+          });
         }
       }))
   }
@@ -246,7 +243,7 @@ export class DocumentService {
         // // navigate to the edition view after creating a new doc
         this.navigateToFolderView(r.data!.uuid);
       } else {
-        this._snackBar.open('Error','Report', {
+        this._snackBar.open('Error', 'Report', {
           duration: 1000,
           panelClass: 'snack-error'
         });
@@ -331,11 +328,11 @@ export class DocumentService {
 
     let params = new HttpParams()
       .set("blogProjectId", blogProjectId)
-     
 
-      if (folderNamePartial) {
-        params.set('folderNamePartial', folderNamePartial);
-      }
+
+    if (folderNamePartial) {
+      params.set('folderNamePartial', folderNamePartial);
+    }
 
 
     return this.http.get<IRequestResponse<FolderDetailsDto[]>>(this.baseUrl + '/list-folders', { params }).pipe(tap(r => {
@@ -427,11 +424,11 @@ export class DocumentService {
 
     // if the documentId is not the one that we have in edition, then request it to the server.
     if (documentId && (!this._documentInEditionData || (this._documentInEditionData && this._documentInEditionData.uuid !== documentId))) {
-     {
-      this._showFavorites = false;
-       this.findByUuid(documentId).subscribe();
+      {
+        this._showFavorites = false;
+        this.findByUuid(documentId).subscribe();
       }
-     } 
+    }
     //else if (!documentId) {
     //   this._currentFolderData = undefined;
     //   this._currentFolderId = undefined;
@@ -439,7 +436,7 @@ export class DocumentService {
     //   // this.listDocsForTable(this.selectedProjectId).subscribe();
     // }
 
-  
+
   }
 
 
@@ -460,25 +457,24 @@ export class DocumentService {
     this._currentFolderId = folderId;
 
     // if the documentId is not the one that we have in edition, then request it to the server.
-    if (this.selectedProjectId)
-     {
+    if (this.selectedProjectId) {
       this._showFavorites = false;
-       this.listDocsForTable(this.selectedProjectId).subscribe();
-      }
+      this.listDocsForTable(this.selectedProjectId).subscribe();
+    }
   }
 
-  
-  public get selectedFolderId() : string | undefined {
+
+  public get selectedFolderId(): string | undefined {
     return this._currentFolderId;
   }
 
-  
-  public get selectedFolderName() : string | undefined {
+
+  public get selectedFolderName(): string | undefined {
     return this._currentFolderData && this._currentFolderId ? this._currentFolderData.name : undefined;
   }
 
-  
-  public set showFavorites(v : boolean) {
+
+  public set showFavorites(v: boolean) {
     this._showFavorites = v;
 
     if (v) {
@@ -487,12 +483,12 @@ export class DocumentService {
     }
   }
 
-  
-  public get showFavorites() : boolean {
+
+  public get showFavorites(): boolean {
     return this._showFavorites;
   }
-  
-  
-  
-  
+
+
+
+
 }

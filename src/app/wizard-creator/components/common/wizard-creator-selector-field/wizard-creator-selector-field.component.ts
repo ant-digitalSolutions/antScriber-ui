@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {  FormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { FloatLabelType } from '@angular/material/form-field';
 import { Subject, takeUntil } from 'rxjs';
 import { SelectorFieldToRenderData } from 'src/app/common/interfaces/button-toggle-to-render-data';
@@ -63,13 +63,13 @@ export class WizardCreatorSelectorFieldComponent {
 
     this._wizardFormService.resetFieldsToDefault$
       .pipe(takeUntil(this.componentDestroyed$))
-      .subscribe(data => {
+      .subscribe(() => {
         this.form.setValue(this.fieldData.fieldValue);
       });
   }
 
 
-  valueChange(value: any) {
+  valueChange(_value: any) {
     this._wizardFormService.updateAdditionalData(this.fieldData.dataName, this.form.value);
   }
 }

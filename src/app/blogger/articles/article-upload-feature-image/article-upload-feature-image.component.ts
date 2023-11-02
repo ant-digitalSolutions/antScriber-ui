@@ -1,8 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 import { ArticleService } from '../../services/article.service';
-import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
 
 @Component({
   selector: 'app-article-upload-feature-image',
@@ -28,7 +27,7 @@ export class ArticleUploadFeatureImageComponent implements OnInit, OnDestroy {
 
   isLoading = false;
 
-  constructor(private articleService: ArticleService ) {}
+  constructor(private articleService: ArticleService) { }
   ngOnInit(): void {
     this.articleService.articleFeatureImage$.pipe(takeUntil(this.componentDestroyed$)).subscribe(articleFeatureImagePath => {
       this.featureImagePath = articleFeatureImagePath;
@@ -61,9 +60,9 @@ export class ArticleUploadFeatureImageComponent implements OnInit, OnDestroy {
     }
   }
 
-  
-  public get imagePath() : string {
-   return getBaseApiURL() + this.featureImagePath;
+
+  public get imagePath(): string {
+    return getBaseApiURL() + this.featureImagePath;
   }
-  
+
 }

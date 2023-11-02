@@ -1,5 +1,4 @@
 import { IBaseFieldToRenderData } from './base-field-data.interface';
-import { ValidatorFn, Validators } from '@angular/forms';
 export interface TextFieldToRenderData extends IBaseFieldToRenderData {
     /**
      * The text to show as placeholder.

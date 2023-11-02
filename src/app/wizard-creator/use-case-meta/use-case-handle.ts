@@ -20,8 +20,6 @@ export class UseCaseHandle {
 
 
     initUseCaseMetaData() {
-        const groups = useCaseIndex.map(u => u.useCaseGroup);
-
         useCaseIndex.forEach(useCase => {
             if (this._useCaseByGroup.has(useCase.useCaseGroup)) {
                 this._useCaseByGroup.get(useCase.useCaseGroup)?.push(useCase)
@@ -83,7 +81,7 @@ export class UseCaseHandle {
         }
     }
 
-    
+
     /**
      * Return the list of available use case's groups.
      *
@@ -91,13 +89,13 @@ export class UseCaseHandle {
      * @type {string[]}
      * @memberof UseCaseHandle
      */
-    public get useCaseGroups() : string[] {
+    public get useCaseGroups(): string[] {
         return Array.from(this._useCaseByGroup.keys());
     }
-    
-    
- 
-    
+
+
+
+
 
 
 }

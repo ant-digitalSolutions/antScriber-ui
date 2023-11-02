@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Component } from '@angular/core';
+import { Subject } from 'rxjs';
 import { SelectorFieldToRenderData } from 'src/app/common/interfaces/button-toggle-to-render-data';
 import { CheckboxFieldToRenderData } from 'src/app/common/interfaces/checkbox-field-to-render-data';
 import { TextFieldToRenderData } from 'src/app/common/interfaces/textfield-to-render-data';
-import { WizardUseCaseService } from 'src/app/wizard-creator/services/use-case/wizard-use-case.service';
 import { WizardFormService } from 'src/app/wizard-creator/services/wizard-form.service';
 import { environment } from 'src/environments/environment';
 
@@ -22,7 +21,6 @@ export class UseCaseDynamicFormElementsComponent {
   }
 
   ngOnInit(): void {
-    this.setFieldsAndData();
     this.setListeners();
   }
 
@@ -37,14 +35,6 @@ export class UseCaseDynamicFormElementsComponent {
     //   .subscribe(buttonToggleName => {
     //    this.toggleButtonUpdateActions(buttonToggleName);
     //   })
-  }
-
-
-  setFieldsAndData(): void {
-    this.setSelectorFieldsData();
-    this.setButtonToggleData();
-    this.setCheckboxFieldsData();
-    this.setTextFieldsData()
   }
 
   textFieldData(dataName: string): TextFieldToRenderData {
@@ -91,33 +81,18 @@ export class UseCaseDynamicFormElementsComponent {
     return this._wizardFormService.checkIfFieldShouldRender(fieldName);
   }
 
-  
-  public get textFieldsToRender() : TextFieldToRenderData[] {
+
+  public get textFieldsToRender(): TextFieldToRenderData[] {
     return this._wizardFormService.textFieldsToRender;
   }
 
-  
-  public get selectorFieldsToRender() : SelectorFieldToRenderData[] {
+
+  public get selectorFieldsToRender(): SelectorFieldToRenderData[] {
     return this._wizardFormService.selectorFieldsToRender;
   }
 
   public get checkboxFieldsToRender(): CheckboxFieldToRenderData[] {
     return this._wizardFormService.checkboxFieldsToRender;
   }
-  
-  toggleButtonUpdateActions(buttonToggleName: string): void {
 
-  }
-
-  setTextFieldsData(): void {
-  }
-
-  setSelectorFieldsData(): void {
-  }
-
-  setButtonToggleData(): void {
-  }
-
-  setCheckboxFieldsData(): void {
-  }
 }

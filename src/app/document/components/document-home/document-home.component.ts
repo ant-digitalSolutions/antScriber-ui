@@ -1,9 +1,8 @@
-import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { DocumentService } from '../../services/document.service';
-import { Location } from '@angular/common';
 import { configs_UI } from 'src/app/common/configs/ui.config';
+import { DocumentService } from '../../services/document.service';
 
 @Component({
   selector: 'app-document-home',

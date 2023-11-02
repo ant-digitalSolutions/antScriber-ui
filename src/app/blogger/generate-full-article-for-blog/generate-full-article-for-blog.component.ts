@@ -1,15 +1,13 @@
-import { ToastrService } from 'ngx-toastr';
-import { ArticleService } from './../services/article.service';
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { IArticleDetailsDto } from '../dto/article-details.dto';
-import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
-import { ENTER, COMMA } from '@angular/cdk/keycodes';
-import { Subject, takeUntil } from 'rxjs';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Validators } from 'ngx-editor';
+import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { ActivatedRoute } from '@angular/router';
-import { ChangeDetectionStrategy } from '@angular/compiler';
+import { Validators } from 'ngx-editor';
+import { Subject } from 'rxjs';
 import { BloggerService } from '../blogger.service';
+import { IArticleDetailsDto } from '../dto/article-details.dto';
+import { ArticleService } from './../services/article.service';
 
 @Component({
   selector: 'app-generate-full-article-for-blog',
@@ -68,11 +66,10 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
   article: IArticleDetailsDto;
 
   constructor(
-    private articlesService: ArticleService, 
-    private route: ActivatedRoute, 
-    private changeDetector: ChangeDetectorRef, 
+    private articlesService: ArticleService,
+    private route: ActivatedRoute,
     private bloggerService: BloggerService
-    ) {
+  ) {
 
   }
 
@@ -83,7 +80,6 @@ export class GenerateFullArticleForBlogComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.articleId = Number(this.route.snapshot.paramMap.get('id'));
-    const availableData = Boolean(this.route.snapshot.paramMap.get('withData'));
 
     this.articlesService.getArticleById(this.articleId).subscribe(article => {
       this.article = article;

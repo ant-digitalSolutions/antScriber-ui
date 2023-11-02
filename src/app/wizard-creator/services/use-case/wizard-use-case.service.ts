@@ -1,30 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject, Subject } from 'rxjs';
 import { WizardFormService } from '../wizard-form.service';
-import { WizardCreatorUseCaseGroup } from '../../enums/wizard-creator-use-case-group.enum';
-import { WizardCreatorCodingUseCasesEnum } from '../../enums/wizard-creator-coding-use-cases.enum';
-import { WizardGeneralWritingUseCases } from '../../enums/wizard-creator-general-writing-use-cases.enum';
-import { WizardDefaultFieldNamesEnum } from '../../enums/wizard-default-fields-names.enum';
-import { WizardCreatorInternalDevUseCasesEnum } from '../../enums/wizard-creator-internal-dev-use-cases.enum';
-import { WizardCreatorMarketingUseCasesEnum } from '../../enums/wizard-creator-marketing-use-cases.enum';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QueryParamNames } from 'src/app/common/enum/query-params-names.enum';
-import { WizardCreatorLearningUseCasesEnum } from '../../enums/wizard-creator-learning-use-cases.enum';
 import { CacheService } from 'src/app/common/services/cache/cache.service';
-import { WizardSocialMediaUseCases } from '../../enums/wizard-creator-social-media-use-cases.enum';
-import { UseCaseMeta } from '../../interfaces/use-case-meta.interface';
-import { useCaseMeta_GeneralWriting } from '../../data/use-cases/use-cases-general-writing.data';
-import { useCaseMeta_Marketing } from '../../data/use-cases/use-cases-marketing.data';
-import { useCaseMeta_Social } from '../../data/use-cases/use-cases-social.data';
-import { useCaseMeta_Coding } from '../../data/use-cases/use-cases-general-coding.data';
-import { useCaseMeta_Internal } from '../../data/use-cases/use-cases-general-internal.data';
-import { useCaseMeta_Learning } from '../../data/use-cases/use-cases-general-learning.data';
-import { WizardCreatorWebsiteUseCasesEnum } from '../../enums/wizard-creator-website-use-cases.enum';
-import { useCaseMeta_Websites } from '../../data/use-cases/use-cases-general-websites.data';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
-import { Location } from '@angular/common';
 import { UseCaseMetaAbstract } from '../../use-case-meta/use-case-meta.abastract';
-import { useCaseIndex } from '../../use-case-meta/use-case-register';
 import { UseCaseHandle as UseCaseMetaHandle } from '../../use-case-meta/use-case-handle';
 
 @Injectable()

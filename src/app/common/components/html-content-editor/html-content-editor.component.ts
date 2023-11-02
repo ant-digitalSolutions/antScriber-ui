@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Editor, Toolbar, Validators } from 'ngx-editor';
-import { IArticleDetailsDto } from 'src/app/blogger/dto/article-details.dto';
-import { ArticleService } from 'src/app/blogger/services/article.service';
+import { FormGroup } from '@angular/forms';
+import { Editor, Toolbar } from 'ngx-editor';
 
 @Component({
   selector: 'app-html-content-editor',
@@ -50,7 +48,7 @@ export class HtmlContentEditorComponent implements OnInit, OnDestroy, OnChanges 
     }
     if (changes['isLoading']) {
       if (!this.isLoading)
-       this.editionMode = false;
+        this.editionMode = false;
     }
   }
 
@@ -84,7 +82,7 @@ export class HtmlContentEditorComponent implements OnInit, OnDestroy, OnChanges 
   }
 
   changeLoadingState(magicIsLoading: boolean) {
-   this.isLoading = magicIsLoading;
+    this.isLoading = magicIsLoading;
   }
 
 }

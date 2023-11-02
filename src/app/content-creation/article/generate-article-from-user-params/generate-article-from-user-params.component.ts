@@ -1,17 +1,15 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ArticleGenerationParamsDto } from '../../dto/generate-article.dto';
-import { ArticleService } from '../../../blogger/services/article.service';
-import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
-import { ENTER, COMMA } from '@angular/cdk/keycodes';
-import { ArticleIdea } from '../dtos/article-ideas-from-ai.dto';
-import { ArticleIdeasService } from '../article-ideas/article-ideas.service';
-import { Subject, debounceTime, distinctUntilChanged, switchMap, takeUntil, Observable } from 'rxjs';
-import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
-import { BlogProjectDetailsDto } from 'src/app/blogger/dto/blog-project-details.dto';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 import { IArticleDetailsDto } from 'src/app/blogger/dto/article-details.dto';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { BlogProjectDetailsDto } from 'src/app/blogger/dto/blog-project-details.dto';
+import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 import { KeywordsService } from 'src/app/blogger/services/keywords.service';
+import { ArticleService } from '../../../blogger/services/article.service';
+import { ArticleGenerationParamsDto } from '../../dto/generate-article.dto';
+import { ArticleIdeasService } from '../article-ideas/article-ideas.service';
+import { ArticleIdea } from '../dtos/article-ideas-from-ai.dto';
 
 @Component({
   selector: 'app-generate-article-from-user-params',
@@ -88,7 +86,7 @@ export class GenerateArticleFromUserParamsComponent implements OnInit, OnDestroy
         this.articleIdeaToGenerate = idea;
         if (idea.primaryKeyword)
           this.primaryKeywords = [idea.primaryKeyword];
-        
+
         this.setForm();
       }
     });

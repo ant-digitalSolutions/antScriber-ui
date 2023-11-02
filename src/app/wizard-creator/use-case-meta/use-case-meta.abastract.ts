@@ -1,10 +1,7 @@
-import { SelectorFieldToRenderData } from "src/app/common/interfaces/button-toggle-to-render-data";
-import { CheckboxFieldToRenderData } from "src/app/common/interfaces/checkbox-field-to-render-data";
-import { TextFieldToRenderData } from "src/app/common/interfaces/textfield-to-render-data";
+import { Subject, takeUntil } from "rxjs";
+import { WizardDefaultFieldNamesEnum } from "../enums/wizard-default-fields-names.enum";
 import { WizardFormService } from "../services/wizard-form.service";
 import { IUseCaseMeta } from "./use-case-meta.interface";
-import { WizardDefaultFieldNamesEnum } from "../enums/wizard-default-fields-names.enum";
-import { Subject, takeUntil } from "rxjs";
 
 export abstract class UseCaseMetaAbstract implements IUseCaseMeta {
     /**
@@ -61,11 +58,11 @@ export abstract class UseCaseMetaAbstract implements IUseCaseMeta {
     /**
      * The actions to execute after the user select
      *
-     * @param {string} buttonToggleName
+     * @param {string} _buttonToggleName
      * @param {WizardFormService} wizardFormService
      * @memberof IUseCaseMeta
      */
-    toggleButtonUpdateActions(buttonToggleName: string): void { }
+    toggleButtonUpdateActions(_buttonToggleName: string): void { }
 
     /**
      * Initialize the data of the fields that conforms the form for the current

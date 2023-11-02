@@ -1,12 +1,11 @@
-import { ENTER, COMMA } from '@angular/cdk/keycodes';
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable, Subject, debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs';
-import { KeywordDetailsDto } from '../../../blogger/dto/keywords/keyword-details.dto';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MatChipInputEvent, MatChipEditedEvent } from '@angular/material/chips';
+import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
+import { Subject, debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs';
+import { KeywordDetailsDto } from '../../../blogger/dto/keywords/keyword-details.dto';
 import { KeywordsService } from '../../../blogger/services/keywords.service';
-import { KeywordTypeEnum } from '../../../blogger/enums/keyword-type.enum';
 
 @Component({
   selector: 'app-secondary-keywords-selector',
@@ -49,7 +48,7 @@ export class SecondaryKeywordsSelectorComponent implements OnInit, OnDestroy {
       debounceTime(300),
       distinctUntilChanged(),
       switchMap(query => this.keywordsService.listKeywordsByTerm(query))
-    ).subscribe(r => {
+    ).subscribe(() => {
       this.matAutocomplete.showPanel
     })
   }

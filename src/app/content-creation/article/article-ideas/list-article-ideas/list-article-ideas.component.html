@@ -4,7 +4,11 @@
       <div class="col-lg-4">
         <mat-form-field appearance="outline" class="w-100 hide-hint">
           <mat-label>Search</mat-label>
-          <input matInput (keyup)="applySearchFilter($event)" [(ngModel)]="searchTerm" />
+          <input
+            matInput
+            (keyup)="applySearchFilter()"
+            [(ngModel)]="searchTerm"
+          />
           <mat-icon matSuffix>
             <i-tabler name="search" class="icon-20"></i-tabler>
           </mat-icon>
@@ -18,8 +22,11 @@
             [value]="primaryKeywordsList[0]"
             (selectionChange)="changePrimaryKeySelection($event)"
           >
-            <mat-option [value]="pKey" *ngFor="let pKey of primaryKeywordsList">{{pKey}}</mat-option>
-            
+            <mat-option
+              [value]="pKey"
+              *ngFor="let pKey of primaryKeywordsList"
+              >{{ pKey }}</mat-option
+            >
           </mat-select>
         </mat-form-field>
       </div>
@@ -28,10 +35,7 @@
 </mat-card>
 
 <div class="row" *ngIf="articleIdeas">
-    <div class="col-sm-6 col-lg-4"  *ngFor="let articleIdea of articleIdeas">
-  <app-article-idea-card
-    [articleIdea]="articleIdea"
-   
-  ></app-article-idea-card>
-</div>
+  <div class="col-sm-6 col-lg-4" *ngFor="let articleIdea of articleIdeas">
+    <app-article-idea-card [articleIdea]="articleIdea"></app-article-idea-card>
+  </div>
 </div>

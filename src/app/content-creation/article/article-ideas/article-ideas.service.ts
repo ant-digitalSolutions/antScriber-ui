@@ -1,10 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
-import { environment } from 'src/environments/environment';
-import { ArticleIdea, ArticleIdeasResponse } from '../dtos/article-ideas-from-ai.dto';
 import { BehaviorSubject, tap } from 'rxjs';
-import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
+import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
+import { ArticleIdea, ArticleIdeasResponse } from '../dtos/article-ideas-from-ai.dto';
 
 @Injectable({
   providedIn: 'root'

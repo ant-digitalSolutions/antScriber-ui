@@ -1,18 +1,15 @@
-import { Component, HostBinding, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subject, takeUntil, merge, Subscription } from 'rxjs';
-import { DocumentDetailsDto } from '../../dtos/document-details.dto';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { DocumentService } from '../../services/document.service';
-import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
-import { WizardTableElement } from '../../dtos/wizard-table-element.dto';
-import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
-import { DialogService } from 'src/app/dialogs/dialog.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { PageEvent } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
+import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
+import { DialogService } from 'src/app/dialogs/dialog.service';
+import { DocumentDetailsDto } from '../../dtos/document-details.dto';
+import { WizardTableElement } from '../../dtos/wizard-table-element.dto';
+import { DocumentService } from '../../services/document.service';
 import { DialogForMovingDocComponent } from '../dialog-for-moving-doc/dialog-for-moving-doc.component';
-import { OptionField } from 'src/app/common/dto/option-field.dto';
 
 @Component({
   selector: 'app-document-list',
@@ -46,7 +43,6 @@ export class DocumentListComponent implements OnInit, OnDestroy {
     private _docService: DocumentService,
     private _projectService: BlogProjectsService,
     private router: Router,
-    private _location: Location,
     private activeRoute: ActivatedRoute,
     private _dialogService: DialogService,
     public _matDialog: MatDialog) { }
@@ -213,7 +209,7 @@ export class DocumentListComponent implements OnInit, OnDestroy {
   checkIfMobile() {
     this.isMobile = (window.innerWidth < 960);
     if (this.isMobile) {
-      this.displayedColumns = ['name',  'menuDots'];
+      this.displayedColumns = ['name', 'menuDots'];
     }
   }
 

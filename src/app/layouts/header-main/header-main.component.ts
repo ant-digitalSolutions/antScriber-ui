@@ -1,17 +1,16 @@
+import { NgFor, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { TablerIconsModule } from 'angular-tabler-icons';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { BlogProjectDetailsDto } from 'src/app/blogger/dto/blog-project-details.dto';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
-import { CoreService } from 'src/app/services/core.service';
-import { AppSearchDialogComponent } from '../full/vertical/header/header.component';
-import { NgFor, NgIf } from '@angular/common';
-import { TablerIconsModule } from 'angular-tabler-icons';
-import { NgScrollbarModule } from 'ngx-scrollbar';
 import { MaterialModule } from 'src/app/material.module';
+import { AppSearchDialogComponent } from '../full/vertical/header/header.component';
 import { BrandingComponent } from '../full/vertical/sidebar/branding.component';
 
 @Component({
@@ -68,7 +67,6 @@ export class HeaderMainComponent {
   ];
 
   constructor(
-    private vsidenav: CoreService,
     public dialog: MatDialog,
     private translate: TranslateService,
     private authService: AuthService,

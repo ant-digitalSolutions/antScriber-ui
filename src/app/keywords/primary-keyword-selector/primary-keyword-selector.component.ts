@@ -1,10 +1,9 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { KeywordsService } from '../../blogger/services/keywords.service';
-import { Subject, debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { KeywordDetailsDto } from '../../blogger/dto/keywords/keyword-details.dto';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MatChipInputEvent } from '@angular/material/chips';
+import { Subject, debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs';
+import { KeywordDetailsDto } from '../../blogger/dto/keywords/keyword-details.dto';
+import { KeywordsService } from '../../blogger/services/keywords.service';
 
 @Component({
   selector: 'app-primary-keyword-selector',

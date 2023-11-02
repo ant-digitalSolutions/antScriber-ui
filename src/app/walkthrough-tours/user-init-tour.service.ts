@@ -3,7 +3,6 @@ import { ShepherdService } from 'angular-shepherd';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { userInitializationTour_defaultStepOptions, userInitializationShepherdStep_mobile, userInitializationShepherdStep_desktop } from './configs/shepherd/shepherd-user-init.config';
-import { UserInitializationWalkthroughTourStepsEnum } from './enums/walkthrough-tour-user-initialization-steps-id.enum';
 import { UserService } from '../user/services/user.service';
 
 @Injectable({

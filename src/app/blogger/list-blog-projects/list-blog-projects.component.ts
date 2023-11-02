@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BloggerService } from '../blogger.service';
+import { Subject, takeUntil } from 'rxjs';
 import { BlogProjectDetailsDto } from '../dto/blog-project-details.dto';
 import { BlogProjectsService } from '../services/blog-projects.service';
-import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-list-blog-projects',
@@ -11,10 +10,10 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class ListBlogProjectsComponent implements OnInit, OnDestroy {
   componentDestroyed$: Subject<boolean> = new Subject()
-  
+
   blogProjects: BlogProjectDetailsDto[];
-  constructor(private bloggerService: BloggerService, private blogProjectsService: BlogProjectsService) {
-    
+  constructor(private blogProjectsService: BlogProjectsService) {
+
   }
   ngOnInit(): void {
     this.getAllProjects()
