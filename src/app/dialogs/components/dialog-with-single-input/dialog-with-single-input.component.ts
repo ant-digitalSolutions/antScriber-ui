@@ -19,7 +19,7 @@ export class DialogWithSingleInputComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.form = new FormControl(null, [Validators.required(), Validators.maxLength(100)])
+    this.form = new FormControl(this.data.value, [Validators.required(), Validators.maxLength(100)])
   }
 
   ok() {

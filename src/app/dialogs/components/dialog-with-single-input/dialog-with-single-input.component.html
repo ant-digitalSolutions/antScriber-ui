@@ -3,11 +3,7 @@
   <div mat-dialog-content>
     <mat-form-field>
       <mat-label>{{ data.labelText }}</mat-label>
-      <input
-        matInput
-        [(ngModel)]="data.value"
-        [placeholder]="data.placeholder"
-      />
+      <input matInput [formControl]="form" [placeholder]="data.placeholder" />
     </mat-form-field>
   </div>
   <div mat-dialog-actions>
