@@ -3,19 +3,19 @@ import { Component, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import {
+  ApexAxisChartSeries,
   ApexChart,
-  ChartComponent,
   ApexDataLabels,
+  ApexFill,
+  ApexGrid,
   ApexLegend,
+  ApexMarkers,
+  ApexPlotOptions,
   ApexStroke,
   ApexTooltip,
-  ApexAxisChartSeries,
   ApexXAxis,
   ApexYAxis,
-  ApexGrid,
-  ApexPlotOptions,
-  ApexFill,
-  ApexMarkers,
+  ChartComponent,
   NgApexchartsModule,
 } from 'ng-apexcharts';
 import { MaterialModule } from 'src/app/material.module';
@@ -47,7 +47,7 @@ interface stats {
 @Component({
   selector: 'app-weekly-stats',
   standalone: true,
-  imports:[NgApexchartsModule, TablerIconsModule, MatIconModule, MaterialModule, NgFor],
+  imports: [NgApexchartsModule, TablerIconsModule, MatIconModule, MaterialModule, NgFor],
   templateUrl: './weekly-stats.component.html',
 })
 export class AppWeeklyStatsComponent {
@@ -60,7 +60,7 @@ export class AppWeeklyStatsComponent {
       series: [
         {
           name: 'Weekly Stats',
-           data: [40, 60, 50, 65],
+          data: [40, 60, 50, 65],
         },
       ],
       chart: {
@@ -70,12 +70,12 @@ export class AppWeeklyStatsComponent {
           show: false,
         },
         foreColor: '#adb0bb',
-        fontFamily: "'Poppins',sans-serif",
+        fontFamily: "'IBM Plex Sans',sans-serif",
         sparkline: {
           enabled: true,
         },
       },
-      colors:[ '#26c6da'],
+      colors: ['#26c6da'],
       fill: {
         colors: '#26c6da',
         opacity: 0.05,
@@ -127,12 +127,12 @@ export class AppWeeklyStatsComponent {
       percent: '10',
     },
     {
-        id: 4,
-        color: 'error',
-        icon: 'basket',
-        title: 'Recent Commented',
-        subtitle: 'Modernize Admin',
-        percent: '100',
-      },
+      id: 4,
+      color: 'error',
+      icon: 'basket',
+      title: 'Recent Commented',
+      subtitle: 'Modernize Admin',
+      percent: '100',
+    },
   ];
 }

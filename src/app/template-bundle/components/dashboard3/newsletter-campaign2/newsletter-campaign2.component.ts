@@ -1,15 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import {
+  ApexAxisChartSeries,
   ApexChart,
-  ChartComponent,
   ApexDataLabels,
+  ApexFill,
+  ApexGrid,
   ApexLegend,
   ApexTooltip,
-  ApexAxisChartSeries,
   ApexXAxis,
-  ApexGrid,
-  ApexFill,
+  ChartComponent,
   NgApexchartsModule,
 } from 'ng-apexcharts';
 import { MaterialModule } from 'src/app/material.module';
@@ -53,7 +53,7 @@ export class AppNewsletterCampaign2Component {
       ],
       chart: {
         height: 260,
-        fontFamily: 'Poppins,sans-serif',
+        fontFamily: 'IBM Plex Sans,sans-serif',
         type: 'area',
         foreColor: '#adb0bb',
       },

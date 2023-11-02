@@ -1,26 +1,26 @@
 import { Component, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router, NavigationEnd, ActivatedRoute, Data, RouterModule } from '@angular/router';
+import { ActivatedRoute, Data, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { CoreService } from 'src/app/services/core.service';
 
+import { NgForOf, NgIf } from '@angular/common';
 import {
+  ApexAxisChartSeries,
   ApexChart,
-  ChartComponent,
   ApexDataLabels,
+  ApexFill,
+  ApexGrid,
   ApexLegend,
+  ApexMarkers,
+  ApexPlotOptions,
   ApexStroke,
   ApexTooltip,
-  ApexAxisChartSeries,
   ApexXAxis,
   ApexYAxis,
-  ApexGrid,
-  ApexPlotOptions,
-  ApexFill,
-  ApexMarkers,
+  ChartComponent,
   NgApexchartsModule,
 } from 'ng-apexcharts';
-import { NgForOf, NgIf } from '@angular/common';
 
 export interface breadcrumbOption {
   series: ApexAxisChartSeries;
@@ -41,7 +41,7 @@ export interface breadcrumbOption {
 @Component({
   selector: 'app-breadcrumb',
   standalone: true,
-  imports:[NgApexchartsModule, RouterModule, NgIf, NgForOf],
+  imports: [NgApexchartsModule, RouterModule, NgIf, NgForOf],
   templateUrl: './breadcrumb.component.html',
   styleUrls: [],
 })
@@ -73,7 +73,7 @@ export class AppBreadcrumbComponent {
         type: 'bar',
         height: 35,
         width: 60,
-        fontFamily: 'Poppins,sans-serif',
+        fontFamily: 'IBM Plex Sans,sans-serif',
         sparkline: {
           enabled: true,
         },
@@ -123,7 +123,7 @@ export class AppBreadcrumbComponent {
         type: 'bar',
         height: 35,
         width: 60,
-        fontFamily: 'Poppins,sans-serif',
+        fontFamily: 'IBM Plex Sans,sans-serif',
         sparkline: {
           enabled: true,
         },

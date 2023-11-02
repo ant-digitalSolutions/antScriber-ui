@@ -2,13 +2,13 @@ import { Component, ViewChild } from '@angular/core';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import {
   ApexChart,
-  ChartComponent,
   ApexDataLabels,
-  ApexPlotOptions,
   ApexLegend,
-  ApexTooltip,
   ApexNonAxisChartSeries,
+  ApexPlotOptions,
   ApexResponsive,
+  ApexTooltip,
+  ChartComponent,
   NgApexchartsModule,
 } from 'ng-apexcharts';
 import { MaterialModule } from 'src/app/material.module';
@@ -29,7 +29,7 @@ export interface visitorChart {
 @Component({
   selector: 'app-visitors',
   standalone: true,
-  imports:[NgApexchartsModule, MaterialModule, TablerIconsModule],
+  imports: [NgApexchartsModule, MaterialModule, TablerIconsModule],
   templateUrl: './visitors.component.html',
 })
 export class AppVisitorsComponent {
@@ -42,7 +42,7 @@ export class AppVisitorsComponent {
       series: [45, 15, 27, 18],
       chart: {
         type: 'donut',
-        fontFamily: 'Poppins,sans-serif',
+        fontFamily: 'IBM Plex Sans,sans-serif',
         height: 200,
       },
       plotOptions: {

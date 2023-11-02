@@ -2,13 +2,13 @@ import { Component, ViewChild } from '@angular/core';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import {
   ApexChart,
-  ChartComponent,
   ApexDataLabels,
-  ApexPlotOptions,
   ApexLegend,
-  ApexTooltip,
   ApexNonAxisChartSeries,
+  ApexPlotOptions,
   ApexResponsive,
+  ApexTooltip,
+  ChartComponent,
   NgApexchartsModule,
 } from 'ng-apexcharts';
 import { MaterialModule } from 'src/app/material.module';
@@ -46,7 +46,7 @@ export class AppPieCardsComponent {
       series: [5, 15],
       chart: {
         type: 'donut',
-        fontFamily: 'Poppins,sans-serif',
+        fontFamily: 'IBM Plex Sans,sans-serif',
         height: 100,
         offsetY: 0,
       },
@@ -78,7 +78,7 @@ export class AppPieCardsComponent {
       series: [4, 15],
       chart: {
         type: 'donut',
-        fontFamily: 'Poppins,sans-serif',
+        fontFamily: 'IBM Plex Sans,sans-serif',
         height: 100,
         offsetY: 0,
       },
@@ -110,7 +110,7 @@ export class AppPieCardsComponent {
       series: [11, 15],
       chart: {
         type: 'donut',
-        fontFamily: 'Poppins,sans-serif',
+        fontFamily: 'IBM Plex Sans,sans-serif',
         height: 100,
         offsetY: 0,
       },
@@ -142,7 +142,7 @@ export class AppPieCardsComponent {
       series: [20, 15],
       chart: {
         type: 'donut',
-        fontFamily: 'Poppins,sans-serif',
+        fontFamily: 'IBM Plex Sans,sans-serif',
         height: 100,
         offsetY: 0,
       },

@@ -1,19 +1,19 @@
 import { Component, ViewChild } from '@angular/core';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import {
+  ApexAxisChartSeries,
   ApexChart,
-  ChartComponent,
   ApexDataLabels,
+  ApexFill,
+  ApexGrid,
   ApexLegend,
+  ApexMarkers,
+  ApexPlotOptions,
   ApexStroke,
   ApexTooltip,
-  ApexAxisChartSeries,
   ApexXAxis,
   ApexYAxis,
-  ApexGrid,
-  ApexPlotOptions,
-  ApexFill,
-  ApexMarkers,
+  ChartComponent,
   NgApexchartsModule,
 } from 'ng-apexcharts';
 import { MaterialModule } from 'src/app/material.module';
@@ -57,7 +57,7 @@ export class AppBandwidthUsageComponent {
         height: 70,
         width: 130,
         offsetY: 5,
-        fontFamily: 'Poppins,sans-serif',
+        fontFamily: 'IBM Plex Sans,sans-serif',
         sparkline: {
           enabled: true,
         },

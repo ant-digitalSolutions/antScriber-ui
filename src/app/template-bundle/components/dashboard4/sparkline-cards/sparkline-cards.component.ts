@@ -2,13 +2,13 @@ import { Component, ViewChild } from '@angular/core';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import {
   ApexChart,
-  ChartComponent,
   ApexDataLabels,
-  ApexPlotOptions,
   ApexLegend,
-  ApexTooltip,
   ApexNonAxisChartSeries,
+  ApexPlotOptions,
   ApexResponsive,
+  ApexTooltip,
+  ChartComponent,
   NgApexchartsModule,
 } from 'ng-apexcharts';
 import { MaterialModule } from 'src/app/material.module';
@@ -51,7 +51,7 @@ export class AppSparklineCardsComponent {
       ],
       chart: {
         type: 'bar',
-        fontFamily: 'Poppins,sans-serif',
+        fontFamily: 'IBM Plex Sans,sans-serif',
         height: 65,
         sparkline: { enabled: true },
       },
@@ -103,7 +103,7 @@ export class AppSparklineCardsComponent {
       ],
       chart: {
         type: 'bar',
-        fontFamily: 'Poppins,sans-serif',
+        fontFamily: 'IBM Plex Sans,sans-serif',
         height: 65,
         sparkline: { enabled: true },
       },
@@ -155,7 +155,7 @@ export class AppSparklineCardsComponent {
       ],
       chart: {
         type: 'bar',
-        fontFamily: 'Poppins,sans-serif',
+        fontFamily: 'IBM Plex Sans,sans-serif',
         height: 65,
         sparkline: { enabled: true },
       },
@@ -207,7 +207,7 @@ export class AppSparklineCardsComponent {
       ],
       chart: {
         type: 'bar',
-        fontFamily: 'Poppins,sans-serif',
+        fontFamily: 'IBM Plex Sans,sans-serif',
         height: 65,
         sparkline: { enabled: true },
       },

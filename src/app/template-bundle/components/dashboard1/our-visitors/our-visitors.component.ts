@@ -2,13 +2,13 @@ import { Component, ViewChild } from '@angular/core';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import {
   ApexChart,
-  ChartComponent,
   ApexDataLabels,
-  ApexPlotOptions,
   ApexLegend,
-  ApexTooltip,
   ApexNonAxisChartSeries,
+  ApexPlotOptions,
   ApexResponsive,
+  ApexTooltip,
+  ChartComponent,
   NgApexchartsModule,
 } from 'ng-apexcharts';
 import { MaterialModule } from 'src/app/material.module';
@@ -42,7 +42,7 @@ export class AppSalesOurVisitorsComponent {
       series: [45, 15, 27, 18],
       chart: {
         type: 'donut',
-        fontFamily: 'Poppins,sans-serif',
+        fontFamily: 'IBM Plex Sans,sans-serif',
         height: 253,
       },
       plotOptions: {

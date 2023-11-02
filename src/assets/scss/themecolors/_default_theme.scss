@@ -43,10 +43,10 @@ $bluetheme: mat.define-light-theme(
     ),
     typography:
       mat.define-typography-config(
-        $font-family: "Poppins",
+        $font-family: "IBM Plex Sans",
         $subtitle-2: mat.define-typography-level(14px, 14px, 400),
         $subtitle-1: mat.define-typography-level(21px, 26px, 500),
-         $headline-6: mat.define-typography-level(18px, 26px, 500),
+        $headline-6: mat.define-typography-level(18px, 26px, 500),
         $headline-5: mat.define-typography-level(24px, 30px, 700),
         $button: mat.define-typography-level(14px, 14px, 400),
         $body-1: mat.define-typography-level(14px, 20px, 400),
@@ -64,10 +64,10 @@ $darkbluetheme: mat.define-dark-theme(
     ),
     typography:
       mat.define-typography-config(
-        $font-family: "Poppins",
+        $font-family: "IBM Plex Sans",
         $subtitle-2: mat.define-typography-level(14px, 14px, 400),
         $subtitle-1: mat.define-typography-level(21px, 26px, 500),
-         $headline-6: mat.define-typography-level(18px, 26px, 500),
+        $headline-6: mat.define-typography-level(18px, 26px, 500),
         $headline-5: mat.define-typography-level(24px, 30px, 700),
         $button: mat.define-typography-level(14px, 14px, 400),
         $body-1: mat.define-typography-level(14px, 20px, 400),
@@ -95,16 +95,15 @@ $darkbluetheme: mat.define-dark-theme(
   background-color: mat.get-color-from-palette($theme-accent, 500) !important;
 }
 
-
 // outline button border
 .mat-mdc-outlined-button {
-  &.mat-primary{
+  &.mat-primary {
     border-color: mat.get-color-from-palette($theme-primary, 500) !important;
   }
-  &.mat-accent{
+  &.mat-accent {
     border-color: mat.get-color-from-palette($theme-accent, 500) !important;
   }
-  &.mat-warn{
+  &.mat-warn {
     border-color: mat.get-color-from-palette($theme-warn, 500) !important;
   }
 }
