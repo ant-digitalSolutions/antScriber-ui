@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Subject, takeUntil } from 'rxjs';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
+import { UserService } from 'src/app/user/services/user.service';
 import { UserInitTourService } from 'src/app/walkthrough-tours/user-init-tour.service';
 import { WizardCreatorService } from '../../services/wizard-creator.service';
 
@@ -22,7 +23,7 @@ export class WizardCreatorHomeComponent implements OnDestroy, OnInit, AfterViewI
     protected $gaService: GoogleAnalyticsService,
     private _projectService: BlogProjectsService,
     private _userWalkthroughTours: UserInitTourService,
-    // private _userService: UserService,
+    private _userService: UserService,
   ) {
 
   }
@@ -70,8 +71,8 @@ export class WizardCreatorHomeComponent implements OnDestroy, OnInit, AfterViewI
   }
 
   checkAndRenderInitialWalkthrough() {
-    // if (this._userService.showInitialTour)
-    this._userWalkthroughTours.initShepherd_userInitialization()
+    if (this._userService.showInitialTour)
+      this._userWalkthroughTours.initShepherd_userInitialization()
   }
 
 }
