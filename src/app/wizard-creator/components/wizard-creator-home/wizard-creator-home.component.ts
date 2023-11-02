@@ -72,7 +72,7 @@ export class WizardCreatorHomeComponent implements OnDestroy, OnInit, AfterViewI
   }
 
   checkAndRenderInitialWalkthrough() {
-    if (this._userService.showInitialTour)
+    // if (this._userService.showInitialTour)
       this._userWalkthroughTours.initShepherd_userInitialization()
   }
 
