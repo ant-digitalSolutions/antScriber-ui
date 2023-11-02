@@ -12,12 +12,7 @@
   </div>
   <div mat-dialog-actions>
     <button mat-button (click)="onClose()" class="btn-secondary">Cancel</button>
-    <button
-      mat-button
-      [mat-dialog-close]="data.value"
-      cdkFocusInitial
-      class="btn-primary"
-    >
+    <button mat-button (click)="ok()" class="btn-primary">
       {{ data.okBtnText }}
     </button>
   </div>
