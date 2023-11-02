@@ -300,7 +300,7 @@ Here's what the Assistant has crafted for you. Navigate the document and make an
             return new Promise<void>(function (resolve) {
                 setTimeout(function () {
                     resolve();
-                }, 100);
+                }, 300);
             });
         }
     },
@@ -665,7 +665,7 @@ Here's what the Assistant has crafted for you. Navigate the document and make an
             return new Promise<void>(function (resolve) {
                 setTimeout(function () {
                     resolve();
-                }, 100);
+                }, 300);
             });
         },
         useModalOverlay: false,
