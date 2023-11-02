@@ -1,17 +1,23 @@
 import { StepperOptions } from '@angular/cdk/stepper';
 import { UserInitializationWalkthroughTourStepsEnum } from '../../enums/walkthrough-tour-user-initialization-steps-id.enum';
 
-export const defaultStepOptions = {
-    classes: 'ui-intro-box',
+export const userInitializationTour_defaultStepOptions = {
+    classes: 'walkthrough-tour-user-initialization',
     scrollTo: false,
     cancelIcon: {
         enabled: true
     },
     useModalOverlay: true,
     canClickTarget: false,
-    // modalOverlayOpeningPadding: 0,
-
-
+    tourName: 'UserInitialization',
+    beforeShowPromise: function () {
+        return new Promise<void>(function (resolve) {
+            setTimeout(function () {
+                resolve();
+            }, 150);
+        });
+    }
+  
 };
 
 
@@ -36,14 +42,14 @@ export const userInitializationShepherdStep_desktop: any = [
         cancelIcon: {
             enabled: true
         },
-        classes: 'ui-intro-box',
         scrollTo: false,
         title: 'Welcome to Adfluens!',
-        text: ['Adfluens is your AI-powered creative assistant designed to enhance productivity. To get the most out of our platform, would you like a guided walkthrough of our key features?'],
+        text: ['To get the most out of our platform, would you like a guided walkthrough of our key features?'],
     },
     // select use case group
     {
         id: UserInitializationWalkthroughTourStepsEnum.SelectTaskGroup,
+        modalOverlayOpeningPadding: 10,
         attachTo: {
             element: '.use-cases-container',
             on: 'right'
@@ -58,10 +64,9 @@ export const userInitializationShepherdStep_desktop: any = [
         cancelIcon: {
             enabled: true
         },
-        classes: 'ui-intro-box',
         scrollTo: false,
-        title: `Choose Your Task Group`,
-        text: ['Adfluens is equipped with a variety of task groups tailored to your needs. Select a group to explore specific tasks that Adfluens can assist you with..'],
+        title: `Task Exploration`,
+        text: [`Task Groups are containers of specific tasks. Once clicked, you'll see its related tasks.`],
     },
     // select use case
     {
@@ -85,10 +90,9 @@ export const userInitializationShepherdStep_desktop: any = [
         cancelIcon: {
             enabled: true
         },
-        classes: 'ui-intro-box',
         scrollTo: false,
-        title: `Choose Your Desired Task`,
-        text: ['Select a specific task you need assistant with.'],
+        title: `Task Exploration`,
+        text: ['After selecting a group, you can choose between specific tasks, each designed for distinct activities.'],
         beforeShowPromise: function () {
             return new Promise<void>(function (resolve) {
                 setTimeout(function () {
@@ -101,6 +105,7 @@ export const userInitializationShepherdStep_desktop: any = [
     // set params in wizard form
     {
         id: UserInitializationWalkthroughTourStepsEnum.FillWizardFormFields,
+        modalOverlayOpeningPadding: 5,
         attachTo: {
             element: '#formElements',
             on: 'right'
@@ -120,10 +125,9 @@ export const userInitializationShepherdStep_desktop: any = [
         cancelIcon: {
             enabled: true
         },
-        classes: 'ui-intro-box',
         scrollTo: false,
         title: `Tailor Your Request`,
-        text: ['For Adfluens to generate the most relevant and accurate responses, provide specific details related to your chosen task.'],
+        text: [`Use the form fields in each task to provide specifics. This will refine the Assistant's response to best match your requirements.`],
         beforeShowPromise: function () {
             return new Promise<void>(function (resolve) {
                 setTimeout(function () {
@@ -155,7 +159,6 @@ export const userInitializationShepherdStep_desktop: any = [
     //         cancelIcon: {
     //             enabled: true
     //         },
-    //         classes: 'ui-intro-box',
     //         // highlightClass: 'highlight',
     //         scrollTo: false,
     //         title: `Choose Your Engine`,
@@ -204,7 +207,6 @@ export const userInitializationShepherdStep_desktop: any = [
     //         cancelIcon: {
     //             enabled: true
     //         },
-    //         classes: 'ui-intro-box',
     //         // highlightClass: 'highlight',
     //         scrollTo: false,
     //         title: `Imagination Level`,
@@ -256,16 +258,15 @@ export const userInitializationShepherdStep_desktop: any = [
         cancelIcon: {
             enabled: true
         },
-        classes: 'ui-intro-box',
         scrollTo: false,
-        title: `Generate Responses`,
-        text: [`
-Once you've adjusted the needed parameters for your task, unleash the assistant's creative answers`],
+        title: `Unleash the Assistant`,
+        text: [`After providing your details in the form fields, hit the 'Unleash' button to generate a tailored response.`],
     },
 
     // Output Results
     {
         id: UserInitializationWalkthroughTourStepsEnum.RenderAssistantResults,
+        modalOverlayOpeningPadding: 10,
         attachTo: {
             element: '#document-editor > p',
             on: 'left'
@@ -285,19 +286,16 @@ Once you've adjusted the needed parameters for your task, unleash the assistant'
         cancelIcon: {
             enabled: true
         },
-        classes: 'ui-intro-box',
         scrollTo: false,
         title: `Managing the Assistant Output`,
         text: [`
-<p>Once the assistant generates a response, you have full control to modify it as you see fit.</p>
-
-<p>All changes you make within the document are saved automatically for your convenience.</p>`],
+Here's what the Assistant has crafted for you. Navigate the document and make any tweaks as you see fit. All modifications are auto-saved for your convenience.`],
 
         beforeShowPromise: function () {
             return new Promise<void>(function (resolve) {
                 setTimeout(function () {
                     resolve();
-                }, 3500);
+                }, 5000);
             });
         }
     },
@@ -324,11 +322,10 @@ Once you've adjusted the needed parameters for your task, unleash the assistant'
         cancelIcon: {
             enabled: true
         },
-        classes: 'ui-intro-box',
         scrollTo: false,
-        title: `Organize Your Content`,
+        title: `Organize With Ease`,
         text: [`
-Organize your content seamlessly with our intuitive File System. Create, edit, and manage all in one place`],
+Effortlessly Create, Edit, and Delete your folders and documents, ensuring your creative assets are neatly organized.`],
         beforeShowPromise: function () {
             return new Promise<void>(function (resolve) {
                 setTimeout(function () {
@@ -357,20 +354,10 @@ Organize your content seamlessly with our intuitive File System. Create, edit, a
         cancelIcon: {
             enabled: true
         },
-        classes: 'ui-intro-box',
         scrollTo: false,
-        title: `Boost Your Creativity`,
+        title: `Amplify Your Potential`,
         text: [`
-<p>As you navigate and create, remember that our AI-powered assistant is here to amplify your potential.</p>
-
-<p> We're excited to be part of your creative process. Wishing you endless inspiration and success!</p>`],
-        beforeShowPromise: function () {
-            return new Promise<void>(function (resolve) {
-                setTimeout(function () {
-                    resolve();
-                }, 300);
-            });
-        }
+Our Assistant is designed to complement and elevate your creative prowess. We're thrilled to be a part of your journey. Welcome aboard, and let's create brilliance together!`],
     },
 ]
 
@@ -410,14 +397,14 @@ export const userInitializationShepherdStep_mobile: any = [
         cancelIcon: {
             enabled: true
         },
-        classes: 'ui-intro-box',
         scrollTo: false,
         title: 'Welcome to Adfluens!',
-        text: ['Adfluens is your AI-powered creative assistant designed to enhance productivity. To get the most out of our platform, would you like a guided walkthrough of our key features?'],
+        text: ['To get the most out of our platform, would you like a guided walkthrough of our key features?'],
     },
     // select use case group
     {
         id: UserInitializationWalkthroughTourStepsEnum.SelectTaskGroup,
+        modalOverlayOpeningPadding: 10,
         attachTo: {
             element: '.use-cases-container',
             on: 'top'
@@ -432,10 +419,9 @@ export const userInitializationShepherdStep_mobile: any = [
         cancelIcon: {
             enabled: true
         },
-        classes: 'ui-intro-box',
         scrollTo: false,
-        title: `Choose Your Task Group`,
-        text: ['Adfluens is equipped with a variety of task groups tailored to your needs. Select a group to explore specific tasks that Adfluens can assist you with..'],
+        title: `Task Exploration`,
+        text: [`Task Groups are containers of specific tasks.`],
     },
     // select use case
     {
@@ -459,15 +445,14 @@ export const userInitializationShepherdStep_mobile: any = [
         cancelIcon: {
             enabled: true
         },
-        classes: 'ui-intro-box',
         scrollTo: false,
-        title: `Choose Your Desired Task`,
-        text: ['Select a specific task you need assistant with.'],
+        title: `Task Exploration`,
+        text: ['After selecting a group, you can choose between specific tasks, each designed for distinct activities.'],
         beforeShowPromise: function () {
             return new Promise<void>(function (resolve) {
                 setTimeout(function () {
                     resolve();
-                }, 500);
+                }, 300);
             });
         }
     },
@@ -475,6 +460,7 @@ export const userInitializationShepherdStep_mobile: any = [
     // set params in wizard form
     {
         id: UserInitializationWalkthroughTourStepsEnum.FillWizardFormFields,
+        modalOverlayOpeningPadding: 5,
         attachTo: {
             element: '#formElements',
             on: 'top'
@@ -494,10 +480,9 @@ export const userInitializationShepherdStep_mobile: any = [
         cancelIcon: {
             enabled: true
         },
-        classes: 'ui-intro-box',
         scrollTo: false,
         title: `Tailor Your Request`,
-        text: ['For Adfluens to generate the most relevant and accurate responses, provide specific details related to your chosen task.'],
+        text: [`Use the form fields in each task to provide specifics. This will refine the Assistant's response to best match your requirements.`],
         beforeShowPromise: function () {
             return new Promise<void>(function (resolve) {
                 setTimeout(function () {
@@ -529,7 +514,6 @@ export const userInitializationShepherdStep_mobile: any = [
     //         cancelIcon: {
     //             enabled: true
     //         },
-    //         classes: 'ui-intro-box',
     //         // highlightClass: 'highlight',
     //         scrollTo: false,
     //         title: `Choose Your Engine`,
@@ -578,7 +562,6 @@ export const userInitializationShepherdStep_mobile: any = [
     //         cancelIcon: {
     //             enabled: true
     //         },
-    //         classes: 'ui-intro-box',
     //         // highlightClass: 'highlight',
     //         scrollTo: false,
     //         title: `Imagination Level`,
@@ -632,16 +615,15 @@ export const userInitializationShepherdStep_mobile: any = [
         cancelIcon: {
             enabled: true
         },
-        classes: 'ui-intro-box',
         scrollTo: false,
-        title: `Generate Responses`,
-        text: [`
-Once you've adjusted the needed parameters for your task, unleash the assistant's creative answers`],
+        title: `Unleash the Assistant`,
+        text: [`After providing your details in the form fields, hit the 'Unleash' button to generate a tailored response.`],
     },
 
     // Output Results
     {
         id: UserInitializationWalkthroughTourStepsEnum.RenderAssistantResults,
+        modalOverlayOpeningPadding: 10,
         attachTo: {
             element: '#document-editor > p',
             on: 'bottom'
@@ -661,19 +643,16 @@ Once you've adjusted the needed parameters for your task, unleash the assistant'
         cancelIcon: {
             enabled: true
         },
-        classes: 'ui-intro-box',
         scrollTo: false,
         title: `Managing the Assistant Output`,
         text: [`
-<p>Once the assistant generates a response, you have full control to modify it as you see fit.</p>
-
-<p>All changes you make within the document are saved automatically for your convenience.</p>`],
+Here's what the Assistant has crafted for you. Navigate the document and make any tweaks as you see fit. All modifications are auto-saved for your convenience.`],
 
         beforeShowPromise: function () {
             return new Promise<void>(function (resolve) {
                 setTimeout(function () {
                     resolve();
-                }, 3000);
+                }, 5000);
             });
         },
         useModalOverlay: false,
@@ -701,11 +680,10 @@ Once you've adjusted the needed parameters for your task, unleash the assistant'
         cancelIcon: {
             enabled: true
         },
-        classes: 'ui-intro-box',
         scrollTo: false,
-        title: `Organize Your Content`,
+        title: `Organize With Ease`,
         text: [`
-Organize your content seamlessly with our intuitive File System. Create, edit, and manage all in one place`],
+Effortlessly Create, Edit, and Delete your folders and documents, ensuring your creative assets are neatly organized.`],
         beforeShowPromise: function () {
             return new Promise<void>(function (resolve) {
                 setTimeout(function () {
@@ -734,19 +712,10 @@ Organize your content seamlessly with our intuitive File System. Create, edit, a
         cancelIcon: {
             enabled: true
         },
-        classes: 'ui-intro-box',
         scrollTo: false,
-        title: `Boost Your Creativity`,
+        title: `Amplify Your Potential`,
         text: [`
-<p>As you navigate and create, remember that our AI-powered assistant is here to amplify your potential.</p>
-
-<p> We're excited to be part of your creative process. Wishing you endless inspiration and success!</p>`],
-        beforeShowPromise: function () {
-            return new Promise<void>(function (resolve) {
-                setTimeout(function () {
-                    resolve();
-                }, 300);
-            });
-        }
+Our Assistant is designed to complement and elevate your creative prowess. We're thrilled to be a part of your journey. Welcome aboard, and let's create brilliance together!`],
     },
 ]
+

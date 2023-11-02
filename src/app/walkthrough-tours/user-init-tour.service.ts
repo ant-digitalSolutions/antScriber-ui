@@ -2,7 +2,7 @@ import { WalkthroughTourIdEnum } from 'src/app/walkthrough-tours/enums/walktroug
 import { ShepherdService } from 'angular-shepherd';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { defaultStepOptions, userInitializationShepherdStep_mobile, userInitializationShepherdStep_desktop } from './configs/shepherd/shepherd-user-init.config';
+import { userInitializationTour_defaultStepOptions, userInitializationShepherdStep_mobile, userInitializationShepherdStep_desktop } from './configs/shepherd/shepherd-user-init.config';
 import { UserInitializationWalkthroughTourStepsEnum } from './enums/walkthrough-tour-user-initialization-steps-id.enum';
 import { UserService } from '../user/services/user.service';
 
@@ -34,7 +34,7 @@ export class UserInitTourService {
 
   initShepherd_userInitialization() {
     this.tourId = WalkthroughTourIdEnum.UserInitialization;
-    this._shepherdService.defaultStepOptions = defaultStepOptions;
+    this._shepherdService.defaultStepOptions = userInitializationTour_defaultStepOptions;
     this._shepherdService.modal = true;
     this._shepherdService.confirmCancel = false;
 
@@ -42,7 +42,7 @@ export class UserInitTourService {
     this._shepherdService.addSteps(steps);
 
     this._shepherdService.tourObject.on('show', () => {
-      setTimeout(() => this.show(), 500)
+      setTimeout(() => this.show(), 175)
     })
 
     this._shepherdService.tourObject.on('complete', () => {
