@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import {Subject, takeUntil, tap } from 'rxjs';
+import { Subject, takeUntil, tap } from 'rxjs';
 import { WizardCreatorService } from '../../services/wizard-creator.service';
-import {Validators } from '@angular/forms';
+import { Validators } from '@angular/forms';
 import { ContentTone, contentToneOptionFields } from 'src/app/common/enum/content generation/content-tone.enum';
 import { langEnumOptionFields } from 'src/app/common/enum/lang-options.enum';
 import { ContentCreationCreativityLevel, creativityLevelOptionFields } from 'src/app/common/enum/content generation/content-creation-imagination-level.enum';
@@ -65,7 +65,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
 
   isMobile: boolean = false;
 
-// showGenerateBtn = false;
+  // showGenerateBtn = false;
 
   @ViewChild('formElements') formElements: ElementRef;
 
@@ -81,13 +81,15 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
 
   }
   ngAfterViewInit(): void {
-   this.setFormEventClick();
+    this.setFormEventClick();
 
   }
 
   ngOnInit(): void {
     this.selectorFields = [];
     this.textFields = [];
+
+    // TODO: move the next declaration to file
     this.initTextFields();
     this.initContentToneOptions();
     this.initLangEnumOptions();
@@ -130,32 +132,30 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
     })
 
     this._useCaseService.wizardUseCase$.pipe(takeUntil(this.componentDestroyed$))
-    .subscribe(() => {
-      this.useCaseSelected = true;
-    this.setFormEventClick();
-    });
+      .subscribe(() => {
+        this.useCaseSelected = true;
+        this.setFormEventClick();
+      });
 
     this._wizardFormService
-    .additionalDataFieldWithError$.pipe(takeUntil(this.componentDestroyed$))
-    .subscribe(() => this.scrollToWizardInputWithError())
+      .additionalDataFieldWithError$.pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(() => this.scrollToWizardInputWithError())
 
-    if (this._userInitTour.isActive && this._userInitTour.tourId === WalkthroughTourIdEnum.UserInitialization) {
-      this._userInitTour.walkthroughTouStepShowEvent$.pipe(takeUntil(this.componentDestroyed$), takeUntil(this._userInitTour.walkthroughTourEnded$))
-        .subscribe(stepId => {
-          if (stepId === UserInitializationWalkthroughTourStepsEnum.UnleashAssistant) {
-            this._wizardFormService.updateAdditionalData('postThemeIdea', `I found a new tool to boost my productivity, Adfluens. Check it out now and start for free: https://adfluens.io.` )
-            const postThemeIdea = this._wizardFormService._additionalDataFormFields.find(f => f.fieldName === 'postThemeIdea')
-            postThemeIdea?.formControl.setValue(`I found a new tool to boost my productivity, Adfluens. Check it out now and start for free: https://adfluens.io.`)
-          }
-        })
+    this._userInitTour.walkthroughTouStepShowEvent$.pipe(takeUntil(this.componentDestroyed$), takeUntil(this._userInitTour.walkthroughTourEnded$))
+      .subscribe(stepId => {
+        if (stepId === UserInitializationWalkthroughTourStepsEnum.UnleashAssistant) {
+          this._wizardFormService.updateAdditionalData('postThemeIdea', `I found a new tool to boost my productivity, Adfluens. Check it out now and start for free: https://adfluens.io.`)
+          const postThemeIdea = this._wizardFormService._additionalDataFormFields.find(f => f.fieldName === 'postThemeIdea')
+          postThemeIdea?.formControl.setValue(`I found a new tool to boost my productivity, Adfluens. Check it out now and start for free: https://adfluens.io.`)
+        }
+      })
 
-      this._userInitTour.walkthroughTouStepHideEvent$.pipe(takeUntil(this.componentDestroyed$), takeUntil(this._userInitTour.walkthroughTourEnded$))
-        .subscribe(stepId => {
-          if (stepId === UserInitializationWalkthroughTourStepsEnum.UnleashAssistant) {
-           this.generateContent();
-          }
-        })
-    }
+    this._userInitTour.walkthroughTouStepHideEvent$.pipe(takeUntil(this.componentDestroyed$), takeUntil(this._userInitTour.walkthroughTourEnded$))
+      .subscribe(stepId => {
+        if (stepId === UserInitializationWalkthroughTourStepsEnum.UnleashAssistant) {
+          this.generateContent();
+        }
+      })
 
 
   }
@@ -253,7 +253,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
     }
   }
 
-  checkIfFieldRender(fieldName: string) : boolean {
+  checkIfFieldRender(fieldName: string): boolean {
     return this._wizardFormService.checkIfFieldShouldRender(fieldName);
   }
 
@@ -285,9 +285,9 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
     }, 3000)
   }
 
-  
-  public get showGenerateBtn() : boolean {
+
+  public get showGenerateBtn(): boolean {
     return this._useCaseService.showGenerateBtn;
   }
-  
+
 }

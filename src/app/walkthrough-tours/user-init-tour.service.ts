@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { defaultStepOptions, userInitializationShepherdStep_mobile, userInitializationShepherdStep_desktop } from './configs/shepherd/shepherd-user-init.config';
 import { UserInitializationWalkthroughTourStepsEnum } from './enums/walkthrough-tour-user-initialization-steps-id.enum';
+import { UserService } from '../user/services/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,10 @@ export class UserInitTourService {
 
   tourId: string | undefined;
 
-  constructor(private _shepherdService: ShepherdService) {
+  constructor(
+    private _shepherdService: ShepherdService,
+    private _userService: UserService
+    ) {
     // this.initShepherd_userInitialization();
   }
 
@@ -40,6 +44,10 @@ export class UserInitTourService {
     this._shepherdService.tourObject.on('show', () => {
       setTimeout(() => this.show(), 500)
     })
+
+    this._shepherdService.tourObject.on('complete', () => {
+      this._userService.initialWalkthroughCompleted()
+    } )
 
     this._shepherdService.tourObject.steps.forEach(step => {
       step.on('hide', () => this.shepherdHideEvent(step))

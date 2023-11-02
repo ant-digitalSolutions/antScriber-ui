@@ -297,7 +297,7 @@ Once you've adjusted the needed parameters for your task, unleash the assistant'
             return new Promise<void>(function (resolve) {
                 setTimeout(function () {
                     resolve();
-                }, 2500);
+                }, 3500);
             });
         }
     },

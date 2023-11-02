@@ -10,6 +10,7 @@ import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { CookieService } from 'ngx-cookie-service';
 import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
+import { UserService } from 'src/app/user/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -34,7 +35,8 @@ export class LoginComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     protected $gaService: GoogleAnalyticsService,
-    private _projectService: BlogProjectsService) { }
+    private _projectService: BlogProjectsService,
+    private _userService: UserService) { }
 
   ngOnInit(): void {
     this.checkIfMobile();
@@ -58,14 +60,17 @@ export class LoginComponent implements OnInit {
 
     const access_token = qParams['access_token'];
     const expiresAt = qParams['expires_at'];
-    const provider = qParams['provider']
+    const provider = qParams['provider'];
+    const showInitialTour = qParams['showInitialTour'];
 
     const session = {
       access_token,
       expiresAt
     }
 
-    // const access_token_raw = this.cookieService.get('access_token');
+    if (showInitialTour) {
+      this._userService.showInitialTour = true;
+    }
 
     if (access_token && expiresAt) {
       // const access_token = JSON.parse(access_token_raw.replace('j:', ''));

@@ -1,16 +1,18 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { WizardCreatorService } from '../../services/wizard-creator.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
+import { UserService } from 'src/app/user/services/user.service';
+import { UserInitTourService } from 'src/app/walkthrough-tours/user-init-tour.service';
 
 @Component({
   selector: 'app-wizard-creator-home',
   templateUrl: './wizard-creator-home.component.html',
   styleUrls: ['./wizard-creator-home.component.scss']
 })
-export class WizardCreatorHomeComponent {
+export class WizardCreatorHomeComponent implements OnDestroy, OnInit, AfterViewInit {
   componentDestroyed$: Subject<boolean> = new Subject();
 
   isMobile = false;
@@ -21,7 +23,9 @@ export class WizardCreatorHomeComponent {
     private _wizard: WizardCreatorService,
     private breakpointObserver: BreakpointObserver,
     protected $gaService: GoogleAnalyticsService,
-    private _projectService: BlogProjectsService) {
+    private _projectService: BlogProjectsService,
+    private _userWalkthroughTours: UserInitTourService,
+    private _userService: UserService) {
 
   }
 
@@ -39,6 +43,10 @@ export class WizardCreatorHomeComponent {
 
     this.$gaService.event('user_wizard_engagement', 'page_on_init', 'wizard_home_page');
 
+  }
+
+  ngAfterViewInit(): void {
+    this.checkAndRenderInitialWalkthrough()
   }
 
   setListeners() {
@@ -61,6 +69,11 @@ export class WizardCreatorHomeComponent {
 
   checkIfMobile() {
     this.isMobile = (window.innerWidth < 960);
+  }
+
+  checkAndRenderInitialWalkthrough() {
+    if (this._userService.showInitialTour)
+      this._userWalkthroughTours.initShepherd_userInitialization()
   }
 
 }

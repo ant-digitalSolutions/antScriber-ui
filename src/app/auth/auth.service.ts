@@ -171,6 +171,13 @@ export class AuthService {
   }
 
   
+  public get isFirstSessionEver() : boolean | null {
+    const jwtData = this.userJwtData;
+    return jwtData ? jwtData.firstSessionEver : null;
+  }
+  
+
+  
   public get userJwtData() : IJwtData | null {
     const data = localStorage.getItem(this.JWT_STORAGE_KEY);
 

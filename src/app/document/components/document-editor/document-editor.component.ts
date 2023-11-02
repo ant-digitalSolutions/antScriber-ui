@@ -116,7 +116,6 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
             this._documentContent = d.content
       })
 
-    if (this._userInitTour.isActive && this._userInitTour.tourId === WalkthroughTourIdEnum.UserInitialization) {
 
       this._userInitTour.walkthroughTouStepHideEvent$.pipe(takeUntil(this.componentDestroyed$), takeUntil(this._userInitTour.walkthroughTourEnded$))
         .subscribe(stepId => {
@@ -124,7 +123,6 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
             this.goback();
           }
         })
-    }
   }
 
   documentEditorFocusEvent() {

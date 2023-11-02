@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UserInitTourService } from '../user-init-tour.service';
+import { UserService } from 'src/app/user/services/user.service';
 
 @Component({
   selector: 'app-walkthrough-tour',
@@ -8,14 +9,21 @@ import { UserInitTourService } from '../user-init-tour.service';
 })
 export class WalkthroughTourComponent {
 
-  constructor(private _userWalkthroughTours: UserInitTourService) {
+  constructor(
+    private _userWalkthroughTours: UserInitTourService,
+    private _userService: UserService) {
 
 
   }
 
   ngAfterViewInit(): void {
-    //TODO: implement logic to check if we should run the walkthrough
+    this.checkAndRenderInitialWalkthrough()
+    // setTimeout(() => this.checkAndRenderInitialWalkthrough(), 300)
+  
+  }
 
-    this._userWalkthroughTours.initShepherd_userInitialization()
+  checkAndRenderInitialWalkthrough() {
+    if (this._userService.showInitialTour)
+      this._userWalkthroughTours.initShepherd_userInitialization()
   }
 }

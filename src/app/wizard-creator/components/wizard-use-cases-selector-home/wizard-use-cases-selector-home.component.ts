@@ -93,14 +93,12 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
         this.selectedUseCaseGroup = this._useCaseService.selectedUseCaseGroup;
       });
 
-      if (this._userInitTour.isActive && this._userInitTour.tourId === WalkthroughTourIdEnum.UserInitialization) {
         this._userInitTour.walkthroughTouStepShowEvent$.pipe(takeUntil(this.componentDestroyed$), takeUntil(this._userInitTour.walkthroughTourEnded$))
         .subscribe(stepId => {
           if (stepId === UserInitializationWalkthroughTourStepsEnum.SelectSpecificTask) {
             this.selectUseCaseGroup(WizardCreatorUseCaseGroup.SocialMedia);
           }
         })
-      }
   }
 
   setUseCases(initialElements: boolean = true) {
