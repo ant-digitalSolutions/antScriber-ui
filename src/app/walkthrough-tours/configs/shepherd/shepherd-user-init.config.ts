@@ -65,7 +65,7 @@ export const userInitializationShepherdStep_desktop: any = [
         },
         scrollTo: false,
         title: `Task Exploration`,
-        text: [`Task Groups are containers of specific tasks. Once clicked, you'll see its related tasks.`],
+        text: [`Task Groups are containers of specific tasks.`],
     },
     // select use case
     {
@@ -91,7 +91,7 @@ export const userInitializationShepherdStep_desktop: any = [
         },
         scrollTo: false,
         title: `Task Exploration`,
-        text: ['After selecting a group, you can choose between specific tasks, each designed for distinct activities.'],
+        text: ['After selecting a group, you can choose between individual tasks, each designed for distinct activities.'],
         beforeShowPromise: function () {
             return new Promise<void>(function (resolve) {
                 setTimeout(function () {
@@ -126,7 +126,7 @@ export const userInitializationShepherdStep_desktop: any = [
         },
         scrollTo: false,
         title: `Tailor Your Request`,
-        text: [`Use the form fields in each task to provide specifics. This will refine the Assistant's response to best match your requirements.`],
+        text: [`Use the form fields to customize and refine the Assistant's response, ensuring personalization and precision.`],
         beforeShowPromise: function () {
             return new Promise<void>(function (resolve) {
                 setTimeout(function () {
@@ -238,34 +238,40 @@ export const userInitializationShepherdStep_desktop: any = [
     // unleash btn
     {
         id: UserInitializationWalkthroughTourStepsEnum.UnleashAssistant,
+        classes: 'm-t--15',
+        canClickTarget: true,
         attachTo: {
             element: '.wizard-generate-btn-container',
-            on: 'right-start'
+            on: 'top'
         },
-        buttons: [
-            {
-                classes: 'shepherd-button-secondary',
-                text: 'Prev',
-                type: 'back'
-            },
-            {
-                classes: 'shepherd-button-primary',
-                text: 'Next',
-                type: 'next'
-            }
-        ],
+        // buttons: [
+        //     {
+        //         classes: 'shepherd-button-secondary',
+        //         text: 'Prev',
+        //         type: 'back'
+        //     },
+        //     {
+        //         classes: 'shepherd-button-primary',
+        //         text: 'Next',
+        //         type: 'next'
+        //     }
+        // ],
         cancelIcon: {
             enabled: true
         },
         scrollTo: false,
         title: `Unleash the Assistant`,
-        text: [`After providing your details in the form fields, hit the 'Unleash' button to generate a tailored response.`],
+        text: [`<p>After providing your details in the form fields, hit the 'Unleash' button to generate a tailored response.</p>
+        
+        <p><span class="f-w-500">Hit it Now</span> to Unleash your first creation!</p>
+        `],
     },
 
     // Output Results
     {
         id: UserInitializationWalkthroughTourStepsEnum.RenderAssistantResults,
         modalOverlayOpeningPadding: 10,
+        classes: 'm-l--16',
         attachTo: {
             element: '#document-editor > p',
             on: 'left'
@@ -294,7 +300,7 @@ Here's what the Assistant has crafted for you. Navigate the document and make an
             return new Promise<void>(function (resolve) {
                 setTimeout(function () {
                     resolve();
-                }, 5000);
+                }, 100);
             });
         }
     },
@@ -404,9 +410,10 @@ export const userInitializationShepherdStep_mobile: any = [
     {
         id: UserInitializationWalkthroughTourStepsEnum.SelectTaskGroup,
         modalOverlayOpeningPadding: 10,
+        classes: 'm-t-16',
         attachTo: {
             element: '.use-cases-container',
-            on: 'top'
+            on: 'bottom'
         },
         buttons: [
             {
@@ -425,6 +432,7 @@ export const userInitializationShepherdStep_mobile: any = [
     // select use case
     {
         id: UserInitializationWalkthroughTourStepsEnum.SelectSpecificTask,
+        classes: 'm-t-6',
         attachTo: {
             element: '.mat-expanded',
             on: 'bottom'
@@ -446,7 +454,7 @@ export const userInitializationShepherdStep_mobile: any = [
         },
         scrollTo: false,
         title: `Task Exploration`,
-        text: ['After selecting a group, you can choose between specific tasks, each designed for distinct activities.'],
+        text: ['After selecting a group, you can choose between individual tasks, each designed for distinct activities.'],
         beforeShowPromise: function () {
             return new Promise<void>(function (resolve) {
                 setTimeout(function () {
@@ -481,7 +489,7 @@ export const userInitializationShepherdStep_mobile: any = [
         },
         scrollTo: false,
         title: `Tailor Your Request`,
-        text: [`Use the form fields in each task to provide specifics. This will refine the Assistant's response to best match your requirements.`],
+        text: [`Use the form fields to customize and refine the Assistant's response, ensuring personalization and precision.`],
         beforeShowPromise: function () {
             return new Promise<void>(function (resolve) {
                 setTimeout(function () {
@@ -595,34 +603,40 @@ export const userInitializationShepherdStep_mobile: any = [
     // unleash btn
     {
         id: UserInitializationWalkthroughTourStepsEnum.UnleashAssistant,
+        classes: 'm-t--15',
+        canClickTarget: true,
         attachTo: {
             element: '.wizard-generate-btn-container',
             on: 'top'
         },
-        buttons: [
-            {
-                classes: 'shepherd-button-secondary',
-                text: 'Prev',
-                type: 'back'
-            },
-            {
-                classes: 'shepherd-button-primary',
-                text: 'Next',
-                type: 'next'
-            }
-        ],
+        // buttons: [
+        //     {
+        //         classes: 'shepherd-button-secondary',
+        //         text: 'Prev',
+        //         type: 'back'
+        //     },
+        //     {
+        //         classes: 'shepherd-button-primary',
+        //         text: 'Next',
+        //         type: 'next'
+        //     }
+        // ],
         cancelIcon: {
             enabled: true
         },
         scrollTo: false,
         title: `Unleash the Assistant`,
-        text: [`After providing your details in the form fields, hit the 'Unleash' button to generate a tailored response.`],
+        text: [`<p>After providing your details in the form fields, hit the 'Unleash' button to generate a tailored response.</p>
+        
+        <p><span class="f-w-500">Hit it Now</span> to Unleash your first creation!</p>
+        `],
     },
 
     // Output Results
     {
         id: UserInitializationWalkthroughTourStepsEnum.RenderAssistantResults,
         modalOverlayOpeningPadding: 10,
+        classes: 'm-t-12',
         attachTo: {
             element: '#document-editor > p',
             on: 'bottom'
@@ -651,7 +665,7 @@ Here's what the Assistant has crafted for you. Navigate the document and make an
             return new Promise<void>(function (resolve) {
                 setTimeout(function () {
                     resolve();
-                }, 5000);
+                }, 100);
             });
         },
         useModalOverlay: false,

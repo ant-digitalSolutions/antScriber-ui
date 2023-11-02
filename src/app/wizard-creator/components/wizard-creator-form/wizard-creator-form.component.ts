@@ -10,6 +10,7 @@ import { mapEnumNameAndValue } from 'src/app/common/functions/name-and-values-of
 import { SelectorFieldToRenderData } from 'src/app/common/interfaces/button-toggle-to-render-data';
 import { TextFieldToRenderData } from 'src/app/common/interfaces/textfield-to-render-data';
 import { UserInitializationWalkthroughTourStepsEnum } from 'src/app/walkthrough-tours/enums/walkthrough-tour-user-initialization-steps-id.enum';
+import { WalkthroughTourIdEnum } from 'src/app/walkthrough-tours/enums/walktrough-tour-id.enum';
 import { UserInitTourService } from 'src/app/walkthrough-tours/user-init-tour.service';
 import { WizardDefaultFieldNamesEnum } from '../../enums/wizard-default-fields-names.enum';
 import { WizardUseCaseService } from '../../services/use-case/wizard-use-case.service';
@@ -127,6 +128,13 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
 
     this._wizardCreatorService.wizardCreatedContent$.pipe(takeUntil(this.componentDestroyed$)).subscribe(() => {
       this.isLoading = false;
+
+      // user initialization walkthrough tour
+      if (this._userInitTour.isActive
+        && this._userInitTour.tourId === WalkthroughTourIdEnum.UserInitialization
+        && this._userInitTour.currentStepId === UserInitializationWalkthroughTourStepsEnum.UnleashAssistant) {
+        this._userInitTour.next();
+      }
     })
 
     this._useCaseService.wizardUseCase$.pipe(takeUntil(this.componentDestroyed$))
@@ -147,15 +155,6 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
           postThemeIdea?.formControl.setValue(`I found a new tool to boost my productivity, Adfluens. Check it out now and start for free: https://adfluens.io.`)
         }
       })
-
-    this._userInitTour.walkthroughTouStepHideEvent$.pipe(takeUntil(this.componentDestroyed$), takeUntil(this._userInitTour.walkthroughTourEnded$))
-      .subscribe(stepId => {
-        if (stepId === UserInitializationWalkthroughTourStepsEnum.UnleashAssistant) {
-          this.generateContent();
-        }
-      })
-
-
   }
 
   initTextFields() {

@@ -1,9 +1,9 @@
-import { WalkthroughTourIdEnum } from 'src/app/walkthrough-tours/enums/walktrough-tour-id.enum';
-import { ShepherdService } from 'angular-shepherd';
 import { Injectable } from '@angular/core';
+import { ShepherdService } from 'angular-shepherd';
 import { Subject } from 'rxjs';
-import { userInitializationTour_defaultStepOptions, userInitializationShepherdStep_mobile, userInitializationShepherdStep_desktop } from './configs/shepherd/shepherd-user-init.config';
+import { WalkthroughTourIdEnum } from 'src/app/walkthrough-tours/enums/walktrough-tour-id.enum';
 import { UserService } from '../user/services/user.service';
+import { userInitializationShepherdStep_desktop, userInitializationShepherdStep_mobile, userInitializationTour_defaultStepOptions } from './configs/shepherd/shepherd-user-init.config';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class UserInitTourService {
   constructor(
     private _shepherdService: ShepherdService,
     private _userService: UserService
-    ) {
+  ) {
     // this.initShepherd_userInitialization();
   }
 
@@ -46,7 +46,7 @@ export class UserInitTourService {
 
     this._shepherdService.tourObject.on('complete', () => {
       this._userService.initialWalkthroughCompleted()
-    } )
+    })
 
     this._shepherdService.tourObject.steps.forEach(step => {
       step.on('hide', () => this.shepherdHideEvent(step))
@@ -78,8 +78,14 @@ export class UserInitTourService {
     return this._shepherdService;
   }
 
-  shepherdHideEvent(step:any) {
-      this._shepherdHideStepSubject.next(step.id);
+
+  public get currentStepId(): string | undefined {
+    return this._shepherdService.tourObject.getCurrentStep()?.id;
+  }
+
+
+  shepherdHideEvent(step: any) {
+    this._shepherdHideStepSubject.next(step.id);
   }
 
   show() {
