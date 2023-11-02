@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ShepherdService } from 'angular-shepherd';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Subject } from 'rxjs';
 import { WalkthroughTourIdEnum } from 'src/app/walkthrough-tours/enums/walktrough-tour-id.enum';
 import { UserService } from '../user/services/user.service';
@@ -22,13 +23,14 @@ export class UserInitTourService {
   private _walkthroughTourEnded = new Subject<void>();
   walkthroughTourEnded$ = this._walkthroughTourEnded.asObservable();
 
+  // id of the active tour
   tourId: string | undefined;
 
   constructor(
     private _shepherdService: ShepherdService,
-    private _userService: UserService
+    private _userService: UserService,
+    protected $gaService: GoogleAnalyticsService
   ) {
-    // this.initShepherd_userInitialization();
   }
 
   initShepherd_userInitialization() {
@@ -40,25 +42,40 @@ export class UserInitTourService {
     const steps = window.innerWidth < 960 ? userInitializationShepherdStep_mobile : userInitializationShepherdStep_desktop;
     this._shepherdService.addSteps(steps);
 
+    this.tour_userInitialization_events();
+
+    this.start();
+  }
+
+  tour_userInitialization_events() {
     this._shepherdService.tourObject.on('show', () => {
       setTimeout(() => this.show(), 175)
     })
 
     this._shepherdService.tourObject.on('complete', () => {
-      this._userService.initialWalkthroughCompleted()
+      this._userService.initialWalkthroughCompleted();
+      this.$gaService.event('walkthroughTour_user_init', 'tour_completed');
+    })
+
+    this._shepherdService.tourObject.on('cancel', () => {
+      const currentStep = this._shepherdService.tourObject.getCurrentStep();
+
+      if (currentStep) {
+        const stepIndex = this._shepherdService.tourObject.steps.indexOf(currentStep);
+        this.$gaService.event('walkthroughTour_user_init', 'tour_canceled', `step_${stepIndex}`);
+      } else {
+        this.$gaService.event('walkthroughTour_user_init', 'tour_canceled');
+      }
     })
 
     this._shepherdService.tourObject.steps.forEach(step => {
       step.on('hide', () => this.shepherdHideEvent(step))
     });
-
-    this.start();
-
   }
 
   start() {
     this._shepherdService.start();
-
+    this.$gaService.event('walkthroughTour_user_init', 'tour_started');
   }
 
   next() {
