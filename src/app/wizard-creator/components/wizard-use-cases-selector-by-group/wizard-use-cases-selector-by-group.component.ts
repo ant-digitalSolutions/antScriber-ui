@@ -36,7 +36,6 @@ export class WizardUseCasesSelectorByGroupComponent implements OnDestroy, OnInit
 
 
   setListeners() {
-    if (this._userInitTour.isActive && this._userInitTour.tourId === WalkthroughTourIdEnum.UserInitialization) {
       this._userInitTour.walkthroughTouStepShowEvent$.pipe(takeUntil(this.componentDestroyed$), takeUntil(this._userInitTour.walkthroughTourEnded$))
         .subscribe(stepId => {
           if (stepId === UserInitializationWalkthroughTourStepsEnum.FillWizardFormFields) {
@@ -46,7 +45,6 @@ export class WizardUseCasesSelectorByGroupComponent implements OnDestroy, OnInit
             }
           }
         })
-    }
   }
 
   selectUseCase(useCaseMeta: IUseCaseMeta) {
