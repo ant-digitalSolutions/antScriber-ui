@@ -64,7 +64,7 @@ export const userInitializationShepherdStep_desktop: any = [
             enabled: true
         },
         scrollTo: false,
-        title: `Task Exploration`,
+        title: `Tasks`,
         text: [`Task Groups are containers of specific tasks.`],
     },
     // select use case
@@ -90,7 +90,7 @@ export const userInitializationShepherdStep_desktop: any = [
             enabled: true
         },
         scrollTo: false,
-        title: `Task Exploration`,
+        title: `Tasks`,
         text: ['After selecting a group, you can choose between individual tasks, each designed for distinct activities.'],
         beforeShowPromise: function () {
             return new Promise<void>(function (resolve) {
@@ -426,7 +426,7 @@ export const userInitializationShepherdStep_mobile: any = [
             enabled: true
         },
         scrollTo: false,
-        title: `Task Exploration`,
+        title: `Tasks`,
         text: [`Task Groups are containers of specific tasks.`],
     },
     // select use case
@@ -453,7 +453,7 @@ export const userInitializationShepherdStep_mobile: any = [
             enabled: true
         },
         scrollTo: false,
-        title: `Task Exploration`,
+        title: `Tasks`,
         text: ['After selecting a group, you can choose between individual tasks, each designed for distinct activities.'],
         beforeShowPromise: function () {
             return new Promise<void>(function (resolve) {
