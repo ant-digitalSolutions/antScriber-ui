@@ -1,14 +1,14 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,300,600,700&display=swap");
 
 // font
-$font-family: 'Poppins', sans-serif;
+$font-family: "Poppins", sans-serif;
 
 // light color variable
 $sidebarbg: white;
 $background: #fff;
 $cardbg: white;
 $toolbar: white;
-$cardshadow: 0px 5px 20px rgba(0,0,0,.05);
+$cardshadow: 0px 5px 20px rgba(0, 0, 0, 0.05);
 $hoverBgColor: #f6f9fc;
 
 // Dark color variable
@@ -16,56 +16,54 @@ $darksidebarbg: #2a3447;
 $darkbackground: #2a3447;
 $darkcardbg: #2a3447;
 $darktoolbar: #2a3447;
-$darkcardshadow: rgba(145, 158, 171, 0.3) 0px 0px 2px 0px, rgba(145, 158, 171, 0.02) 0px 12px 24px -4px;
+$darkcardshadow: rgba(145, 158, 171, 0.3) 0px 0px 2px 0px,
+  rgba(145, 158, 171, 0.02) 0px 12px 24px -4px;
 $darkborderColor: #333f55;
 $darkformborderColor: #465670;
 $darkhoverbgcolor: #333f55;
 $darkthemelightprimary: #253662;
-$darkthemelightaccent: #1C455D;
-$darkthemelightwarning: #4D3A2A;
-$darkthemelighterror: #4B313D;
-$darkthemelightsuccess: #1B3C48;
+$darkthemelightaccent: #1c455d;
+$darkthemelightwarning: #4d3a2a;
+$darkthemelighterror: #4b313d;
+$darkthemelightsuccess: #1b3c48;
 
 // Sidenav
 $sidenav-desktop: 270px !default;
 $sidenav-mini: 80px !default;
-
-
-
 
 //BorderColor
 $borderColor: #02020229;
 $borderformColor: #02020229;
 $border-radius: 30px;
 
-
 // custom colors
 $caribbean: #127475;
-$cinnabar: #F2542D;
-$dark-cyan: #0E9594;
-$plum:#8D3B72;
-$eminence: #542E71;
-$violet: #502F4C;
-$violet-chinese: #70587C;
-$violet-english:#5C415D;
+$cinnabar: #f2542d;
+$dark-cyan: #0e9594;
+$plum: #8d3b72;
+$eminence: #542e71;
+$violet: #502f4c;
+$violet-chinese: #70587c;
+$violet-english: #5c415d;
 $violet-ultra: #565676;
-$purple: #602B62;
-$purple-vivid: rgba(161,60,164,1);
-$red: #D90429;
+$purple: #602b62;
+$purple-vivid: rgba(161, 60, 164, 1);
+$red: #d90429;
 $red-dark: #721c24;
-$space-cadet: #2B2D42;
-$turquoise: #72E1D1;
+$space-cadet: #2b2d42;
+$turquoise: #72e1d1;
 
 $blue-dark: #044389;
-$blue-cornflower: #5995ED; 
-$blue-notifications: #1264A3;
+$blue-cornflower: #5995ed;
+$blue-notifications: #1264a3;
 $blue-sky: #4285f4;
+$blue-light: #a7c6f9;
 
 $light: #f2f6fa;
 
-$gray-100:  #7c8fac;
+$gray-100: #7c8fac;
 $gray-50: #e2e2e2;
-$gray-davy: #635D5C;
+$gray-davy: #635d5c;
 
 $light-primary: #ecf6ff;
 $light-accent: #e8f7ff;
@@ -84,7 +82,6 @@ $input-height: 30px;
 $textPrimary: #2a3547;
 $text-dark: #423b3b;
 
-
 // documents area
 $editor-outer-container-bc: #f6f6f6;
 $editor-bc: #fff;
@@ -102,8 +99,12 @@ $header-height: 50px !default;
 $inner-navbar-height: 48px !default;
 $header-bc: $primary;
 $header-icon-color: $white;
-$header-background: rgb(96,43,98);
-$header-background-gradient:linear-gradient(180deg, rgba(96,43,98,1) 6%, rgba(161,60,164,1) 100%);
+$header-background: rgb(96, 43, 98);
+$header-background-gradient: linear-gradient(
+  180deg,
+  rgba(96, 43, 98, 1) 6%,
+  rgba(161, 60, 164, 1) 100%
+);
 
 // wizard creator
 $btn-create-container-bc: $background;
@@ -115,7 +116,6 @@ $btn-uc-selector-width: 115px;
 $btn-uc-selector-bc: $white;
 $btn-uc-selector-border: none;
 $btn-uc-selector-color: $eminence;
-
 
 // input fields
 $placeholder-color: transparentize($textPrimary, 0.6);

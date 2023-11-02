@@ -1,5 +1,8 @@
 @import "src/assets/scss/_variables.scss";
 
+$walkthrough-user-initialization-bc: $plum;
+$walkthrough-user-initialization-text-secondary: #e4a1cf;
+
 // Error styles
 .error-message-container {
   p {
@@ -8,45 +11,54 @@
     color: $error-font-color;
     font-size: 0.8rem;
     text-align: center;
-        padding: 6px 5px;
+    padding: 6px 5px;
     border-radius: 5px;
-
   }
 }
 
 // shepherd styles
 .shepherd-element {
-  background-color: $blue-sky !important;
+  background-color: $walkthrough-user-initialization-bc !important;
   color: #fff !important;
 
   .shepherd-arrow::before {
-  background-color: $blue-sky !important;
-  background: $blue-sky !important;
+    background-color: $walkthrough-user-initialization-bc !important;
+    background: $walkthrough-user-initialization-bc !important;
 
-  border-color: $blue-sky !important;
+    border-color: $walkthrough-user-initialization-bc !important;
   }
 
-  .shepherd-header, .shepherd-title, .shepherd-cancel-icon, .shepherd-text  {
-      background-color: $blue-sky !important;
-  color: #fff !important;
+  .shepherd-header,
+  .shepherd-title,
+  .shepherd-cancel-icon,
+  .shepherd-text {
+    background-color: $walkthrough-user-initialization-bc !important;
+    color: #fff !important;
   }
 
-  .shepherd-text, .shepherd-step-counter {
+  .shepherd-text,
+  .shepherd-step-counter {
     font-weight: 300 !important;
     font-size: 14px !important;
   }
 
   .shepherd-step-counter {
-      color: #a7c6f9 !important;
+    color: $walkthrough-user-initialization-text-secondary !important;
     font-size: 13px !important;
   }
 
   .shepherd-button {
-      background-color: transparent !important;
-      text-transform: uppercase;
+    background-color: transparent !important;
+    text-transform: uppercase;
+    font-size: 14px !important;
 
     &.shepherd-button-secondary {
-      color: #a7c6f9 !important;
+      color: $walkthrough-user-initialization-text-secondary !important;
+    }
+
+    &.shepherd-button-primary {
+      font-weight: 500 !important;
+      color: #fff !important;
     }
 
     &.shepherd-button-gotit {
