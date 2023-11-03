@@ -10,7 +10,6 @@ export class LoadingInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler) {
         this._loadingService._loadingSubject.next(true);
 
-        // extend server response observable with logging
         return next.handle(req)
             .pipe(
                 // Log when response observable either completes or errors
