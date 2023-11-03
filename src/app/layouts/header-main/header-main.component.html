@@ -1,4 +1,4 @@
-<mat-toolbar class="topbar" [ngStyle]="isLoading ? { height: '46px' } : {}">
+<mat-toolbar class="topbar">
   <!-- <app-branding></app-branding> -->
 
   <!-- --------------------------------------------------------------- -->
@@ -207,5 +207,8 @@
 </mat-toolbar>
 
 <ng-container *ngIf="isLoading">
-  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  <mat-progress-bar
+    mode="indeterminate"
+    id="global-loading-progress-bar"
+  ></mat-progress-bar>
 </ng-container>

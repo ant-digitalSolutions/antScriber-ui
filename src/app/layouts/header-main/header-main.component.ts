@@ -1,4 +1,4 @@
-import { CommonModule, NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterModule } from '@angular/router';
@@ -19,7 +19,7 @@ import { BrandingComponent } from '../full/vertical/sidebar/branding.component';
   templateUrl: './header-main.component.html',
   styleUrls: ['./header-main.component.scss'],
   standalone: true,
-  imports: [RouterModule, NgScrollbarModule, TablerIconsModule, MaterialModule, BrandingComponent, NgFor, NgIf, AppSearchDialogComponent, CommonModule],
+  imports: [RouterModule, NgScrollbarModule, TablerIconsModule, MaterialModule, BrandingComponent, NgFor, NgIf, AppSearchDialogComponent],
 })
 export class HeaderMainComponent {
   @Input() showToggle = true;

@@ -112,3 +112,13 @@ $walkthrough-user-initialization-text-secondary: #e4a1cf;
     }
   }
 }
+
+// global loading
+#global-loading-progress-bar {
+  position: absolute;
+  top: 50px;
+  bottom: auto;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
