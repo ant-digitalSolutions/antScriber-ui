@@ -42,6 +42,7 @@ export class DocumentListComponent implements OnInit, OnDestroy {
   @ViewChild('docsTableInnerContainer') tableInnerContainerRef: ElementRef;
   @ViewChild('docsTableOuterContainer') tableOuterContainerRef: ElementRef;
 
+
   constructor(
     private _docService: DocumentService,
     private _projectService: BlogProjectsService,
@@ -49,6 +50,7 @@ export class DocumentListComponent implements OnInit, OnDestroy {
     private activeRoute: ActivatedRoute,
     private _dialogService: DialogService,
     public _matDialog: MatDialog) { }
+
 
   ngOnInit(): void {
     this.setListeners();
@@ -66,6 +68,7 @@ export class DocumentListComponent implements OnInit, OnDestroy {
       if (elements) {
         this.tableElementsToRender = elements;
         this.dataSource = new MatTableDataSource<WizardTableElement>(this.tableElementsToRender);
+
       }
     });
 

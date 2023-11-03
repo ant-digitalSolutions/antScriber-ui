@@ -185,7 +185,11 @@
       </mat-paginator> -->
   </div>
 
-  <div class="add-new-element-container" *ngIf="showAddElementsBtn">
+  <div
+    class="add-new-element-container"
+    [ngClass]="{ hide: showAddElementsBtn === false }"
+    #btnAddElements
+  >
     <button
       mat-fab
       color="light"

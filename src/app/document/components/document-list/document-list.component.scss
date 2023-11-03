@@ -110,18 +110,51 @@ mat-header-cell {
   left: auto;
   right: min(8%, 50px);
   bottom: 3%;
+  animation: fade-in 1s;
+
+  display: block;
+
+  .btn-add-elements {
+    height: 50px;
+    padding: 0;
+    max-width: 50px;
+    min-width: 50px;
+    // animation: fade-in 1s;
+
+    .mat-icon {
+      font-weight: 600 !important;
+      font-size: 28px;
+      height: 28px;
+      width: 28px;
+      // animation: fade-in 1s;
+    }
+  }
+
+  &.hide {
+    animation: fade-out 1s;
+    display: none;
+
+    .btn-add-elements {
+      .mat-icon {
+      }
+    }
+  }
 }
 
-.btn-add-elements {
-  height: 50px;
-  padding: 0;
-  max-width: 50px;
-  min-width: 50px;
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
-  .mat-icon {
-    font-weight: 600 !important;
-    font-size: 28px;
-    height: 28px;
-    width: 28px;
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
