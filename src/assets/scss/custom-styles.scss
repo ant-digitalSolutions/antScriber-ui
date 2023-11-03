@@ -68,51 +68,6 @@ $walkthrough-user-initialization-text-secondary: #e4a1cf;
   }
 }
 
-// helpers
-// .btn-success {
-//   background-color: $primary !important;
-//   color: $white !important;
-//   font-weight: 500 !important;
-// }
-
-// dialogs styles
-
-.mat-mdc-dialog-container {
-  .dialog-inner-container {
-    background-color: $plum;
-    padding: 15px 25px 5px 25px;
-
-    .mat-mdc-dialog-title {
-      color: $light !important;
-      padding: 0;
-      display: flex;
-    }
-
-    .mat-mdc-dialog-content {
-      padding: 0;
-      padding-top: 10px;
-    }
-
-    .mat-mdc-dialog-actions {
-      padding: 0;
-      justify-content: flex-end;
-      button {
-        background-color: transparent !important;
-        color: $white;
-
-        &.btn-primary {
-          font-weight: 600;
-          color: $plum-primary-text-color;
-        }
-
-        &.btn-secondary {
-          color: $plum-secondary-text-color;
-        }
-      }
-    }
-  }
-}
-
 // global loading
 #global-loading-progress-bar {
   position: absolute;
@@ -142,11 +97,4 @@ $walkthrough-user-initialization-text-secondary: #e4a1cf;
   //   background-color: $plum;
   //   color: $plum;
   // }
-}
-
-// menu styles
-.menu-add-new-docs-folder {
-  padding: 10px !important;
-  border-radius: 15px !important;
-  margin-bottom: 5px !important;
 }
