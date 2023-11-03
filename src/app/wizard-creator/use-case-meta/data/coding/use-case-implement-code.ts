@@ -25,7 +25,7 @@ export class UseCase_Coding_ImplementCode extends UseCaseMetaAbstract {
         const fields: TextFieldToRenderData[] = [];
 
         fields.push({
-            placeholder: 'The specific programming language for the code. [E.g., "Python"]',
+            placeholder: 'E.g. Python',
             fieldLabel: 'Programming Lang',
             fieldValue: '',
             validators: [Validators.required(), Validators.maxLength(20)],
@@ -34,7 +34,7 @@ export class UseCase_Coding_ImplementCode extends UseCaseMetaAbstract {
         })
 
         fields.push({
-            placeholder: 'If any, specific framework is to be used. [E.g., "Django"]',
+            placeholder: 'E.g.: Django',
             fieldLabel: 'Framework',
             fieldValue: '',
             validators: [Validators.maxLength(20)],
