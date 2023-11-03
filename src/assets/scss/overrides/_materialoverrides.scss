@@ -318,13 +318,10 @@ input.mat-input-element {
     color: $light !important;
     padding: 0;
     display: flex;
+    font-size: 1rem !important;
   }
 
   .mat-mdc-dialog-content {
-    // padding: 0;
-    // padding-top: 10px;
-    // border-radius: 20px !important;
-    // background-color: transparent !important;
     color: $light !important;
     padding: 0 !important;
   }
@@ -335,10 +332,10 @@ input.mat-input-element {
     button {
       background-color: transparent !important;
       color: $white;
-      font-weight: 300;
+      font-weight: 500;
 
       &:last-child {
-        font-weight: 600;
+        // font-weight: 600;
       }
 
       // &.btn-primary {
