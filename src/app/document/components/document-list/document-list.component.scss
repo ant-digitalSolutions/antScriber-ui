@@ -6,12 +6,16 @@ $paginator-height: 60px;
   width: 25px;
   background-color: transparent;
   .btn-mat-icon {
-    font-size: 20;
-    color: black;
+    font-size: 20px;
+    color: $plum;
+
+    &.dots-icon {
+      color: black !important;
+    }
   }
 
   .is-favorite {
-    color: rgb(207, 150, 60);
+    color: $plum;
   }
 }
 
@@ -21,16 +25,6 @@ mat-header-cell {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.mat-mdc-row .mat-mdc-cell {
-  border-bottom: 1px solid transparent;
-  border-top: 1px solid transparent;
-  cursor: pointer;
-}
-
-.mat-mdc-row:hover .mat-mdc-cell {
-  border-color: currentColor;
 }
 
 .demo-row-is-clicked {
@@ -61,7 +55,9 @@ mat-header-cell {
 }
 
 .folder-icon {
-  color: $plum !important;
+  color: #340641 !important;
+  font-size: 20px !important;
+  line-height: 23px;
 }
 
 .docs-table-outer-container {
@@ -96,8 +92,12 @@ mat-header-cell {
   max-width: 175px;
 
   .doc-text-name {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
+}
+
+.updated-at-text {
+  font-size: 0.85rem;
 }
 
 .hide-table-header {

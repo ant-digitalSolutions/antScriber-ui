@@ -1,7 +1,12 @@
 <div class="wizard-use-case-outer-container">
-  <div id="select-use-case-container" class="w-100" *ngIf="!showUseCases" [ngClass]="{'align-content-center': !selectedCase}">
+  <div
+    id="select-use-case-container"
+    class="w-100"
+    *ngIf="!showUseCases"
+    [ngClass]="{ 'align-content-center': !selectedCase }"
+  >
     <ng-container *ngIf="selectedCase">
-    <h2 id="selected-use-case-heading">{{ selectedCase }}</h2>
+      <h2 id="selected-use-case-heading">{{ selectedCase }}</h2>
     </ng-container>
     <button
       mat-raised-button
@@ -20,7 +25,9 @@
     class="use-cases-container d-flex justify-content-center flex-column align-items-center"
     *ngIf="showUseCases"
   >
-    <h4 class="align-self-start justify-self-start">Pick the task for your assistant:</h4>
+    <h4 class="align-self-start justify-self-start">
+      Pick the task for your assistant:
+    </h4>
     <mat-accordion class="w-100">
       <ng-container *ngFor="let group of useCasesGroups">
         <mat-expansion-panel

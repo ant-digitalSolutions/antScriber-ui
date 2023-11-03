@@ -27,7 +27,8 @@
           <mat-icon
             class="m-r-10 folder-icon"
             *ngIf="doc.isDocument; else folderIcon"
-            >description</mat-icon
+            fontSet="material-icons-outlined"
+            >article</mat-icon
           >
           <ng-template #folderIcon>
             <mat-icon class="m-r-10 folder-icon">folder</mat-icon>
@@ -81,7 +82,9 @@
           *matCellDef="let doc"
           class="mat-body-1 wizard-mat-cell-small"
         >
-          {{ doc.updatedAt | date : "short" }}
+          <span class="updated-at-text">
+            {{ doc.updatedAt | date : "short" }}</span
+          >
         </mat-cell>
       </ng-container>
 
@@ -137,7 +140,7 @@
           class="mat-body-1 wizard-mat-cell-small wizard-mat-cell-options"
         >
           <button class="btn-table" mat-mini-fab [matMenuTriggerFor]="menu">
-            <mat-icon class="btn-mat-icon">more_vert</mat-icon>
+            <mat-icon class="btn-mat-icon dots-icon">more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
             <button mat-button (click)="openRenameDialog(doc)">
@@ -203,13 +206,13 @@
     <mat-menu #menu="matMenu" class="menu-add-new-docs-folder">
       <button mat-button (click)="newFolder()">
         <mat-icon fontSet="material-icons-outlined" class="btn-mat-icon"
-          >folder</mat-icon
+          >create_new_folder</mat-icon
         >
         New Folder
       </button>
       <button mat-button (click)="newDocument()">
         <mat-icon class="btn-mat-icon" fontSet="material-icons-outlined"
-          >description</mat-icon
+          >post_add</mat-icon
         >
         New Document
       </button>
