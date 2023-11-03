@@ -1,15 +1,26 @@
-<div class="b-t-1 p-20 wizard-creator-form-outer-container p-t-0" *ngIf="dataReady">
-  <div class="wizard-form p-t-0 p-r-4" [ngClass]="{'p-r-4': !isMobile}">
+<div
+  class="b-t-1 p-20 wizard-creator-form-outer-container p-t-0"
+  *ngIf="dataReady"
+>
+  <div class="wizard-form p-t-0 p-r-4" [ngClass]="{ 'p-r-4': !isMobile }">
     <!-- ------------------------------------------------------------------------- -->
     <!-- Use Case Selector -->
     <!-- ------------------------------------------------------------------------- -->
-    <div class="use-case-selector-container field-container m-y-20 col-12 m-b-32 p-x-0">
+    <div
+      class="use-case-selector-container field-container m-y-20 col-12 m-b-32 p-x-0"
+    >
       <app-wizard-use-cases-selector-home
         class="col-12 p-x-6"
       ></app-wizard-use-cases-selector-home>
     </div>
 
-    <div #formElements id="formElements" class="form-elements p-t-2" *ngIf="useCaseSelected" [ngClass]="{'mobile-view': isMobile }">
+    <div
+      #formElements
+      id="formElements"
+      class="form-elements p-t-2"
+      *ngIf="useCaseSelected"
+      [ngClass]="{ 'mobile-view': isMobile }"
+    >
       <!-- ------------------------------------------------------------------------- -->
       <!-- Variable Input Container -->
       <!-- ------------------------------------------------------------------------- -->
@@ -28,7 +39,9 @@
       <!-- Render the specific fields for the selected use-case -->
       <!-- ------------------------------------------------------------------------- -->
       <div class="field-container">
-        <use-case-dynamic-form-elements class="col-12"></use-case-dynamic-form-elements>
+        <use-case-dynamic-form-elements
+          class="col-12"
+        ></use-case-dynamic-form-elements>
       </div>
 
       <!-- ------------------------------------------------------------------------- -->
@@ -89,15 +102,18 @@
         <app-wizard-creator-selector-field
           [fieldData]="selectorData('creativityLevel')"
           *ngIf="checkIfFieldRender('creativityLevel')"
-          [ngClass]="checkIfFieldRender('amountOfVariants')? 'col-8' : 'col-12'"
+          [ngClass]="
+            checkIfFieldRender('amountOfVariants') ? 'col-8' : 'col-12'
+          "
         ></app-wizard-creator-selector-field>
       </div>
 
       <div class="reset-form-container d-flex align-items-center p-l-10">
-        <button mat-button (click)="resetForm()" class="btn-small">Reset Form</button>
+        <button mat-button (click)="resetForm()" class="btn-small">
+          Reset Form
+        </button>
       </div>
     </div>
-
   </div>
 
   <!-- ------------------------------------------------------------------------- -->
@@ -105,27 +121,27 @@
   <!-- ------------------------------------------------------------------------- -->
 
   <ng-container *ngIf="showGenerateBtn">
-  <div
-    class="wizard-generate-btn-container d-flex align-items-center justify-content-center"
-    [ngClass]="{'mobile-view': isMobile }"
-  >
-    <button
-      mat-flat-button
-      color="primary"
-      type="button"
-      [disabled]="isLoading"
-      class="wizard-generate-btn"
-      (click)="generateContent()"
+    <div
+      class="wizard-generate-btn-container d-flex align-items-center justify-content-center"
+      [ngClass]="{ 'mobile-view': isMobile }"
     >
-      <mat-icon *ngIf="!isLoading; else loading">rocket_launch</mat-icon>
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        [disabled]="isLoading"
+        class="wizard-generate-btn"
+        (click)="generateContent()"
+      >
+        <mat-icon *ngIf="!isLoading; else loading">rocket_launch</mat-icon>
 
-      <ng-template #loading>
-        <mat-spinner class="btn-loading-spinner"></mat-spinner>
-      </ng-template>
+        <ng-template #loading>
+          <mat-spinner class="btn-loading-spinner"></mat-spinner>
+        </ng-template>
 
-      Unleash
-    </button>
-  </div>
+        Unleash
+      </button>
+    </div>
   </ng-container>
 </div>
 <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->

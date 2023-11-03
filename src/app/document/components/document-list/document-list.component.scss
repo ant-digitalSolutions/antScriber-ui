@@ -104,3 +104,17 @@ mat-header-cell {
   right: min(8%, 50px);
   bottom: 3%;
 }
+
+.btn-add-elements {
+  height: 50px;
+  padding: 0;
+  max-width: 50px;
+  min-width: 50px;
+
+  .mat-icon {
+    font-weight: 600 !important;
+    font-size: 24px;
+    height: 24px;
+    width: 24px;
+  }
+}

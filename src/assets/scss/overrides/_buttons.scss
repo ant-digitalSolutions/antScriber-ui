@@ -11,11 +11,20 @@
 }
 
 .mdc-button {
-  border-radius: $border-radius;
+  border-radius: $btns-border-radius;
 }
 
 .mat-mdc-raised-button {
-  box-shadow: $cardshadow;
+  box-shadow: $btn-shadow;
+  -webkit-box-shadow: $btn-shadow;
+  -moz-box-shadow: $btn-shadow;
+
+  &:hover,
+  &:focus {
+    box-shadow: $btn-shadow-hover;
+    -webkit-box-shadow: $btn-shadow-hover;
+    -moz-box-shadow: $btn-shadow-hover;
+  }
 }
 
 .mat-mdc-fab,
@@ -25,6 +34,14 @@
 .mat-mdc-mini-fab:hover,
 .mat-mdc-mini-fab:focus {
   box-shadow: none;
+
+  &.with-shadow {
+    box-shadow: $btn-shadow;
+
+    &:hover {
+      box-shadow: $btn-shadow-hover;
+    }
+  }
 }
 
 .mat-button-toggle-button {
@@ -53,8 +70,8 @@
   padding: 8;
   padding: 8px 10px;
   border-radius: 12px;
-      font-weight: 300;
-    font-size: 12px;
+  font-weight: 300;
+  font-size: 12px;
 }
 
 .btn-warning {
@@ -63,7 +80,7 @@
 }
 
 /// wizard view
-/// 
+///
 .btn-use-case {
   .mdc-button__label {
     display: flex;
@@ -76,7 +93,6 @@
       margin-right: 10px;
     }
   }
-
 }
 
 .btn-menu-dots {

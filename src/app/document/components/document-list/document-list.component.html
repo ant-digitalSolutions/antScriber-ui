@@ -178,12 +178,13 @@
 
   <div class="add-new-element-container">
     <button
-      mat-fab
-      color="primary"
+      mat-raised-button
+      color="light"
       aria-label="Create new Folders and Documents"
       [matMenuTriggerFor]="menu"
+      class="with-shadow btn-add-elements"
     >
-      <mat-icon>add</mat-icon>
+      <mat-icon color="primary" class="f-w-600 m-0">add</mat-icon>
     </button>
 
     <mat-menu #menu="matMenu" class="menu-add-new-docs-folder">

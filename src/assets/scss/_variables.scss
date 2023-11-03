@@ -32,10 +32,11 @@ $darkthemelightsuccess: #1b3c48;
 $sidenav-desktop: 270px !default;
 $sidenav-mini: 80px !default;
 
-//BorderColor
+// borders
 $borderColor: #02020229;
 $borderformColor: #02020229;
 $border-radius: 30px;
+$btns-border-radius: 15px;
 
 // custom colors
 $caribbean: #127475;
@@ -113,7 +114,7 @@ $header-background-gradient: linear-gradient(
 
 // wizard creator
 $btn-create-container-bc: $background;
-$btn-create-color: $purple;
+$btn-create-color: $primary;
 
 // = use case btn selector
 $btn-uc-selector-height: 30px;
@@ -134,7 +135,8 @@ $label-fw: 400;
 $label-fc: $text-dark;
 
 // btns
-$btn-shadow: 1px 2px 5px 1px rgb(0 0 0 / 30%);
+$btn-shadow: 0px 3px 8px 1px rgb(0 0 0 / 30%);
+$btn-shadow-hover: 0px 6px 11px 1px rgb(0 0 0 / 33%);
 
 // tabs
 $tab-header-bc: $white;
