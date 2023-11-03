@@ -108,8 +108,8 @@ mat-header-cell {
   position: fixed;
   top: auto;
   left: auto;
-  right: min(8%, 50px);
-  bottom: 3%;
+  right: 50px;
+  bottom: 50px;
   animation: fade-in 1s;
 
   display: block;
@@ -119,13 +119,14 @@ mat-header-cell {
     padding: 0;
     max-width: 50px;
     min-width: 50px;
+    background-color: $light;
     // animation: fade-in 1s;
 
     .mat-icon {
       font-weight: 600 !important;
-      font-size: 28px;
-      height: 28px;
-      width: 28px;
+      font-size: 32px;
+      height: 32px;
+      width: 32px;
       // animation: fade-in 1s;
     }
   }
