@@ -206,6 +206,20 @@ export class DocumentListComponent implements OnInit, OnDestroy {
       });
   }
 
+  newDocument() {
+    this._dialogService.openDialogWithSingleInput('Create New Document', 'Document Name', '', 'Create').afterClosed().subscribe(result => {
+      if (result)
+        this._docService.create(result, '').subscribe();
+    });
+  }
+
+  newFolder() {
+    this._dialogService.openDialogWithSingleInput('Create New Folder', 'Folder Name', '', 'Create').afterClosed().subscribe(result => {
+      if (result)
+        this._docService.createFolder(result).subscribe();
+    });
+  }
+
   checkIfMobile() {
     this.isMobile = (window.innerWidth < 960);
     if (this.isMobile) {

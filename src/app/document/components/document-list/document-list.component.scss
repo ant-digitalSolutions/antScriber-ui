@@ -64,12 +64,13 @@ mat-header-cell {
   color: $plum !important;
 }
 
-.docs-table-container {
+.docs-table-outer-container {
   // max-height: calc(100dvh - $header-height - $inner-navbar-height);
-  height: calc(100dvh);
+  // height: calc(100dvh);
 
   overflow: auto;
   position: relative;
+  padding-bottom: 35px;
 }
 
 .docs-table-paginator {
@@ -94,4 +95,12 @@ mat-header-cell {
 
 .hide-table-header {
   display: none;
+}
+
+.add-new-element-container {
+  position: fixed;
+  top: auto;
+  left: auto;
+  right: min(8%, 50px);
+  bottom: 3%;
 }

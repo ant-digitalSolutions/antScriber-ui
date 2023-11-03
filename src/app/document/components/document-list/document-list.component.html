@@ -1,5 +1,5 @@
-<div class="docs-table-container">
-  <div class="table-responsive docs-table-container">
+<div class="docs-table-outer-container">
+  <div class="table-responsive docs-table-inner-container">
     <mat-table #table [dataSource]="dataSource" *ngIf="tableElementsToRender">
       <!-- Name Column -->
       <ng-container matColumnDef="name">
@@ -36,29 +36,6 @@
         </mat-cell>
       </ng-container>
 
-      <!-- documentsCount Column -->
-      <!-- <ng-container matColumnDef="documentsCount">
-        <mat-header-cell
-          *matHeaderCellDef
-          class="f-w-600 mat-subtitle-1 f-s-14 wizard-mat-cell-small"
-        >
-          Documents
-        </mat-header-cell>
-        <mat-cell
-          class="table-cell-content"
-          *matCellDef="let doc"
-          class="mat-body-1 wizard-mat-cell-small"
-        >
-          <span
-            class="bg-light-accent text-primary rounded f-w-600 p-6 p-y-4 f-s-12"
-            *ngIf="doc.documentsCount; else noWords"
-            >{{ doc.documentsCount }}</span
-          >
-
-          <ng-template #noWords>-</ng-template>
-        </mat-cell>
-      </ng-container> -->
-
       <!--Primary Keyword Column -->
       <ng-container matColumnDef="words">
         <mat-header-cell
@@ -81,25 +58,6 @@
           <ng-template #noWords>-</ng-template>
         </mat-cell>
       </ng-container>
-
-      <!--Secondary Keyword Column -->
-      <!-- <ng-container matColumnDef="secondary-keywords">
-          <mat-header-cell
-            *matHeaderCellDef
-            class="f-w-600 mat-subtitle-1 f-s-14 wizard-mat-cell-small"
-          >
-            Secondary Keywords
-          </mat-header-cell>
-          <mat-cell class="table-cell-content" *matCellDef="let doc" class="mat-body-1 wizard-mat-cell-small">
-            <div *ngIf="doc.secondaryKeywords">
-              <span
-                class="bg-light-accent text-accent rounded f-w-600 p-6 p-y-4 f-s-12"
-                *ngFor="let sKey of doc.secondaryKeywords"
-                >{{ sKey.name }}</span
-              >
-            </div></mat-cell
-          >
-        </ng-container> -->
 
       <!--StatusColumn -->
       <ng-container matColumnDef="updatedAt" *ngIf="!isMobile">
@@ -216,5 +174,31 @@
         class="docs-table-paginator"
       >
       </mat-paginator> -->
+  </div>
+
+  <div class="add-new-element-container">
+    <button
+      mat-fab
+      color="primary"
+      aria-label="Create new Folders and Documents"
+      [matMenuTriggerFor]="menu"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <button mat-button (click)="newFolder()">
+        <mat-icon fontSet="material-icons-outlined" class="btn-mat-icon"
+          >folder</mat-icon
+        >
+        New Folder
+      </button>
+      <button mat-button (click)="newDocument()">
+        <mat-icon class="btn-mat-icon" fontSet="material-icons-outlined"
+          >description</mat-icon
+        >
+        New Document
+      </button>
+    </mat-menu>
   </div>
 </div>
