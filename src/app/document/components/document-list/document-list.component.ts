@@ -1,6 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -38,6 +37,10 @@ export class DocumentListComponent implements OnInit, OnDestroy {
   selectedProjectId: number;
 
   isMobile = false;
+  showAddElementsBtn = true;
+
+  @ViewChild('docsTableInnerContainer') tableInnerContainerRef: ElementRef;
+  @ViewChild('docsTableOuterContainer') tableOuterContainerRef: ElementRef;
 
   constructor(
     private _docService: DocumentService,
@@ -76,22 +79,7 @@ export class DocumentListComponent implements OnInit, OnDestroy {
     })
   }
 
-  /**
- * Set the paginator after the view init since this component will
- * be able to query its view for the initialized paginator.
- */
-  ngAfterViewInit(): void {
-    // this.dataSource.paginator = this.paginator;
-  }
 
-  handlePageEvent(e: PageEvent) {
-    this.pageSize = e.pageSize;
-    this.pageIndex = e.pageIndex;
-  }
-
-  starDoc(_t47: any) {
-    throw new Error('Method not implemented.');
-  }
 
   documentRowSelected(tableElement: WizardTableElement) {
     const existingQueryParams = this.activeRoute.snapshot.queryParams;
@@ -224,6 +212,17 @@ export class DocumentListComponent implements OnInit, OnDestroy {
     this.isMobile = (window.innerWidth < 960);
     if (this.isMobile) {
       this.displayedColumns = ['name', 'menuDots'];
+    }
+  }
+
+  onScrollTableInnerScroll() {
+    const scrollPosition = this.tableInnerContainerRef.nativeElement.scrollTop;
+    const percent = (this.tableInnerContainerRef.nativeElement.scrollHeight - scrollPosition) / this.tableOuterContainerRef.nativeElement.clientHeight;
+
+    if (percent < 1.10) {
+      this.showAddElementsBtn = false;
+    } else {
+      this.showAddElementsBtn = true;
     }
   }
 

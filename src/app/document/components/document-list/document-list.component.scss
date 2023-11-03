@@ -66,11 +66,18 @@ mat-header-cell {
 
 .docs-table-outer-container {
   // max-height: calc(100dvh - $header-height - $inner-navbar-height);
-  // height: calc(100dvh);
 
-  overflow: auto;
   position: relative;
-  padding-bottom: 35px;
+  height: 100%;
+
+  .docs-table-inner-container {
+    overflow: auto;
+    height: calc(100dvh - $header-height - $inner-navbar-height);
+
+    .mat-mdc-table {
+      padding-bottom: 60px;
+    }
+  }
 }
 
 .docs-table-paginator {

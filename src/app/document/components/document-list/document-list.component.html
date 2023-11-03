@@ -1,6 +1,15 @@
-<div class="docs-table-outer-container">
-  <div class="table-responsive docs-table-inner-container">
-    <mat-table #table [dataSource]="dataSource" *ngIf="tableElementsToRender">
+<div class="docs-table-outer-container" #docsTableOuterContainer>
+  <div
+    class="table-responsive docs-table-inner-container"
+    (scroll)="onScrollTableInnerScroll()"
+    #docsTableInnerContainer
+  >
+    <mat-table
+      #table
+      [dataSource]="dataSource"
+      *ngIf="tableElementsToRender"
+      class="docs-table"
+    >
       <!-- Name Column -->
       <ng-container matColumnDef="name">
         <mat-header-cell
@@ -176,7 +185,7 @@
       </mat-paginator> -->
   </div>
 
-  <div class="add-new-element-container">
+  <div class="add-new-element-container" *ngIf="showAddElementsBtn">
     <button
       mat-fab
       color="light"
