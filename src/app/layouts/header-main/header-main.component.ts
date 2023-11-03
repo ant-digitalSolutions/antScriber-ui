@@ -9,6 +9,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { BlogProjectDetailsDto } from 'src/app/blogger/dto/blog-project-details.dto';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
+import { LoadingService } from 'src/app/common/services/loading.service';
 import { MaterialModule } from 'src/app/material.module';
 import { AppSearchDialogComponent } from '../full/vertical/header/header.component';
 import { BrandingComponent } from '../full/vertical/sidebar/branding.component';
@@ -65,6 +66,7 @@ export class HeaderMainComponent {
       icon: '/assets/images/flag/icon-flag-de.svg',
     },
   ];
+  isLoading: boolean;
 
   constructor(
     public dialog: MatDialog,
@@ -72,11 +74,21 @@ export class HeaderMainComponent {
     private authService: AuthService,
     private router: Router,
     private blogProjectService: BlogProjectsService,
+    private _loadingService: LoadingService
   ) {
     translate.setDefaultLang('en');
   }
 
   ngOnInit(): void {
+    this.setListeners()
+  }
+
+  ngOnDestroy() {
+    this.componentDestroyed$.next(true)
+    this.componentDestroyed$.complete()
+  }
+
+  setListeners() {
     this.blogProjectService.blogProjects$.pipe(takeUntil(this.componentDestroyed$)).subscribe(projects => {
       this.blogProjects = projects;
       if (!this.selectedBlogProjectId && projects.length > 0) {
@@ -84,11 +96,9 @@ export class HeaderMainComponent {
         this.blogProjectService.selectedProjectId = this.selectedBlogProjectId;
       }
     });
-  }
 
-  ngOnDestroy() {
-    this.componentDestroyed$.next(true)
-    this.componentDestroyed$.complete()
+    this._loadingService.loadingEvent$.pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(isLoading => this.isLoading = isLoading)
   }
 
   openDialog() {
