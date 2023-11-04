@@ -220,9 +220,12 @@ export class DocumentListComponent implements OnInit, OnDestroy {
 
   onScrollTableInnerScroll() {
     const scrollPosition = this.tableInnerContainerRef.nativeElement.scrollTop;
-    const percent = (this.tableInnerContainerRef.nativeElement.scrollHeight - scrollPosition) / this.tableOuterContainerRef.nativeElement.clientHeight;
+    const outerHeight = this.tableOuterContainerRef.nativeElement.clientHeight;
+    const innerHeight = this.tableInnerContainerRef.nativeElement.scrollHeight;
+    const percent = (innerHeight - scrollPosition) / outerHeight;
 
-    if (percent < 1.10) {
+
+    if (scrollPosition > 5 && percent < 1.10) {
       this.showAddElementsBtn = false;
     } else {
       this.showAddElementsBtn = true;
