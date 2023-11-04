@@ -99,13 +99,13 @@ export class DocumentService {
         // navigate to the edition view after creating a new doc
         this.navigateToDocumentEditionView(r.data!.uuid);
         this._snackBar.open('Document created', undefined, {
-          duration: 1000,
+          duration: 2000,
           panelClass: 'snack-success'
         });
 
       } else {
         this._snackBar.open('Error', 'Report', {
-          duration: 1000,
+          duration: 2000,
           panelClass: 'snack-error'
         });
       }
@@ -116,12 +116,12 @@ export class DocumentService {
     return this.http.put<IRequestResponse<DocumentDetailsDto>>(`${this.baseUrl}/${docId}`, doc).pipe(tap(r => {
       if (r.success) {
         // this._snackBar.open('Document updated', undefined, {
-        //   duration: 1000,
+        //   duration: 2000,
         //   panelClass: 'snack-success'
         // });
       } else {
         this._snackBar.open('Error', 'Report', {
-          duration: 1000,
+          duration: 2000,
           panelClass: 'snack-error'
         });
       }
@@ -132,12 +132,12 @@ export class DocumentService {
     return this.http.delete<IRequestResponse<boolean>>(`${this.baseUrl}/${docId}`).pipe(tap(r => {
       if (r.success) {
         this._snackBar.open('Document deleted', undefined, {
-          duration: 1000,
+          duration: 2000,
           panelClass: 'snack-success'
         });
       } else {
         this._snackBar.open('Error deleting the document', 'Report', {
-          duration: 1000,
+          duration: 2000,
           panelClass: 'snack-error'
         });
       }
@@ -151,12 +151,12 @@ export class DocumentService {
     return this.http.put<IRequestResponse<DocumentDetailsDto>>(`${this.baseUrl}/${docUUId}`, doc).pipe(tap(r => {
       if (r.success) {
         this._snackBar.open('Document updated', undefined, {
-          duration: 1000,
+          duration: 2000,
           panelClass: 'snack-success'
         });
       } else {
         this._snackBar.open('Error', 'Report', {
-          duration: 1000,
+          duration: 2000,
           panelClass: 'snack-error'
         });
       }
@@ -201,7 +201,7 @@ export class DocumentService {
         }
       } else {
         this._snackBar.open('Error', 'Report', {
-          duration: 1000,
+          duration: 2000,
           panelClass: 'snack-error'
         });
       }
@@ -218,7 +218,7 @@ export class DocumentService {
           this._documentInEditionData = r.data!;
         } else {
           this._snackBar.open('Error', 'Report', {
-            duration: 1000,
+            duration: 2000,
             panelClass: 'snack-error'
           });
         }
@@ -244,7 +244,7 @@ export class DocumentService {
         this.navigateToFolderView(r.data!.uuid);
       } else {
         this._snackBar.open('Error', 'Report', {
-          duration: 1000,
+          duration: 2000,
           panelClass: 'snack-error'
         });
       }
@@ -340,7 +340,7 @@ export class DocumentService {
         this._availableFolders.next(r.data)
       } else {
         this._snackBar.open('Error', 'Report', {
-          duration: 1000,
+          duration: 2000,
           panelClass: 'snack-error'
         });
       }
@@ -353,12 +353,12 @@ export class DocumentService {
     }).pipe(tap(r => {
       if (r.success) {
         this._snackBar.open('Document updated', undefined, {
-          duration: 1000,
+          duration: 2000,
           panelClass: 'snack-success'
         });
       } else {
         this._snackBar.open('Error', 'Report', {
-          duration: 1000,
+          duration: 2000,
           panelClass: 'snack-error'
         });
       }
@@ -369,12 +369,12 @@ export class DocumentService {
     return this.http.delete<IRequestResponse<boolean>>(`${this.baseUrl}/delete-folder/${folderUUID}`).pipe(tap(r => {
       if (r.success) {
         this._snackBar.open('Folder deleted', undefined, {
-          duration: 1000,
+          duration: 2000,
           panelClass: 'snack-success'
         });
       } else {
         this._snackBar.open('Error deleting the folder', 'Report', {
-          duration: 1000,
+          duration: 2000,
           panelClass: 'snack-error'
         });
       }
@@ -389,12 +389,12 @@ export class DocumentService {
     return this.http.put<IRequestResponse<boolean>>(`${this.baseUrl}/update-folder/${folderUUID}`, folderUpdate).pipe(tap(r => {
       if (r.success) {
         this._snackBar.open('Folder updated', undefined, {
-          duration: 1000,
+          duration: 2000,
           panelClass: 'snack-success'
         });
       } else {
         this._snackBar.open('Error', 'Report', {
-          duration: 1000,
+          duration: 2000,
           panelClass: 'snack-error'
         });
       }

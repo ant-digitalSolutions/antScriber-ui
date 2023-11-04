@@ -358,3 +358,28 @@ input.mat-input-element {
     margin-bottom: 5px !important;
   }
 }
+
+// snack bars
+
+.mat-mdc-snack-bar-container {
+  .mdc-snackbar__surface {
+    border-radius: $btns-border-radius !important;
+  }
+  &.snack-error {
+    .mdc-snackbar__surface {
+      background-color: $error;
+    }
+  }
+
+  &.snack-warning {
+    .mdc-snackbar__surface {
+      background-color: $warning;
+    }
+  }
+
+  &.snack-success {
+    .mdc-snackbar__surface {
+      background-color: $success;
+    }
+  }
+}
