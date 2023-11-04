@@ -34,7 +34,7 @@
   -webkit-box-shadow: -3px -5px 20px 1px rgb(224 224 224 / 71%);
   -moz-box-shadow: -3px -5px 20px 1px rgb(224 224 224 / 71%);
   box-shadow: -3px -5px 20px 1px rgb(224 224 224 / 71%);
-  background-color: #fafafa;
+  background-color: rgb(224 224 224 / 24%);
   border-top: 1px solid #dededeba;
 
   .wizard-generate-btn {
@@ -66,7 +66,7 @@
     // left: 0;
     // right: 0;
     z-index: 99;
-    background-color: $btn-create-container-bc;
+    // background-color: $btn-create-container-bc;
     .wizard-generate-btn {
       width: auto;
       height: 50px;
