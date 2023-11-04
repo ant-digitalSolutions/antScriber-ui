@@ -65,8 +65,10 @@ export class WizardCreatorService {
           this._wizardCreatedContent.next(null);
         }
 
+        const gptVersionRaw = formData.data.gptVersion as string;
+        const gptVersion = gptVersionRaw.substring(gptVersionRaw.indexOf('(') + 1, gptVersionRaw.length - 1);
         this.$gaService.event('wizard_create_request', 'request_to_server', `${this._useCaseService._wizardUseCaseGroup}<->${this._useCaseService._wizardUseCase}`, wizardRequestElapsedTime / 1000);
-        this.$gaService.event('request_to_server_timing', `wizard_${this._useCaseService._wizardUseCaseGroup}<->${this._useCaseService._wizardUseCase}`, `${wizardRequestElapsedTime / 1000}`);
+        this.$gaService.event('request_to_server_timing', `${gptVersion}__${this._useCaseService._wizardUseCase}`, `${wizardRequestElapsedTime / 1000}`);
       }))
   }
 }

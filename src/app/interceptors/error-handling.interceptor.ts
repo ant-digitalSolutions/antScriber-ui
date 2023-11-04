@@ -1,18 +1,19 @@
-import { ToastrService } from 'ngx-toastr';
-import { Injectable } from '@angular/core';
 import {
-  HttpRequest,
-  HttpHandler,
+  HttpErrorResponse,
   HttpEvent,
+  HttpHandler,
   HttpInterceptor,
-  HttpErrorResponse
+  HttpRequest
 } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Observable, catchError, throwError } from 'rxjs';
 
 @Injectable()
 export class ErrorHandlingInterceptor implements HttpInterceptor {
 
-  constructor(private toastr: ToastrService) {}
+  constructor(private _snackBar: MatSnackBar, protected $gaService: GoogleAnalyticsService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request)
@@ -20,15 +21,24 @@ export class ErrorHandlingInterceptor implements HttpInterceptor {
         catchError((error: HttpErrorResponse) => {
           let errorMsg = '';
           if (error.error instanceof ErrorEvent) {
-            console.log('This is client side error');
             errorMsg = `Error: ${error.error.message}`;
-            this.toastr.error(error.error.message, `Error`)
+            this._snackBar.open(`Oops, please try gain.`, undefined, {
+              duration: 4000,
+              panelClass: 'snack-error'
+            });
+            this.$gaService.event('client_exception', error.error.message)
           } else {
-            console.log('This is server side error');
             errorMsg = `Error Code: ${error.status},  Message: ${error.message}`;
-            this.toastr.error(error.message, `Request Error: ${error.status}`)
+
+            this._snackBar.open(`Oops, we have an error. Please try again.`, undefined, {
+              duration: 4000,
+              panelClass: 'snack-error'
+            });
+
+            this.$gaService.event('server_exception', error.status.toString(), error.message, -1, undefined, {
+              url: error.url
+            })
           }
-          console.log(errorMsg);
           return throwError(() => new Error(errorMsg));
         })
       )

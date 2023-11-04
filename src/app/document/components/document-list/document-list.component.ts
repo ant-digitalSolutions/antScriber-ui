@@ -2,6 +2,7 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Subject, takeUntil } from 'rxjs';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 import { DialogService } from 'src/app/dialogs/dialog.service';
@@ -49,7 +50,8 @@ export class DocumentListComponent implements OnInit, OnDestroy {
     private router: Router,
     private activeRoute: ActivatedRoute,
     private _dialogService: DialogService,
-    public _matDialog: MatDialog) { }
+    public _matDialog: MatDialog,
+    protected $gaService: GoogleAnalyticsService,) { }
 
 
   ngOnInit(): void {
@@ -87,6 +89,12 @@ export class DocumentListComponent implements OnInit, OnDestroy {
   documentRowSelected(tableElement: WizardTableElement) {
     const existingQueryParams = this.activeRoute.snapshot.queryParams;
 
+    if (tableElement.isDocument)
+      this.$gaService.event('docs_open_document');
+    else {
+      this.$gaService.event('docs_open_folder');
+    }
+
     const newQueryParams = tableElement.isDocument ?
       {
         ...existingQueryParams,
@@ -106,6 +114,8 @@ export class DocumentListComponent implements OnInit, OnDestroy {
   }
 
   setAsFavorite(tableElement: WizardTableElement): void {
+    this.$gaService.event('docs_table_set_favorite');
+
     if (tableElement.isDocument) {
       const docIsFavorite = tableElement.isFavorite!;
 
@@ -122,6 +132,7 @@ export class DocumentListComponent implements OnInit, OnDestroy {
   }
 
   openDeleteDialog(doc: WizardTableElement) {
+    this.$gaService.event('docs_table_element_options', 'delete_element', 'open_dialog');
     const dialogMessage = doc.isDocument ?
       'Are you sure you want to permanently delete this document?' :
       'Are you sure you want to delete this folder and its documents?'
@@ -133,12 +144,15 @@ export class DocumentListComponent implements OnInit, OnDestroy {
       .afterClosed()
       .subscribe(r => {
         if (r) {
+          this.$gaService.event('docs_table_element_options', 'delete_element', 'confirm');
+
           if (doc.isDocument) {
             this._docService.deleteDoc(doc.uuid).subscribe(r => {
               if (r.success) {
                 this.removeElementFromTable(doc.uuid)
               }
             });
+
           }
           else {
             this._docService.deleteFolder(doc.uuid).subscribe(r => {
@@ -148,10 +162,12 @@ export class DocumentListComponent implements OnInit, OnDestroy {
             })
           }
         }
+        this.$gaService.event('docs_table_element_options', 'delete_element', 'cancel');
       })
   }
 
   openMoveDialog(doc: WizardTableElement) {
+    this.$gaService.event('docs_table_element_options', 'move_element', 'open_dialog');
     this._docService.listFolders(this.selectedProjectId)
       .subscribe()
 
@@ -163,12 +179,17 @@ export class DocumentListComponent implements OnInit, OnDestroy {
       .afterClosed()
       .subscribe(r => {
         if (r) {
+          this.$gaService.event('docs_table_element_options', 'move_element', 'confirm');
           this.removeElementFromTable(doc.uuid);
         }
+        this.$gaService.event('docs_table_element_options', 'move_element', 'cancel');
+
       })
   }
 
   openRenameDialog(tableElement: WizardTableElement) {
+    this.$gaService.event('docs_table_element_options', 'rename_element', 'open_dialog');
+
     this._dialogService.openDialogWithSingleInput_v2(
       {
         title: tableElement.isDocument ? 'Rename Document' : ' Rename Folder',
@@ -180,6 +201,7 @@ export class DocumentListComponent implements OnInit, OnDestroy {
       .afterClosed()
       .subscribe(result => {
         if (result) {
+          this.$gaService.event('docs_table_element_options', 'rename_element', 'confirm');
           if (tableElement.isDocument) {
             this._docService.update(tableElement.uuid, { name: result }).subscribe(r => {
               if (r) {
@@ -194,10 +216,14 @@ export class DocumentListComponent implements OnInit, OnDestroy {
             });
           }
         }
+        this.$gaService.event('docs_table_element_options', 'rename_element', 'cancel');
+
+
       });
   }
 
   newDocument() {
+    this.$gaService.event('docs_add_new_element', 'new_document_click');
     this._dialogService.openDialogWithSingleInput('Create New Document', 'Document Name', '', 'Create').afterClosed().subscribe(result => {
       if (result)
         this._docService.create(result, '').subscribe();
@@ -205,6 +231,8 @@ export class DocumentListComponent implements OnInit, OnDestroy {
   }
 
   newFolder() {
+    this.$gaService.event('docs_add_new_element', 'new_folder_click');
+
     this._dialogService.openDialogWithSingleInput('Create New Folder', 'Folder Name', '', 'Create').afterClosed().subscribe(result => {
       if (result)
         this._docService.createFolder(result).subscribe();
@@ -230,6 +258,15 @@ export class DocumentListComponent implements OnInit, OnDestroy {
     } else {
       this.showAddElementsBtn = true;
     }
+  }
+
+  clickOnAddElementBtn() {
+    this.$gaService.event('docs_add_new_element', 'floating_btn_click');
+  }
+
+  clickOnTableElementActionBtn() {
+    this.$gaService.event('docs_table_element_options', 'options_btn_click');
+
   }
 
   private removeElementFromTable(elementUUID: string) {
