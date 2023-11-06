@@ -10,8 +10,6 @@
   }
 }
 
-
-
 // user profile
 .user-profile {
   position: relative;
@@ -76,7 +74,7 @@
   }
   .sidebarNav {
     width: $sidenav-mini;
-    
+
     .profile-bar {
       display: none;
     }
@@ -95,7 +93,7 @@
     &:hover {
       width: $sidenav-desktop;
       .mini-scroll {
-        height: calc(100vh - 230px) !important;
+        height: calc(100dvh) !important;
       }
       .profile-bar {
         display: block;
@@ -108,7 +106,6 @@
           }
           .mdc-list-item__start {
             margin-left: 0 !important;
-          
           }
         }
         &.mdc-list {
@@ -141,7 +138,6 @@
     transition: swift-ease-out(width);
   }
 }
-
 
 @media (min-width: 1024px) {
   .sidebarNav-mini {
@@ -193,7 +189,7 @@
         justify-content: center;
         font-size: 12px;
       }
-      &.activeMenu {
+      &.is-active {
         .mdc-list-item__primary-text {
           color: $white !important;
         }
@@ -201,6 +197,8 @@
         .mat-mdc-list-item-icon {
           color: $white !important;
         }
+
+        background-color: $plum !important;
       }
 
       .mdc-list-item__start {
@@ -215,7 +213,7 @@
       .mdc-list-item__primary-text {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: flex-start;
 
         .arrow-icon {
           display: flex;

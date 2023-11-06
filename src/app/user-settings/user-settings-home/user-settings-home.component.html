@@ -1,5 +1,7 @@
 <div autosize autoFocus class="user-settings-outer-container">
-  <app-user-settings-navbar></app-user-settings-navbar>
+  <div class="us-navbar-outer-container">
+    <app-user-settings-navbar></app-user-settings-navbar>
+  </div>
   <mat-sidenav-container [hasBackdrop]="'false'">
     <!-- ============================================================== -->
     <!-- horizontal Sidebar -->
@@ -7,17 +9,17 @@
     <mat-sidenav
       #leftsidenav
       [mode]="sidebarMode"
-      [opened]="(options.sidenavOpened && !isTablet) || true"
+      [opened]="options.sidenavOpened || !isMobileScreen"
       *ngIf="resView"
       (openedChange)="onSidenavOpenedChange($event)"
       (closedStart)="onSidenavClosedStart()"
-      class="sidebarNav"
+      class="sidebarNav shadow-none b-r-1 bg-light"
     >
       <ng-scrollbar
         class="position-relative mini-scroll"
-        style="height: calc(100dvh - 230px)"
+        style="height: calc(100dvh)"
       >
-        <mat-nav-list class="sidebar-list">
+        <mat-nav-list class="sidebar-list p-t-32">
           <app-nav-item
             *ngFor="let item of navItems"
             [item]="item"
@@ -35,6 +37,7 @@
         [ngClass]="{
           maxWidth: options.boxed
         }"
+        class="p-32"
       >
         <!-- ============================================================== -->
         <!-- Outlet -->
