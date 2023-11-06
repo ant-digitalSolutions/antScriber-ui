@@ -24,7 +24,10 @@
           </div>
 
           <div class="row m-y-48 align-items-center justify-content-center">
-            <div class="logged-in-message-container" *ngIf="isLoggedIn && !showForm">
+            <div
+              class="logged-in-message-container"
+              *ngIf="isLoggedIn && !showForm"
+            >
               <p class="text-center">
                 You are currently logged in as
                 <span class="f-w-500"> {{ userEmail }}</span>
@@ -38,7 +41,10 @@
                 Continue
               </button>
 
-              <a class="d-block f-w-300 d-block m-t-24 text-center" (click)="signUpAsDifferentPerson()"  [routerLink]="['/auth/register']"
+              <a
+                class="d-block f-w-300 d-block m-t-24 text-center"
+                (click)="signUpAsDifferentPerson()"
+                [routerLink]="['/auth/register']"
                 >Sign Up as a different person?
               </a>
             </div>
@@ -78,7 +84,7 @@
             </div> -->
           </div>
 
-          <div class="or-border m-t-30" *ngIf="showForm">OR</div>
+          <div class="text-center m-t-30" *ngIf="showForm">OR</div>
 
           <ng-container *ngIf="hasInvalidCredentials">
             <div class="error-message-container">

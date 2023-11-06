@@ -2,7 +2,10 @@
   class="blank-layout-container justify-content-center align-items-center bg-gredient h-100"
 >
   <div class="position-relative row w-100 h-100 justify-content-center">
-    <div class="col-lg-4 d-flex align-items-center p-t-16 p-b-48">
+    <div
+      class="col-lg-4 d-flex align-items-center p-t-16 p-b-48"
+      *ngIf="renderContent"
+    >
       <mat-card class="cardWithShadow boxed-auth">
         <mat-card-content class="p-32">
           <div class="col-12 p-0">
@@ -75,7 +78,7 @@
             </div> -->
           </div>
 
-          <div class="or-border m-y-48" *ngIf="!isLoggedIn">OR</div>
+          <div class="m-y-48 text-center" *ngIf="!isLoggedIn">OR</div>
 
           <form
             class="m-t-30"
@@ -170,7 +173,7 @@
             >Sign Up as a different Person?
             <a
               [routerLink]="['/auth/register']"
-              [queryParams]="{loginForceDisplayForm: 'true'}"
+              [queryParams]="{ loginForceDisplayForm: 'true' }"
               class="text-decoration-none text-primary f-w-500 f-s-14"
             >
               Sign Up</a

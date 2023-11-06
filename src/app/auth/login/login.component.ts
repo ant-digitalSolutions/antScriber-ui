@@ -20,11 +20,13 @@ export class LoginComponent implements OnInit {
 
   hasInvalidCredentials = false;
 
-  isLoading = false;
+  isLoading = true;
 
   appName = environment.appName;
 
   bigScreen = true;
+
+  renderContent = false;
 
   constructor(
     private settings: CoreService,
@@ -77,11 +79,17 @@ export class LoginComponent implements OnInit {
         this._projectService.refreshProjects().then(() => {
           window.history.replaceState(null, '', '/auth/login')
           this.router.navigateByUrl('/');
+
         })
         this.$gaService.event('user_login', 'user_logged_in', `provider_${provider}`);
+      } else {
+        this.isLoading = false;
+        this.renderContent = true;
       }
+    } else {
+      this.isLoading = false;
+      this.renderContent = true;
     }
-    this.isLoading = false;
   }
 
   submit() {
