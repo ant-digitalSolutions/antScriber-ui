@@ -1,0 +1,72 @@
+<div class="position-relative w-100 p-10 p-b-0">
+  <div class="d-flex align-items-center p-b-24 b-b-1 w-100">
+    <span class="d-flex align-items-center">
+      <i-tabler name="mail" class="icon-15 m-r-4"></i-tabler>
+      {{ userEmail }}
+    </span>
+  </div>
+  <!-- <div class="p-x-32">
+        <a
+          class="p-y-16 text-decoration-none d-block text-hover-primary"
+          [routerLink]="[profile.link]"
+          *ngFor="let profile of profiledd"
+        >
+          <div class="d-flex align-items-center">
+            <button
+              mat-mini-fab
+              class="text-primary bg-light-primary shadow-none rounded"
+            >
+              <img [src]="profile.img" width="20" />
+            </button>
+
+            <div class="m-l-16">
+              <h5
+                class="f-s-14 f-w-600 m-0 textprimary mat-subtitle-1 hover-text"
+              >
+                {{ profile.title }}
+              </h5>
+              <span class="mat-body-1">{{ profile.subtitle }}</span>
+            </div>
+          </div>
+        </a>
+
+        <div
+          class="p-24 overflow-hidden bg-light-primary rounded position-relative m-y-16"
+        >
+          <div class="d-flex align-items-center">
+            <div>
+              <h5 class="f-s-18 m-0 f-w-600 m-b-12">
+                Unlimited <br />
+                Access
+              </h5>
+              <button mat-flat-button color="primary">Upgrade</button>
+            </div>
+            <div class="m-l-auto">
+              <img
+                src="/assets/images/backgrounds/unlimited-bg.png"
+                alt="upgrade-bg"
+                class="upgrade-bg"
+              />
+            </div>
+          </div>
+        </div>
+      </div>-->
+
+  <div class="p-t-12">
+    <button
+      mat-flat-button
+      class="w-100 align-items-center justify-content-start h-40px"
+    >
+      <mat-icon fontSet="material-icons-outlined">settings</mat-icon>
+      Settings
+    </button>
+    <button
+      mat-flat-button
+      class="w-100 align-items-center justify-content-start h-40px"
+      (click)="signOut()"
+    >
+      <mat-icon fontSet="material-icons-outlined">logout</mat-icon>
+      Logout
+    </button>
+  </div>
+</div>

@@ -35,8 +35,8 @@ export class UserService {
 
 
   public get userDisplayName(): string | null {
-    if (this._jwtData) {
-      return this._jwtData.displayName;
+    if (this.userJwtData) {
+      return this.userJwtData.displayName;
     } else {
       return null;
     }
@@ -44,12 +44,12 @@ export class UserService {
 
 
   public get userEmail(): string | null {
-    return this._jwtData ? this._jwtData.email : null;
+    return this.userJwtData ? this.userJwtData.email : null;
   }
 
 
   public get userLastLoginProvider(): string | null {
-    return this._jwtData ? this._jwtData.lastLoginProvider : null;
+    return this.userJwtData ? this.userJwtData.lastLoginProvider : null;
   }
 
   public get userJwtData(): IJwtData | null {
