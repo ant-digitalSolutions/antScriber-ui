@@ -14,7 +14,7 @@ import {
   OnChanges,
   Output
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { MaterialModule } from 'src/app/material.module';
@@ -49,7 +49,7 @@ export class AppNavItemComponent implements OnChanges {
   @Input() item: NavItem | any;
   @Input() depth: any;
 
-  constructor(public navService: NavService, public router: Router) {
+  constructor(public navService: NavService, public router: Router, private route: ActivatedRoute) {
     if (this.depth === undefined) {
       this.depth = 0;
     }
@@ -68,7 +68,11 @@ export class AppNavItemComponent implements OnChanges {
 
   onItemSelected(item: NavItem) {
     if (!item.children || !item.children.length) {
-      this.router.navigate([item.route]);
+      if (!item.relativeRoute)
+        this.router.navigate([item.route]);
+      else {
+        this.router.navigate([item.route], { relativeTo: this.route })
+      }
     }
     if (item.children && item.children.length) {
       this.expanded = !this.expanded;
@@ -80,7 +84,7 @@ export class AppNavItemComponent implements OnChanges {
       behavior: 'smooth',
     });
     if (!this.expanded) {
-      if (window.innerWidth < 1024) {
+      if (window.innerWidth < 960) {
         this.notify.emit();
       }
     }

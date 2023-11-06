@@ -1,1 +1,46 @@
-<p>user-settings-home works!</p>
+<div autosize autoFocus class="user-settings-outer-container">
+  <app-user-settings-navbar></app-user-settings-navbar>
+  <mat-sidenav-container [hasBackdrop]="'false'">
+    <!-- ============================================================== -->
+    <!-- horizontal Sidebar -->
+    <!-- ============================================================== -->
+    <mat-sidenav
+      #leftsidenav
+      [mode]="sidebarMode"
+      [opened]="(options.sidenavOpened && !isTablet) || true"
+      *ngIf="resView"
+      (openedChange)="onSidenavOpenedChange($event)"
+      (closedStart)="onSidenavClosedStart()"
+      class="sidebarNav"
+    >
+      <ng-scrollbar
+        class="position-relative mini-scroll"
+        style="height: calc(100dvh - 230px)"
+      >
+        <mat-nav-list class="sidebar-list">
+          <app-nav-item
+            *ngFor="let item of navItems"
+            [item]="item"
+            (notify)="sidenav.toggle()"
+          >
+          </app-nav-item>
+        </mat-nav-list>
+      </ng-scrollbar>
+    </mat-sidenav>
+    <!-- ============================================================== -->
+    <!-- Main Content -->
+    <!-- ============================================================== -->
+    <mat-sidenav-content>
+      <main
+        [ngClass]="{
+          maxWidth: options.boxed
+        }"
+      >
+        <!-- ============================================================== -->
+        <!-- Outlet -->
+        <!-- ============================================================== -->
+        <router-outlet></router-outlet>
+      </main>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

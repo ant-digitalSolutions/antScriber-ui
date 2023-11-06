@@ -13,11 +13,7 @@
   class="menu-list-item"
   *ngIf="!item.navCap && !item.external && !item.twoLines"
 >
-  <i-tabler
-    name="{{ item.iconName }}"
-    class="routeIcon"
-    matListItemIcon
-  ></i-tabler>
+  <mat-icon>{{ item.iconName }}</mat-icon>
   <span class="hide-menu">{{ item.displayName | translate }}</span>
   <span class="arrow-icon" fxFlex *ngIf="item.children && item.children.length">
     <span fxFlex></span>
