@@ -38,6 +38,10 @@ mat-header-cell {
   align-items: center;
   justify-content: center;
 
+  @media (max-width: 959px) {
+    max-width: 50px !important;
+  }
+
   &.wizard-mat-cell-options {
     justify-content: flex-end;
   }
