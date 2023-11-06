@@ -58,7 +58,7 @@ mat-tab-group {
 
 .text-area-custom-element {
   .mdc-text-field {
-    border-radius: 20px !important;
+    border-radius: $border-radius !important;
 
     .mat-mdc-form-field > .mat-mdc-form-field-infix {
       min-height: 75px !important;
@@ -93,7 +93,7 @@ mat-tab-group {
 
   .mdc-text-field {
     border: 1px solid $borderColor;
-    border-radius: 40px;
+    border-radius: $border-radius;
     background-color: #fff !important;
 
     &.mdc-text-field--focused {
@@ -169,7 +169,7 @@ input.mat-input-element {
 
   .mdc-text-field {
     border: none;
-    border-radius: 40px;
+    border-radius: $border-radius;
     background-color: #fff !important;
   }
 }
@@ -308,7 +308,7 @@ input.mat-input-element {
 
   .mat-mdc-dialog-surface {
     --mdc-dialog-container-color: $plum !important;
-    border-radius: 20px !important;
+    border-radius: $border-radius !important;
 
     background-color: $plum !important;
     padding: 15px 25px 5px 25px;
@@ -382,4 +382,9 @@ input.mat-input-element {
       background-color: $success;
     }
   }
+}
+
+// selectors menu-surface
+.mat-mdc-select-panel {
+  border-radius: $border-radius !important;
 }

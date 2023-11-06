@@ -33,3 +33,9 @@
     border: 0 !important;
   }
 }
+
+.mdc-checkbox
+  .mdc-checkbox__native-control:enabled:checked
+  ~ .mdc-checkbox__background {
+  background-color: $plum !important;
+}

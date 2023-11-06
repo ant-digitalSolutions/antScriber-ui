@@ -99,3 +99,8 @@
   background-color: transparent;
   color: black !important;
 }
+
+.mdc-button__label {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
