@@ -1,1 +1,16 @@
-<p>user-settings-navbar works!</p>
+<div
+  class="us-navbar-container d-flex justify-content-between h-50px b-b-1 bg-light p-x-20"
+>
+  <div class="left-container d-flex align-items-center">
+    <button mat-icon-button *ngIf="isMobileScreen" (click)="toggleSidebar()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h3 class="m-0">Settings</h3>
+  </div>
+
+  <div class="right-container">
+    <button mat-icon-button [routerLink]="['/']">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>

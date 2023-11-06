@@ -5,15 +5,16 @@
   (click)="onItemSelected(item)"
   [ngClass]="{
     'mat-toolbar mat-accent activeMenu': item.route
-      ? router.isActive(item.route, true)
+      ? router.isActive(item.route, false)
       : false,
     expanded: expanded,
     disabled: item.disabled
   }"
-  class="menu-list-item"
+  [class.is-active]="isActive(item.route)"
+  class="menu-list-item mat-mdc-menu-panel"
   *ngIf="!item.navCap && !item.external && !item.twoLines"
 >
-  <mat-icon>{{ item.iconName }}</mat-icon>
+  <mat-icon class="m-r-20">{{ item.iconName }}</mat-icon>
   <span class="hide-menu">{{ item.displayName | translate }}</span>
   <span class="arrow-icon" fxFlex *ngIf="item.children && item.children.length">
     <span fxFlex></span>

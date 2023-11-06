@@ -21,7 +21,7 @@ export class UserSettingsHomeComponent implements OnInit {
 
   navItems = userSettingsNavItems;
 
-  private isMobileScreen = false;
+  // private isMobileScreen = false;
 
   @ViewChild('leftsidenav')
   public sidenav: MatSidenav;
@@ -57,7 +57,7 @@ export class UserSettingsHomeComponent implements OnInit {
       .subscribe((state) => {
         // SidenavOpened must be reset true when layout changes
         this.options.sidenavOpened = true;
-        this.isMobileScreen = state.breakpoints[MOBILE_VIEW];
+        // this.isMobileScreen = state.breakpoints[MOBILE_VIEW];
 
         if (this.options.sidenavCollapsed == false) {
           this.options.sidenavCollapsed = state.breakpoints[TABLET_VIEW];
@@ -100,10 +100,16 @@ export class UserSettingsHomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isMobileScreen = window.innerWidth < 960;
+    // this.isMobileScreen = window.innerWidth < 960;
     if (this.isMobileScreen) {
       this.sidebarMode = 'push'
     }
   }
+
+
+  public get isMobileScreen(): boolean {
+    return window.innerWidth < 960;
+  }
+
 
 }
