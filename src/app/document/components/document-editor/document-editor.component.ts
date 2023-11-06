@@ -6,9 +6,12 @@ import { Subject, takeUntil } from 'rxjs';
 import { DocumentService } from '../../services/document.service';
 // import BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { configs_UI } from 'src/app/common/configs/ui.config';
+import { DialogService } from 'src/app/dialogs/dialog.service';
 import { UserInitializationWalkthroughTourStepsEnum } from 'src/app/walkthrough-tours/enums/walkthrough-tour-user-initialization-steps-id.enum';
 import { UserInitTourService } from 'src/app/walkthrough-tours/user-init-tour.service';
+import { DocumentDetailsDto } from '../../dtos/document-details.dto';
 
 
 
@@ -49,6 +52,10 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
 
   editorContentSeparatorElement = '<div class="content-separator"></div>';
 
+  docName: string;
+
+  documentInEditionDetails: DocumentDetailsDto;
+
 
   _documentContent: string;
 
@@ -60,7 +67,9 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
     private _docService: DocumentService,
     private router: Router,
     private _route: ActivatedRoute,
-    private _userInitTour: UserInitTourService) { }
+    private _userInitTour: UserInitTourService,
+    protected $gaService: GoogleAnalyticsService,
+    private _dialogService: DialogService,) { }
 
 
   ngOnInit(): void {
@@ -94,6 +103,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
   setListerners() {
     this._docService.documentInEdition$.pipe(takeUntil(this.componentDestroyed$))
       .subscribe(doc => {
+
         if (doc) {
           this.docNameForm = new FormControl(doc.name, [Validators.required(), Validators.maxLength(200)])
         }
@@ -106,11 +116,15 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
 
     this._docService.documentInEdition$.pipe(takeUntil(this.componentDestroyed$))
       .subscribe(d => {
-        if (d)
+        if (d) {
           if (this._editor)
             this._editor.setData(d.content);
           else
             this._documentContent = d.content
+
+          this.docName = d.name;
+          this.documentInEditionDetails = d;
+        }
       })
 
 
@@ -256,6 +270,60 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
     </div>
     `
   }
+
+  openDeleteDialog() {
+    this.$gaService.event('doc_edition_options', 'delete_element', 'open_dialog');
+    const dialogMessage =
+      'Are you sure you want to permanently delete this document?';
+
+    this._dialogService.openConfirmationDialog({
+      okBtnText: 'Yes',
+      cancelBtnText: 'No',
+      message: dialogMessage
+    })
+      .afterClosed()
+      .subscribe(r => {
+        if (r) {
+          this.$gaService.event('doc_edition_options', 'delete_element', 'confirm');
+
+          this._docService.deleteDoc(this.documentInEditionDetails.uuid).subscribe(r => {
+            if (r.success) {
+              this.goback()
+            }
+          });
+
+        }
+        this.$gaService.event('doc_edition_options', 'delete_element', 'cancel');
+      })
+  }
+
+  openRenameDialog() {
+    this.$gaService.event('doc_edition_options', 'rename_element', 'open_dialog');
+
+    this._dialogService.openDialogWithSingleInput_v2(
+      {
+        title: 'Rename Document',
+        labelText: 'Document Name',
+        value: this.documentInEditionDetails.name,
+        okBtnText: 'Rename',
+        placeholder: 'The name for your doc'
+      })
+      .afterClosed()
+      .subscribe(result => {
+        if (result) {
+          this.$gaService.event('doc_edition_options', 'rename_element', 'confirm');
+          this._docService.update(this.documentInEditionDetails.uuid, { name: result }).subscribe(r => {
+            if (r) {
+              this.docName = result;
+            }
+          });
+        }
+        this.$gaService.event('doc_edition_options', 'rename_element', 'cancel');
+
+
+      });
+  }
+
 }
 
 

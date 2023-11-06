@@ -23,14 +23,12 @@
       display: flex;
       align-items: center;
       width: 90%;
-
-   
     }
 
     .options-container {
-      width: 6%;
+      width: 50px;
       display: flex;
-      justify-content: end;
+      justify-content: center;
       .mini-fab-btn {
         background-color: transparent;
 
@@ -44,7 +42,7 @@
 
   #document-editor {
     // Styles for the ckeditor if required
-      min-height: calc(100dvh - 50px - 45px);
+    min-height: calc(100dvh - 50px - 45px);
 
     .ck-content {
     }
@@ -52,7 +50,6 @@
 }
 
 #doc-editor {
-  
 }
 
 #doc-editor-inner-container {
@@ -91,9 +88,7 @@
       border-radius: 15px 0 0 15px;
       padding-left: 15px;
       padding-right: 15px;
-z-index: 99;
-
-
+      z-index: 99;
     }
   }
 

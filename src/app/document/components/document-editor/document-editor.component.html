@@ -6,24 +6,30 @@
       </button>
 
       <div class="name-editor-mat-field">
-        <!-- Incorporating Angular Material's mat-form-field component -->
-        <mat-form-field class="full-width">
-          <input
-            matInput
-            placeholder="Enter document name"
-            [formControl]="docNameForm"
-            (blur)="updateDocName()"
-          />
-        </mat-form-field>
+        <h3 class="m-l-4 m-0">{{ docName }}</h3>
       </div>
     </div>
 
     <div class="options-container">
-      <button class="mini-fab-btn" mat-mini-fab>
+      <button class="mini-fab-btn" mat-mini-fab [matMenuTriggerFor]="menu">
         <mat-icon class="btn-mat-icon" fontSet="material-icons-outlined"
           >more_vert</mat-icon
         >
       </button>
+      <mat-menu #menu="matMenu">
+        <button mat-button (click)="openRenameDialog()">
+          <mat-icon fontSet="material-icons-outlined" class="btn-mat-icon"
+            >edit</mat-icon
+          >
+          Rename
+        </button>
+        <button mat-button (click)="openDeleteDialog()">
+          <mat-icon fontSet="material-icons-outlined" class="btn-mat-icon"
+            >delete</mat-icon
+          >
+          Delete
+        </button>
+      </mat-menu>
     </div>
   </div>
 
@@ -50,10 +56,21 @@
       </button>
     </div>
 
-    <div id="editor-element-container" [ngStyle]="{ height: [editorHeight], 'margin-top': _docMarginTopNumber + 'px'}">
+    <div
+      id="editor-element-container"
+      [ngStyle]="{
+        height: [editorHeight],
+        'margin-top': _docMarginTopNumber + 'px'
+      }"
+    >
       <!-- <ckeditor [editor]="editor" [(ngModel)]="documentContent" (blur)="saveEditorChanges()" id="editor" ></ckeditor> -->
       <!-- <ckeditor [editor]="Editor" [data]="documentContent" (blur)="saveEditorChanges()" id="editor" ></ckeditor> -->
-      <div #documentEditor id="document-editor" (blur)="documentEditorOnBlurEvent()" (focus)="documentEditorFocusEvent()"></div>
+      <div
+        #documentEditor
+        id="document-editor"
+        (blur)="documentEditorOnBlurEvent()"
+        (focus)="documentEditorFocusEvent()"
+      ></div>
     </div>
   </div>
 
