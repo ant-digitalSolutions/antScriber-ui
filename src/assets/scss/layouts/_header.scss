@@ -10,7 +10,8 @@ html .topbar {
 }
 
 .topbar-dd {
-  min-width: 360px !important;
+  // min-width: 360px !important;
+  padding: 10px !important;
   &.mat-mdc-menu-panel.mat-mdc-menu-panel {
     overflow: unset;
   }
