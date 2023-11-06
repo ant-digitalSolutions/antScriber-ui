@@ -23,6 +23,12 @@ const routes: Routes = [
     ],
     canActivate: [authGuard]
   },
+  {
+    path: 'settings',
+    loadChildren: () =>
+      import('./user-settings/user-settings.module').then((m) => m.UserSettingsModule),
+    canActivate: [authGuard]
+  },
   // {
   //   path: '',
   //   component: FullComponent,
