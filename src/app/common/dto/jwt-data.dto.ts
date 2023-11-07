@@ -1,7 +1,8 @@
 export interface IJwtData {
   sub: string;
   email: string;
-  displayName: string;
+  firstName: string;
+  lastName: string;
   lastLoginProvider: string;
   user_uuid: string;
 

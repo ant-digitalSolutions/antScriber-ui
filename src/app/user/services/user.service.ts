@@ -1,22 +1,37 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { IJwtData } from 'src/app/common/dto/jwt-data.dto';
+import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 import { environment } from 'src/environments/environment';
+import { IUserChangePasswordDto } from '../dto/user-change-password.dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
+
   _jwtData: IJwtData | null;
 
   showInitialTour: boolean;
 
+  baseUrl = getBaseApiURL() + 'users';
 
-  constructor() { }
+
+  constructor(private _httpClient: HttpClient) { }
 
   initialWalkthroughCompleted() {
     localStorage.setItem('walkthrough_initial_tour', 'completed');
     this.showInitialTour = false;
+  }
+
+  updatePassword(values: IUserChangePasswordDto): Observable<IRequestResponse<string | boolean>> {
+    const currentUserUUID = this.userJwtData?.user_uuid;
+    values.userUUID = currentUserUUID;
+
+    return this._httpClient.put<IRequestResponse<string | boolean>>(`${this.baseUrl}/password/${currentUserUUID}`, values);
   }
 
 
@@ -34,12 +49,15 @@ export class UserService {
   }
 
 
-  public get userDisplayName(): string | null {
-    if (this.userJwtData) {
-      return this.userJwtData.displayName;
-    } else {
-      return null;
-    }
+
+  public get userFirstName(): string | null {
+    const jwtData = this.userJwtData;
+    return jwtData ? jwtData.firstName : null;
+  }
+
+  public get userLastName(): string | null {
+    const jwtData = this.userJwtData;
+    return jwtData ? jwtData.lastName : null;
   }
 
 
