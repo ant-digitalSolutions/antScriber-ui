@@ -35,8 +35,8 @@ export class UserSettingsProfileComponent implements OnInit {
 
   setForm() {
     this.profileForm = this._formBuilder.group({
-      firstName: [this._userService.userDisplayName, [Validators.required]],
-      lastName: [this._userService.userDisplayName, [Validators.required]],
+      firstName: [this._userService.userFirstName, [Validators.required]],
+      lastName: [this._userService.userLastName, [Validators.required]],
       email: { value: this._userService.userEmail, disabled: true },
       company: ['', [Validators.maxLength(100), Validators.minLength(3)]],
       role: ['']
