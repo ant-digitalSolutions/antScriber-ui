@@ -12,15 +12,31 @@
             <div class="row">
               <div class="col-sm-12 d-flex align-items-center">
                 <mat-label class="mat-subtitle-2 f-w-600 d-block"
-                  >FullName
+                  >First Name
                 </mat-label>
               </div>
               <div class="col-sm-12">
                 <mat-form-field class="w-100">
                   <input
-                    formControlName="fullName"
+                    formControlName="firstName"
                     matInput
-                    placeholder="John Deo"
+                    placeholder="Jane"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 d-flex align-items-center">
+                <mat-label class="mat-subtitle-2 f-w-600 d-block"
+                  >Last Name
+                </mat-label>
+              </div>
+              <div class="col-sm-12">
+                <mat-form-field class="w-100">
+                  <input
+                    formControlName="lastName"
+                    matInput
+                    placeholder="Dow"
                   />
                 </mat-form-field>
               </div>
@@ -38,6 +54,7 @@
                     matInput
                     placeholder="jane@email.com"
                     type="email"
+                    readonly="true"
                     [disabled]="true"
                   />
                 </mat-form-field>
@@ -50,19 +67,30 @@
                 </mat-label>
               </div>
               <div class="col-sm-12">
-                <mat-form-field class="w-100">
-                  <input matInput [type]="hidePass ? 'password' : 'text'" />
+                <mat-form-field
+                  class="w-100 cursor-pointer"
+                  (click)="changePass()"
+                  [routerLink]="['']"
+                >
+                  <input
+                    matInput
+                    [type]="hidePass ? 'password' : 'text'"
+                    class="cursor-pointer"
+                    [value]="'password'"
+                  />
                   <button
-                    mat-icon-button
+                    mat-flat-button
                     matSuffix
                     (click)="hidePass = !hidePass"
                     [attr.aria-label]="'Hide password'"
                     [attr.aria-pressed]="hidePass"
-                    class="btn-pass"
+                    class="btn-pass f-w-500"
+                    (click)="changePass()"
                   >
-                    <mat-icon class="op-5">{{
+                    <!-- <mat-icon class="op-5">{{
                       hidePass ? "visibility_off" : "visibility"
-                    }}</mat-icon>
+                    }}</mat-icon> -->
+                    Change
                   </button>
                 </mat-form-field>
               </div>

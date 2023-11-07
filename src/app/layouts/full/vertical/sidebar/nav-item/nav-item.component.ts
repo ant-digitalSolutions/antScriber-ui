@@ -99,9 +99,10 @@ export class AppNavItemComponent implements OnChanges {
   }
 
   isActive(itemRoute: string): boolean {
-    const routeSections = window.location.href.split('/')
-    const routeLastSection = routeSections[routeSections.length - 1];
+    return window.location.href.indexOf(itemRoute) >= 0;
+    // const routeSections = window.location.href.split('/')
+    // const routeLastSection = routeSections[routeSections.length - 1];
 
-    return routeLastSection === itemRoute;
+    // return routeLastSection === itemRoute;
   }
 }

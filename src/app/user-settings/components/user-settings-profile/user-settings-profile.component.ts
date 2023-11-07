@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/user/services/user.service';
 
 @Component({
@@ -8,6 +9,7 @@ import { UserService } from 'src/app/user/services/user.service';
   styleUrls: ['./user-settings-profile.component.scss']
 })
 export class UserSettingsProfileComponent implements OnInit {
+
   isLoading = false;
 
 
@@ -18,7 +20,11 @@ export class UserSettingsProfileComponent implements OnInit {
 
   userData: any;
 
-  constructor(private _userService: UserService) {
+  constructor(
+    private _userService: UserService,
+    private _formBuilder: FormBuilder,
+    private _router: Router,
+    private _route: ActivatedRoute) {
 
   }
 
@@ -28,12 +34,23 @@ export class UserSettingsProfileComponent implements OnInit {
   }
 
   setForm() {
-    this.profileForm = new FormGroup({
-      fullName: new FormControl(this._userService.userDisplayName, [Validators.required]),
-      email: new FormControl(this._userService.userEmail, [Validators.required, Validators.email]),
-      company: new FormControl('', [Validators.maxLength(100), Validators.minLength(3)]),
-      role: new FormControl('')
-    })
+    this.profileForm = this._formBuilder.group({
+      firstName: [this._userService.userDisplayName, [Validators.required]],
+      lastName: [this._userService.userDisplayName, [Validators.required]],
+      email: { value: this._userService.userEmail, disabled: true },
+      company: ['', [Validators.maxLength(100), Validators.minLength(3)]],
+      role: ['']
+    });
+    // this.profileForm = new FormGroup({
+    //   fullName: new FormControl(this._userService.userDisplayName, [Validators.required]),
+    //   email: new FormControl(this._userService.userEmail, [Validators.required, Validators.email],),
+    //   company: new FormControl('', [Validators.maxLength(100), Validators.minLength(3)]),
+    //   role: new FormControl('')
+    // })
+  }
+
+  changePass() {
+    this._router.navigate(['password'], { relativeTo: this._route })
   }
 
   updateProfile() {
