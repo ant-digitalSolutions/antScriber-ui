@@ -14,7 +14,9 @@
   class="menu-list-item mat-mdc-menu-panel"
   *ngIf="!item.navCap && !item.external && !item.twoLines"
 >
-  <mat-icon class="m-r-20">{{ item.iconName }}</mat-icon>
+  <mat-icon class="m-r-20" fontSet="material-icons-outlined">{{
+    item.iconName
+  }}</mat-icon>
   <span class="hide-menu">{{ item.displayName | translate }}</span>
   <span class="arrow-icon" fxFlex *ngIf="item.children && item.children.length">
     <span fxFlex></span>

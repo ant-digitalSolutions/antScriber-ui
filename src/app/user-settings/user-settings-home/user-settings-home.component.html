@@ -9,8 +9,7 @@
     <mat-sidenav
       #leftsidenav
       [mode]="sidebarMode"
-      [opened]="options.sidenavOpened || !isMobileScreen"
-      *ngIf="resView"
+      [opened]="sidebarIsOpen"
       (openedChange)="onSidenavOpenedChange($event)"
       (closedStart)="onSidenavClosedStart()"
       class="sidebarNav shadow-none b-r-1 bg-light"
