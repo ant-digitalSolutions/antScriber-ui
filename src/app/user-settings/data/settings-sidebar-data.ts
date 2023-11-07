@@ -9,9 +9,21 @@ export const userSettingsNavItems: NavItem[] = [
     relativeRoute: true
   },
   {
-    displayName: 'Billing & Usage',
+    displayName: 'Billing',
     iconName: 'credit_card',
     route: 'billing',
+    relativeRoute: true
+  },
+  {
+    displayName: 'Tasks',
+    iconName: 'smart_toy',
+    route: 'tasks',
+    relativeRoute: true
+  },
+  {
+    displayName: 'Usage',
+    iconName: 'analytics',
+    route: 'usage',
     relativeRoute: true
   },
 
