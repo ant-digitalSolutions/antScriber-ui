@@ -67,7 +67,7 @@ export class UserSettingsChangePasswordComponent {
         });
         this.goBack();
       } else {
-        this._snackBar.open(`Error updating the password.`, undefined, {
+        this._snackBar.open(`Error updating the password. Check the current Password`, undefined, {
           duration: 2000,
           panelClass: 'snack-error'
         });

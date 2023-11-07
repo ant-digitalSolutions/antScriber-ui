@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IUserProfileDto } from 'src/app/user/dto/user-profile.dto';
 import { UserService } from 'src/app/user/services/user.service';
+import { IUserUpdateDto } from '../../dtos/user-update.dto';
 
 @Component({
   selector: 'app-user-settings-profile',
@@ -12,6 +15,9 @@ export class UserSettingsProfileComponent implements OnInit {
 
   isLoading = false;
 
+  // indicate if the data is ready and the 
+  // form can be rendered
+  dataReady = false;
 
 
   hidePass = true;
@@ -20,24 +26,34 @@ export class UserSettingsProfileComponent implements OnInit {
 
   userData: any;
 
+  userProfile: IUserProfileDto;
+
   constructor(
     private _userService: UserService,
     private _formBuilder: FormBuilder,
     private _router: Router,
-    private _route: ActivatedRoute) {
+    private _route: ActivatedRoute,
+    private _snackBar: MatSnackBar) {
 
   }
 
 
   ngOnInit(): void {
-    this.setForm();
+    this._userService.getProfile().subscribe(r => {
+      if (r.success) {
+        this.userProfile = r.data!;
+
+        this.setForm();
+        this.dataReady = true;
+      }
+    })
   }
 
   setForm() {
     this.profileForm = this._formBuilder.group({
-      firstName: [this._userService.userFirstName, [Validators.required]],
-      lastName: [this._userService.userLastName, [Validators.required]],
-      email: { value: this._userService.userEmail, disabled: true },
+      firstName: [this.userProfile.firstName, [Validators.required]],
+      lastName: [this.userProfile.lastName, [Validators.required]],
+      email: { value: this.userProfile.email, disabled: true },
       company: ['', [Validators.maxLength(100), Validators.minLength(3)]],
       role: ['']
     });
@@ -54,7 +70,27 @@ export class UserSettingsProfileComponent implements OnInit {
   }
 
   updateProfile() {
-    throw new Error('Method not implemented.');
+    if (this.profileForm.invalid) {
+      return false;
+    }
+
+    const userData: IUserUpdateDto = this.profileForm.value;
+
+    this._userService.updateProfile(userData).subscribe(r => {
+      if (r.success) {
+        this._snackBar.open(`Profile Updated Successfully.`, undefined, {
+          duration: 2000,
+          panelClass: 'snack-success'
+        });
+      } else {
+        this._snackBar.open(`Error updating the profile.`, undefined, {
+          duration: 2000,
+          panelClass: 'snack-error'
+        });
+      }
+    })
+
+    return true;
   }
 
 }
