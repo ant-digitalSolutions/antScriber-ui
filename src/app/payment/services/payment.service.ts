@@ -18,4 +18,12 @@ export class PaymentService {
     params = params.append('cancelURL', window.location.protocol + "//" + window.location.host + "/cancelpayment");
     return this.http.get<IRequestResponse<string>>(this.baseUrl + 'payment/create-product-permanent-link', { params: params });
   }
+
+  getUserSubscriptionType() {
+    return this.http.get<IRequestResponse<boolean>>(this.baseUrl + 'payment/subscription-type');
+  }
+
+  cancelSubscription() {
+    return this.http.get<IRequestResponse<string>>(this.baseUrl + 'subscription/cancel');
+  }
 }

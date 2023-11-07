@@ -72,6 +72,7 @@ export class HeaderMainComponent {
     },
   ];
   isLoading: boolean;
+  userPaysSubscription: boolean;
 
   constructor(
     public dialog: MatDialog,
@@ -88,6 +89,7 @@ export class HeaderMainComponent {
   ngOnInit(): void {
     this.setListeners()
     this.retrieveAdfluencePermanentProductLink();
+    this.retrieveUserSubscriptionType();
   }
 
   ngOnDestroy() {
@@ -118,17 +120,34 @@ export class HeaderMainComponent {
 
   retrieveAdfluencePermanentProductLink() {
     this.paymentService.getAdfluentsProductPermanentLink()
-    .subscribe((response: IRequestResponse<string>) => {
-      if(response.success) {
-        this.permanentAdfluensProductLink = response.data || '';
-      }
-    }, (error) => {console.log(error);}
-  );
+      .subscribe((response: IRequestResponse<string>) => {
+        if (response.success) {
+          this.permanentAdfluensProductLink = response.data || '';
+        }
+      }, (error) => { console.log(error); }
+      );
   }
 
- onClickSubscribeButton()  {
+  retrieveUserSubscriptionType() {
+    this.paymentService.getUserSubscriptionType().subscribe(
+      (response) => {
+        if (response) {
+          this.userPaysSubscription = response.data as boolean;
+        }
+      }
+    );
+  }
+
+  onClickSubscribeButton() {
     window.location.href = this.permanentAdfluensProductLink;
     this.retrieveAdfluencePermanentProductLink();
+  }
+
+  onClickCancelButton() {
+    this.paymentService.cancelSubscription().subscribe(
+      response => {
+        console.log(response)
+      });
   }
 
   changeLanguage(lang: any): void {

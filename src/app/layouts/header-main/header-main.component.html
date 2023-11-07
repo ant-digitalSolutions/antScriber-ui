@@ -73,7 +73,13 @@
   <button 
   class="update-button"
    id="update-button"
+   [style.visibility]="userPaysSubscription ? 'hidden' : 'visible'"
    (click)="onClickSubscribeButton()">Update your subscription now</button>
+   <button 
+   class="update-button"
+    id="cancel-button"
+    [style.visibility]="userPaysSubscription ? 'visible' : 'hidden'"
+    (click)="onClickCancelButton()">Cancel your subscription</button>
 
   <!-- Notification Dropdown -->
   <!-- --------------------------------------------------------------- -->
