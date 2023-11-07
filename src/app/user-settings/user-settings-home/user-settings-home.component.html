@@ -36,12 +36,14 @@
         [ngClass]="{
           maxWidth: options.boxed
         }"
-        class="p-32"
+        class="align-items-center d-flex justify-content-start maxWidth p-t-30"
       >
         <!-- ============================================================== -->
         <!-- Outlet -->
         <!-- ============================================================== -->
-        <router-outlet></router-outlet>
+        <div class="col-12 col-md-8 col-lg-4">
+          <router-outlet></router-outlet>
+        </div>
       </main>
     </mat-sidenav-content>
   </mat-sidenav-container>
