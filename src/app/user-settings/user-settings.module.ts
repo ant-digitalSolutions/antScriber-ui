@@ -12,6 +12,7 @@ import { UserSettingsNavbarComponent } from './components/user-settings-navbar/u
 import { UserSettingsProfileComponent } from './components/user-settings-profile/user-settings-profile.component';
 import { UserSettingsHomeComponent } from './user-settings-home/user-settings-home.component';
 import { UserSettingsRoutes } from './user-settings-routing.module';
+import { UserSettingsChangePasswordComponent } from './components/user-settings-change-password/user-settings-change-password.component';
 
 
 
@@ -21,6 +22,7 @@ import { UserSettingsRoutes } from './user-settings-routing.module';
     UserSettingsProfileComponent,
     UserSettingsNavbarComponent,
     UserSettingsBillingComponent,
+    UserSettingsChangePasswordComponent,
   ],
   imports: [
     CommonModule,
