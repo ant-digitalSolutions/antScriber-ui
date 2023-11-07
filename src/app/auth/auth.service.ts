@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
-import { UserLogin } from './dtos/login.dto';
 import { HttpClient } from '@angular/common/http';
-import { Observable, shareReplay, tap } from 'rxjs';
-import * as moment from 'moment';
-import { IRequestResponse } from '../common/dto/request-response.dto';
-import { UserRegisterDto } from './dtos/user-register.dto';
-import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
-import { CookieService } from 'ngx-cookie-service';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import * as moment from 'moment';
+import { CookieService } from 'ngx-cookie-service';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { Observable, shareReplay, tap } from 'rxjs';
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 import { IJwtData } from '../common/dto/jwt-data.dto';
+import { IRequestResponse } from '../common/dto/request-response.dto';
+import { UserLogin } from './dtos/login.dto';
+import { UserRegisterDto } from './dtos/user-register.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,7 @@ export class AuthService {
   JWT_STORAGE_KEY = 'user_jwt_data';
 
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private cookieService: CookieService,
     protected $gaService: GoogleAnalyticsService,
     private _router: Router,
@@ -52,10 +52,9 @@ export class AuthService {
     return this.http.post<IRequestResponse<any>>(this.baseUrl + 'auth/register', userData)
       .pipe(
         tap(res => {
-        if (res.success)
-         {
-           this.setSession(res.data)
-           this.registerUserActivity()
+          if (res.success) {
+            this.setSession(res.data)
+            this.registerUserActivity()
           } else {
             console.error('There is an issue with the Registration')
             console.error(res.error);
@@ -79,7 +78,7 @@ export class AuthService {
     localStorage.removeItem("expires_at");
     this.cookieService.delete('access_token');
     document.cookie = `access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
-    this.$gaService.event('user_logout',  `manually_logged_out`);
+    this.$gaService.event('user_logout', `manually_logged_out`);
     this._router.navigate(['/auth/login']);
   }
 
@@ -129,15 +128,15 @@ export class AuthService {
 
   shouldRedirectUserFromRegisterPageToLoginPage() {
     return document.referrer === 'https://adfluens.io/' &&
-     this.hasUserBeenActive() &&
-     !this.redirectedUser;
+      this.hasUserBeenActive() &&
+      !this.redirectedUser;
   }
 
-  
-  public get getJwt() : string | null {
+
+  public get getJwt(): string | null {
     if (this.isLoggedIn())
       return localStorage.getItem('id_token');
-    else 
+    else
       return null;
   }
 
@@ -153,9 +152,14 @@ export class AuthService {
     localStorage.setItem(this.JWT_STORAGE_KEY, JSON.stringify(this._jwtData))
   }
 
-  public get userDisplayName(): string | null {
+  public get userFirstName(): string | null {
     const jwtData = this.userJwtData;
-    return jwtData ? jwtData.displayName : null;
+    return jwtData ? jwtData.firstName : null;
+  }
+
+  public get userLastName(): string | null {
+    const jwtData = this.userJwtData;
+    return jwtData ? jwtData.lastName : null;
   }
 
 
@@ -170,15 +174,15 @@ export class AuthService {
     return jwtData ? jwtData.lastLoginProvider : null;
   }
 
-  
-  public get isFirstSessionEver() : boolean | null {
+
+  public get isFirstSessionEver(): boolean | null {
     const jwtData = this.userJwtData;
     return jwtData ? jwtData.firstSessionEver : null;
   }
-  
 
-  
-  public get userJwtData() : IJwtData | null {
+
+
+  public get userJwtData(): IJwtData | null {
     const data = localStorage.getItem(this.JWT_STORAGE_KEY);
 
     if (data) {
@@ -187,6 +191,6 @@ export class AuthService {
 
     return null;
   }
-  
-  
+
+
 }
