@@ -20,7 +20,9 @@ export class UserSettingsChangePasswordComponent {
 
   isLoading = false;
 
+  hasPassword = true;
 
+  dataReady = false;
 
 
   constructor(
@@ -33,20 +35,34 @@ export class UserSettingsChangePasswordComponent {
 
 
   ngOnInit(): void {
-    this.setForm();
+    // this.setForm();
+
+    this._userService.userHasPassword().subscribe(r => {
+      if (r.success) {
+        this.hasPassword = r.data!;
+
+        this.setForm()
+      }
+    })
   }
 
   setForm() {
     const regex = RegExp("(?=.*?[0-9])(?=.*?[#?!@$%^&*-])")
     this.passForm = this._formBuilder.group({
-      currentPassword: ['', [Validators.required]],
+      // currentPassword: ['', [Validators.required]],
       newPassword: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(50), Validators.pattern(regex)]),
       newPasswordConfirmation: ['', [Validators.required]],
 
       role: ['']
     });
 
+    if (this.hasPassword) {
+      this.passForm.addControl('currentPassword', new FormControl('', [Validators.required]))
+    }
+
     this.passForm.addValidators(this.passMatchValidator(this.passForm.get('newPassword')!, this.passForm.get('newPasswordConfirmation')!))
+
+    this.dataReady = true;
   }
 
   goBack(): void {

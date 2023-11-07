@@ -50,6 +50,11 @@ export class UserService {
   }
 
 
+  userHasPassword(): Observable<IRequestResponse<boolean>> {
+    return this._httpClient.get<IRequestResponse<boolean>>(`${this.baseUrl}/has-password`);
+  }
+
+
   /**
    * True if the user has already done the initial tour walkthrough
    *
