@@ -26,7 +26,6 @@ export class UserSettingsHomeComponent implements OnInit {
   @ViewChild('leftsidenav')
   public sidenav: MatSidenav;
 
-  resView = false;
   //get options from service
   options = this.settings.getOptions();
   navopt = this.navService.showClass;
@@ -35,14 +34,10 @@ export class UserSettingsHomeComponent implements OnInit {
   // private isCollapsedWidthFixed = false;
   // private htmlElement!: HTMLHtmlElement;
 
-  sidebarMode: 'over' | 'push' = 'push';
+  sidebarMode: 'over' | 'push' | 'side' = 'push';
 
   get isOver(): boolean {
     return this.isMobileScreen;
-  }
-
-  get isTablet(): boolean {
-    return this.resView;
   }
 
   constructor(
@@ -56,14 +51,14 @@ export class UserSettingsHomeComponent implements OnInit {
       .observe([MOBILE_VIEW, TABLET_VIEW, MONITOR_VIEW, BELOWMONITOR])
       .subscribe((state) => {
         // SidenavOpened must be reset true when layout changes
-        this.options.sidenavOpened = true;
+        this.options.sidenavOpened = false;
         // this.isMobileScreen = state.breakpoints[MOBILE_VIEW];
 
         if (this.options.sidenavCollapsed == false) {
           this.options.sidenavCollapsed = state.breakpoints[TABLET_VIEW];
         }
         // this.isContentWidthFixed = state.breakpoints[MONITOR_VIEW];
-        this.resView = state.breakpoints[BELOWMONITOR];
+        // this.resView = state.breakpoints[BELOWMONITOR];
       });
 
     // Initialize project theme with options
@@ -102,7 +97,7 @@ export class UserSettingsHomeComponent implements OnInit {
   ngOnInit(): void {
     // this.isMobileScreen = window.innerWidth < 960;
     if (this.isMobileScreen) {
-      this.sidebarMode = 'push'
+      this.sidebarMode = 'over'
     }
   }
 
@@ -110,6 +105,16 @@ export class UserSettingsHomeComponent implements OnInit {
   public get isMobileScreen(): boolean {
     return window.innerWidth < 960;
   }
+
+
+  public get sidebarIsOpen(): boolean {
+    if (!this.isMobileScreen) {
+      return true
+    }
+
+    return this.options.sidenavOpened;
+  }
+
 
 
 }
