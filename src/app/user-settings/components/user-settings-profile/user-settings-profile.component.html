@@ -1,6 +1,6 @@
 <div class="row">
-  <div class="col-lg-6 col-sm-8 col-12">
-    <mat-card class="cardWithShadow">
+  <div class="col-12">
+    <mat-card class="shadow-none p-0">
       <mat-card-header>
         <mat-card-title class="m-b-0">
           <h2>My Profile</h2>
@@ -108,19 +108,17 @@
                   </mat-form-field>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-4">
-                  <button
-                    mat-flat-button
-                    color="primary"
-                    [disabled]="!profileForm.valid"
-                  >
-                    <ng-container *ngIf="isLoading">
-                      <mat-spinner class="btn-loading-spinner"></mat-spinner>
-                    </ng-container>
-                    Update
-                  </button>
-                </div>
+              <div class="row justify-content-end p-x-16">
+                <button
+                  mat-flat-button
+                  color="primary"
+                  [disabled]="!profileForm.valid"
+                >
+                  <ng-container *ngIf="isLoading">
+                    <mat-spinner class="btn-loading-spinner"></mat-spinner>
+                  </ng-container>
+                  Update
+                </button>
               </div>
             </form>
           </div>
