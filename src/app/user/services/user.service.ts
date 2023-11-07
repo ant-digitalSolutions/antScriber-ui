@@ -3,14 +3,17 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IJwtData } from 'src/app/common/dto/jwt-data.dto';
 import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
+import { IUserUpdateDto } from 'src/app/user-settings/dtos/user-update.dto';
 import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 import { environment } from 'src/environments/environment';
 import { IUserChangePasswordDto } from '../dto/user-change-password.dto';
+import { IUserProfileDto } from '../dto/user-profile.dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+
 
 
   _jwtData: IJwtData | null;
@@ -27,11 +30,23 @@ export class UserService {
     this.showInitialTour = false;
   }
 
-  updatePassword(values: IUserChangePasswordDto): Observable<IRequestResponse<string | boolean>> {
+  updatePassword(values: IUserChangePasswordDto): Observable<IRequestResponse<boolean>> {
     const currentUserUUID = this.userJwtData?.user_uuid;
     values.userUUID = currentUserUUID;
 
-    return this._httpClient.put<IRequestResponse<string | boolean>>(`${this.baseUrl}/password/${currentUserUUID}`, values);
+    return this._httpClient.put<IRequestResponse<boolean>>(`${this.baseUrl}/password/${currentUserUUID}`, values);
+  }
+
+  updateProfile(userData: IUserUpdateDto): Observable<IRequestResponse<boolean>> {
+    const currentUserUUID = this.userJwtData?.user_uuid;
+    userData.userUUID = currentUserUUID!;
+
+    return this._httpClient.put<IRequestResponse<boolean>>(`${this.baseUrl}/profile/${currentUserUUID}`, userData);
+
+  }
+
+  getProfile(): Observable<IRequestResponse<IUserProfileDto>> {
+    return this._httpClient.get<IRequestResponse<IUserProfileDto>>(`${this.baseUrl}/profile`);
   }
 
 
