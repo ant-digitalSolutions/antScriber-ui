@@ -36,7 +36,7 @@ export class UserSettingsHomeComponent implements OnInit {
   // private isCollapsedWidthFixed = false;
   // private htmlElement!: HTMLHtmlElement;
 
-  sidebarMode: 'over' | 'push' | 'side' = 'push';
+  sidebarMode: 'over' | 'push' | 'side' = 'side';
 
   get isOver(): boolean {
     return this.isMobileScreen;
