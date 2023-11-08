@@ -19,7 +19,7 @@ export class AppPricingComponent {
 
   constructor() { }
 
-  yearlyPrice(a: any) {
-    return Math.round((a * 12 - a * 12 * .2) / 12);
+  yearlyPrice(cardData: IPriceCardData) {
+    return Math.round((cardData.planOriginalPrice * 12 - cardData.planOriginalPrice * 12 * (cardData.planAnnualPercentOff! / 100)) / 12);
   }
 }

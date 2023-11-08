@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
   <div class="col-lg-8 justify-content-center">
     <h4 class="f-s-30 f-w-600 text-center mat-subtitle-1 lh-lg m-b-16">
-      Flexible Plans Tailored to Fit Your Community's Unique Needs!
+      Flexible Plans Tailored to Fit Your Creative's Unique Needs!
     </h4>
     <div class="d-flex align-items-center justify-content-center">
       <span class="f-s-14 m-r-8">Monthly</span>
@@ -33,51 +33,56 @@
           class="pricing-title-container d-flex align-items-center justify-content-center flex-col"
         >
           <h3 class="pricing-title">{{ pricecard.plan }}</h3>
-
-          <p class="pricing-description">
-            {{ pricecard.description }}
-          </p>
         </div>
 
         <!-- <span class="d-block text-uppercase f-s-12 m-b-16">{{
           pricecard.plan
         }}</span> -->
 
-        <div *ngIf="pricecard.free; else pricingContent">
+        <!-- <div *ngIf="pricecard.free; else pricingContent">
           <h2 class="mat-headline-6 plan-title m-b-24">Free</h2>
-        </div>
+        </div> -->
 
-        <ng-template #pricingContent>
-          <div
-            class="align-items-center d-flex flex-col justify-content-center m-y-16 ng-star-inserted pricing-area-container"
-          >
+        <div
+          class="align-items-center d-flex flex-col justify-content-center m-y-16 ng-star-inserted pricing-area-container"
+        >
+          <ng-container *ngIf="pricecard.free; else pricingContent">
+            <h2 class="mat-headline-6 plan-title">Free</h2>
+          </ng-container>
+          <ng-template #pricingContent>
             <ng-container *ngIf="annualPricing; else monthlyPricing">
               <div
                 class="pricing-area-inner-container d-flex justify-content-around align-items-center"
               >
                 <div class="original-price-container">
-                  {{ pricecard.planPrice }}
+                  {{ pricecard.planOriginalPrice }}
                 </div>
                 <h2 class="mat-headline-6 plan-title">
-                  ${{ yearlyPrice(pricecard.planPrice) }}
+                  ${{ yearlyPrice(pricecard) }}
                 </h2>
                 <span
                   *ngIf="annualPricing"
-                  class="text-uppercase bg-primary text-warning p-x-8 p-y-4 f-s-12 f-w-500 rounded"
-                  >{{ pricecard.planPercentAmountOff }}%</span
+                  class="text-uppercase bg-light-warning text-warning p-x-8 p-y-4 f-s-12 f-w-500 rounded"
+                  >{{ pricecard.planAnnualPercentOff }}%</span
                 >
               </div>
             </ng-container>
-            <ng-template #monthlyPricing>
-              <div class="d-flex justify-content-center align-items-center">
-                <h2 class="mat-headline-6 plan-title">
-                  ${{ pricecard.planPrice }}
-                </h2>
-              </div>
-            </ng-template>
-            <p class="per-month-text text-center">per month</p>
-          </div>
-        </ng-template>
+          </ng-template>
+          <ng-template #monthlyPricing>
+            <div class="d-flex justify-content-center align-items-center">
+              <h2 class="mat-headline-6 plan-title">
+                ${{ pricecard.planOriginalPrice }}
+              </h2>
+            </div>
+          </ng-template>
+          <p class="per-month-text text-center">per month</p>
+        </div>
+
+        <div class="plan-description-container b-b-1">
+          <p class="plan-description-text">
+            {{ pricecard.description }}
+          </p>
+        </div>
 
         <div
           class="d-flex align-items-center p-y-12"
