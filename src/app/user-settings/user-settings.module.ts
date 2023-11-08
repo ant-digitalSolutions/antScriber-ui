@@ -7,12 +7,13 @@ import { AppHorizontalSidebarComponent } from '../layouts/full/horizontal/sideba
 import { AppNavItemComponent } from '../layouts/full/vertical/sidebar/nav-item/nav-item.component';
 import { SidebarComponent } from '../layouts/full/vertical/sidebar/sidebar.component';
 import { MaterialModule } from '../material.module';
+import { PricingModule } from '../pricing/pricing.module';
 import { UserSettingsBillingComponent } from './components/user-settings-billing/user-settings-billing.component';
+import { UserSettingsChangePasswordComponent } from './components/user-settings-change-password/user-settings-change-password.component';
 import { UserSettingsNavbarComponent } from './components/user-settings-navbar/user-settings-navbar.component';
 import { UserSettingsProfileComponent } from './components/user-settings-profile/user-settings-profile.component';
 import { UserSettingsHomeComponent } from './user-settings-home/user-settings-home.component';
 import { UserSettingsRoutes } from './user-settings-routing.module';
-import { UserSettingsChangePasswordComponent } from './components/user-settings-change-password/user-settings-change-password.component';
 
 
 
@@ -36,6 +37,7 @@ import { UserSettingsChangePasswordComponent } from './components/user-settings-
     AppNavItemComponent,
     FormsModule,
     ReactiveFormsModule,
+    PricingModule
   ]
 })
 export class UserSettingsModule { }
