@@ -2,7 +2,7 @@
   <div class="us-navbar-outer-container">
     <app-user-settings-navbar></app-user-settings-navbar>
   </div>
-  <mat-sidenav-container [hasBackdrop]="'false'">
+  <mat-sidenav-container [hasBackdrop]="'false'" class="h-100">
     <!-- ============================================================== -->
     <!-- horizontal Sidebar -->
     <!-- ============================================================== -->
@@ -31,20 +31,24 @@
     <!-- ============================================================== -->
     <!-- Main Content -->
     <!-- ============================================================== -->
-    <mat-sidenav-content>
-      <main
-        [ngClass]="{
-          maxWidth: options.boxed
-        }"
-        class="align-items-center d-flex justify-content-start maxWidth p-t-30"
+    <mat-sidenav-content class="h-100">
+      <ng-scrollbar
+        class="us-content-container align-items-center d-flex justify-content-start maxWidth p-t-30 us-content-container"
       >
+        <!-- <main
+          [ngClass]="{
+            maxWidth: options.boxed
+          }"
+          class="align-items-center d-flex justify-content-start maxWidth p-t-30 us-content-container"
+        > -->
         <!-- ============================================================== -->
         <!-- Outlet -->
         <!-- ============================================================== -->
         <div class="col-12">
           <router-outlet></router-outlet>
         </div>
-      </main>
+        <!-- </main> -->
+      </ng-scrollbar>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

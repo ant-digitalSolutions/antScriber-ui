@@ -7,8 +7,10 @@ export interface IPriceCardData {
     description: string;
     btnText: string;
     free: boolean;
-    planOriginalPrice?: number;
-    planPercentAmountOff?: number;
+    planOriginalPrice: number;
+    planDiscountPercentOff?: number;
+    planAnnualPercentOff?: number;
+
     planPrice?: Number;
     popular?: boolean;
     rules: IPricingCardRule[];
