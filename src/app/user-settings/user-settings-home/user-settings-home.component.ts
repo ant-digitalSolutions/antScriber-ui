@@ -3,8 +3,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Subscription } from 'rxjs';
 import { AppSettings } from 'src/app/app.config';
+import { NavItem } from 'src/app/layouts/full/vertical/sidebar/nav-item/nav-item';
 import { CoreService } from 'src/app/services/core.service';
 import { NavService } from 'src/app/services/nav.service';
+import { environment } from 'src/environments/environment';
 import { userSettingsNavItems } from '../data/settings-sidebar-data';
 
 const MOBILE_VIEW = 'screen and (max-width: 768px)';
@@ -19,7 +21,7 @@ const BELOWMONITOR = 'screen and (max-width: 1023px)';
 })
 export class UserSettingsHomeComponent implements OnInit {
 
-  navItems = userSettingsNavItems;
+  _navItems = userSettingsNavItems;
 
   // private isMobileScreen = false;
 
@@ -116,5 +118,11 @@ export class UserSettingsHomeComponent implements OnInit {
   }
 
 
+  public get navItems(): NavItem[] {
+    if (environment.production) {
+      return this._navItems.filter(i => i.prodReady);
+    }
 
+    return this._navItems;
+  }
 }
