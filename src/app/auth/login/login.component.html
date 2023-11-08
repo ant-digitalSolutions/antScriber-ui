@@ -60,22 +60,22 @@
                 </div>
               </button>
             </div>
-            <!-- <div class="col-12 col-sm-6">
+            <div class="col-12 m-t-16" *ngIf="!isLoggedIn">
               <button
                 mat-stroked-button
-                class="w-100 d-flex align-items-center"
+                class="w-100"
+                (click)="redirectToFacebookSignIn()"
               >
                 <div class="d-flex align-items-center">
                   <img
                     src="/assets/images/svgs/facebook-icon.svg"
                     alt="facebook"
                     width="40"
-                    class="m-r-4"
                   />
-                  Sign in with FB
+                  Sign in with Facebook
                 </div>
               </button>
-            </div> -->
+            </div>
           </div>
 
           <div class="m-y-48 text-center" *ngIf="!isLoggedIn">OR</div>
