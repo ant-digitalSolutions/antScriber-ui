@@ -48,13 +48,13 @@ export const cardPricing_standard: IPriceCardData[] = [
     {
         id: 2,
         plan: 'Solo',
-        description: 'Ideal for Freelancers',
+        description: `Perfect for solo adventurers looking to create impactful content, it provides a robust foundation to start building your presence with essential tools and support.`,
         btnText: 'Upgrade',
         free: false,
 
         planOriginalPrice: 15,
         planDiscountPercentOff: 20,
-        planAnnualPercentOff: 20,
+        planAnnualPercentOff: 40,
         rules: [
             {
                 title: '100k words per month',
@@ -93,12 +93,12 @@ export const cardPricing_standard: IPriceCardData[] = [
     {
         id: 3,
         plan: 'Flow',
-        description: `For businesses with multiple clients`,
+        description: `Designed for creators who need more room to grow, it offers an expanded set of tools to keep your content flowing and your audience engaged.`,
         btnText: 'Upgrade',
         free: false,
-        planOriginalPrice: 29,
+        planOriginalPrice: 49,
         planDiscountPercentOff: 20,
-        planAnnualPercentOff: 33,
+        planAnnualPercentOff: 40,
         popular: true,
         rules: [
             {
@@ -136,14 +136,14 @@ export const cardPricing_standard: IPriceCardData[] = [
         ],
     },
     {
-        id: 3,
+        id: 4,
         plan: 'Horizon',
-        description: `For businesses with multiple clients`,
+        description: `ultimate tier for serious content professionals who want no limits on their creative output, with premium features that cater to expansive projects and diverse needs.`,
         btnText: 'Upgrade',
         free: false,
-        planOriginalPrice: 119,
+        planOriginalPrice: 99,
         planDiscountPercentOff: 50,
-        planAnnualPercentOff: 50,
+        planAnnualPercentOff: 51,
         rules: [
             {
                 title: 'Unlimited words per month',
@@ -171,6 +171,14 @@ export const cardPricing_standard: IPriceCardData[] = [
             },
             {
                 title: 'Chat',
+                limit: true,
+            },
+            {
+                title: 'Create 100 Images per month',
+                limit: true,
+            },
+            {
+                title: 'Create 100 Images per month',
                 limit: true,
             },
             {
