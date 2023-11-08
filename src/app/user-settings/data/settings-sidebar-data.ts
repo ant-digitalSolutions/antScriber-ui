@@ -6,7 +6,8 @@ export const userSettingsNavItems: NavItem[] = [
     displayName: 'My Profile',
     iconName: 'account_circle',
     route: 'profile',
-    relativeRoute: true
+    relativeRoute: true,
+    prodReady: true
   },
   {
     displayName: 'Billing',

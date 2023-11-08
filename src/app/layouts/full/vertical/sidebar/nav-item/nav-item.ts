@@ -14,4 +14,6 @@ export interface NavItem {
     ddType?: string;
 
     relativeRoute?: boolean;
+
+    prodReady?: boolean;
 }
