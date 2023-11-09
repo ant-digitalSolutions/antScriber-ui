@@ -150,6 +150,13 @@ export class HeaderMainComponent {
       });
   }
 
+  onClickRetrieveSubscriptionInfoButton() {
+    this.paymentService.getSubscriptionInfo().subscribe(
+      response => {
+        console.log(response)
+      });
+  }
+
   changeLanguage(lang: any): void {
     this.translate.use(lang.code);
     this.selectedLanguage = lang;
