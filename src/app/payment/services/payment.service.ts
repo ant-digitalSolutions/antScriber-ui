@@ -2,13 +2,15 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
-import { getBaseApiURL } from 'src/environments/enviroment.dynamic'
+import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PaymentService {
   baseUrl = getBaseApiURL();
+
+  _isPremiumUser: boolean;
 
   constructor(private http: HttpClient) { }
 
@@ -20,7 +22,10 @@ export class PaymentService {
   }
 
   getUserSubscriptionType() {
-    return this.http.get<IRequestResponse<boolean>>(this.baseUrl + 'payment/subscription-type');
+    return this.http.get<IRequestResponse<boolean>>(this.baseUrl + 'payment/subscription-type')
+      .pipe(tap(result => {
+        result.
+    }));
   }
 
   getSubscriptionInfo() {

@@ -29,6 +29,7 @@ import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
 import { BreadcrumbModule } from 'xng-breadcrumb';
 
 import { JwtModule } from "@auth0/angular-jwt";
+import { NgxStripeModule } from 'ngx-stripe';
 import { WalkthroughToursModule } from './walkthrough-tours/walkthrough-tours.module';
 
 export function HttpLoaderFactory(http: HttpClient): any {
@@ -73,7 +74,9 @@ export function HttpLoaderFactory(http: HttpClient): any {
     BreadcrumbModule,
     TimeagoModule.forRoot(),
     NgxGoogleAnalyticsModule.forRoot(window.location.href.indexOf('app.') >= 0 ? 'G-XQVZWP9SRY' : 'G-1C8PD3RDD5'),
-    WalkthroughToursModule
+    WalkthroughToursModule,
+    NgxStripeModule.forRoot('pk_test_51MdfuXFXqwjYWAm8OYTaPXU4Y04Cg5WYUxGNciIDXX1yC8WzFk1uV49D1yHIcJE8BwCZlCSDkaHt3plpEzMfbNzo00o6k2JINi'),
+
 
   ],
   exports: [TablerIconsModule],
