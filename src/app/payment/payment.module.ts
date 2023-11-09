@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PaymentService } from './services/payment.service';
+import { SubscriptionCheckoutComponent } from './components/subscription-checkout/subscription-checkout.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    SubscriptionCheckoutComponent
+  ],
   imports: [
     CommonModule
   ],
