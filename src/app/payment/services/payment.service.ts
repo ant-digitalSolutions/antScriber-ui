@@ -23,6 +23,10 @@ export class PaymentService {
     return this.http.get<IRequestResponse<boolean>>(this.baseUrl + 'payment/subscription-type');
   }
 
+  getSubscriptionInfo() {
+    return this.http.get<IRequestResponse<boolean>>(this.baseUrl + 'subscription/info');
+  }
+
   cancelSubscription() {
     return this.http.get<IRequestResponse<string>>(this.baseUrl + 'subscription/cancel');
   }
