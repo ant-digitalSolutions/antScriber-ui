@@ -1,8 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
 import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
+import { ICreateSubscriptionPaymentSessionDto } from '../dtos/create-suscription-payment-session.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 export class PaymentService {
   baseUrl = getBaseApiURL();
 
-  _isPremiumUser: boolean;
+  _isPremiumUser?: boolean;
 
   constructor(private http: HttpClient) { }
 
@@ -24,8 +25,8 @@ export class PaymentService {
   getUserSubscriptionType() {
     return this.http.get<IRequestResponse<boolean>>(this.baseUrl + 'payment/subscription-type')
       .pipe(tap(result => {
-        result.
-    }));
+        this._isPremiumUser = result.data;
+      }));
   }
 
   getSubscriptionInfo() {
@@ -34,5 +35,14 @@ export class PaymentService {
 
   cancelSubscription() {
     return this.http.get<IRequestResponse<string>>(this.baseUrl + 'subscription/cancel');
+  }
+
+  generatePaymentSession(prodPriceId: string): Observable<IRequestResponse<any>> {
+    const data: ICreateSubscriptionPaymentSessionDto = {
+      successURL: window.location.protocol + "//" + window.location.host + "/succespayment",
+      cancelURL: window.location.protocol + "//" + window.location.host + "/cancelpayment",
+      prodPriceId
+    }
+    return this.http.post<IRequestResponse<any>>(this.baseUrl + 'payment/create-subscription-payment-session', data);
   }
 }

@@ -9,13 +9,13 @@ import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { BlogProjectDetailsDto } from 'src/app/blogger/dto/blog-project-details.dto';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
+import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
 import { LoadingService } from 'src/app/common/services/loading.service';
 import { MaterialModule } from 'src/app/material.module';
+import { PaymentService } from 'src/app/payment/services/payment.service';
 import { AppSearchDialogComponent } from '../full/vertical/header/header.component';
 import { BrandingComponent } from '../full/vertical/sidebar/branding.component';
 import { HeaderMenuItemsComponent } from './header-menu-items/header-menu-items.component';
-import { PaymentService } from 'src/app/payment/services/payment.service';
-import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
 
 @Component({
   selector: 'app-header-main',
@@ -88,7 +88,6 @@ export class HeaderMainComponent {
 
   ngOnInit(): void {
     this.setListeners()
-    this.retrieveAdfluencePermanentProductLink();
     this.retrieveUserSubscriptionType();
   }
 
