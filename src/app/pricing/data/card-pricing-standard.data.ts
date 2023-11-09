@@ -55,6 +55,8 @@ export const cardPricing_standard: IPriceCardData[] = [
         planOriginalPrice: 15,
         planDiscountPercentOff: 20,
         planAnnualPercentOff: 40,
+        stripeMonthlyPriceId: 'price_1OAcjdFXqwjYWAm8qXUIhbRR',
+        stripeYearlyPriceId: 'price_1OAd4JFXqwjYWAm8upr94XbE',
         rules: [
             {
                 title: '100k words per month',
@@ -99,6 +101,8 @@ export const cardPricing_standard: IPriceCardData[] = [
         planOriginalPrice: 49,
         planDiscountPercentOff: 20,
         planAnnualPercentOff: 40,
+        stripeMonthlyPriceId: 'price_1OAcl7FXqwjYWAm8s5ssMyck',
+        stripeYearlyPriceId: 'price_1OAd2lFXqwjYWAm8hjjbbEMs',
         popular: true,
         rules: [
             {
@@ -144,6 +148,8 @@ export const cardPricing_standard: IPriceCardData[] = [
         planOriginalPrice: 99,
         planDiscountPercentOff: 50,
         planAnnualPercentOff: 51,
+        stripeMonthlyPriceId: 'price_1O5JFcFXqwjYWAm81cDrag3G',
+        stripeYearlyPriceId: 'price_1O5JFcFXqwjYWAm81cDrag3G',
         rules: [
             {
                 title: 'Unlimited words per month',

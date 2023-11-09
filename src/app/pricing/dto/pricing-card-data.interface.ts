@@ -14,4 +14,8 @@ export interface IPriceCardData {
     planPrice?: Number;
     popular?: boolean;
     rules: IPricingCardRule[];
+
+    stripeMonthlyPriceId: string;
+    stripeYearlyPriceId: string;
+
 }
