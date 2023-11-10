@@ -29,8 +29,7 @@ export class AppPricingComponent {
 
   }
 
-  checkout(priceId: number) {
-    const priceData = this.pricecards.find(p => p.id === priceId);
+  checkout(priceData: IPriceCardData) {
     const stripePriceId = this.annualPricing ? priceData?.stripeYearlyPriceId : priceData?.stripeMonthlyPriceId;
 
     this._paymentService.generatePaymentSession(stripePriceId!)

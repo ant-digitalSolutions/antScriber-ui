@@ -1,13 +1,15 @@
+import { ProductsEnum } from 'src/app/common/subscriptions/products.enum';
+
 export class IUserProfileDto {
+  firstName: string;
 
-    firstName: string;
+  lastName: string;
 
-    lastName: string;
+  email?: string;
 
+  company?: string;
 
-    email?: string;
+  companyRole?: string;
 
-    company?: string;
-
-    companyRole?: string;
+  mainSubscription: ProductsEnum;
 }

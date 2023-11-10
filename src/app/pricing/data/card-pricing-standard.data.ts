@@ -1,3 +1,4 @@
+import { ProductsEnum } from "src/app/common/subscriptions/products.enum";
 import { IPriceCardData } from "../dto/pricing-card-data.interface";
 
 export const cardPricing_standard: IPriceCardData[] = [
@@ -46,7 +47,7 @@ export const cardPricing_standard: IPriceCardData[] = [
     //     ],
     // },
     {
-        id: 2,
+        index: 2,
         plan: 'Solo',
         description: `Perfect for solo adventurers looking to create impactful content, it provides a robust foundation to start building your presence with essential tools and support.`,
         btnText: 'Upgrade',
@@ -57,6 +58,7 @@ export const cardPricing_standard: IPriceCardData[] = [
         planAnnualPercentOff: 40,
         stripeMonthlyPriceId: 'price_1OAcjdFXqwjYWAm8qXUIhbRR',
         stripeYearlyPriceId: 'price_1OAd4JFXqwjYWAm8upr94XbE',
+        id: ProductsEnum.Solo,
         rules: [
             {
                 title: '100k words per month',
@@ -93,7 +95,7 @@ export const cardPricing_standard: IPriceCardData[] = [
         ],
     },
     {
-        id: 3,
+        index: 3,
         plan: 'Flow',
         description: `Designed for creators who need more room to grow, it offers an expanded set of tools to keep your content flowing and your audience engaged.`,
         btnText: 'Upgrade',
@@ -104,6 +106,7 @@ export const cardPricing_standard: IPriceCardData[] = [
         stripeMonthlyPriceId: 'price_1OAcl7FXqwjYWAm8s5ssMyck',
         stripeYearlyPriceId: 'price_1OAd2lFXqwjYWAm8hjjbbEMs',
         popular: true,
+        id: ProductsEnum.Flow,
         rules: [
             {
                 title: '500k words per month',
@@ -140,7 +143,7 @@ export const cardPricing_standard: IPriceCardData[] = [
         ],
     },
     {
-        id: 4,
+        index: 4,
         plan: 'Horizon',
         description: `ultimate tier for serious content professionals who want no limits on their creative output, with premium features that cater to expansive projects and diverse needs.`,
         btnText: 'Upgrade',
@@ -150,6 +153,7 @@ export const cardPricing_standard: IPriceCardData[] = [
         planAnnualPercentOff: 51,
         stripeMonthlyPriceId: 'price_1O5JFcFXqwjYWAm81cDrag3G',
         stripeYearlyPriceId: 'price_1O5JFcFXqwjYWAm81cDrag3G',
+        id: ProductsEnum.Horizon,
         rules: [
             {
                 title: 'Unlimited words per month',
