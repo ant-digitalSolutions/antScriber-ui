@@ -1,18 +1,14 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PaymentService } from './services/payment.service';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { CheckoutReturnComponent } from './components/checkout-return/checkout-return.component';
 import { SubscriptionCheckoutComponent } from './components/subscription-checkout/subscription-checkout.component';
-
-
+import { PaymentsModuleRoutes } from './payments.routing';
+import { PaymentService } from './services/payment.service';
 
 @NgModule({
-  declarations: [
-    SubscriptionCheckoutComponent
-  ],
-  imports: [
-    CommonModule
-  ],
+  declarations: [SubscriptionCheckoutComponent, CheckoutReturnComponent],
+  imports: [CommonModule, RouterModule.forChild(PaymentsModuleRoutes)],
   providers: [PaymentService],
-  exports: [PaymentService]
 })
-export class PaymentModule { }
+export class PaymentModule {}
