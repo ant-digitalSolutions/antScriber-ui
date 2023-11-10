@@ -21,11 +21,11 @@
     <div
       class="col-sm-4 col-lg-4 pricing-card-outer-container"
       *ngFor="let pricecard of pricecards"
-      [ngClass]="{ popular: pricecard.popular }"
+      [ngClass]="{ popular: pricecard.popular,  'current-subscription': checkIfShouldUpgrade(pricecard) === 0 }"
     >
       <mat-card
         class="cardWithShadow pricing-card h-100"
-        [ngClass]="{ popular: pricecard.popular }"
+        [ngClass]="{ popular: pricecard.popular, }"
       >
         <mat-card-content
           class="p-y-24 p-t-48 d-flex flex-col justify-content-around h-100"
@@ -122,47 +122,39 @@
           </div>
 
           <!-- BTN if the card subs is a higher TIER that the current subscription -->
-          <ng-container
-            *ngIf="pricecard.index > currentSubCardIndex; else downgradeBtn"
-          >
+          <ng-container [ngSwitch]="checkIfShouldUpgrade(pricecard)">
+            <!-- upgrade -->
             <button
               mat-raised-button
               class="w-100 m-t-24 bg-plum text-white f-w-500 f-s-18 btn-upgrade align-self-end"
               (click)="checkout(pricecard)"
-              [disabled]="userCurrentSubscription === pricecard.id"
+              *ngSwitchCase="1"
             >
-              <ng-container
-                *ngIf="
-                  userCurrentSubscription !== pricecard.id;
-                  else currentSubBtnText
-                "
-              >
-                {{ pricecard.btnText }}
-              </ng-container>
+        
+                Upgrade
 
-              <ng-template #currentSubBtnText>Current</ng-template>
+            </button>
+
+            <!-- Downgrade -->
+            <button
+              mat-flat-button
+              class="w-100 m-t-24 f-w-400 f-s-18 btn-downgrade align-self-end"
+              (click)="checkout(pricecard)"
+              *ngSwitchCase="-1"
+            >
+                Downgrade
+            </button>
+
+            <!-- Current -->
+            <button
+              mat-raised-button
+              class="w-100 m-t-24 f-w-500 f-s-18 btn-upgrade align-self-end current-subscription-btn"
+              disabled
+              *ngSwitchDefault
+            >
+              Current
             </button>
           </ng-container>
-
-          <ng-template #downgradeBtn>
-            <button
-              mat-raised-button
-              class="w-100 m-t-24 bg-plum text-white f-w-500 f-s-18 btn-upgrade align-self-end"
-              (click)="checkout(pricecard)"
-              [disabled]="userCurrentSubscription === pricecard.id"
-            >
-              <ng-container
-                *ngIf="
-                  userCurrentSubscription !== pricecard.id;
-                  else currentSubBtnText
-                "
-              >
-                Downgrade
-              </ng-container>
-
-              <ng-template #currentSubBtnText>Current</ng-template>
-            </button>
-          </ng-template>
         </mat-card-content>
       </mat-card>
     </div>

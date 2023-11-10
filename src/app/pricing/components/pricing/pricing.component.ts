@@ -3,6 +3,7 @@ import { StripeService } from 'ngx-stripe';
 import { switchMap } from 'rxjs';
 import { ProductsEnum } from 'src/app/common/subscriptions/products.enum';
 import { PaymentService } from 'src/app/payment/services/payment.service';
+import { UserSubscriptionDto } from 'src/app/user/dto/user-subscription-data.dto';
 import { UserService } from 'src/app/user/services/user.service';
 import { cardPricing_standard } from '../../data/card-pricing-standard.data';
 import { IPriceCardData } from '../../dto/pricing-card-data.interface';
@@ -20,10 +21,10 @@ export class AppPricingComponent {
   // card 1
   pricecards: IPriceCardData[] = cardPricing_standard;
 
-  userCurrentSubscription: ProductsEnum;
+  userCurrentSubscription: UserSubscriptionDto;
 
   // the index of the card that represent the current subscription
-  currentSubCardIndex = -1;
+  currentSubscriptionCardIndex = -1;
 
   constructor(
     private _paymentService: PaymentService,
@@ -38,12 +39,12 @@ export class AppPricingComponent {
   checkCurrentSubscription() {
     this.userCurrentSubscription = this._userService.getUserSubscription();
 
-    if (this.userCurrentSubscription === ProductsEnum.FREE) {
+    if (this.userCurrentSubscription.mainSubscription === ProductsEnum.FREE) {
       return;
     }
 
-    this.currentSubCardIndex = this.pricecards.find(
-      (c) => c.id === this.userCurrentSubscription
+    this.currentSubscriptionCardIndex = this.pricecards.find(
+      (c) => c.id === this.userCurrentSubscription.mainSubscription
     )!.index;
   }
 
@@ -79,5 +80,42 @@ export class AppPricingComponent {
           (cardData.planAnnualPercentOff! / 100)) /
         12
     );
+  }
+
+  /**
+   * Check if the user's subscription can be upgradable to the current card.
+   *
+   * Return 1 if it can;
+   * 0 if its the same subscription
+   * -1 if the user can downgrade
+   *
+   * @param {IPriceCardData} card
+   * @return {*}  {number}
+   * @memberof AppPricingComponent
+   */
+  checkIfShouldUpgrade(card: IPriceCardData): number {
+    if (card.index > this.currentSubscriptionCardIndex) {
+      return 1;
+    }
+
+    if (card.index < this.currentSubscriptionCardIndex) {
+      return -1;
+    }
+
+    if (
+      !this.annualPricing &&
+      this.userCurrentSubscription.stripePriceId === card.stripeYearlyPriceId
+    ) {
+      return -1;
+    }
+
+    if (
+      this.annualPricing &&
+      this.userCurrentSubscription.stripePriceId === card.stripeMonthlyPriceId
+    ) {
+      return 1;
+    }
+
+    return 0;
   }
 }

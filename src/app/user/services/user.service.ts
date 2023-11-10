@@ -10,6 +10,7 @@ import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 import { environment } from 'src/environments/environment';
 import { IUserChangePasswordDto } from '../dto/user-change-password.dto';
 import { IUserProfileDto } from '../dto/user-profile.dto';
+import { UserSubscriptionDto } from './../dto/user-subscription-data.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,7 @@ export class UserService {
   baseUrl = getBaseApiURL() + 'users';
 
   constructor(private _httpClient: HttpClient) {
-    this.getProfile(false);
+    this.getProfile(false).subscribe();
   }
 
   initialWalkthroughCompleted() {
@@ -105,26 +106,26 @@ export class UserService {
     const userProfile = JSON.parse(localProfileString) as IUserProfileDto;
 
     return (
-      userProfile.mainSubscription &&
-      userProfile.mainSubscription !== ProductsEnum.FREE
+      userProfile.subscriptionData &&
+      userProfile.subscriptionData.mainSubscription !== ProductsEnum.FREE
     );
   }
 
-  getUserSubscription(): ProductsEnum {
+  getUserSubscription(): UserSubscriptionDto {
     const localProfileString = localStorage.getItem(
       StorageObjectNamesEnum.UserProfile
     );
 
     if (!localProfileString) {
       console.error('The user profile is not set on LocalStorage');
-      return ProductsEnum.FREE;
+      return UserSubscriptionDto.createFreeSubscription();
     }
 
     const userProfile = JSON.parse(localProfileString) as IUserProfileDto;
 
-    return userProfile.mainSubscription
-      ? userProfile.mainSubscription
-      : ProductsEnum.FREE;
+    return userProfile.subscriptionData
+      ? userProfile.subscriptionData
+      : UserSubscriptionDto.createFreeSubscription();
   }
 
   /**
