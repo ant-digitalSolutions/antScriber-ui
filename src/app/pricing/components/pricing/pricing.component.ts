@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { StripeService } from 'ngx-stripe';
 import { switchMap } from 'rxjs';
+import { ProductsEnum } from 'src/app/common/subscriptions/products.enum';
 import { PaymentService } from 'src/app/payment/services/payment.service';
+import { UserService } from 'src/app/user/services/user.service';
 import { cardPricing_standard } from '../../data/card-pricing-standard.data';
 import { IPriceCardData } from '../../dto/pricing-card-data.interface';
 
@@ -18,12 +20,17 @@ export class AppPricingComponent {
   // card 1
   pricecards: IPriceCardData[] = cardPricing_standard;
 
+  userCurrentSubscription: ProductsEnum;
+
   constructor(
     private _paymentService: PaymentService,
-    private stripeService: StripeService
+    private stripeService: StripeService,
+    private _userService: UserService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userCurrentSubscription = this._userService.getUserSubscription();
+  }
 
   checkout(priceData: IPriceCardData) {
     const stripePriceId = this.annualPricing

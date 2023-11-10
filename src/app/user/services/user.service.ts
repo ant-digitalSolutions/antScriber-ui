@@ -110,6 +110,23 @@ export class UserService {
     );
   }
 
+  getUserSubscription(): ProductsEnum {
+    const localProfileString = localStorage.getItem(
+      StorageObjectNamesEnum.UserProfile
+    );
+
+    if (!localProfileString) {
+      console.error('The user profile is not set on LocalStorage');
+      return ProductsEnum.FREE;
+    }
+
+    const userProfile = JSON.parse(localProfileString) as IUserProfileDto;
+
+    return userProfile.mainSubscription
+      ? userProfile.mainSubscription
+      : ProductsEnum.FREE;
+  }
+
   /**
    * True if the user has already done the initial tour walkthrough
    *
