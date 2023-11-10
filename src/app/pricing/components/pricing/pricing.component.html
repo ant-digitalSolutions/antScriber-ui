@@ -120,23 +120,49 @@
               </ng-template>
             </div>
           </div>
-          <button
-            mat-raised-button
-            class="w-100 m-t-24 bg-plum text-white f-w-500 f-s-18 btn-upgrade align-self-end"
-            (click)="checkout(pricecard)"
-            [disabled]="userCurrentSubscription === pricecard.id"
-          >
-            <ng-container
-              *ngIf="
-                userCurrentSubscription !== pricecard.id;
-                else currentSubBtnText
-              "
-            >
-              {{ pricecard.btnText }}
-            </ng-container>
 
-            <ng-template #currentSubBtnText>Current</ng-template>
-          </button>
+          <!-- BTN if the card subs is a higher TIER that the current subscription -->
+          <ng-container
+            *ngIf="pricecard.index > currentSubCardIndex; else downgradeBtn"
+          >
+            <button
+              mat-raised-button
+              class="w-100 m-t-24 bg-plum text-white f-w-500 f-s-18 btn-upgrade align-self-end"
+              (click)="checkout(pricecard)"
+              [disabled]="userCurrentSubscription === pricecard.id"
+            >
+              <ng-container
+                *ngIf="
+                  userCurrentSubscription !== pricecard.id;
+                  else currentSubBtnText
+                "
+              >
+                {{ pricecard.btnText }}
+              </ng-container>
+
+              <ng-template #currentSubBtnText>Current</ng-template>
+            </button>
+          </ng-container>
+
+          <ng-template #downgradeBtn>
+            <button
+              mat-raised-button
+              class="w-100 m-t-24 bg-plum text-white f-w-500 f-s-18 btn-upgrade align-self-end"
+              (click)="checkout(pricecard)"
+              [disabled]="userCurrentSubscription === pricecard.id"
+            >
+              <ng-container
+                *ngIf="
+                  userCurrentSubscription !== pricecard.id;
+                  else currentSubBtnText
+                "
+              >
+                Downgrade
+              </ng-container>
+
+              <ng-template #currentSubBtnText>Current</ng-template>
+            </button>
+          </ng-template>
         </mat-card-content>
       </mat-card>
     </div>

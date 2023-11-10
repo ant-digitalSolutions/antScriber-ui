@@ -22,6 +22,9 @@ export class AppPricingComponent {
 
   userCurrentSubscription: ProductsEnum;
 
+  // the index of the card that represent the current subscription
+  currentSubCardIndex = -1;
+
   constructor(
     private _paymentService: PaymentService,
     private stripeService: StripeService,
@@ -29,7 +32,19 @@ export class AppPricingComponent {
   ) {}
 
   ngOnInit(): void {
+    this.checkCurrentSubscription();
+  }
+
+  checkCurrentSubscription() {
     this.userCurrentSubscription = this._userService.getUserSubscription();
+
+    if (this.userCurrentSubscription === ProductsEnum.FREE) {
+      return;
+    }
+
+    this.currentSubCardIndex = this.pricecards.find(
+      (c) => c.id === this.userCurrentSubscription
+    )!.index;
   }
 
   checkout(priceData: IPriceCardData) {
