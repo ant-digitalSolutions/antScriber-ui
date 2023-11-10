@@ -1,5 +1,4 @@
-import { ProductsEnum } from 'src/app/common/subscriptions/products.enum';
-
+import { UserSubscriptionDto } from "./user-subscription-data.dto";
 export class IUserProfileDto {
   firstName: string;
 
@@ -11,5 +10,5 @@ export class IUserProfileDto {
 
   companyRole?: string;
 
-  mainSubscription: ProductsEnum;
+  subscriptionData: UserSubscriptionDto;
 }

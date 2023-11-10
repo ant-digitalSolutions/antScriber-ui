@@ -19,11 +19,17 @@ export class PaymentService {
     let params = new HttpParams();
     params = params.append(
       'successURL',
-      window.location.protocol + '//' + window.location.host + '/succespayment'
+      window.location.protocol +
+        '//' +
+        window.location.host +
+        '/checkout-return?session_id={CHECKOUT_SESSION_ID}'
     );
     params = params.append(
       'cancelURL',
-      window.location.protocol + '//' + window.location.host + '/cancelpayment'
+      window.location.protocol +
+        '//' +
+        window.location.host +
+        '/checkout-return?session_id={CHECKOUT_SESSION_ID}'
     );
     return this.http.get<IRequestResponse<string>>(
       this.baseUrl + 'payment/create-product-permanent-link',
