@@ -15,30 +15,31 @@ export class AppPricingComponent {
 
   // yearlyPrice: any = (a: any, b: number) => ;
 
-
-
   // card 1
   pricecards: IPriceCardData[] = cardPricing_standard;
 
-  constructor(private _paymentService: PaymentService, private stripeService: StripeService) {
+  constructor(
+    private _paymentService: PaymentService,
+    private stripeService: StripeService
+  ) {}
 
-  }
-
-
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   checkout(priceData: IPriceCardData) {
-    const stripePriceId = this.annualPricing ? priceData?.stripeYearlyPriceId : priceData?.stripeMonthlyPriceId;
+    const stripePriceId = this.annualPricing
+      ? priceData?.stripeYearlyPriceId
+      : priceData?.stripeMonthlyPriceId;
 
-    this._paymentService.generatePaymentSession(stripePriceId!)
+    this._paymentService
+      .generatePaymentSession(stripePriceId!)
       .pipe(
-        switchMap(result => {
-          return this.stripeService.redirectToCheckout({ sessionId: result.data.id })
+        switchMap((result) => {
+          return this.stripeService.redirectToCheckout({
+            sessionId: result.data.id,
+          });
         })
       )
-      .subscribe(result => {
+      .subscribe((result) => {
         // If `redirectToCheckout` fails due to a browser or network
         // error, you should display the localized error message to your
         // customer using `error.message`.
@@ -49,6 +50,12 @@ export class AppPricingComponent {
   }
 
   yearlyPrice(cardData: IPriceCardData) {
-    return Math.round((cardData.planOriginalPrice * 12 - cardData.planOriginalPrice * 12 * (cardData.planAnnualPercentOff! / 100)) / 12);
+    return Math.round(
+      (cardData.planOriginalPrice * 12 -
+        cardData.planOriginalPrice *
+          12 *
+          (cardData.planAnnualPercentOff! / 100)) /
+        12
+    );
   }
 }
