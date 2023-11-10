@@ -1,5 +1,8 @@
 export enum StorageObjectNamesEnum {
-    WizardFormData = 'wfd',
-    WizardUseCase = 'wuc',
-    WizardGroupCase = 'wgc'
+  WizardFormData = 'wfd',
+  WizardUseCase = 'wuc',
+  WizardGroupCase = 'wgc',
+
+  //profile
+  UserProfile = 'user-profile',
 }
