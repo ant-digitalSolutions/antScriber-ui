@@ -22,14 +22,14 @@ export class PaymentService {
       window.location.protocol +
         '//' +
         window.location.host +
-        '/checkout-return?session_id={CHECKOUT_SESSION_ID}'
+        '/settings/billing/checkout-return?session_id={CHECKOUT_SESSION_ID}'
     );
     params = params.append(
       'cancelURL',
       window.location.protocol +
         '//' +
         window.location.host +
-        '/checkout-return?session_id={CHECKOUT_SESSION_ID}'
+        '/settings/billing/checkout-return?session_id={CHECKOUT_SESSION_ID}'
     );
     return this.http.get<IRequestResponse<string>>(
       this.baseUrl + 'payment/create-product-permanent-link',

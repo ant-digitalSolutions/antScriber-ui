@@ -8,7 +8,7 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'wizard/creator',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'wizard',
@@ -17,23 +17,34 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: () =>
-          import('./wizard-creator/wizard-creator.module').then((m) => m.WizardCreatorModule),
-        data: { breadcrumb: 'Home' }
+          import('./wizard-creator/wizard-creator.module').then(
+            (m) => m.WizardCreatorModule
+          ),
+        data: { breadcrumb: 'Home' },
       },
     ],
-    canActivate: [authGuard]
+    canActivate: [authGuard],
   },
   {
     path: 'settings',
     loadChildren: () =>
-      import('./user-settings/user-settings.module').then((m) => m.UserSettingsModule),
-    canActivate: [authGuard]
+      import('./user-settings/user-settings.module').then(
+        (m) => m.UserSettingsModule
+      ),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'billing',
+    loadChildren: () =>
+      import('./payment/payment.module').then(
+        (m) => m.PaymentModule
+      ),
+    canActivate: [authGuard],
   },
   // {
   //   path: '',
   //   component: FullComponent,
   //   children: [
-
 
   //     {
   //       path: 'content',
@@ -114,8 +125,6 @@ const routes: Routes = [
     path: 'auth',
     component: BlankComponent,
     children: [
-
-
       // template
       // {
       //   path: 'authentication',
