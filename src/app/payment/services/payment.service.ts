@@ -6,27 +6,41 @@ import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 import { ICreateSubscriptionPaymentSessionDto } from '../dtos/create-suscription-payment-session.dto';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PaymentService {
   baseUrl = getBaseApiURL();
 
   _isPremiumUser?: boolean;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getAdfluentsProductPermanentLink(): Observable<IRequestResponse<string>> {
     let params = new HttpParams();
-    params = params.append('successURL', window.location.protocol + "//" + window.location.host + "/succespayment");
-    params = params.append('cancelURL', window.location.protocol + "//" + window.location.host + "/cancelpayment");
-    return this.http.get<IRequestResponse<string>>(this.baseUrl + 'payment/create-product-permanent-link', { params: params });
+    params = params.append(
+      'successURL',
+      window.location.protocol + '//' + window.location.host + '/succespayment'
+    );
+    params = params.append(
+      'cancelURL',
+      window.location.protocol + '//' + window.location.host + '/cancelpayment'
+    );
+    return this.http.get<IRequestResponse<string>>(
+      this.baseUrl + 'payment/create-product-permanent-link',
+      { params: params }
+    );
   }
 
   getUserSubscriptionType() {
-    return this.http.get<IRequestResponse<boolean>>(this.baseUrl + 'payment/subscription-type')
-      .pipe(tap(result => {
-        this._isPremiumUser = result.data;
-      }));
+    return this.http
+      .get<IRequestResponse<boolean>>(
+        this.baseUrl + 'payment/subscription-type'
+      )
+      .pipe(
+        tap((result) => {
+          this._isPremiumUser = result.data;
+        })
+      );
   }
 
   getSubscriptionInfo() {
@@ -34,15 +48,30 @@ export class PaymentService {
   }
 
   cancelSubscription() {
-    return this.http.get<IRequestResponse<string>>(this.baseUrl + 'subscription/cancel');
+    return this.http.get<IRequestResponse<string>>(
+      this.baseUrl + 'subscription/cancel'
+    );
   }
 
-  generatePaymentSession(prodPriceId: string): Observable<IRequestResponse<any>> {
+  generatePaymentSession(
+    prodPriceId: string
+  ): Observable<IRequestResponse<any>> {
     const data: ICreateSubscriptionPaymentSessionDto = {
-      successURL: window.location.protocol + "//" + window.location.host + "/succespayment",
-      cancelURL: window.location.protocol + "//" + window.location.host + "/cancelpayment",
-      prodPriceId
-    }
-    return this.http.post<IRequestResponse<any>>(this.baseUrl + 'payment/create-subscription-payment-session', data);
+      successURL:
+        window.location.protocol +
+        '//' +
+        window.location.host +
+        '/succespayment',
+      cancelURL:
+        window.location.protocol +
+        '//' +
+        window.location.host +
+        '/cancelpayment',
+      prodPriceId,
+    };
+    return this.http.post<IRequestResponse<any>>(
+      this.baseUrl + 'payment/create-subscription-payment-session',
+      data
+    );
   }
 }
