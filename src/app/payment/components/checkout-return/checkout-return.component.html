@@ -1,31 +1,60 @@
-<div class="row justify-content-center h-100 align-items-center">
-  <div class="col-6 justify-content-center">
-    <mat-card>
+<div class="row justify-content-center align-items-center bg-plum outer-container">
+  <div class="col-12 col-sm-8 col-lg-4 justify-content-center card-container">
+    <mat-card *ngIf="dataReady;else loading">
 
-        <!-- SUCCESS PAYMENT -->
-      <ng-container *ngIf="paymentSucceed; else paymentFailed">
-        <mat-card-header class="d-flex flex-col b-b-1">
-          <h3 class="text-center">Your payment has been received.</h3>
-          <h5 class="text-center p-t-2 p-t-0">Your Journey with Adfluens Begins Now!</h5>
-        </mat-card-header>
+        <!-- SUCCESSFUL PAYMENT -->
+        <ng-container *ngIf="paymentSucceed; else paymentFailed">
+          <mat-card-header class="d-flex flex-col b-b-1">
+            <h2 class="text-center">Your payment has been received.</h2>
+            <h5 class="text-center p-t-2 p-t-0">Your Journey with Adfluens Begins Now!</h5>
+               <p>{{userFirstName}}, we're thrilled to welcome you to Adfluens! Get ready to unleash your creative potential with the power of AI.</p>
+          </mat-card-header>
 
-        <mat-card-content>
-            <p>{{userFirstName}}, we're thrilled to welcome you to Adfluens! Get ready to unleash your creative potential with the power of AI.</p> 
-        </mat-card-content>
+          <mat-card-content>
+         
+            
+            <div class="subscription-details b-b-1">
+              <h3 class="text-center">Subscription Details</h3>
+              <p><strong>Status:</strong> {{ subscription.status | uppercase }}</p>
+              <p><strong>Billing Cycle:</strong> {{ subscription.startDate * 1000 | date }} - {{ subscription.currentPeriodEnd * 1000 | date }}</p>
+              <p><strong>Plan Amount:</strong> ${{ subscription.plan!.amount / 100 }} ({{ subscription.plan!.currency | uppercase }})</p>
+              <p><strong>Billed 
+                <ng-container *ngIf="plan.interval === 'year';else monthly">
+                Annually
+                </ng-container>    
 
-      </ng-container>
+                <ng-template #monthly>Monthly</ng-template>
+            
+            </strong></p>
+            </div>
 
-      <!-- FAILED PAYMENT -->
-      <ng-template #paymentFailed>
-         <mat-card-header>
-         <h3 class="text-center">Your payment has failed.</h3>
-          
-        </mat-card-header>
-        <mat-card-content> 
-            <p>ERROR DEtails</p>
-        </mat-card-content>
-       
-      </ng-template>
+            <div class="invoice-details">
+              <h3 class="text-center">Invoice Details</h3>
+              <p><strong>Invoice ID:</strong> {{ invoice!.id }}</p>
+              <p><strong>Amount Paid:</strong> ${{ invoice!.amountPaid / 100 }} ({{ invoice!.currency | uppercase }})</p>
+              <a href="{{ invoice.invoicePdf }}" target="_blank">Download Invoice</a> <br>
+                <a href="{{ invoice.hostedInvoiceUrl }}" target="_blank">Details</a>
+            </div>
+
+          </mat-card-content>
+
+        </ng-container>
+
+        <!-- FAILED PAYMENT -->
+        <ng-template #paymentFailed>
+          <mat-card-header>
+            <h3 class="text-center">Your payment has failed.</h3>
+          </mat-card-header>
+          <mat-card-content> 
+            <p>There was an issue with your payment. Please contact support for further assistance.</p>
+          </mat-card-content>
+        </ng-template>
+
     </mat-card>
+    <ng-template #loading>
+                  <div class="col-12">
+              <mat-spinner></mat-spinner>
+            </div>
+    </ng-template>
   </div>
 </div>
