@@ -1,1 +1,31 @@
-<p>checkout-return works!</p>
+<div class="row justify-content-center h-100 align-items-center">
+  <div class="col-6 justify-content-center">
+    <mat-card>
+
+        <!-- SUCCESS PAYMENT -->
+      <ng-container *ngIf="paymentSucceed; else paymentFailed">
+        <mat-card-header class="d-flex flex-col b-b-1">
+          <h3 class="text-center">Your payment has been received.</h3>
+          <h5 class="text-center p-t-2 p-t-0">Your Journey with Adfluens Begins Now!</h5>
+        </mat-card-header>
+
+        <mat-card-content>
+            <p>{{userFirstName}}, we're thrilled to welcome you to Adfluens! Get ready to unleash your creative potential with the power of AI.</p> 
+        </mat-card-content>
+
+      </ng-container>
+
+      <!-- FAILED PAYMENT -->
+      <ng-template #paymentFailed>
+         <mat-card-header>
+         <h3 class="text-center">Your payment has failed.</h3>
+          
+        </mat-card-header>
+        <mat-card-content> 
+            <p>ERROR DEtails</p>
+        </mat-card-content>
+       
+      </ng-template>
+    </mat-card>
+  </div>
+</div>
