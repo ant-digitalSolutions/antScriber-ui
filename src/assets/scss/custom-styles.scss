@@ -103,3 +103,7 @@ $walkthrough-user-initialization-text-secondary: #e4a1cf;
 .user-settings-card-max-width {
   max-width: 800px;
 }
+
+.border-round {
+  border-radius: $border-radius !important;
+}

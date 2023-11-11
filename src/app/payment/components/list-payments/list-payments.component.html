@@ -1,0 +1,63 @@
+<div class="row justify-content-center align-items-center payment-list-container bg-plum">
+  <div class="col-10 m-t-48 inner-container">
+    <mat-card class="border-round">
+      <mat-card-title class="m-b-30">
+        <h2 class="text-black text-center">Payments</h2>
+      </mat-card-title>
+
+      <mat-card-content>
+        <mat-table [dataSource]="dataSource" class="">
+          <!-- Status Column -->
+          <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+            <mat-cell *matCellDef="let invoice"
+              ><span
+                class="bg-success f-s-12 f-w-500 p-x-8 p-y-4 rounded text-light-primary text-uppercase"
+              >
+                {{ invoice.paid ? "Paid" : "Pending" }}
+              </span></mat-cell
+            >
+          </ng-container>
+
+          <!-- Period Column -->
+          <!-- <ng-container matColumnDef="period">
+        <mat-header-cell *matHeaderCellDef> Period </mat-header-cell>
+        <mat-cell *matCellDef="let invoice">
+          {{ invoice.subscription.currentPeriodStart * 1000 | date : "shortDate" }} -
+          {{ invoice.subscription.currentPeriodEnd * 1000 | date : "shortDate" }}
+        </mat-cell>
+      </ng-container> -->
+
+          <!-- Date Column -->
+          <ng-container matColumnDef="date">
+            <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+            <mat-cell *matCellDef="let invoice">
+              {{ invoice.created * 1000 | date : "mediumDate" }}
+            </mat-cell>
+          </ng-container>
+
+          <!-- Amount Column -->
+          <ng-container matColumnDef="amount">
+            <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
+            <mat-cell *matCellDef="let invoice">
+              ${{ invoice.amountPaid / 100 }} {{ invoice.currency | uppercase }}
+            </mat-cell>
+          </ng-container>
+
+          <!-- View Details Column -->
+          <ng-container matColumnDef="details">
+            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+            <mat-cell *matCellDef="let invoice">
+              <a href="{{ invoice.hostedInvoiceUrl }}" target="_blank"
+                >Details</a
+              >
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
