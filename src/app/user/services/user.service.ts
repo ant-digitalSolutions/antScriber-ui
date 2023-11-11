@@ -142,13 +142,13 @@ export class UserService {
   }
 
   public get userFirstName(): string | null {
-    const jwtData = this.userJwtData;
-    return jwtData ? jwtData.firstName : null;
+    const userProfile = this.userProfile;
+    return userProfile ? userProfile.firstName : null;
   }
 
   public get userLastName(): string | null {
-    const jwtData = this.userJwtData;
-    return jwtData ? jwtData.lastName : null;
+    const userProfile = this.userProfile;
+    return userProfile ? userProfile.lastName : null;
   }
 
   public get userEmail(): string | null {
@@ -168,4 +168,17 @@ export class UserService {
 
     return null;
   }
+
+  
+  public get userProfile() : IUserProfileDto | undefined {
+    const localProfile = localStorage.getItem(
+      StorageObjectNamesEnum.UserProfile
+    );
+
+    if (localProfile)
+      return JSON.parse(localProfile) as any as IUserProfileDto;
+
+      return undefined;
+  }
+  
 }
