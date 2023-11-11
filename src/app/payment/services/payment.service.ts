@@ -67,17 +67,26 @@ export class PaymentService {
         window.location.protocol +
         '//' +
         window.location.host +
-        '/succespayment',
+        '/settings/billing/checkout-return?session_id={CHECKOUT_SESSION_ID}',
       cancelURL:
         window.location.protocol +
         '//' +
         window.location.host +
-        '/cancelpayment',
+        '/settings/billing/checkout-return?session_id={CHECKOUT_SESSION_ID}',
       prodPriceId,
     };
     return this.http.post<IRequestResponse<any>>(
       this.baseUrl + 'payment/create-subscription-payment-session',
       data
+    );
+  }
+
+  getStripeSession(sessionId: string) {
+    let params = new HttpParams();
+    params = params.append('sessionId', sessionId);
+
+    return this.http.get<IRequestResponse<any>>(
+      this.baseUrl + 'payment/checkout-session-result', {params}
     );
   }
 }
