@@ -107,3 +107,11 @@ $walkthrough-user-initialization-text-secondary: #e4a1cf;
 .border-round {
   border-radius: $border-radius !important;
 }
+
+.h-100dvh {
+  height: 100dvh;
+}
+
+.h-100dvh-50 {
+  height: calc(100dvh - 50px);
+}

@@ -1,5 +1,5 @@
-<div class="pricing-outer-container">
-  <div class="row justify-content-center">
+<div class="pricing-outer-container bg-white row justify-content-center">
+  <div class="col-10 justify-content-center">
     <div class="col-lg-8 justify-content-center">
       <h4 class="f-s-30 f-w-600 text-center mat-subtitle-1 lh-lg m-b-16">
         Flexible Plans Tailored to Fit Your Creative's Unique Needs!
@@ -17,9 +17,9 @@
     </div>
   </div>
 
-  <div class="row m-t-32 p-t-32">
+  <div class="m-t-32 p-t-32 d-flex card-outer-container">
     <div
-      class="col-sm-4 col-lg-4 pricing-card-outer-container"
+      class="col-sm-4 col-lg-4 card-container m-b-10"
       *ngFor="let pricecard of pricecards"
       [ngClass]="{ popular: pricecard.popular,  'current-subscription': checkIfShouldUpgrade(pricecard) === 0 }"
     >
