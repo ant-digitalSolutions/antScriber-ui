@@ -1,20 +1,20 @@
 <div class="pricing-outer-container bg-white row justify-content-center">
-  <div class="col-10 justify-content-center">
-    <div class="col-lg-8 justify-content-center">
+  <div class="col-12 justify-content-center">
       <h4 class="f-s-30 f-w-600 text-center mat-subtitle-1 lh-lg m-b-16">
         Flexible Plans Tailored to Fit Your Creative's Unique Needs!
       </h4>
-      <div class="d-flex align-items-center justify-content-center">
-        <span class="f-s-14 m-r-8">Monthly</span>
+      <div class="d-flex align-items-center justify-content-center m-t-32">
+        <span class="f-s-16 m-r-8 f-w-600 p-x-12">Monthly</span>
         <mat-slide-toggle
           (click)="annualPricing = !annualPricing"
           color="primary"
           [checked]="annualPricing"
-          >Yearly</mat-slide-toggle
+          >
+          <span class="f-s-16 m-r-8 f-w-600 p-x-12">Annual</span>
+          </mat-slide-toggle
         >
       </div>
       <div class="text-center m-t-6">Save 20% on annual plans</div>
-    </div>
   </div>
 
   <div class="m-t-32 p-t-32 d-flex card-outer-container">

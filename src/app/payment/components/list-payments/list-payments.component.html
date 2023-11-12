@@ -1,12 +1,16 @@
-<div class="row justify-content-center align-items-start payment-list-container">
+<div
+  class="d-flex justify-content-center align-items-start payment-list-container p-4"
+>
   <!-- <div class="col-10 m-t-48 inner-container"> -->
-    <mat-card class="border-round col-11 user-settings-card-max-width">
-      <mat-card-header class="m-b-30">
-        <h3 class="text-black">Payments</h3>
-      </mat-card-header>
+  <mat-card class="border-round col-12 user-settings-card-max-width p-4 p-b-20">
+    <mat-card-header>
+      <mat-card-title class="m-b-0">
+        <h3 class="text-center">Payments</h3>
+      </mat-card-title>
+    </mat-card-header>
 
-      <ng-container *ngIf="!loading;else loadingData">
-      <mat-card-content>
+    <ng-container *ngIf="!loading; else loadingData">
+      <mat-card-content class="p-0">
         <mat-table [dataSource]="dataSource" class="">
           <!-- Status Column -->
           <ng-container matColumnDef="status">
@@ -59,13 +63,13 @@
           <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
         </mat-table>
       </mat-card-content>
-      </ng-container>
+    </ng-container>
 
-       <ng-template #loadingData>
-          <div class="col-12 justify-content-center d-flex">
-            <mat-spinner></mat-spinner>
-          </div>
-        </ng-template>
-    </mat-card>
+    <ng-template #loadingData>
+      <div class="col-12 justify-content-center d-flex">
+        <mat-spinner></mat-spinner>
+      </div>
+    </ng-template>
+  </mat-card>
   <!-- </div> -->
 </div>
