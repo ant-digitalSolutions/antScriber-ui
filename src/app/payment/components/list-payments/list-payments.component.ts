@@ -29,6 +29,8 @@ export class ListPaymentsComponent implements OnInit {
         this.invoiceList = r.data;
         this.dataSource = new MatTableDataSource<InvoiceDto>(this.invoiceList);
       }
+
+      this.loading = false;
     });
   }
 }
