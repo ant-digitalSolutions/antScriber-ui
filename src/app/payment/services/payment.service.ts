@@ -41,7 +41,7 @@ export class PaymentService {
   getUserSubscriptionType() {
     return this.http
       .get<IRequestResponse<boolean>>(
-        this.baseUrl + 'payment/subscription-type'
+        this.baseUrl + 'user-subscription/type'
       )
       .pipe(
         tap((result) => {
