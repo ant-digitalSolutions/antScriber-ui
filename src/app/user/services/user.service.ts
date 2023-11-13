@@ -1,8 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { Observable, Subscriber, tap } from 'rxjs';
+import { subscriptionLimitReachedObserver } from 'src/app/common/common-events';
+import { SubscriptionUsageLimitException } from 'src/app/common/dto/errors/subscription-usage-limit-exception.dto';
 import { IJwtData } from 'src/app/common/dto/jwt-data.dto';
 import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
+import { OpenAiGPTVersionEnum } from 'src/app/common/enum/content generation/openai-gtp-version.enum';
 import { StorageObjectNamesEnum } from 'src/app/common/enum/storage-objects-name.enum';
 import { ProductsEnum } from 'src/app/common/subscriptions/products.enum';
 import { IUserUpdateDto } from 'src/app/user-settings/dtos/user-update.dto';
@@ -22,8 +27,15 @@ export class UserService {
 
   baseUrl = getBaseApiURL() + 'users';
 
-  constructor(private _httpClient: HttpClient) {
+  constructor(
+    private _httpClient: HttpClient,
+    private _snackBar: MatSnackBar,
+    private _router: Router
+  ) {
     this.getProfile(false).subscribe();
+    subscriptionLimitReachedObserver.subscribe((r) => {
+      if (r) this.subscriptionLimitReached(r);
+    });
   }
 
   initialWalkthroughCompleted() {
@@ -128,6 +140,28 @@ export class UserService {
       : UserSubscriptionDto.createFreeSubscription();
   }
 
+  subscriptionLimitReached(error: SubscriptionUsageLimitException) {
+    localStorage.setItem(
+      error.gptVersion === OpenAiGPTVersionEnum.GPT3
+        ? StorageObjectNamesEnum.HasAvailableQuota_GPT_3
+        : StorageObjectNamesEnum.HasAvailableQuota_GPT_4,
+      'false'
+    );
+
+    const stack = this._snackBar.open(
+      `Oops, you just reached your subscription's limits for: ${error.gptVersion}.`,
+      'Upgrade',
+      {
+        panelClass: 'snack-error',
+        duration: 10000,
+      }
+    );
+
+    stack.onAction().subscribe(() => {
+      this._router.navigate(['/settings/subscriptions']);
+    });
+  }
+
   /**
    * True if the user has already done the initial tour walkthrough
    *
@@ -169,16 +203,13 @@ export class UserService {
     return null;
   }
 
-  
-  public get userProfile() : IUserProfileDto | undefined {
+  public get userProfile(): IUserProfileDto | undefined {
     const localProfile = localStorage.getItem(
       StorageObjectNamesEnum.UserProfile
     );
 
-    if (localProfile)
-      return JSON.parse(localProfile) as any as IUserProfileDto;
+    if (localProfile) return JSON.parse(localProfile) as any as IUserProfileDto;
 
-      return undefined;
+    return undefined;
   }
-  
 }

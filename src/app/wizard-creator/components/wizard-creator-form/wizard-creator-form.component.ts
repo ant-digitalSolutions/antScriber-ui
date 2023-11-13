@@ -20,10 +20,11 @@ import { WizardFormService } from '../../services/wizard-form.service';
 @Component({
   selector: 'app-wizard-creator-form',
   templateUrl: './wizard-creator-form.component.html',
-  styleUrls: ['./wizard-creator-form.component.scss']
+  styleUrls: ['./wizard-creator-form.component.scss'],
 })
-export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewInit {
-
+export class WizardCreatorFormComponent
+  implements OnDestroy, OnInit, AfterViewInit
+{
   MAX_AMOUNT_OPTIONS = 5;
 
   componentDestroyed$: Subject<boolean> = new Subject();
@@ -45,7 +46,6 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
    */
   dataReady = false;
 
-
   /**
    * If true the default description field will be shown.
    *
@@ -55,7 +55,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
 
   /**
    * Indicate if the user selected a use case.
-   * 
+   *
    * If true, render the dynamic field content.
    *
    * @memberof WizardCreatorFormComponent
@@ -76,12 +76,10 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
     private projectService: BlogProjectsService,
     private _wizardFormService: WizardFormService,
     private _useCaseService: WizardUseCaseService,
-    private _userInitTour: UserInitTourService) {
-
-  }
+    private _userInitTour: UserInitTourService
+  ) {}
   ngAfterViewInit(): void {
     this.setFormEventClick();
-
   }
 
   ngOnInit(): void {
@@ -95,66 +93,88 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
     this.initCreativityLevelOptions();
     this.initVariantsOptions();
     this.setListeners();
-    this.initGPTVersionOptions()
+    this.initGPTVersionOptions();
 
     this.dataReady = true;
 
     this.checkIfMobile();
-    window.addEventListener("resize", this.checkIfMobile.bind(this), false)
-
+    window.addEventListener('resize', this.checkIfMobile.bind(this), false);
   }
 
   ngOnDestroy(): void {
-    this.componentDestroyed$.next(true)
-    this.componentDestroyed$.complete()
+    this.componentDestroyed$.next(true);
+    this.componentDestroyed$.complete();
   }
 
   generateContent(): void {
     this.isLoading = true;
-
-    this._wizardCreatorService.generateContent().subscribe(r => {
-      if (Object.keys(r).length === 0) {
+    this._wizardCreatorService.generateContent().subscribe({
+      error: () => {
         this.isLoading = false;
-      }
+      },
+      complete: () => {
+        this.isLoading = false;
+      },
     });
   }
 
   setListeners() {
-    this.projectService.selectedProjectId$.subscribe(projectId => {
+    this.projectService.selectedProjectId$.subscribe((projectId) => {
       if (projectId !== -1) {
         this.currentProjectId = projectId;
       }
     });
 
-    this._wizardCreatorService.wizardCreatedContent$.pipe(takeUntil(this.componentDestroyed$)).subscribe(() => {
-      this.isLoading = false;
+    this._wizardCreatorService.wizardCreatedContent$
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(() => {
+        this.isLoading = false;
 
-      // user initialization walkthrough tour
-      if (this._userInitTour.isActive
-        && this._userInitTour.tourId === WalkthroughTourIdEnum.UserInitialization
-        && this._userInitTour.currentStepId === UserInitializationWalkthroughTourStepsEnum.UnleashAssistant) {
-        this._userInitTour.next();
-      }
-    })
+        // user initialization walkthrough tour
+        if (
+          this._userInitTour.isActive &&
+          this._userInitTour.tourId ===
+            WalkthroughTourIdEnum.UserInitialization &&
+          this._userInitTour.currentStepId ===
+            UserInitializationWalkthroughTourStepsEnum.UnleashAssistant
+        ) {
+          this._userInitTour.next();
+        }
+      });
 
-    this._useCaseService.wizardUseCase$.pipe(takeUntil(this.componentDestroyed$))
+    this._useCaseService.wizardUseCase$
+      .pipe(takeUntil(this.componentDestroyed$))
       .subscribe(() => {
         this.useCaseSelected = true;
         this.setFormEventClick();
       });
 
-    this._wizardFormService
-      .additionalDataFieldWithError$.pipe(takeUntil(this.componentDestroyed$))
-      .subscribe(() => this.scrollToWizardInputWithError())
+    this._wizardFormService.additionalDataFieldWithError$
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(() => this.scrollToWizardInputWithError());
 
-    this._userInitTour.walkthroughTouStepShowEvent$.pipe(takeUntil(this.componentDestroyed$), takeUntil(this._userInitTour.walkthroughTourEnded$))
-      .subscribe(stepId => {
-        if (stepId === UserInitializationWalkthroughTourStepsEnum.UnleashAssistant) {
-          this._wizardFormService.updateAdditionalData('postThemeIdea', `I found a new tool to boost my productivity, Adfluens. Check it out now and start for free: https://adfluens.io.`)
-          const postThemeIdea = this._wizardFormService._additionalDataFormFields.find(f => f.fieldName === 'postThemeIdea')
-          postThemeIdea?.formControl.setValue(`I found a new tool to boost my productivity, Adfluens. Check it out now and start for free: https://adfluens.io.`)
+    this._userInitTour.walkthroughTouStepShowEvent$
+      .pipe(
+        takeUntil(this.componentDestroyed$),
+        takeUntil(this._userInitTour.walkthroughTourEnded$)
+      )
+      .subscribe((stepId) => {
+        if (
+          stepId === UserInitializationWalkthroughTourStepsEnum.UnleashAssistant
+        ) {
+          this._wizardFormService.updateAdditionalData(
+            'postThemeIdea',
+            `I found a new tool to boost my productivity, Adfluens. Check it out now and start for free: https://adfluens.io.`
+          );
+          const postThemeIdea =
+            this._wizardFormService._additionalDataFormFields.find(
+              (f) => f.fieldName === 'postThemeIdea'
+            );
+          postThemeIdea?.formControl.setValue(
+            `I found a new tool to boost my productivity, Adfluens. Check it out now and start for free: https://adfluens.io.`
+          );
         }
-      })
+      });
   }
 
   initTextFields() {
@@ -162,11 +182,15 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
       placeholder: 'E.g. "Describe the benefits of solar energy"',
       fieldLabel: 'Instruction',
       fieldValue: ``,
-      validators: [Validators.required, Validators.maxLength(4000), Validators.minLength(10)],
+      validators: [
+        Validators.required,
+        Validators.maxLength(4000),
+        Validators.minLength(10),
+      ],
       inputMaxLen: 4000,
       dataName: WizardDefaultFieldNamesEnum.Instruction,
       tooltipText: 'Detailed instruction to generate the desired content.',
-      isLongText: true
+      isLongText: true,
     });
   }
 
@@ -176,7 +200,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
       fieldValue: ContentTone.Friendly,
       dataName: WizardDefaultFieldNamesEnum.VoiceTone,
       tooltipText: 'The voice tone to use.',
-      values: contentToneOptionFields()
+      values: contentToneOptionFields(),
     });
   }
 
@@ -187,7 +211,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
       dataName: WizardDefaultFieldNamesEnum.GtpVersion,
       tooltipText: 'GPT version to use.',
       values: mapEnumNameAndValue(OpenAiGPTVersionEnum),
-      className: 'gpt-version-selector'
+      className: 'gpt-version-selector',
     });
   }
 
@@ -197,7 +221,7 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
       fieldValue: 'English',
       dataName: WizardDefaultFieldNamesEnum.OutputLang,
       tooltipText: 'The desired language for the output content.',
-      values: langEnumOptionFields()
+      values: langEnumOptionFields(),
     });
   }
 
@@ -208,17 +232,19 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
       dataName: WizardDefaultFieldNamesEnum.ImaginationSelector,
       tooltipText: 'How much imagination to apply?',
       values: creativityLevelOptionFields(),
-      className: 'imagination-selector'
+      className: 'imagination-selector',
     });
   }
 
   initVariantsOptions() {
-    const x: number[] = new Array(this.MAX_AMOUNT_OPTIONS).fill(0).map((_, index) => index + 1);
-    const variantOptions = x.map(v => {
+    const x: number[] = new Array(this.MAX_AMOUNT_OPTIONS)
+      .fill(0)
+      .map((_, index) => index + 1);
+    const variantOptions = x.map((v) => {
       return {
         value: v,
-        text: v.toString()
-      }
+        text: v.toString(),
+      };
     });
 
     this.selectorFields.push({
@@ -226,27 +252,27 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
       fieldValue: 1,
       dataName: WizardDefaultFieldNamesEnum.AmountOfVariants,
       tooltipText: '# of variants to generate.',
-      values: variantOptions
+      values: variantOptions,
     });
   }
 
   selectorData(dataName: string): SelectorFieldToRenderData {
-    const data = this.selectorFields.find(d => d.dataName === dataName);
+    const data = this.selectorFields.find((d) => d.dataName === dataName);
 
     if (data) {
       return data;
     } else {
-      throw new Error(`The given dataName is not registered: ${dataName}`)
+      throw new Error(`The given dataName is not registered: ${dataName}`);
     }
   }
 
   textFieldData(dataName: string): TextFieldToRenderData {
-    const data = this.textFields.find(d => d.dataName === dataName);
+    const data = this.textFields.find((d) => d.dataName === dataName);
 
     if (data) {
       return data;
     } else {
-      throw new Error(`The given dataName is not registered: ${dataName}`)
+      throw new Error(`The given dataName is not registered: ${dataName}`);
     }
   }
 
@@ -255,15 +281,17 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
   }
 
   resetForm() {
-    this._wizardFormService.resetFormData()
+    this._wizardFormService.resetFormData();
   }
 
   checkIfMobile() {
-    this.isMobile = (window.innerWidth < 960);
+    this.isMobile = window.innerWidth < 960;
   }
 
   scrollToWizardInputWithError() {
-    const element = document.querySelector('.wizard-field-with-error') as HTMLElement;
+    const element = document.querySelector(
+      '.wizard-field-with-error'
+    ) as HTMLElement;
     element.scrollIntoView();
   }
 
@@ -276,15 +304,16 @@ export class WizardCreatorFormComponent implements OnDestroy, OnInit, AfterViewI
   setFormEventClick() {
     setTimeout(() => {
       if (!this.formClickEventSet && this.formElements) {
-        this.formElements.nativeElement.addEventListener('click', this.onClick.bind(this));
+        this.formElements.nativeElement.addEventListener(
+          'click',
+          this.onClick.bind(this)
+        );
         this.formClickEventSet = true;
       }
-    }, 3000)
+    }, 3000);
   }
-
 
   public get showGenerateBtn(): boolean {
     return this._useCaseService.showGenerateBtn;
   }
-
 }
