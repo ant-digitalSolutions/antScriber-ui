@@ -365,7 +365,7 @@ input.mat-input-element {
   }
   &.snack-error {
     .mdc-snackbar__surface {
-      background-color: $error;
+      background-color: $error-snackbars;
     }
   }
 
@@ -380,6 +380,11 @@ input.mat-input-element {
       background-color: $success;
     }
   }
+}
+
+.mat-mdc-snack-bar-container .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled) {
+  font-weight: 600 !important;
+  color: #fff !important;
 }
 
 // selectors menu-surface
