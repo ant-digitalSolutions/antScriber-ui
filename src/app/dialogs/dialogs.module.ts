@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { DialogForConfirmationComponent } from './components/dialog-for-confirmation/dialog-for-confirmation.component';
 import { DialogWithSingleInputComponent } from './components/dialog-with-single-input/dialog-with-single-input.component';
+import { DialogForMessageComponent } from './components/dialog-for-message/dialog-for-message.component';
 
 
 
@@ -14,6 +15,7 @@ import { DialogWithSingleInputComponent } from './components/dialog-with-single-
   declarations: [
     DialogWithSingleInputComponent,
     DialogForConfirmationComponent,
+    DialogForMessageComponent,
   ],
   imports: [
     CommonModule,

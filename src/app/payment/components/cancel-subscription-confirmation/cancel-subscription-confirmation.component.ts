@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { DialogService } from 'src/app/dialogs/dialog.service';
 import { PaymentService } from '../../services/payment.service';
 
 @Component({
@@ -8,19 +9,29 @@ import { PaymentService } from '../../services/payment.service';
   styleUrls: ['./cancel-subscription-confirmation.component.scss'],
 })
 export class CancelSubscriptionConfirmationComponent {
+  cancelingRequest = false;
+
   constructor(
     public dialogRef: MatDialogRef<CancelSubscriptionConfirmationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private _paymentService: PaymentService
+    private _paymentService: PaymentService,
+    private _dialogService: DialogService
   ) {}
 
   onDecline(): void {
-    this._paymentService.cancelSubscription().subscribe(r => {
+    this.cancelingRequest = true;
+    this._paymentService.cancelSubscription().subscribe((r) => {
       if (r.success) {
-        console.log('Subscription cancelled');
         this.dialogRef.close(false);
+        this._dialogService.openMessageDialog({
+          okBtnText: 'OK',
+          message:
+            'Your subscription has been canceled. You can continue enyoing your premium features until the end of the period',
+        });
       }
-    })
+
+      this.cancelingRequest = false;
+    });
   }
 
   onAccept(): void {

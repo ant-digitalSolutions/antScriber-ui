@@ -3,5 +3,5 @@ export class DialogCustomData_Confirmation {
 
     okBtnText = 'Yes';
 
-    cancelBtnText = 'Cancel';
+    cancelBtnText? = 'Cancel';
 }

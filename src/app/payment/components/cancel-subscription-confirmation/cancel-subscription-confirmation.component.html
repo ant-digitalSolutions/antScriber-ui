@@ -1,7 +1,9 @@
 <mat-card class="bg-plum shadow-none">
   <mat-card-header>
     <mat-icon class="close-icon text-white" (click)="onClose()">close</mat-icon>
-    <mat-card-title class="text-white"> <h3 class="m-0">Special Offer</h3></mat-card-title>
+    <mat-card-title class="text-white">
+      <h3 class="m-0">Special Offer</h3></mat-card-title
+    >
   </mat-card-header>
   <mat-card-content class="text-white">
     <p>
@@ -16,12 +18,20 @@
       class="border-round btn-cancel m-r-8"
       (click)="onDecline()"
     >
-      No Thanks - Confirm Cancellation
+    <div class="btn-content d-flex align-items-center justify-content-end">
+      <ng-container *ngIf="cancelingRequest">
+        <mat-spinner class="btn-loading-spinner"></mat-spinner>
+      </ng-container>
+     <span> No Thanks - Confirm Cancellation</span>
+    </div>
     </button>
+
+
     <button
       mat-flat-button
       class="border-round text-primary f-w-600"
       (click)="onAccept()"
+      cdkFocusInitial
     >
       Yes, please!
     </button>

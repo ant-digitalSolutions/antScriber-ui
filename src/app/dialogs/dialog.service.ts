@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { DialogWithSingleInputComponent } from './components/dialog-with-single-input/dialog-with-single-input.component';
 import { Subject } from 'rxjs';
-import { DialogCustomData_SingleInput } from './dto/dialog-data';
-import { DialogCustomData_Confirmation } from './dto/dialog-custom-data-confirmation';
 import { DialogForConfirmationComponent } from './components/dialog-for-confirmation/dialog-for-confirmation.component';
+import { DialogForMessageComponent } from './components/dialog-for-message/dialog-for-message.component';
+import { DialogWithSingleInputComponent } from './components/dialog-with-single-input/dialog-with-single-input.component';
+import { DialogCustomData_Confirmation } from './dto/dialog-custom-data-confirmation';
+import { DialogCustomData_SingleInput } from './dto/dialog-data';
 
 @Injectable({
   providedIn: 'root'
@@ -80,6 +81,13 @@ export class DialogService {
   openConfirmationDialog(data: DialogCustomData_Confirmation): MatDialogRef<any, any> {
     return this.dialog.open(DialogForConfirmationComponent, {
       data
+    })
+  }
+
+  openMessageDialog(data: DialogCustomData_Confirmation): MatDialogRef<any, any> {
+    return this.dialog.open(DialogForMessageComponent, {
+      data,
+      width: '350px'
     })
   }
 }
