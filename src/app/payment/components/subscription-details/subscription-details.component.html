@@ -27,7 +27,7 @@
     </table>
   </mat-card-content>
 
-  <mat-card-actions class="justify-content-end p-0 m-t-48 b-t-1">
+  <mat-card-actions class="justify-content-end p-0 m-t-48">
     <ng-container *ngIf="!isCanceling;else cancelConfirmation">
         <button mat-flat-button class="border-round btn-cancel m-r-8" (click)="isCanceling = true">
       Cancel Subscription
@@ -40,7 +40,7 @@
     </button>
     </ng-template>
 
-    <button mat-flat-button class="border-round text-primary f-w-600">
+    <button mat-flat-button class="border-round text-primary f-w-600" cdkFocusInitial>
       Upgrade
     </button>
   </mat-card-actions>
