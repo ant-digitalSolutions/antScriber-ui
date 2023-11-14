@@ -1,27 +1,37 @@
 <div class="pricing-outer-container bg-white row justify-content-center">
+  <div
+    class="my-plan-btn-container w-100 d-flex align-items-start justify-content-end p-x-20"
+  >
+    <button mat-flat-button class="b-2" (click)="renderModalWithPlanDetails()">
+      <mat-icon>verified_user</mat-icon>
+      My Plan
+    </button>
+  </div>
   <div class="col-12 justify-content-center">
-      <h4 class="f-s-30 f-w-600 text-center mat-subtitle-1 lh-lg m-b-16">
-        Flexible Plans Tailored to Fit Your Creative's Unique Needs!
-      </h4>
-      <div class="d-flex align-items-center justify-content-center m-t-32">
-        <span class="f-s-16 m-r-8 f-w-600 p-x-12">Monthly</span>
-        <mat-slide-toggle
-          (click)="annualPricing = !annualPricing"
-          color="primary"
-          [checked]="annualPricing"
-          >
-          <span class="f-s-16 m-r-8 f-w-600 p-x-12">Annual</span>
-          </mat-slide-toggle
-        >
-      </div>
-      <div class="text-center m-t-6">Save 20% on annual plans</div>
+    <h4 class="f-s-30 f-w-600 text-center mat-subtitle-1 lh-lg m-b-16">
+      Flexible Plans Tailored to Fit Your Creative's Unique Needs!
+    </h4>
+    <div class="d-flex align-items-center justify-content-center m-t-32">
+      <span class="f-s-16 m-r-8 f-w-600 p-x-12">Monthly</span>
+      <mat-slide-toggle
+        (click)="annualPricing = !annualPricing"
+        color="primary"
+        [checked]="annualPricing"
+      >
+        <span class="f-s-16 m-r-8 f-w-600 p-x-12">Annual</span>
+      </mat-slide-toggle>
+    </div>
+    <div class="text-center m-t-6">Save 20% on annual plans</div>
   </div>
 
   <div class="m-t-32 p-t-32 d-flex card-outer-container">
     <div
       class="col-sm-4 col-lg-4 card-container m-b-10"
       *ngFor="let pricecard of pricecards"
-      [ngClass]="{ popular: pricecard.popular,  'current-subscription': checkIfShouldUpgrade(pricecard) === 0 }"
+      [ngClass]="{
+        popular: pricecard.popular,
+        'current-subscription': checkIfShouldUpgrade(pricecard) === 0
+      }"
     >
       <mat-card
         class="cardWithShadow pricing-card h-100"
@@ -130,9 +140,7 @@
               (click)="checkout(pricecard)"
               *ngSwitchCase="1"
             >
-        
-                Upgrade
-
+              Upgrade
             </button>
 
             <!-- Downgrade -->
@@ -142,7 +150,7 @@
               (click)="checkout(pricecard)"
               *ngSwitchCase="-1"
             >
-                Downgrade
+              Downgrade
             </button>
 
             <!-- Current -->
