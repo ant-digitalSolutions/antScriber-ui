@@ -35,7 +35,7 @@ export class AppPricingComponent {
     private _paymentService: PaymentService,
     private stripeService: StripeService,
     private _userService: UserService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -131,10 +131,11 @@ export class AppPricingComponent {
   }
 
   renderModalWithPlanDetails() {
- 
-    this.dialog.open(SubscriptionDetailsComponent, {
-      width: '500px',
+    return this.dialog.open(SubscriptionDetailsComponent, {
+      width: '600px',
+      maxWidth: '95vw',
       data: { subscription: this.subscriptionInfo },
+      panelClass: 'subscription-details-modal',
     });
   }
 }

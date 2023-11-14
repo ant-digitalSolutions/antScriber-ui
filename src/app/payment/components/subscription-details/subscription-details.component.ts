@@ -17,6 +17,8 @@ export class SubscriptionDetailsComponent {
 
   wordsUsage: IWordsUsageDto;
 
+  loading = true;
+
   constructor(
     public dialogRef: MatDialogRef<SubscriptionDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -39,6 +41,8 @@ export class SubscriptionDetailsComponent {
       if (r.success) {
         this.wordsUsage = r.data!;
       }
+
+      this.loading = false;
     })
   }
 

@@ -1,51 +1,39 @@
-<mat-card class="bg-plum shadow-none">
-  <mat-card-header class="justify-content-between">
+<mat-card class="bg-plum shadow-none" *ngIf="!loading">
+  <mat-card-header class="justify-content-between m-b-48">
     <mat-icon class="close-icon text-white" (click)="onClose()">close</mat-icon>
     <mat-card-title>
-      <h2 class="text-white">Subscription Details</h2>
+      <h2 class="text-white m-0 p-0">Subscription Details</h2>
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <p class="text-white">
-      <strong>Current Plan:</strong> {{ planName }}
-    </p>
+    <table mat-table [dataSource]="[
+      {'label': 'Current Plan', 'value': planName},
+      {'label': 'Words per Month (GPT 4)', 'value': wordsUsage.wordsMonthlyLimit_GPT_4},
+      {'label': 'Used Words (GPT-4)', 'value': wordsUsage.usageCurrentMonth_GPT_4},
+      {'label': 'Words per Month (GPT-3.5)', 'value': wordsUsage.wordsMonthlyLimit_GPT_3},
+      {'label': 'Used Words (GPT-3.5)', 'value': wordsUsage.usageCurrentMonth_GPT_3},
+      {'label': 'Plan Pricing', 'value': (subscription.plan!.amount / 100) + ' ' + (subscription.currency | uppercase)},
+      {'label': 'Billing Cycle', 'value': (subscription.currentPeriodStart * 1000 | date : 'mediumDate') + ' - ' + (subscription.currentPeriodEnd * 1000 | date : 'mediumDate')},
+      {'label': 'Billed', 'value': subscription.plan?.interval === 'year' ? 'Yearly' : 'Monthly'}
+    ]" class="mat-elevation-z8 bg-plum shadow-none">
 
- 
+      <!-- Label Column -->
+      <ng-container matColumnDef="label">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element" class="text-white"><strong>{{element.label}}:</strong></td>
+      </ng-container>
 
-    <p class="text-white"><strong>Words per Month (GPT 4):</strong> {{wordsUsage.wordsMonthlyLimit_GPT_4}}</p>
+      <!-- Value Column -->
+      <ng-container matColumnDef="value">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element" class="text-white">{{element.value}}</td>
+      </ng-container>
 
-    <p class="text-white"><strong>Used Words (GPT-4):</strong> {{wordsUsage.usageCurrentMonth_GPT_4}}</p>
-
-        <p class="text-white"><strong>Words per Month (GPT-3.5):</strong> {{wordsUsage.wordsMonthlyLimit_GPT_3}}</p>
-
-    <p class="text-white"><strong>Used Words (GPT-3.5):</strong> {{wordsUsage.usageCurrentMonth_GPT_3}}</p>
-
-    <div class="separator"></div>
-
-      
-    <!-- pricing details -->
-    
-    <p class="text-white">
-      <strong>Plan Pricing:</strong> {{ subscription.plan!.amount / 100 }}
-      {{ subscription.currency | uppercase }}
-    </p>
-
-    <p class="text-white">
-      <strong>Billing Cycle:</strong>
-      {{ subscription.currentPeriodStart * 1000 | date : "mediumDate" }} -
-      {{ subscription.currentPeriodEnd * 1000 | date : "mediumDate" }}
-    </p>
-
-    
-
-    <p class="text-white">
-      <strong>Billed:</strong>
-      {{ subscription.plan?.interval === "year" ? "Yearly" : "Monthly" }}
-    </p>
-
+      <tr mat-row *matRowDef="let row; columns: ['label', 'value'];"></tr>
+    </table>
   </mat-card-content>
 
-  <mat-card-actions class="justify-content-end p-y-16 p-t-32">
+  <mat-card-actions class="justify-content-end p-0 m-t-48 b-t-1">
     <button mat-flat-button class="border-round btn-cancel">
       Cancel Subscription
     </button>
