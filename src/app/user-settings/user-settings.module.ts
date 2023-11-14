@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { AnalyticsModule } from '../analytics/analytics.module';
 import { AppHorizontalSidebarComponent } from '../layouts/full/horizontal/sidebar/sidebar.component';
 import { AppNavItemComponent } from '../layouts/full/vertical/sidebar/nav-item/nav-item.component';
 import { SidebarComponent } from '../layouts/full/vertical/sidebar/sidebar.component';
@@ -37,7 +38,8 @@ import { UserSettingsRoutes } from './user-settings-routing.module';
     AppNavItemComponent,
     FormsModule,
     ReactiveFormsModule,
-    PricingModule
+    PricingModule,
+    AnalyticsModule
   ]
 })
 export class UserSettingsModule { }
