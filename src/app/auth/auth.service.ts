@@ -9,6 +9,7 @@ import { Observable, shareReplay, tap } from 'rxjs';
 import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 import { IJwtData } from '../common/dto/jwt-data.dto';
 import { IRequestResponse } from '../common/dto/request-response.dto';
+import { UserService } from '../user/services/user.service';
 import { UserLogin } from './dtos/login.dto';
 import { UserRegisterDto } from './dtos/user-register.dto';
 
@@ -29,7 +30,12 @@ export class AuthService {
     private cookieService: CookieService,
     protected $gaService: GoogleAnalyticsService,
     private _router: Router,
-    private _jwtHelper: JwtHelperService,) { }
+    private _jwtHelper: JwtHelperService,
+    private _userService: UserService) { 
+      if (this.isLoggedIn()) {
+        this._userService.getProfile(false).subscribe();
+      }
+    }
 
   login(userLogin: UserLogin): Observable<any> {
     const result = this.http.post<IRequestResponse<any>>(this.baseUrl + 'auth/signin', userLogin)
@@ -71,6 +77,8 @@ export class AuthService {
     localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
 
     this.decodeJwt();
+
+    this._userService.getProfile(false).subscribe();
   }
 
   logout() {

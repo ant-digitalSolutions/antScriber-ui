@@ -27,15 +27,17 @@ export class UserService {
 
   baseUrl = getBaseApiURL() + 'users';
 
+  _userProfile: IUserProfileDto;
+
   constructor(
     private _httpClient: HttpClient,
     private _snackBar: MatSnackBar,
     private _router: Router
   ) {
-    this.getProfile(false).subscribe();
     subscriptionLimitReachedObserver.subscribe((r) => {
       if (r) this.subscriptionLimitReached(r);
     });
+
   }
 
   initialWalkthroughCompleted() {
@@ -66,6 +68,7 @@ export class UserService {
       userData
     );
   }
+
 
   getProfile(
     checkCache: boolean = true
