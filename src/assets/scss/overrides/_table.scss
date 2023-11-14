@@ -1,3 +1,5 @@
+.docs-table{
+
 .mdc-data-table__cell,
 .mdc-data-table__header-cell {
   padding: 16px;
@@ -8,7 +10,7 @@
   border-bottom-color: $borderColor;
 }
 
-.mat-mdc-table .mdc-data-table__row {
+.mdc-data-table__row {
   height: 60px !important;
   border-top: 1px solid #80808017;
 
@@ -17,7 +19,7 @@
   }
 }
 
-.mat-mdc-table .mat-mdc-header-row {
+.mat-mdc-header-row {
   height: 35px;
   min-height: 35px;
   -webkit-box-shadow: 5px 0px 8px -2px rgba(0, 0, 0, 0.82);
@@ -28,6 +30,7 @@
   border-bottom: 1px solid transparent;
   border-top: 1px solid transparent;
   cursor: pointer;
+}
 }
 
 // .mat-mdc-row:hover .mat-mdc-cell {
