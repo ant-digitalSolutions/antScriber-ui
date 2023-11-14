@@ -165,6 +165,12 @@ export class UserService {
     });
   }
 
+  cleanUserData() {
+    localStorage.removeItem(StorageObjectNamesEnum.UserProfile);
+    localStorage.removeItem(StorageObjectNamesEnum.HasAvailableQuota_GPT_3);
+    localStorage.removeItem(StorageObjectNamesEnum.HasAvailableQuota_GPT_4);
+  }
+
   /**
    * True if the user has already done the initial tour walkthrough
    *

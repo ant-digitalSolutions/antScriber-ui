@@ -82,6 +82,7 @@ export class AuthService {
   }
 
   logout() {
+    this._userService.cleanUserData();
     localStorage.removeItem("id_token");
     localStorage.removeItem("expires_at");
     this.cookieService.delete('access_token');
@@ -96,6 +97,7 @@ export class AuthService {
    * @memberof AuthService
    */
   logout_in_silence() {
+    this._userService.cleanUserData();
     localStorage.removeItem("id_token");
     localStorage.removeItem("expires_at");
     this.cookieService.delete('access_token');
