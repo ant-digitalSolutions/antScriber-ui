@@ -44,11 +44,7 @@ export class AppPricingComponent {
 
   checkCurrentSubscription() {
     this.userCurrentSubscription = this._userService.getUserSubscription();
-    this._paymentService.getSubscriptionInfo().subscribe(r => {
-      if (r.success) {
-        this.subscriptionInfo = r.data;
-      }
-    })
+   
 
     if (this.userCurrentSubscription.mainSubscription === ProductsEnum.FREE) {
       return;
@@ -134,7 +130,6 @@ export class AppPricingComponent {
     return this.dialog.open(SubscriptionDetailsComponent, {
       width: '600px',
       maxWidth: '95vw',
-      data: { subscription: this.subscriptionInfo },
       panelClass: 'subscription-details-modal',
     });
   }
