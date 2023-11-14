@@ -137,25 +137,6 @@ export class HeaderMainComponent {
     );
   }
 
-  onClickSubscribeButton() {
-    window.location.href = this.permanentAdfluensProductLink;
-    this.retrieveAdfluencePermanentProductLink();
-  }
-
-  onClickCancelButton() {
-    this.paymentService.cancelSubscription().subscribe(
-      response => {
-        console.log(response)
-      });
-  }
-
-  onClickRetrieveSubscriptionInfoButton() {
-    this.paymentService.getSubscriptionInfo().subscribe(
-      response => {
-        console.log(response)
-      });
-  }
-
   changeLanguage(lang: any): void {
     this.translate.use(lang.code);
     this.selectedLanguage = lang;
