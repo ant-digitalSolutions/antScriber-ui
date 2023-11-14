@@ -36,4 +36,10 @@ export class HeaderMenuItemsComponent {
     return this._userService.userEmail;
   }
 
+  
+  public get isPremium() : boolean {
+    return this._userService.userIsPremium();
+  }
+  
+
 }
