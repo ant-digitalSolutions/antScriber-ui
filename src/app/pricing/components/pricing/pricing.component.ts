@@ -4,6 +4,7 @@ import { StripeService } from 'ngx-stripe';
 import { switchMap } from 'rxjs';
 import { ProductsEnum } from 'src/app/common/subscriptions/products.enum';
 import { SubscriptionDetailsComponent } from 'src/app/payment/components/subscription-details/subscription-details.component';
+import { SubscriptionResponseDTO } from 'src/app/payment/dtos/subscription-response.dto';
 import { PaymentService } from 'src/app/payment/services/payment.service';
 import { UserSubscriptionDto } from 'src/app/user/dto/user-subscription-data.dto';
 import { UserService } from 'src/app/user/services/user.service';
@@ -28,6 +29,8 @@ export class AppPricingComponent {
   // the index of the card that represent the current subscription
   currentSubscriptionCardIndex = -1;
 
+  subscriptionInfo: SubscriptionResponseDTO;
+
   constructor(
     private _paymentService: PaymentService,
     private stripeService: StripeService,
@@ -41,6 +44,11 @@ export class AppPricingComponent {
 
   checkCurrentSubscription() {
     this.userCurrentSubscription = this._userService.getUserSubscription();
+    this._paymentService.getSubscriptionInfo().subscribe(r => {
+      if (r.success) {
+        this.subscriptionInfo = r.data;
+      }
+    })
 
     if (this.userCurrentSubscription.mainSubscription === ProductsEnum.FREE) {
       return;
@@ -123,16 +131,10 @@ export class AppPricingComponent {
   }
 
   renderModalWithPlanDetails() {
-    const subscription: any = {
-      currentPlan: 'Premium',
-      planPricing: 29.99,
-      wordsPerMonth: 100000,
-      usedWords: 50000,
-      billingCycle: 'Monthly',
-    };
+ 
     this.dialog.open(SubscriptionDetailsComponent, {
       width: '500px',
-      data: { subscription: subscription },
+      data: { subscription: this.subscriptionInfo },
     });
   }
 }

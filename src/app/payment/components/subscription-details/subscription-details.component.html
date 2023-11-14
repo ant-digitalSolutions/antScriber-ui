@@ -1,31 +1,52 @@
 <mat-card class="bg-plum shadow-none">
   <mat-card-header class="justify-content-between">
-     <mat-icon class="close-icon text-white" (click)="onClose()">close</mat-icon>
+    <mat-icon class="close-icon text-white" (click)="onClose()">close</mat-icon>
     <mat-card-title>
       <h2 class="text-white">Subscription Details</h2>
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <p class="text-white">
-      <strong>Current Plan:</strong> {{ subscription.currentPlan }}
+      <strong>Current Plan:</strong> {{ planName }}
     </p>
+
+ 
+
+    <p class="text-white"><strong>Words per Month:</strong> 10000</p>
+
+    <p class="text-white"><strong>Used Words:</strong> 1000</p>
+
+    <div class="separator"></div>
+
+      
+    <!-- pricing details -->
+    
     <p class="text-white">
-      <strong>Plan Pricing:</strong> {{ subscription.planPricing }}
+      <strong>Plan Pricing:</strong> {{ subscription.plan!.amount / 100 }}
+      {{ subscription.currency | uppercase }}
     </p>
+
     <p class="text-white">
-      <strong>Words per Month:</strong> {{ subscription.wordsPerMonth }}
+      <strong>Billing Cycle:</strong>
+      {{ subscription.currentPeriodStart * 1000 | date : "mediumDate" }} -
+      {{ subscription.currentPeriodEnd * 1000 | date : "mediumDate" }}
     </p>
+
+    
+
     <p class="text-white">
-      <strong>Used Words:</strong> {{ subscription.usedWords }}
+      <strong>Billed:</strong>
+      {{ subscription.plan?.interval === "year" ? "Yearly" : "Monthly" }}
     </p>
-    <p class="text-white">
-      <strong>Billing Cycle:</strong> {{ subscription.billingCycle }}
-    </p>
+
   </mat-card-content>
 
   <mat-card-actions class="justify-content-end p-y-16 p-t-32">
-
-      <button mat-flat-button class="border-round btn-cancel">Cancel Subscription</button>
-      <button mat-flat-button class="border-round text-primary f-w-600">Upgrade</button>
+    <button mat-flat-button class="border-round btn-cancel">
+      Cancel Subscription
+    </button>
+    <button mat-flat-button class="border-round text-primary f-w-600">
+      Upgrade
+    </button>
   </mat-card-actions>
 </mat-card>

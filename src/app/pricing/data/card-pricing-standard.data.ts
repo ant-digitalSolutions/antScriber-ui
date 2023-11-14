@@ -198,3 +198,14 @@ export const cardPricing_standard: IPriceCardData[] = [
     ],
   },
 ];
+
+export function getPlanDetailsFromStripeProductId(stripeProductId: string): IPriceCardData | undefined {
+  const output  = cardPricing_standard.find(c => c.id === stripeProductId);
+
+  if (!output) {
+    console.error('The given stripeProductId is not related to any pricing card.');
+    return undefined;
+  }
+
+  return output;
+}
