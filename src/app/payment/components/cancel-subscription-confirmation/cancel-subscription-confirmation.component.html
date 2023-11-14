@@ -1,0 +1,29 @@
+<mat-card class="bg-plum shadow-none">
+  <mat-card-header>
+    <mat-icon class="close-icon text-white" (click)="onClose()">close</mat-icon>
+    <mat-card-title class="text-white"> <h3 class="m-0">Special Offer</h3></mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="text-white">
+    <p>
+      Stay with us and enjoy a 30% discount on your subscription for the next 3
+      months!
+    </p>
+  </mat-card-content>
+
+  <mat-card-actions class="justify-content-end p-0 m-t-48">
+    <button
+      mat-flat-button
+      class="border-round btn-cancel m-r-8"
+      (click)="onDecline()"
+    >
+      No Thanks - Confirm Cancellation
+    </button>
+    <button
+      mat-flat-button
+      class="border-round text-primary f-w-600"
+      (click)="onAccept()"
+    >
+      Yes, please!
+    </button>
+  </mat-card-actions>
+</mat-card>

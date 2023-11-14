@@ -1,21 +1,15 @@
-<mat-card class="bg-plum shadow-none" *ngIf="!loading">
+
+<mat-card class="bg-plum shadow-none">
   <mat-card-header class="justify-content-between m-b-48">
     <mat-icon class="close-icon text-white" (click)="onClose()">close</mat-icon>
     <mat-card-title>
-      <h2 class="text-white m-0 p-0">Subscription Details</h2>
+      <h3 class="text-white m-0 p-0">Subscription Details</h3>
     </mat-card-title>
   </mat-card-header>
+
+  <ng-container  *ngIf="!isLoading;else loading">
   <mat-card-content>
-    <table mat-table [dataSource]="[
-      {'label': 'Current Plan', 'value': planName},
-      {'label': 'Words per Month (GPT 4)', 'value': wordsUsage.wordsMonthlyLimit_GPT_4},
-      {'label': 'Used Words (GPT-4)', 'value': wordsUsage.usageCurrentMonth_GPT_4},
-      {'label': 'Words per Month (GPT-3.5)', 'value': wordsUsage.wordsMonthlyLimit_GPT_3},
-      {'label': 'Used Words (GPT-3.5)', 'value': wordsUsage.usageCurrentMonth_GPT_3},
-      {'label': 'Plan Pricing', 'value': (subscription.plan!.amount / 100) + ' ' + (subscription.currency | uppercase)},
-      {'label': 'Billing Cycle', 'value': (subscription.currentPeriodStart * 1000 | date : 'mediumDate') + ' - ' + (subscription.currentPeriodEnd * 1000 | date : 'mediumDate')},
-      {'label': 'Billed', 'value': subscription.plan?.interval === 'year' ? 'Yearly' : 'Monthly'}
-    ]" class="mat-elevation-z8 bg-plum shadow-none">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 bg-plum shadow-none">
 
       <!-- Label Column -->
       <ng-container matColumnDef="label">
@@ -34,11 +28,30 @@
   </mat-card-content>
 
   <mat-card-actions class="justify-content-end p-0 m-t-48 b-t-1">
-    <button mat-flat-button class="border-round btn-cancel">
+    <ng-container *ngIf="!isCanceling;else cancelConfirmation">
+        <button mat-flat-button class="border-round btn-cancel m-r-8" (click)="isCanceling = true">
       Cancel Subscription
     </button>
+    </ng-container>
+    
+    <ng-template #cancelConfirmation>
+        <button mat-flat-button class="border-round btn-cancel-confirmation m-r-8 bg-error text-white" (click)="openOfferModal()">
+      Are you sure?
+    </button>
+    </ng-template>
+
     <button mat-flat-button class="border-round text-primary f-w-600">
       Upgrade
     </button>
   </mat-card-actions>
+</ng-container>
+
+<ng-template #loading>
+  <div class="col-12 align-items-center justify-content-center w-100 d-flex">
+    <mat-spinner class="text-white"></mat-spinner>
+  </div>
+  </ng-template>
+
 </mat-card>
+
+

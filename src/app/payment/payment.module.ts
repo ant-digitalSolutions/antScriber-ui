@@ -9,9 +9,10 @@ import { SubscriptionCheckoutComponent } from './components/subscription-checkou
 import { SubscriptionDetailsComponent } from './components/subscription-details/subscription-details.component';
 import { PaymentsModuleRoutes } from './payments.routing';
 import { PaymentService } from './services/payment.service';
+import { CancelSubscriptionConfirmationComponent } from './components/cancel-subscription-confirmation/cancel-subscription-confirmation.component';
 
 @NgModule({
-  declarations: [SubscriptionCheckoutComponent, CheckoutReturnComponent, ListPaymentsComponent, SubscriptionDetailsComponent],
+  declarations: [SubscriptionCheckoutComponent, CheckoutReturnComponent, ListPaymentsComponent, SubscriptionDetailsComponent, CancelSubscriptionConfirmationComponent],
   imports: [CommonModule, RouterModule.forChild(PaymentsModuleRoutes), MaterialModule, AnalyticsModule],
   providers: [PaymentService],
 })
