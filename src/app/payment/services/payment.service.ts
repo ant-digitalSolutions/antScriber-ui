@@ -51,7 +51,7 @@ export class PaymentService {
   }
 
   getSubscriptionInfo() {
-    return this.http.get<IRequestResponse<boolean>>(
+    return this.http.get<IRequestResponse<any>>(
       this.baseUrl + 'subscription/info'
     );
   }

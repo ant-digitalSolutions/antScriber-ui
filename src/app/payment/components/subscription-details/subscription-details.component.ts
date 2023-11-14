@@ -1,5 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { getPlanDetailsFromStripeProductId } from 'src/app/pricing/data/card-pricing-standard.data';
+import { SubscriptionResponseDTO } from '../../dtos/subscription-response.dto';
 
 @Component({
   selector: 'app-subscription-details',
@@ -7,7 +9,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./subscription-details.component.scss'],
 })
 export class SubscriptionDetailsComponent {
-  subscription: any;
+  subscription: SubscriptionResponseDTO;
+
+  planName: string | undefined;
 
   constructor(
     public dialogRef: MatDialogRef<SubscriptionDetailsComponent>,
@@ -17,6 +21,11 @@ export class SubscriptionDetailsComponent {
   ngOnInit(): void {
     console.log(this.data.subscription);
     this.subscription = this.data.subscription;
+
+    const plan = getPlanDetailsFromStripeProductId(this.subscription.plan?.product!);
+    if (plan) {
+      this.planName = plan.plan;
+    }
   }
 
   onClose(): void {
