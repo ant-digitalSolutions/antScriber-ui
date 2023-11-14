@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { StripeService } from 'ngx-stripe';
 import { switchMap } from 'rxjs';
 import { ProductsEnum } from 'src/app/common/subscriptions/products.enum';
+import { SubscriptionDetailsComponent } from 'src/app/payment/components/subscription-details/subscription-details.component';
 import { PaymentService } from 'src/app/payment/services/payment.service';
 import { UserSubscriptionDto } from 'src/app/user/dto/user-subscription-data.dto';
 import { UserService } from 'src/app/user/services/user.service';
@@ -29,7 +31,8 @@ export class AppPricingComponent {
   constructor(
     private _paymentService: PaymentService,
     private stripeService: StripeService,
-    private _userService: UserService
+    private _userService: UserService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -117,5 +120,19 @@ export class AppPricingComponent {
     }
 
     return 0;
+  }
+
+  renderModalWithPlanDetails() {
+    const subscription: any = {
+      currentPlan: 'Premium',
+      planPricing: 29.99,
+      wordsPerMonth: 100000,
+      usedWords: 50000,
+      billingCycle: 'Monthly',
+    };
+    this.dialog.open(SubscriptionDetailsComponent, {
+      width: '500px',
+      data: { subscription: subscription },
+    });
   }
 }

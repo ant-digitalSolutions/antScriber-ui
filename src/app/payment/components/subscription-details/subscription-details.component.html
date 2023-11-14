@@ -1,0 +1,31 @@
+<mat-card class="bg-plum shadow-none">
+  <mat-card-header class="justify-content-between">
+     <mat-icon class="close-icon text-white" (click)="onClose()">close</mat-icon>
+    <mat-card-title>
+      <h2 class="text-white">Subscription Details</h2>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p class="text-white">
+      <strong>Current Plan:</strong> {{ subscription.currentPlan }}
+    </p>
+    <p class="text-white">
+      <strong>Plan Pricing:</strong> {{ subscription.planPricing }}
+    </p>
+    <p class="text-white">
+      <strong>Words per Month:</strong> {{ subscription.wordsPerMonth }}
+    </p>
+    <p class="text-white">
+      <strong>Used Words:</strong> {{ subscription.usedWords }}
+    </p>
+    <p class="text-white">
+      <strong>Billing Cycle:</strong> {{ subscription.billingCycle }}
+    </p>
+  </mat-card-content>
+
+  <mat-card-actions class="justify-content-end p-y-16 p-t-32">
+
+      <button mat-flat-button class="border-round btn-cancel">Cancel Subscription</button>
+      <button mat-flat-button class="border-round text-primary f-w-600">Upgrade</button>
+  </mat-card-actions>
+</mat-card>

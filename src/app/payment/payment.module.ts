@@ -7,9 +7,10 @@ import { SubscriptionCheckoutComponent } from './components/subscription-checkou
 import { PaymentsModuleRoutes } from './payments.routing';
 import { PaymentService } from './services/payment.service';
 import { ListPaymentsComponent } from './components/list-payments/list-payments.component';
+import { SubscriptionDetailsComponent } from './components/subscription-details/subscription-details.component';
 
 @NgModule({
-  declarations: [SubscriptionCheckoutComponent, CheckoutReturnComponent, ListPaymentsComponent],
+  declarations: [SubscriptionCheckoutComponent, CheckoutReturnComponent, ListPaymentsComponent, SubscriptionDetailsComponent],
   imports: [CommonModule, RouterModule.forChild(PaymentsModuleRoutes), MaterialModule],
   providers: [PaymentService],
 })
