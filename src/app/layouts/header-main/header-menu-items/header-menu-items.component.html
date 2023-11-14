@@ -53,6 +53,18 @@
       </div>-->
 
   <div class="p-t-12">
+    <!-- Upgrade -->
+      <button
+        *ngIf="!isPremium"
+      mat-flat-button
+      class="w-100 align-items-center justify-content-start h-40px bg-plum border-round f-w-500 text-white text-uppercase m-b-10"
+      [routerLink]="['/settings/subscriptions']"
+    >
+      <mat-icon fontSet="material-icons-outlined">workspace_premium</mat-icon>
+      Upgrade
+    </button>
+
+    <!-- Settings -->
     <button
       mat-flat-button
       class="w-100 align-items-center justify-content-start h-40px"
@@ -61,6 +73,8 @@
       <mat-icon fontSet="material-icons-outlined">settings</mat-icon>
       Settings
     </button>
+      
+    <!-- LogOut -->
     <button
       mat-flat-button
       class="w-100 align-items-center justify-content-start h-40px"
