@@ -29,6 +29,14 @@ const routes: Routes = [
       import('./user-settings/user-settings.module').then((m) => m.UserSettingsModule),
     canActivate: [authGuard]
   },
+  {
+    path: 'chat-assistant',
+    loadChildren: () =>
+      import('./chat-assistant/chat-assistant.module').then(
+        (m) => m.ChatAssistantModule
+      ),
+    canActivate: [authGuard],
+  },
   // {
   //   path: '',
   //   component: FullComponent,
