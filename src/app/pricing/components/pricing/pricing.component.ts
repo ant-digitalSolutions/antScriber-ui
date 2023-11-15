@@ -35,7 +35,7 @@ export class AppPricingComponent {
     private _paymentService: PaymentService,
     private stripeService: StripeService,
     private _userService: UserService,
-    private dialog: MatDialog,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -44,7 +44,6 @@ export class AppPricingComponent {
 
   checkCurrentSubscription() {
     this.userCurrentSubscription = this._userService.getUserSubscription();
-   
 
     if (this.userCurrentSubscription.mainSubscription === ProductsEnum.FREE) {
       return;
@@ -60,23 +59,35 @@ export class AppPricingComponent {
       ? priceData?.stripeYearlyPriceId
       : priceData?.stripeMonthlyPriceId;
 
-    this._paymentService
-      .generatePaymentSession(stripePriceId!)
-      .pipe(
-        switchMap((result) => {
-          return this.stripeService.redirectToCheckout({
-            sessionId: result.data.id,
-          });
-        })
-      )
-      .subscribe((result) => {
-        // If `redirectToCheckout` fails due to a browser or network
-        // error, you should display the localized error message to your
-        // customer using `error.message`.
-        if (result.error) {
-          alert(result.error.message);
-        }
-      });
+    if (this.userCurrentSubscription.mainSubscription === ProductsEnum.FREE) {
+      this._paymentService
+        .generatePaymentSession(stripePriceId!)
+        .pipe(
+          switchMap((result) => {
+            return this.stripeService.redirectToCheckout({
+              sessionId: result.data.id,
+            });
+          })
+        )
+        .subscribe((result) => {
+          // If `redirectToCheckout` fails due to a browser or network
+          // error, you should display the localized error message to your
+          // customer using `error.message`.
+          if (result.error) {
+            alert(result.error.message);
+          }
+        });
+    } else {
+      this._paymentService
+        .updateSubscription(priceData.id, stripePriceId)
+        .subscribe((subscriptionUpdated) => {
+          if(subscriptionUpdated) {
+            console.log('subscription update response value');
+          } else {
+            console.log('empty subscription update');
+          }
+        });
+    }
   }
 
   yearlyPrice(cardData: IPriceCardData) {
