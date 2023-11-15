@@ -1,13 +1,27 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { WordsUsageMonthPieChartComponent } from './components/words-usage-month-pie-chart/words-usage-month-pie-chart.component';
 import { AnalyticsService } from './services/analytics.service';
+// icons
+import { TablerIconsModule } from 'angular-tabler-icons';
+import * as TablerIcons from 'angular-tabler-icons/icons';
+
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { MaterialModule } from '../material.module';
+import { UsageHomeComponent } from './components/usage-home/usage-home.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    WordsUsageMonthPieChartComponent,
+    UsageHomeComponent
+  ],
   imports: [
-    CommonModule
+    CommonModule,
+    NgApexchartsModule,
+    TablerIconsModule.pick(TablerIcons),
+    MaterialModule
   ],
   providers: [AnalyticsService]
 })

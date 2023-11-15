@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { UsageHomeComponent } from '../analytics/components/usage-home/usage-home.component';
 import { CheckoutReturnComponent } from '../payment/components/checkout-return/checkout-return.component';
 import { ListPaymentsComponent } from '../payment/components/list-payments/list-payments.component';
 import { AppPricingComponent } from '../pricing/components/pricing/pricing.component';
@@ -43,6 +44,15 @@ export const UserSettingsRoutes: Routes = [
           {
             path: '',
             component: ListPaymentsComponent,
+          }
+        ],
+      },
+      {
+        path: 'usage',
+        children: [
+          {
+            path: '',
+            component: UsageHomeComponent,
           }
         ],
       },

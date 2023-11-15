@@ -1,0 +1,20 @@
+<div class="row usage-outer-container">
+
+    <!-- main charts -->
+    <div class="col-12 col-sm-12 col-md-8"></div>
+
+    <!-- right column with charts -->
+    <div class="col-12 col-sm-12 col-md-4">
+
+        <!-- Words Usage GPT-3.5 -->
+        <app-words-usage-month-pie-chart [consumedWords]="wordsUsage.usageCurrentMonth_GPT_3" [wordsLimit]="wordsUsage.wordsMonthlyLimit_GPT_3" [title]="'GPT-3.5'">
+
+        </app-words-usage-month-pie-chart>
+
+         <!-- Words Usage GPT-4 -->
+         <app-words-usage-month-pie-chart [consumedWords]="wordsUsage.usageCurrentMonth_GPT_4" [wordsLimit]="wordsUsage.wordsMonthlyLimit_GPT_4" [title]="'GPT-4'">
+
+         </app-words-usage-month-pie-chart>
+    </div>
+
+</div>
