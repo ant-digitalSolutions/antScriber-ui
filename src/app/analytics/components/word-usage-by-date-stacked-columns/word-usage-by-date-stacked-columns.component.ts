@@ -19,12 +19,16 @@ export class WordUsageByDateStackedColumnsComponent implements OnInit {
 
   initializeData() {
     const gptVersions = Array.from(new Set(this.data.map(item => item.gpt)));
-    const days = Array.from(new Set(this.data.map(item => item.day))).sort();
+    const days = Array.from(new Set(this.data.map(item => parseInt(item.day as any)))).sort((a, b) => a - b);
+
+    const minDay = Math.min(...days);
+    const maxDay = Math.max(...days);
+    const allDays = Array.from({ length: maxDay - minDay + 1 }, (_, i) => (i + minDay).toString());
 
     const series = gptVersions.map(version => ({
       name: version,
-      data: days.map(day => {
-        const entry = this.data.find(item => item.day === day && item.gpt === version);
+      data: allDays.map(day => {
+        const entry = this.data.find(item => +item.day === +day && item.gpt === version);
         return entry ? parseInt(entry.words as any) : 0;
       })
     }));
@@ -58,7 +62,7 @@ export class WordUsageByDateStackedColumnsComponent implements OnInit {
         },
       },
       xaxis: {
-        categories: days,
+        categories: allDays,
       },
       legend: {
         position: 'right',
