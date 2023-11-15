@@ -97,4 +97,10 @@ export class PaymentService {
   listInvoices() {
     return this.http.get<IRequestResponse<InvoiceDto[]>>(this.baseUrl + 'invoice/list')
   }
+
+  updateSubscription(productId: string, priceId: string) {
+    return this.http.post(this.baseUrl + 'user-subscription/update', { productId, priceId }).pipe(tap(() => {
+      console.log("Trigerred subscription canceled event")
+    }));
+  }
 }
