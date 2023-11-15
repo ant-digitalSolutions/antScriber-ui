@@ -11,29 +11,3 @@
     padding: 10px;
   }
   
-  .chat-history {
-    height: calc(100vh - 120px); /* Adjust based on header/footer height */
-    overflow-y: auto;
-    margin-bottom: 10px;
-  }
-  
-  .message {
-    margin: 5px;
-    padding: 10px;
-    border-radius: 10px;
-    background-color: #f0f0f0;
-  }
-  
-  .user-message {
-    text-align: right;
-    background-color: #d1e8ff;
-  }
-  
-  .assistant-message {
-    text-align: left;
-    background-color: #f0f0f0;
-  }
-  
-  .message-input {
-    width: 100%;
-  }

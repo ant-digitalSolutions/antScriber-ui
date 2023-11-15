@@ -1,20 +1,10 @@
+<!-- chat-assistant-home.component.html -->
 <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #sidenav mode="side" opened="true" class="sidenav">
-      <mat-nav-list>
-        <a mat-list-item *ngFor="let chat of previousChats">{{ chat }}</a>
-      </mat-nav-list>
+      <app-chat-list-sidebar></app-chat-list-sidebar>
     </mat-sidenav>
-  
     <mat-sidenav-content class="sidenav-content">
-      <div class="chat-history">
-        <div *ngFor="let message of chatHistory" class="message" [ngClass]="{'user-message': message.sender === 'user', 'assistant-message': message.sender === 'assistant'}">
-          {{ message.content }}
-        </div>
-      </div>
-      <mat-form-field class="message-input">
-        <mat-label>Enter your message</mat-label>
-        <input matInput [(ngModel)]="newMessage" (keyup.enter)="sendMessage()">
-      </mat-form-field>
-      <button mat-raised-button color="primary" (click)="sendMessage()">Send</button>
+      <app-chat-history></app-chat-history>
     </mat-sidenav-content>
   </mat-sidenav-container>
+  
