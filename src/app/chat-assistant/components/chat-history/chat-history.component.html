@@ -1,0 +1,18 @@
+<!-- chat-history.component.html -->
+<div class="chat-history">
+  <div
+    *ngFor="let message of chatHistory"
+    class="message"
+    [ngClass]="{
+      'user-message': message.sender === 'user',
+      'assistant-message': message.sender === 'assistant'
+    }"
+  >
+    {{ message.content }}
+  </div>
+</div>
+<mat-form-field class="message-input">
+  <mat-label>Enter your message</mat-label>
+  <input matInput [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" />
+</mat-form-field>
+<button mat-raised-button color="primary" (click)="sendMessage()">Send</button>
