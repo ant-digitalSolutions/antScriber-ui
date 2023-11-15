@@ -1,5 +1,19 @@
 <div class="row usage-outer-container">
 
+    <div class="month-selector-container d-flex justify-content-end ">
+    <div class="month-selector-container d-flex align-items-center justify-content-center">
+        <button mat-icon-button (click)="previousMonth()" >
+            <mat-icon>arrow_back_ios</mat-icon>
+        </button>
+        <span class="selected-month">{{selectedMonth}}</span>
+        <button mat-icon-button (click)="nextMonth()" >
+            <mat-icon>arrow_forward_ios</mat-icon>
+        </button>
+    </div>
+</div>
+
+
+    <div class="charts-container d-flex">
     <!-- main charts -->
     <div class="col-12 col-sm-12 col-md-8">
         <app-word-usage-by-date-stacked-columns [data]="wordsUsageByDay" *ngIf="wordsUsageByDay"></app-word-usage-by-date-stacked-columns>
@@ -18,5 +32,6 @@
 
          </app-words-usage-month-pie-chart>
     </div>
+</div>
 
 </div>

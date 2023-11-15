@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
@@ -18,10 +18,25 @@ export class AnalyticsService {
     );
   }
 
-
-  getWordsUsageByDay(): Observable<IRequestResponse<WordsUsageByDay[]>> {
+  getWordsUsageByDay(
+    selectedMonth?: Date
+  ): Observable<IRequestResponse<WordsUsageByDay[]>> {
+    if (!selectedMonth) {
+      selectedMonth = new Date();
+    }
+    const params = new HttpParams().set(
+      'selectedMonth',
+      selectedMonth.toISOString()
+    );
     return this._http.get<IRequestResponse<WordsUsageByDay[]>>(
-      this.baseUrl + 'words-usage-by-day'
+      this.baseUrl + 'words-usage-by-day',
+      { params }
+    );
+  }
+
+  getOldestDateOfData(): Observable<IRequestResponse<Date>> {
+    return this._http.get<IRequestResponse<Date>>(
+      this.baseUrl + 'oldest-date-of-data'
     );
   }
 }
