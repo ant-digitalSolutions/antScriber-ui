@@ -9,13 +9,15 @@ import * as TablerIcons from 'angular-tabler-icons/icons';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { MaterialModule } from '../material.module';
 import { UsageHomeComponent } from './components/usage-home/usage-home.component';
+import { WordUsageByDateStackedColumnsComponent } from './components/word-usage-by-date-stacked-columns/word-usage-by-date-stacked-columns.component';
 
 
 
 @NgModule({
   declarations: [
     WordsUsageMonthPieChartComponent,
-    UsageHomeComponent
+    UsageHomeComponent,
+    WordUsageByDateStackedColumnsComponent
   ],
   imports: [
     CommonModule,

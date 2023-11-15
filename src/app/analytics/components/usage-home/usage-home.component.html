@@ -1,7 +1,9 @@
 <div class="row usage-outer-container">
 
     <!-- main charts -->
-    <div class="col-12 col-sm-12 col-md-8"></div>
+    <div class="col-12 col-sm-12 col-md-8">
+        <app-word-usage-by-date-stacked-columns [data]="wordsUsageByDay" *ngIf="wordsUsageByDay"></app-word-usage-by-date-stacked-columns>
+    </div>
 
     <!-- right column with charts -->
     <div class="col-12 col-sm-12 col-md-4">

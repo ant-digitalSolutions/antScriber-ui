@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IWordsUsageDto } from '../../dtos/word-usage.dto';
+import { WordsUsageByDay } from '../../dtos/words-usage-by-day.dot';
 import { AnalyticsService } from '../../services/analytics.service';
 
 @Component({
@@ -10,6 +11,7 @@ import { AnalyticsService } from '../../services/analytics.service';
 export class UsageHomeComponent {
 
   wordsUsage: IWordsUsageDto;
+  wordsUsageByDay: WordsUsageByDay[];
 
   constructor(private _analyticService: AnalyticsService){}
 
@@ -22,6 +24,12 @@ export class UsageHomeComponent {
     this._analyticService.getWordsUsage().subscribe(r => {
       if (r.success) {
         this.wordsUsage = r.data!;
+      }
+    })
+   
+    this._analyticService.getWordsUsageByDay().subscribe(r => {
+      if (r.success) {
+        this.wordsUsageByDay = r.data!;
       }
     })
   }
