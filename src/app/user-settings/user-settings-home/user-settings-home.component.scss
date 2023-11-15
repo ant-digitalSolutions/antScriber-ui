@@ -1,4 +1,6 @@
 .us-content-container {
   height: calc(100dvh - 50px);
   overflow-y: auto;
+
+  max-width: 1400px;
 }

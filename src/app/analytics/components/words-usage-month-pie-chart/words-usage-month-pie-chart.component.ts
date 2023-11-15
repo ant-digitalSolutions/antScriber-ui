@@ -34,7 +34,7 @@ export class WordsUsageMonthPieChartComponent implements OnInit {
     this.chartData = {
       series: [percent],
       chart: {
-        height: 225,
+        height: 200,
         type: "radialBar"
       },
       plotOptions: {
