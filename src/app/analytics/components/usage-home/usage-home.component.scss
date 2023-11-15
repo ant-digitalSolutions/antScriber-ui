@@ -4,6 +4,14 @@
     // min-width: 350px;
     width: 50% !important;
   }
+
+  .charts-container {
+    flex-direction: column !important;
+  }
+
+  .usage-month-pie-chart-container {
+    margin-top: 20px;
+  }
 }
 
 @media screen and (max-width: 600px) {
@@ -12,6 +20,14 @@
       max-width: 100%;
       // min-width: 350px;
       width: 100% !important;
+    }
+
+    .charts-container {
+      flex-direction: column !important;
+    }
+  
+    .usage-month-pie-chart-container {
+      margin-top: 20px;
     }
   }
 
@@ -39,5 +55,9 @@
   }
 
   .month-selector-container {
+    min-width: 200px;
 
+    .month-selector-container {
+      border-radius: 25px !important;
+    }
   }

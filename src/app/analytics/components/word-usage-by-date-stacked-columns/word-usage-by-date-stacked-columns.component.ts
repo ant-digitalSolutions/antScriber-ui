@@ -18,11 +18,7 @@ export class WordUsageByDateStackedColumnsComponent implements OnInit, OnChanges
   }
 
   ngOnChanges() {
-        
     this.initializeData();
-    // You can also use categoryId.previousValue and 
-    // categoryId.firstChange for comparing old and new values
-    
 }
 
   initializeData() {
@@ -52,7 +48,7 @@ export class WordUsageByDateStackedColumnsComponent implements OnInit, OnChanges
         },
         zoom: {
           enabled: false
-        }
+        },
       },
       responsive: [{
         breakpoint: 480,
@@ -85,6 +81,9 @@ export class WordUsageByDateStackedColumnsComponent implements OnInit, OnChanges
       fill: {
         opacity: 1,
         colors: ['#127475', '#4285f4']
+      },
+      dataLabels: {
+        enabled: false
       }
     };
   }

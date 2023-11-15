@@ -17,6 +17,9 @@ export class UsageHomeComponent {
   monthTimeLineString: string[];
   monthTimelineDates: Date[];
 
+  totalWords_gpt_3: number;
+  totalWords_gpt_4: number;
+
   loading = true;
 
   constructor(private _analyticService: AnalyticsService) {}
@@ -46,6 +49,8 @@ export class UsageHomeComponent {
       .subscribe((r) => {
         if (r.success) {
           this.wordsUsageByDay = r.data!;
+          this.calculateTotalWords_gpt_3()
+          this.calculateTotalWords_gpt_4();
         }
       });
   }
@@ -91,6 +96,24 @@ export class UsageHomeComponent {
       this.selectedMonthIndex++;
       this.getWordsUsageByDay();
     }
+  }
+
+  calculateTotalWords_gpt_3(): void {
+    const total = this.wordsUsageByDay
+      .filter((u) => u!.gpt! === 'gpt-3.5')
+      .map((u) => +u.words)
+      .reduce((p, c) => p + c, 0);
+
+    this.totalWords_gpt_3 = total;
+  }
+
+  calculateTotalWords_gpt_4(): void {
+    const total = this.wordsUsageByDay
+      .filter((u) => u!.gpt! === 'gpt-4')
+      .map((u) => +u.words)
+      .reduce((p, c) => p + c, 0);
+
+    this.totalWords_gpt_4 = total;
   }
 
   public get selectedMonth(): string {
