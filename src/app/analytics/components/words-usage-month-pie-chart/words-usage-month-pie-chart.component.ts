@@ -30,7 +30,7 @@ export class WordsUsageMonthPieChartComponent implements OnInit {
   }
 
   initializeChartData() {
-    const percent = this.consumedWords/this.wordsLimit * 100;
+    const percent = Math.round(this.consumedWords/this.wordsLimit * 100);
     this.chartData = {
       series: [percent],
       chart: {
