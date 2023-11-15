@@ -40,10 +40,10 @@ export class WordUsageByDateStackedColumnsComponent implements OnInit {
         height: 350,
         stacked: true,
         toolbar: {
-          show: true
+          show: false
         },
         zoom: {
-          enabled: true
+          enabled: false
         }
       },
       responsive: [{
@@ -66,10 +66,17 @@ export class WordUsageByDateStackedColumnsComponent implements OnInit {
       },
       legend: {
         position: 'right',
-        offsetY: 50
+        offsetY: 50,
+        labels: {
+          useSeriesColors: false
+        },
+        markers: {
+          fillColors: ['#127475', '#4285f4']
+        }
       },
       fill: {
-        opacity: 1
+        opacity: 1,
+        colors: ['#127475', '#4285f4']
       }
     };
   }
