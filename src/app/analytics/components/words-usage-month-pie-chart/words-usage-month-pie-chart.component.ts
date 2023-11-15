@@ -26,15 +26,18 @@ export class WordsUsageMonthPieChartComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.initializeChartData();
   }
+
+  ngOnChanges() {
+    this.initializeChartData();
+}
 
   initializeChartData() {
     const percent = Math.round(this.consumedWords/this.wordsLimit * 100);
     this.chartData = {
       series: [percent],
       chart: {
-        height: 200,
+        height: 150,
         type: "radialBar"
       },
       plotOptions: {

@@ -1,6 +1,6 @@
 <mat-card class="card-radial-chart-container border-round">
     <mat-card-header>
-        <mat-card-title>{{ title }}</mat-card-title>
+        <mat-card-title>Total Words - {{ title }}</mat-card-title>
     </mat-card-header>
     <mat-card-content class="d-flex flex-row">
         <div class="col-8">
@@ -12,8 +12,8 @@
             <!-- <h5 class="title m-0 p-b-4">{{title}}</h5> -->
 
             <ul class="p-0">
-                <li><strong>Used:</strong><span>{{consumedWords}}</span></li>
-                <li><strong>Limit:</strong><span>{{wordsLimit}}</span></li>
+                <li><strong>Used:</strong><span>{{" " + consumedWords}}</span></li>
+                <li><strong>Limit:</strong><span>{{" " + wordsLimit}}</span></li>
             </ul>
         </div>
     </mat-card-content>

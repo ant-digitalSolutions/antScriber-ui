@@ -1,37 +1,49 @@
 <div class="row usage-outer-container">
-
-    <div class="month-selector-container d-flex justify-content-end ">
-    <div class="month-selector-container d-flex align-items-center justify-content-center">
-        <button mat-icon-button (click)="previousMonth()" >
-            <mat-icon>arrow_back_ios</mat-icon>
-        </button>
-        <span class="selected-month">{{selectedMonth}}</span>
-        <button mat-icon-button (click)="nextMonth()" >
-            <mat-icon>arrow_forward_ios</mat-icon>
-        </button>
+  <div class="month-selector-container d-flex justify-content-end m-b-16 p-x-10">
+    <div
+      class="month-selector-container d-flex align-items-center justify-content-between b-1 border-round"
+    >
+      <button mat-icon-button (click)="previousMonth()">
+        <mat-icon>navigate_before</mat-icon>
+      </button>
+      <span class="selected-month">{{ selectedMonth }}</span>
+      <button mat-icon-button (click)="nextMonth()">
+        <mat-icon>navigate_next</mat-icon>
+      </button>
     </div>
-</div>
+  </div>
 
-
-    <div class="charts-container d-flex">
+  <div class="charts-container d-flex">
     <!-- main charts -->
     <div class="col-12 col-sm-12 col-md-8">
-        <app-word-usage-by-date-stacked-columns [data]="wordsUsageByDay" *ngIf="wordsUsageByDay"></app-word-usage-by-date-stacked-columns>
+      <app-word-usage-by-date-stacked-columns
+        [data]="wordsUsageByDay"
+        *ngIf="wordsUsageByDay"
+      ></app-word-usage-by-date-stacked-columns>
     </div>
 
     <!-- right column with charts -->
-    <div class="col-12 col-sm-12 col-md-4 d-flex flex-wrap justify-content-between p-0 usage-month-pie-chart-container" *ngIf="wordsUsage">
+    <div
+      class="col-12 col-sm-12 col-md-4 d-flex flex-wrap justify-content-between p-0 usage-month-pie-chart-container"
+      *ngIf="wordsUsageByDay"
+    >
+      <!-- Words Usage GPT-3.5 -->
+      <app-words-usage-month-pie-chart
+        class="col-12 usage-month-pie-chart"
+        [consumedWords]="totalWords_gpt_3"
+        [wordsLimit]="wordsUsage.wordsMonthlyLimit_GPT_3"
+        [title]="'GPT-3.5'"
+      >
+      </app-words-usage-month-pie-chart>
 
-        <!-- Words Usage GPT-3.5 -->
-        <app-words-usage-month-pie-chart class="col-12  usage-month-pie-chart" [consumedWords]="wordsUsage.usageCurrentMonth_GPT_3" [wordsLimit]="wordsUsage.wordsMonthlyLimit_GPT_3" [title]="'GPT-3.5'">
-
-        </app-words-usage-month-pie-chart>
-
-         <!-- Words Usage GPT-4 -->
-         <app-words-usage-month-pie-chart  class="col-12  usage-month-pie-chart"[consumedWords]="wordsUsage.usageCurrentMonth_GPT_4" [wordsLimit]="wordsUsage.wordsMonthlyLimit_GPT_4" [title]="'GPT-4'">
-
-         </app-words-usage-month-pie-chart>
+      <!-- Words Usage GPT-4 -->
+      <app-words-usage-month-pie-chart
+        class="col-12 usage-month-pie-chart"
+        [consumedWords]="totalWords_gpt_4"
+        [wordsLimit]="wordsUsage.wordsMonthlyLimit_GPT_4"
+        [title]="'GPT-4'"
+      >
+      </app-words-usage-month-pie-chart>
     </div>
-</div>
-
+  </div>
 </div>
