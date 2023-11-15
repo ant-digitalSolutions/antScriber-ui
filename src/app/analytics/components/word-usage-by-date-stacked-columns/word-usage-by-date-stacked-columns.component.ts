@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexFill, ApexLegend, ApexPlotOptions, ApexResponsive, ApexXAxis } from 'ng-apexcharts';
 import { WordsUsageByDay } from '../../dtos/words-usage-by-day.dot';
 
@@ -7,21 +7,29 @@ import { WordsUsageByDay } from '../../dtos/words-usage-by-day.dot';
   templateUrl: './word-usage-by-date-stacked-columns.component.html',
   styleUrls: ['./word-usage-by-date-stacked-columns.component.scss']
 })
-export class WordUsageByDateStackedColumnsComponent implements OnInit {
+export class WordUsageByDateStackedColumnsComponent implements OnInit, OnChanges {
 
   @Input() data: WordsUsageByDay[];
 
   chartOptions: Partial<ChartOptions> | any;
 
   ngOnInit(): void {
-    this.initializeData();
+    // this.initializeData();
   }
+
+  ngOnChanges() {
+        
+    this.initializeData();
+    // You can also use categoryId.previousValue and 
+    // categoryId.firstChange for comparing old and new values
+    
+}
 
   initializeData() {
     const gptVersions = Array.from(new Set(this.data.map(item => item.gpt)));
     const days = Array.from(new Set(this.data.map(item => parseInt(item.day as any)))).sort((a, b) => a - b);
 
-    const minDay = Math.min(...days);
+    const minDay = 1;
     const maxDay = Math.max(...days);
     const allDays = Array.from({ length: maxDay - minDay + 1 }, (_, i) => (i + minDay).toString());
 
