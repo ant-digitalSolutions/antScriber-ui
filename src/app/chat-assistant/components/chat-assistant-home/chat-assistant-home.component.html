@@ -1,17 +1,12 @@
 <!-- chat-assistant-home.component.html -->
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav-container overflow-hidden">
   <mat-sidenav #sidenav mode="side" opened="true" class="sidenav">
     <app-chat-list-sidebar></app-chat-list-sidebar>
   </mat-sidenav>
-  <mat-sidenav-content class="sidenav-content">
+  <mat-sidenav-content class="sidenav-content overflow-hidden">
+    
     <div class="main-content">
-      <ng-container *ngIf="showThreadMessages; else assistantPresentation">
-        <app-chat-history></app-chat-history>
-      </ng-container>
-
-      <ng-template #assistantPresentation>
-        <app-chat-assistant-presentation></app-chat-assistant-presentation
-      ></ng-template>
+      <router-outlet></router-outlet>
     </div>
 
     <div class="row chat-input-outer-container">
