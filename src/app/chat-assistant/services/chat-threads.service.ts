@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
 import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 import { ChatThreadDto } from '../dtos/chat-thread.dto';
@@ -22,7 +23,8 @@ export class ChatThreadsService {
 
   constructor(
     private _http: HttpClient,
-    private _chatAssistantService: ChatAssistantsService
+    private _chatAssistantService: ChatAssistantsService,
+    private _router: Router,
   ) {}
 
   sendMessage(message: string): Observable<IRequestResponse<any>> {
@@ -47,12 +49,14 @@ export class ChatThreadsService {
       );
   }
 
-  listThreadMessages(): Observable<IRequestResponse<any>> {
-    if (!this.threadId) {
-      throw new Error('The thread ID is not set in the route');
+  listThreadMessages(threadId: string): Observable<IRequestResponse<any>> {
+    if (this.threadId && this.threadId === threadId) {
+      return of(undefined as any);
     }
 
-    const params = new HttpParams().append('threadId', this.threadId);
+    this.setThreadId(threadId);
+
+    const params = new HttpParams().append('threadId', this.threadId!);
     return this._http
       .get<IRequestResponse<any>>(this.baseUrl + '/list-thread-messages', {
         params,
@@ -72,7 +76,13 @@ export class ChatThreadsService {
 
     if (!this.threadId) {
       this.setThreadId(chatMessage.threadId);
-      location.href += `/${this.threadId}`;
+      this._router.navigate([
+        'chat-assistant',
+        'a',
+        this.assistantId,
+        't',
+        this.threadId,
+      ]);
     }
   }
 

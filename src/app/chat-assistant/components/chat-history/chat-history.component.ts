@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { ChatMessageDto } from '../../dtos/message.dto';
+import { ChatParamsEnum } from '../../enums/chat-route-params.enum';
+import { ChatAssistantsService } from '../../services/chat-assistants.service';
 import { ChatThreadsService } from '../../services/chat-threads.service';
 
 @Component({
@@ -18,7 +21,7 @@ export class ChatHistoryComponent implements OnInit, OnDestroy {
 
   isLoading = false;
 
-  constructor(private _chatThreadService: ChatThreadsService) {}
+  constructor(private _chatThreadService: ChatThreadsService, private _route: ActivatedRoute, private _chatAssistantService: ChatAssistantsService) {}
 
   ngOnInit(): void {
     this.setListeners()
@@ -30,10 +33,20 @@ export class ChatHistoryComponent implements OnInit, OnDestroy {
   }
 
   setListeners() {
-    // this._chatAssistant.listThreadMessages$.pipe(takeUntil(this.componentDestroyed$))
-    // .subscribe(messages => {
-    //   this.chatHistory = messages;
-    // })
+    this._route.params
+    .pipe(takeUntil(this.componentDestroyed$))
+    .subscribe((params) => {
+      if (params) {
+        if (params[ChatParamsEnum.ThreadId]) {
+          this.isLoading = true;
+          this._chatAssistantService.setAssistantId(params[ChatParamsEnum.AssistantId])
+          // this._chatThreadService.setThreadId(params[ChatParamsEnum.ThreadId])
+          this._chatThreadService.listThreadMessages(params[ChatParamsEnum.ThreadId]).subscribe(() => {
+            this.isLoading = false;
+          });
+        }
+      }
+    });
   }
 
   
