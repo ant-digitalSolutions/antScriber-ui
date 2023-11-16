@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
 import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
+import { ChatAssistantListItemDto } from '../dtos/chat-assistant-list-item.dto';
 import { ChatAssistantDto } from '../dtos/chat-assistant.dto';
 
 @Injectable({
@@ -13,19 +14,19 @@ export class ChatAssistantsService {
 
   _currentAssistant: string = 'asst_Dy9FXW6cFyJRCqDS2R5V9Nkt';
 
-  _chatAssistants?: ChatAssistantDto[];
+  _chatAssistants?: ChatAssistantListItemDto[];
 
   _currentAssistantData: ChatAssistantDto;
 
   private _userAssistantsListEvent = new BehaviorSubject<
-    ChatAssistantDto[] | undefined
+    ChatAssistantListItemDto[] | undefined
   >(undefined);
   listThreadMessages$ = this._userAssistantsListEvent.asObservable();
 
   constructor(private _http: HttpClient) {}
 
   listAssistantsForCurrentUser(): Observable<
-    IRequestResponse<ChatAssistantDto[]>
+    IRequestResponse<ChatAssistantListItemDto[]>
   > {
     return this._http.get<any>(this.baseUrl + '/list-for-user').pipe(
       tap((r) => {
