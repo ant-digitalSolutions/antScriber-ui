@@ -11,4 +11,6 @@ export class ChatAssistantDto extends ChatAssistantListItemDto {
 
   // indicate if the current user is the owner/creator of the assistant
   belongsToUser: boolean;
+
+  model: string;
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { ChatAssistantDto } from '../../dtos/chat-assistant.dto';
 import { ChatAssistantsService } from '../../services/chat-assistants.service';
 
@@ -7,22 +7,26 @@ import { ChatAssistantsService } from '../../services/chat-assistants.service';
   templateUrl: './chat-assistant-presentation.component.html',
   styleUrls: ['./chat-assistant-presentation.component.scss'],
 })
-export class ChatAssistantPresentationComponent implements OnInit {
+export class ChatAssistantPresentationComponent implements OnInit, OnChanges {
   @Input() assistantId: string;
 
   isLoading = true;
 
-  chatAssistant: ChatAssistantDto;
+  assistantData: ChatAssistantDto;
 
   constructor(private _chatAssistantService: ChatAssistantsService) {}
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
     this._chatAssistantService.getAssistant(this.assistantId).subscribe((r) => {
       if (r.success) {
-        this.chatAssistant = r.data!;
+        this.assistantData = r.data!;
       }
 
       this.isLoading = false;
     });
+  }
+
+  ngOnInit(): void {
+    
   }
 }
