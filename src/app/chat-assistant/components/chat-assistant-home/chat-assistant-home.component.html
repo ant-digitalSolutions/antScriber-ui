@@ -4,12 +4,18 @@
     <app-chat-list-sidebar></app-chat-list-sidebar>
   </mat-sidenav>
   <mat-sidenav-content class="sidenav-content">
-    <ng-container *ngIf="showThreadMessages;else assistantPresentation">
-      <app-chat-history></app-chat-history>
-    </ng-container>
+    <div class="main-content">
+      <ng-container *ngIf="showThreadMessages; else assistantPresentation">
+        <app-chat-history></app-chat-history>
+      </ng-container>
 
-    <ng-template #assistantPresentation>
-      <app-chat-assistant-presentation [assistantId]="assistantId"></app-chat-assistant-presentation
-    ></ng-template>
+      <ng-template #assistantPresentation>
+        <app-chat-assistant-presentation></app-chat-assistant-presentation
+      ></ng-template>
+    </div>
+
+    <div class="row chat-input-outer-container">
+      <app-chat-input-field class="col-12"></app-chat-input-field>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

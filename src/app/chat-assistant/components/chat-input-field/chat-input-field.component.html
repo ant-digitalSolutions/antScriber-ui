@@ -1,0 +1,9 @@
+<mat-form-field class="message-input w-100">
+    <textarea
+      matInput
+      [(ngModel)]="newMessage"
+      (keyup.enter)="sendMessage()"
+      [placeholder]="'Instruction...'"
+    ></textarea>
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="sendMessage()">Send</button>
