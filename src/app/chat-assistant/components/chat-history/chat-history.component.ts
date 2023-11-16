@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { marked } from 'marked';
 import { ChatAssistantService } from '../../services/chat-assistant.service';
 
 interface ChatMessage {
@@ -13,11 +12,13 @@ interface ChatMessage {
   styleUrls: ['./chat-history.component.scss'],
 })
 export class ChatHistoryComponent implements OnInit {
+  onCopyToClipboard() {
+    console.log('copied');
+  }
   chatHistory: ChatMessage[] = [
-    { sender: 'user', content: 'Hello, how are you?' },
     {
       sender: 'assistant',
-      content: 'I am good, thank you! How can I assist you today?',
+      content: 'How can I assist you today?',
     },
   ];
   newMessage: string = '';
@@ -32,12 +33,15 @@ export class ChatHistoryComponent implements OnInit {
     if (this.newMessage.trim()) {
       this.chatHistory.push({ sender: 'user', content: this.newMessage });
 
-      this._chatAssistant.sendMessage(this.newMessage.trim()).subscribe(r => {
+      this._chatAssistant.sendMessage(this.newMessage.trim()).subscribe((r) => {
         if (r.success) {
-          const htmlCode = marked.parse(r.data.message)
-          this.chatHistory.push({ sender: 'assistant', content: htmlCode })
+          // const htmlCode = marked.parse(r.data.message)
+          this.chatHistory.push({
+            sender: 'assistant',
+            content: r.data.message,
+          });
         }
-      })
+      });
       this.newMessage = '';
     }
   }

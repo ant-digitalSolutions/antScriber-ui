@@ -8,11 +8,28 @@
       'assistant-message': message.sender === 'assistant'
     }"
   >
-  <div [innerHTML]="message.content"></div>
+    <h4 class="m-b-6">
+      {{ message.sender === "user" ? "You" : "Assistant" }}
+    </h4>
+    <markdown
+      class="variable-binding"
+      [data]="message.content"
+      lineNumbers
+      clipboard
+      [clipboardButtonTemplate]="buttonTemplate"
+    ></markdown>
   </div>
 </div>
 <mat-form-field class="message-input w-100">
-  <mat-label>Enter your message</mat-label>
-  <input matInput [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" />
+  <textarea
+    matInput
+    [(ngModel)]="newMessage"
+    (keyup.enter)="sendMessage()"
+    [placeholder]="'Instruction...'"
+  ></textarea>
 </mat-form-field>
 <button mat-raised-button color="primary" (click)="sendMessage()">Send</button>
+
+<ng-template #buttonTemplate>
+  <button (click)="onCopyToClipboard()">...</button>
+</ng-template>

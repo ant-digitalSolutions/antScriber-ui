@@ -71,6 +71,12 @@
 // custom-styles
 @import "./custom-styles.scss";
 
+// prims and markdown
+// @import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'prismjs/themes/prism-okaidia.css';
+@import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
+@import 'prismjs/plugins/line-highlight/prism-line-highlight.css';
+
 // documents
 // @import "overrides/ckEDitor";
 
