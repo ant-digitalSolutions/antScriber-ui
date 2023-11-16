@@ -21,9 +21,9 @@ export class ChatListSidebarComponent implements OnInit {
   constructor(
     private _chatService: ChatThreadsService,
     private _chatAssistantService: ChatAssistantsService,
-    private _router: Router,
-    // private _route: ActivatedRoute
-  ) {}
+    private _router: Router
+  ) // private _route: ActivatedRoute
+  {}
 
   ngOnInit(): void {
     this.listThreadHistory();
@@ -56,14 +56,19 @@ export class ChatListSidebarComponent implements OnInit {
     // TODO: change this logic, to update the url params
     // so the chat History component get the threadId
     // this._chatService.selectThread(chatThread).subscribe();
-    this._router.navigate(['chat-assistant',chatThread.openaiAssistantId, chatThread.openaiThreadId]);
-
+    this._router.navigate([
+      'chat-assistant',
+      'a',
+      chatThread.openaiAssistantId,
+      't',
+      chatThread.openaiThreadId,
+    ]);
   }
 
   selectAssistant(assistant: ChatAssistantListItemDto) {
     // Navigate to the route for the selected assistant using its UUID
     // const url = this._router.createUrlTree(['', assistant.uuid], { relativeTo: this._route });
-    this._router.navigate(['chat-assistant',assistant.openaiAssistantId]);
+    this._router.navigate(['chat-assistant', 'a', assistant.openaiAssistantId]);
   }
 
   public get chatThreadsNames(): string[] | undefined {

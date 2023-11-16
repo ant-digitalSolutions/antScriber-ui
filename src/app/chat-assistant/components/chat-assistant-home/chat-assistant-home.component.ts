@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
-import { ChatParamsEnum } from '../../enums/chat-route-params.enum';
-import { ChatAssistantsService } from '../../services/chat-assistants.service';
-import { ChatThreadsService } from '../../services/chat-threads.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-chat-assistant-home',
@@ -16,9 +12,6 @@ export class ChatAssistantHomeComponent implements OnInit {
   isLoading = false;
 
   constructor(
-    private _route: ActivatedRoute,
-    private _chatThreadService: ChatThreadsService,
-    private _chatAssistantService: ChatAssistantsService
   ) {}
 
   ngOnInit(): void {
@@ -31,43 +24,7 @@ export class ChatAssistantHomeComponent implements OnInit {
   }
 
   setListeners() {
-    this._route.params
-      .pipe(takeUntil(this.componentDestroyed$))
-      .subscribe((params) => {
-        if (params) {
-          if (params[ChatParamsEnum.ThreadId]) {
-            this.isLoading = true;
-            this._chatAssistantService.setAssistantId(params[ChatParamsEnum.AssistantId])
-            this._chatThreadService.setThreadId(params[ChatParamsEnum.ThreadId])
-            this._chatThreadService.listThreadMessages().subscribe(() => {
-              this.isLoading = false;
-            });
-          }
-          else if (params[ChatParamsEnum.AssistantId]) {
-            this.isLoading = true;
-            this._chatThreadService.setThreadId(undefined);
-            this._chatAssistantService.setAssistantId(params[ChatParamsEnum.AssistantId])
-            this._chatAssistantService.getAssistant().subscribe(() => {
-              this.isLoading = false;
-            })
-          }
-       
-        }
-      });
+ 
   }
 
-
-  public get showThreadMessages() : boolean {
-    return this._chatThreadService.threadId != null;
-  }
-
-  
-  public get showAssistantPresentation() : boolean {
-    return this._chatAssistantService.assistantId != null && this._chatThreadService.threadId == null;
-  }
-
-  
-  public get assistantId() : string | undefined {
-    return this._chatAssistantService.assistantId;
-  }
 }
