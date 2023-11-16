@@ -1,4 +1,21 @@
-<mat-nav-list>
+<div class="assistants-list b-b-1 m-b-10">
+  <mat-nav-list>
     <!-- <a mat-list-item *ngFor="let chat of chatThreadsNames">{{ chat }}</a> -->
-    <button mat-flat-button *ngFor="let chatThread of _chatThreads" (click)="selectThread(chatThread)" >{{ chatThread.threadName }}</button>
+    <button mat-flat-button *ngFor="let assistant of _chatAssistants" (click)="selectAssistant(assistant)">
+      {{ assistant.assistantName }}
+    </button>
   </mat-nav-list>
+</div>
+
+<div class="thread-list">
+  <mat-nav-list>
+    <!-- <a mat-list-item *ngFor="let chat of chatThreadsNames">{{ chat }}</a> -->
+    <button
+      mat-flat-button
+      *ngFor="let chatThread of _chatThreads"
+      (click)="selectThread(chatThread)"
+    >
+      {{ chatThread.threadName }}
+    </button>
+  </mat-nav-list>
+</div>
