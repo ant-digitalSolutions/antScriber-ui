@@ -53,14 +53,18 @@ export class ChatAssistantHomeComponent implements OnInit {
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe((params) => {
         if (params) {
-          if (params['assistantId']) {
-            this._assistantId = params['assistantId'];
-            this._chatAssistantService._currentAssistant = this._assistantId!;
-          }
           if (params['threadId']) {
             this._threadId = params['threadId'];
             this._chatThreadService.listThreadMessages(this._threadId!).subscribe();
           }
+          if (params['assistantId']) {
+            this._assistantId = params['assistantId'];
+            this._chatAssistantService._currentAssistant = this._assistantId!;
+            // this._chatAssistantService.getAssistant(this._assistantId!).subscribe(r => {
+            //   this.isLoading = false;
+            // })
+          }
+       
         }
       });
   }
@@ -81,4 +85,22 @@ export class ChatAssistantHomeComponent implements OnInit {
       this.chatHistory.push({ sender: 'assistant', content: mockResponse });
     }, 1000); // Simulate response delay
   }
+
+  
+  public get showThreadMessages() : boolean {
+    return this._threadId != undefined;
+  }
+
+  
+  public get showAssistantPresentation() : boolean {
+    return this._assistantId != undefined && this._threadId == undefined;
+  }
+
+  
+  public get assistantId() : string {
+    return this._assistantId!;
+  }
+  
+  
+  
 }
