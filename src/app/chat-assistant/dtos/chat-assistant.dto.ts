@@ -1,14 +1,14 @@
+import { ChatAssistantListItemDto } from "./chat-assistant-list-item.dto";
 
-export class ChatAssistantDto {
-  uuid: string;
-  
-  openaiAssistantId: string;
+export class ChatAssistantDto extends ChatAssistantListItemDto {
+  description: string;
 
-  assistantName: string;
+  conversationStarters: string;
 
-  photoUrl?: string;
+  isPublic: boolean;
 
-  totalUses?: number;
-  
-  isSystemAssistant: boolean;
+  status: string;
+
+  // indicate if the current user is the owner/creator of the assistant
+  belongsToUser: boolean;
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ChatAssistantDto } from '../../dtos/chat-assistant.dto';
+import { ChatAssistantListItemDto } from '../../dtos/chat-assistant-list-item.dto';
 import { ChatThreadDto } from '../../dtos/chat-thread.dto';
 import { ChatAssistantsService } from '../../services/chat-assistants.service';
 import { ChatThreadsService } from '../../services/chat-threads.service';
@@ -13,7 +13,7 @@ import { ChatThreadsService } from '../../services/chat-threads.service';
 export class ChatListSidebarComponent implements OnInit {
   _chatThreads: ChatThreadDto[] | undefined;
 
-  _chatAssistants?: ChatAssistantDto[];
+  _chatAssistants?: ChatAssistantListItemDto[];
 
   loadingAssistant = true;
   loadingThreads: boolean;
@@ -60,7 +60,7 @@ export class ChatListSidebarComponent implements OnInit {
 
   }
 
-  selectAssistant(assistant: ChatAssistantDto) {
+  selectAssistant(assistant: ChatAssistantListItemDto) {
     // Navigate to the route for the selected assistant using its UUID
     // const url = this._router.createUrlTree(['', assistant.uuid], { relativeTo: this._route });
     this._router.navigate(['chat-assistant',assistant.openaiAssistantId]);
