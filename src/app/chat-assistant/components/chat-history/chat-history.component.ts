@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
+import { ChatMessageDto } from '../../dtos/message.dto';
 import { ChatAssistantService } from '../../services/chat-assistant.service';
-
-interface ChatMessage {
-  sender: 'user' | 'assistant';
-  content: string;
-}
 
 @Component({
   selector: 'app-chat-history',
@@ -15,30 +12,46 @@ export class ChatHistoryComponent implements OnInit {
   onCopyToClipboard() {
     console.log('copied');
   }
-  chatHistory: ChatMessage[] = [
+  chatHistory: ChatMessageDto[] = [
     {
-      sender: 'assistant',
-      content: 'How can I assist you today?',
+      role: 'assistant',
+      message: 'How can I assist you today?',
     },
   ];
   newMessage: string = '';
 
+  componentDestroyed$: Subject<boolean> = new Subject();
+
+  isLoading = false;
+
   constructor(private _chatAssistant: ChatAssistantService) {}
 
   ngOnInit(): void {
-    // Load chat history from a service or local storage
+    this.setListeners()
+  }
+
+  ngOnDestroy(): void {
+    this.componentDestroyed$.next(true)
+    this.componentDestroyed$.complete()
+  }
+
+  setListeners() {
+    this._chatAssistant.listThreadMessages$.pipe(takeUntil(this.componentDestroyed$))
+    .subscribe(messages => {
+      this.chatHistory = messages;
+    })
   }
 
   sendMessage(): void {
     if (this.newMessage.trim()) {
-      this.chatHistory.push({ sender: 'user', content: this.newMessage });
+      this.chatHistory.push({ role: 'user', message: this.newMessage });
 
       this._chatAssistant.sendMessage(this.newMessage.trim()).subscribe((r) => {
         if (r.success) {
           // const htmlCode = marked.parse(r.data.message)
           this.chatHistory.push({
-            sender: 'assistant',
-            content: r.data.message,
+            role: 'assistant',
+            message: r.data.message,
           });
         }
       });
