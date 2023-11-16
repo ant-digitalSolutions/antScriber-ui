@@ -20,14 +20,14 @@ export class ChatInputFieldComponent {
   sendMessage(): void {
     this.isLoading = true;
     if (this.newMessage.trim()) {
-
       this._chatAssistant.sendMessage(this.newMessage.trim()).subscribe((r) => {
         if (r.success) {
-          // const htmlCode = marked.parse(r.data.message)
         
         }
-      });
       this.isLoading = false;
+      });
+
+      this.newMessage = '';
     }
   }
 }
