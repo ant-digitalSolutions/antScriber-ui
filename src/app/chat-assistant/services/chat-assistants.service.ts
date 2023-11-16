@@ -21,7 +21,14 @@ export class ChatAssistantsService {
   private _userAssistantsListEvent = new BehaviorSubject<
     ChatAssistantListItemDto[] | undefined
   >(undefined);
-  listThreadMessages$ = this._userAssistantsListEvent.asObservable();
+  threadHistory$ = this._userAssistantsListEvent.asObservable();
+
+  private _selectedAssistantDataEvent = new BehaviorSubject<
+    ChatAssistantDto | undefined
+  >(undefined);
+  selectedAssistantDataObservable$ = this._selectedAssistantDataEvent.asObservable();
+
+  private _chatAssistantId?: string;
 
   constructor(private _http: HttpClient) {}
 
@@ -39,17 +46,27 @@ export class ChatAssistantsService {
   }
 
   getAssistant(
-    assistantId: string
+    
   ): Observable<IRequestResponse<ChatAssistantDto>> {
-    const params = new HttpParams().append('assistantId', assistantId);
+    if (!this.assistantId) {
+      throw new Error('The Assistant Id is not set in the route params')
+    }
+    const params = new HttpParams().append('assistantId', this.assistantId);
     return this._http.get<any>(this.baseUrl, { params }).pipe(tap(r => {
       if (r.success) {
         this._currentAssistantData = r.data!;
+        this._selectedAssistantDataEvent.next(r.data)
       }
     }));
   }
 
-  selectAssistant(assistantUUID: string) {
-    this._currentAssistant = assistantUUID;
+ setAssistantId(assistantId: string): void {
+  this._chatAssistantId = assistantId;
+ }
+
+  public get assistantId() : string | undefined {
+    return this._chatAssistantId;
   }
+
+
 }
