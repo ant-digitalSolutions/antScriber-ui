@@ -4,16 +4,16 @@
     *ngFor="let message of chatHistory"
     class="message"
     [ngClass]="{
-      'user-message': message.sender === 'user',
-      'assistant-message': message.sender === 'assistant'
+      'user-message': message.role === 'user',
+      'assistant-message': message.role === 'assistant'
     }"
   >
     <h4 class="m-b-6">
-      {{ message.sender === "user" ? "You" : "Assistant" }}
+      {{ message.role === "user" ? "You" : "Assistant" }}
     </h4>
     <markdown
       class="variable-binding"
-      [data]="message.content"
+      [data]="message.message"
       lineNumbers
       clipboard
       [clipboardButtonTemplate]="buttonTemplate"

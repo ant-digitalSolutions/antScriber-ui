@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
 import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 import { ChatThreadDto } from '../dtos/chat-thread.dto';
@@ -15,6 +15,9 @@ export class ChatAssistantService {
   _currentThread: string;
 
   _currentAssistant: string = 'asst_Dy9FXW6cFyJRCqDS2R5V9Nkt';
+
+  private _threadMessagesListEvent = new BehaviorSubject<ChatMessageDto[]>([]);
+  listThreadMessages$ = this._threadMessagesListEvent.asObservable();
 
   constructor(private _http: HttpClient) {}
 
@@ -47,7 +50,11 @@ export class ChatAssistantService {
     return this._http.get<IRequestResponse<any>>(
       this.baseUrl + '/list-thread-messages',
       { params }
-    );
+    ).pipe(tap(r => {
+      if (r.success) {
+        this._threadMessagesListEvent.next(r.data!)
+      }
+    }));
   }
 
   listThreadHistory(): Observable<IRequestResponse<ChatThreadDto[]>> {
