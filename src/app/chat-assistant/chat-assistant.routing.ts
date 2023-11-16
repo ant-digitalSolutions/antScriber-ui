@@ -5,5 +5,13 @@ export const ChatAssistantRoutes: Routes = [
   {
     path: '',
     component: ChatAssistantHomeComponent,
+  },
+  {
+    path: ':assistantId',
+    component: ChatAssistantHomeComponent,
+  },
+  {
+    path: ':assistantId/:threadId',
+    component: ChatAssistantHomeComponent,
   }
 ];

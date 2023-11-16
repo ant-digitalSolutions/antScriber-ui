@@ -39,13 +39,11 @@ export class ChatThreadsService {
       );
   }
 
-  selectThread(chatThread: ChatThreadDto): Observable<IRequestResponse<any>> {
-    this._currentAssistant = chatThread.openaiAssistantId;
-    this._currentThread = chatThread.openaiThreadId;
+  listThreadMessages(threadId: string): Observable<IRequestResponse<any>> {
 
     const params = new HttpParams().append(
       'threadId',
-      chatThread.openaiThreadId
+      threadId
     );
     return this._http.get<IRequestResponse<any>>(
       this.baseUrl + '/list-thread-messages',

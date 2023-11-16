@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { ChatMessageDto } from '../../dtos/message.dto';
 import { ChatThreadsService } from '../../services/chat-threads.service';
@@ -8,7 +8,7 @@ import { ChatThreadsService } from '../../services/chat-threads.service';
   templateUrl: './chat-history.component.html',
   styleUrls: ['./chat-history.component.scss'],
 })
-export class ChatHistoryComponent implements OnInit {
+export class ChatHistoryComponent implements OnInit, OnDestroy {
   onCopyToClipboard() {
     console.log('copied');
   }
