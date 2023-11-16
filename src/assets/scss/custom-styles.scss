@@ -99,38 +99,11 @@ $walkthrough-user-initialization-text-secondary: #e4a1cf;
   // }
 }
 
-// settings area
-.user-settings-card-max-width {
-  max-width: 800px;
-}
-
-.border-round {
-  border-radius: $border-radius !important;
-}
-
-.h-100dvh {
-  height: 100dvh;
-}
-
-.h-100dvh-50 {
-  height: calc(100dvh - 50px);
-}
-
-*::-webkit-scrollbar {
-  width: 8px; // Adjust scrollbar width
-}
-
-*::-webkit-scrollbar-track {
-  background: transparent; // Track background
-}
-
-*::-webkit-scrollbar-thumb {
-  background: #888; // Scrollbar handle color
-  border-radius: 4px; // Roundness of the scrollbar handle
-  height: 10px !important;
-  max-height: 10px !important;
-}
-
-*::-webkit-scrollbar-thumb:hover {
-  background: #555; // Scrollbar handle color when hovered
+// chat assistant
+.thread-list {
+  .mdc-button__label {
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }

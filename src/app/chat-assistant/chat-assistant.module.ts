@@ -13,6 +13,7 @@ import 'prismjs';
 import 'prismjs/components/prism-typescript.min.js';
 import 'prismjs/plugins/line-highlight/prism-line-highlight.js';
 import 'prismjs/plugins/line-numbers/prism-line-numbers.js';
+import { ChatAssistantPresentationComponent } from './components/chat-assistant-presentation/chat-assistant-presentation.component';
 
 
 
@@ -20,7 +21,8 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers.js';
   declarations: [
     ChatAssistantHomeComponent,
     ChatListSidebarComponent,
-    ChatHistoryComponent
+    ChatHistoryComponent,
+    ChatAssistantPresentationComponent
   ],
   imports: [
     CommonModule,
