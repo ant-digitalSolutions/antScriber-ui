@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { ChatMessageDto } from '../../dtos/message.dto';
-import { ChatAssistantService } from '../../services/chat-assistant.service';
+import { ChatThreadsService } from '../../services/chat-threads.service';
 
 @Component({
   selector: 'app-chat-history',
@@ -24,7 +24,7 @@ export class ChatHistoryComponent implements OnInit {
 
   isLoading = false;
 
-  constructor(private _chatAssistant: ChatAssistantService) {}
+  constructor(private _chatAssistant: ChatThreadsService) {}
 
   ngOnInit(): void {
     this.setListeners()

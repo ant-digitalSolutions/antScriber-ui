@@ -9,8 +9,8 @@ import { ChatMessageDto } from '../dtos/message.dto';
 @Injectable({
   providedIn: 'root',
 })
-export class ChatAssistantService {
-  baseUrl = getBaseApiURL() + 'chat-assistant';
+export class ChatThreadsService {
+  baseUrl = getBaseApiURL() + 'chat-threads';
 
   _currentThread: string;
 
