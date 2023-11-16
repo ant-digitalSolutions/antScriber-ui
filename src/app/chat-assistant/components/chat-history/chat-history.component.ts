@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { marked } from 'marked';
+import { ChatAssistantService } from '../../services/chat-assistant.service';
 
 interface ChatMessage {
   sender: 'user' | 'assistant';
@@ -20,7 +22,7 @@ export class ChatHistoryComponent implements OnInit {
   ];
   newMessage: string = '';
 
-  constructor() {}
+  constructor(private _chatAssistant: ChatAssistantService) {}
 
   ngOnInit(): void {
     // Load chat history from a service or local storage
@@ -29,15 +31,14 @@ export class ChatHistoryComponent implements OnInit {
   sendMessage(): void {
     if (this.newMessage.trim()) {
       this.chatHistory.push({ sender: 'user', content: this.newMessage });
-      this.mockAssistantResponse(this.newMessage);
+
+      this._chatAssistant.sendMessage(this.newMessage.trim()).subscribe(r => {
+        if (r.success) {
+          const htmlCode = marked.parse(r.data.message)
+          this.chatHistory.push({ sender: 'assistant', content: htmlCode })
+        }
+      })
       this.newMessage = '';
     }
-  }
-
-  private mockAssistantResponse(userMessage: string): void {
-    const mockResponse = `Received your message: "${userMessage}"`;
-    setTimeout(() => {
-      this.chatHistory.push({ sender: 'assistant', content: mockResponse });
-    }, 1000);
   }
 }
