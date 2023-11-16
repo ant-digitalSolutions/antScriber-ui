@@ -1,1 +1,46 @@
-<p>chat-assistant-presentation works!</p>
+"<div
+  class="outer-container w-100 d-flex align-items-start justify-content-center"
+>
+  <mat-card class="assistant-card">
+    <mat-card-header
+      class="d-flex flex-col align-items-center justify-content-center"
+    >
+      <div
+        mat-card-avatar
+        *ngIf="assistantData.photoUrl; else defaultAvatar"
+      ></div>
+      <ng-template #defaultAvatar>
+        <div mat-card-avatar class="default-avatar"></div>
+      </ng-template>
+      <mat-card-title class="text-center p-b-20">{{
+        assistantData.assistantName
+      }}</mat-card-title>
+      <mat-card-subtitle class="text-center">{{
+        assistantData.description
+      }}</mat-card-subtitle>
+    </mat-card-header>
+    <img
+      mat-card-image
+      *ngIf="assistantData.photoUrl"
+      [src]="assistantData.photoUrl"
+    />
+    <mat-card-content class="m-t-30">
+      <p></p>
+    </mat-card-content>
+    <mat-card-actions
+      *ngIf="assistantData.isPublic"
+      class="d-flex justify-content-center"
+    >
+      <button mat-raised-button class="text-white border-round btn-share">
+        Share
+      </button>
+    </mat-card-actions>
+    <mat-card-footer class="d-flex justify-content-around footer b-t-1">
+      <mat-chip class="model">Model: {{ assistantData.model }}</mat-chip>
+      <mat-chip>Status: {{ assistantData.status }}</mat-chip>
+      <mat-chip *ngIf="assistantData.totalUses != null">
+        | Uses: {{ assistantData.totalUses }}</mat-chip
+      >
+    </mat-card-footer>
+  </mat-card>
+</div>
