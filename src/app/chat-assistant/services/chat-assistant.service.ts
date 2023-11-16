@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
 import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
+import { ChatThreadDto } from '../dtos/chat-thread.dto';
 import { ChatMessageDto } from '../dtos/message.dto';
 
 @Injectable({
@@ -24,13 +25,32 @@ export class ChatAssistantService {
       assistantId: this._currentAssistant,
       role: 'user',
     };
-    return this._http.post<IRequestResponse<any>>(
-      this.baseUrl + '/user-new-message',
-      data
-    ).pipe(tap(r => {
-      if (r.success) {
-        this._currentThread = r.data.threadId
-      }
-    }));
+    return this._http
+      .post<IRequestResponse<any>>(this.baseUrl + '/user-new-message', data)
+      .pipe(
+        tap((r) => {
+          if (r.success) {
+            this._currentThread = r.data.threadId;
+          }
+        })
+      );
+  }
+
+  selectThread(chatThread: ChatThreadDto): Observable<IRequestResponse<any>> {
+    this._currentAssistant = chatThread.openaiAssistantId;
+    this._currentThread = chatThread.openaiThreadId;
+
+    const params = new HttpParams().append(
+      'threadId',
+      chatThread.openaiThreadId
+    );
+    return this._http.get<IRequestResponse<any>>(
+      this.baseUrl + '/list-thread-messages',
+      { params }
+    );
+  }
+
+  listThreadHistory(): Observable<IRequestResponse<ChatThreadDto[]>> {
+    return this._http.get<any>(this.baseUrl + '/list-threads');
   }
 }
