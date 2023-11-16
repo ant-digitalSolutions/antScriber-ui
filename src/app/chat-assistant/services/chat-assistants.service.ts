@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
@@ -15,12 +15,18 @@ export class ChatAssistantsService {
 
   _chatAssistants?: ChatAssistantDto[];
 
-  private _userAssistantsListEvent = new BehaviorSubject<ChatAssistantDto[] | undefined>(undefined);
+  _currentAssistantData: ChatAssistantDto;
+
+  private _userAssistantsListEvent = new BehaviorSubject<
+    ChatAssistantDto[] | undefined
+  >(undefined);
   listThreadMessages$ = this._userAssistantsListEvent.asObservable();
 
   constructor(private _http: HttpClient) {}
 
-  listAssistantsForCurrentUser(): Observable<IRequestResponse<ChatAssistantDto[]>> {
+  listAssistantsForCurrentUser(): Observable<
+    IRequestResponse<ChatAssistantDto[]>
+  > {
     return this._http.get<any>(this.baseUrl + '/list-for-user').pipe(
       tap((r) => {
         if (r.success) {
@@ -29,6 +35,17 @@ export class ChatAssistantsService {
         }
       })
     );
+  }
+
+  getAssistant(
+    assistantId: string
+  ): Observable<IRequestResponse<ChatAssistantDto>> {
+    const params = new HttpParams().append('assistantId', assistantId);
+    return this._http.get<any>(this.baseUrl, { params }).pipe(tap(r => {
+      if (r.success) {
+        this._currentAssistantData = r.data!;
+      }
+    }));
   }
 
   selectAssistant(assistantUUID: string) {

@@ -98,3 +98,12 @@ $walkthrough-user-initialization-text-secondary: #e4a1cf;
   //   color: $plum;
   // }
 }
+
+// chat assistant
+.thread-list {
+  .mdc-button__label {
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
