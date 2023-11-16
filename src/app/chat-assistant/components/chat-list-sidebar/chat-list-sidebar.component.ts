@@ -28,11 +28,9 @@ export class ChatListSidebarComponent implements OnInit {
   }
 
   selectThread(chatThread: ChatThreadDto) {
-    this._chatService.selectThread(chatThread).subscribe(r => {
-      if (r.success) {
-        console.log(r.data)
-      }
-    })
+    // TODO: change this logic, to update the url params
+    // so the chat History component get the threadId
+    this._chatService.selectThread(chatThread).subscribe()
     }
   
   public get chatThreadsNames() : string[] | undefined {
