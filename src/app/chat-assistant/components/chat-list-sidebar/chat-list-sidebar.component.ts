@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatThreadDto } from '../../dtos/chat-thread.dto';
-import { ChatAssistantService } from '../../services/chat-assistant.service';
+import { ChatThreadsService } from '../../services/chat-threads.service';
 
 @Component({
   selector: 'app-chat-list-sidebar',
@@ -13,7 +13,7 @@ export class ChatListSidebarComponent implements OnInit {
 
   _chatThreads: ChatThreadDto[] | undefined;
 
-  constructor(private _chatService: ChatAssistantService) {}
+  constructor(private _chatService: ChatThreadsService) {}
 
   ngOnInit(): void {
     this.listThreadHistory()
