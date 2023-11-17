@@ -43,10 +43,16 @@ const routes: Routes = [
   },
   {
     path: 'chat-assistant',
-    loadChildren: () =>
-      import('./chat-assistant/chat-assistant.module').then(
-        (m) => m.ChatAssistantModule
-      ),
+    component: LayoutWizardComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./chat-assistant/chat-assistant.module').then(
+            (m) => m.ChatAssistantModule
+          ),
+      },
+    ],
     canActivate: [authGuard],
   },
   // {
@@ -165,4 +171,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
