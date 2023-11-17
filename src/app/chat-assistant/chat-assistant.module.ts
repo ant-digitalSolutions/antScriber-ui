@@ -15,6 +15,7 @@ import 'prismjs/plugins/line-highlight/prism-line-highlight.js';
 import 'prismjs/plugins/line-numbers/prism-line-numbers.js';
 import { ChatAssistantPresentationComponent } from './components/chat-assistant-presentation/chat-assistant-presentation.component';
 import { ChatInputFieldComponent } from './components/chat-input-field/chat-input-field.component';
+import { ChatInputService } from './services/chat-input.service';
 
 
 
@@ -31,6 +32,7 @@ import { ChatInputFieldComponent } from './components/chat-input-field/chat-inpu
     RouterModule.forChild(ChatAssistantRoutes),
     SharedModule,
     MarkdownModule.forRoot(),
-  ]
+  ],
+  providers: [ChatInputService]
 })
 export class ChatAssistantModule { }
