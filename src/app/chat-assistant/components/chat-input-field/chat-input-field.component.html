@@ -4,6 +4,7 @@
     [(ngModel)]="newMessage"
     (keyup.enter)="sendMessage()"
     [placeholder]="'Instruction...'"
+    [rows]="calculateRows(newMessage)"
   >
   </textarea>
   <button class="chat-send-btn" mat-raised-button (click)="sendMessage()">
