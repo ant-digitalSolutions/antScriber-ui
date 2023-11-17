@@ -1,9 +1,14 @@
 <mat-form-field class="message-input w-100">
-    <textarea
-      matInput
-      [(ngModel)]="newMessage"
-      (keyup.enter)="sendMessage()"
-      [placeholder]="'Instruction...'"
-    ></textarea>
-  </mat-form-field>
-  <button mat-raised-button color="primary" (click)="sendMessage()">Send</button>
+  <textarea
+    matInput
+    [(ngModel)]="newMessage"
+    (keyup.enter)="sendMessage()"
+    [placeholder]="'Instruction...'"
+  >
+  </textarea>
+  <button class="chat-send-btn" mat-raised-button (click)="sendMessage()">
+  <mat-icon>arrow_upward_alt</mat-icon>
+  </button>
+
+</mat-form-field>
+

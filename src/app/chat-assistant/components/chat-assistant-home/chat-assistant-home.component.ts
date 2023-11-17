@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDrawerMode } from '@angular/material/sidenav';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -10,6 +11,8 @@ export class ChatAssistantHomeComponent implements OnInit {
   componentDestroyed$: Subject<boolean> = new Subject();
 
   isLoading = false;
+
+  sidenavMode: MatDrawerMode = 'side'
 
   constructor(
   ) {}

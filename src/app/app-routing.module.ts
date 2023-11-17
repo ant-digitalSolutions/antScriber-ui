@@ -8,7 +8,7 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'wizard/creator',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'wizard',
@@ -17,31 +17,40 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: () =>
-          import('./wizard-creator/wizard-creator.module').then((m) => m.WizardCreatorModule),
-        data: { breadcrumb: 'Home' }
+          import('./wizard-creator/wizard-creator.module').then(
+            (m) => m.WizardCreatorModule
+          ),
+        data: { breadcrumb: 'Home' },
       },
     ],
-    canActivate: [authGuard]
+    canActivate: [authGuard],
   },
   {
     path: 'settings',
     loadChildren: () =>
-      import('./user-settings/user-settings.module').then((m) => m.UserSettingsModule),
-    canActivate: [authGuard]
+      import('./user-settings/user-settings.module').then(
+        (m) => m.UserSettingsModule
+      ),
+    canActivate: [authGuard],
   },
   {
     path: 'chat-assistant',
-    loadChildren: () =>
-      import('./chat-assistant/chat-assistant.module').then(
-        (m) => m.ChatAssistantModule
-      ),
+    component: LayoutWizardComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./chat-assistant/chat-assistant.module').then(
+            (m) => m.ChatAssistantModule
+          ),
+      },
+    ],
     canActivate: [authGuard],
   },
   // {
   //   path: '',
   //   component: FullComponent,
   //   children: [
-
 
   //     {
   //       path: 'content',
@@ -122,8 +131,6 @@ const routes: Routes = [
     path: 'auth',
     component: BlankComponent,
     children: [
-
-
       // template
       // {
       //   path: 'authentication',
@@ -156,4 +163,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
