@@ -1,6 +1,6 @@
 <!-- chat-assistant-home.component.html -->
 <mat-sidenav-container class="chat-assistant-sidenav-container overflow-hidden">
-  <mat-sidenav #sidenav [mode]="sidenavMode" opened="true" class="sidenav">
+  <mat-sidenav #sidenav [mode]="sidenavMode" [opened]="sidenavOpened" class="sidenav">
     <app-chat-list-sidebar></app-chat-list-sidebar>
   </mat-sidenav>
   <mat-sidenav-content class="sidenav-content overflow-hidden">

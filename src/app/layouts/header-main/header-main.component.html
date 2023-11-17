@@ -1,4 +1,11 @@
 <mat-toolbar class="topbar">
+  <button
+  mat-icon-button
+  aria-label="Notifications"
+  (click)="toggleSidenav()"
+>
+  <mat-icon class="color-primary">tune</mat-icon>
+</button>
   <!-- <app-branding></app-branding> -->
 
   <!-- --------------------------------------------------------------- -->
@@ -146,7 +153,7 @@
     [matMenuTriggerFor]="profilemenu"
     aria-label="Notifications"
   >
-    <mat-icon class="color-primary">menu</mat-icon>
+    <mat-icon class="color-primary">account_circle</mat-icon>
   </button>
   <mat-menu #profilemenu="matMenu" class="topbar-dd cardWithShadow">
     <app-header-menu-items></app-header-menu-items>
