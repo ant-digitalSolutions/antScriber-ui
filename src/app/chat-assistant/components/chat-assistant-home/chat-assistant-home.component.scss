@@ -1,6 +1,10 @@
 /* chat-assistant-home.component.css */
-.sidenav-container {
+.chat-assistant-sidenav-container {
     height: 100%;
+
+    .mat-drawer-inner-container {
+      overflow-x: hidden;
+    }
   }
   
   .sidenav {
@@ -10,10 +14,19 @@
   .sidenav-content {
     padding: 10px;
     overflow: hidden !important;
+    padding-right: 0;
+
   }
   
   .main-content {
-    height: calc(100dvh - 160px); /* Adjust based on header/footer height */
+    height: calc(100dvh - 150px); /* Adjust based on header/footer height */
     overflow-y: auto;
     margin-bottom: 10px;
+
+    display: flex;
+    justify-content: center;
+
+    .main-content-inner-container {
+      max-width: 900px;
+    }
   }

@@ -100,10 +100,39 @@ $walkthrough-user-initialization-text-secondary: #e4a1cf;
 }
 
 // chat assistant
+.chat-assistant-sidenav-container {
+  height: 100%;
+
+  .mat-drawer-inner-container {
+    overflow-x: hidden !important;
+  }
+}
 .thread-list {
   .mdc-button__label {
     overflow: hidden !important;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+}
+
+.message-input {
+  .chat-send-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #00000014 !important;
+    box-shadow: none !important;
+    min-width: 40px !important;
+    padding: 10px !important;
+
+    
+    mat-icon {
+      font-size: 18px;
+      height: 18px;
+      width: 18px;
+      font-weight: 600;
+      color: #736767;
+      margin: 0;
+    }
   }
 }
