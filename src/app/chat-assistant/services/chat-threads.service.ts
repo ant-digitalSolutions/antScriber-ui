@@ -34,7 +34,13 @@ export class ChatThreadsService {
       assistantId: this.assistantId,
       role: 'user',
     };
-    this._chatMessages?.push(data);
+
+    // if it's the first message of the thread, clean previous chat messages
+    if (!this.threadId) {
+      this._chatMessages = [];
+    }
+    this._chatMessages.push(data);
+
     return this._http
       .post<IRequestResponse<ChatMessageDto>>(
         this.baseUrl + '/user-new-message',
@@ -72,7 +78,7 @@ export class ChatThreadsService {
   }
 
   handleMessageResponse(chatMessage: ChatMessageDto) {
-    this._chatMessages?.push(chatMessage);
+    this._chatMessages.push(chatMessage);
 
     if (!this.threadId) {
       this.setThreadId(chatMessage.threadId);
