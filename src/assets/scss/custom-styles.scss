@@ -116,10 +116,16 @@ $walkthrough-user-initialization-text-secondary: #e4a1cf;
 }
 
 .message-input {
+  .mat-mdc-text-field-wrapper {
+    padding-right: 0;
+
+    .mat-mdc-form-field-infix {
+      display: flex;
+      align-items: center;
+    }
+  }
   .chat-send-btn {
-    position: absolute;
-    top: 5px;
-    right: 5px;
+
     background-color: #00000014 !important;
     box-shadow: none !important;
     min-width: 40px !important;
