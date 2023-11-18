@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { cardPricing_standard } from 'src/app/pricing/data/card-pricing-standard.data';
 import { UserService } from 'src/app/user/services/user.service';
 import { InvoiceDto } from '../../dtos/invoice.dto';
 import { PaymentSessionDto } from '../../dtos/payment-session.dto';
@@ -21,7 +22,9 @@ export class CheckoutReturnComponent implements OnInit {
 
   userFirstName: string;
 
-  paymentSession: PaymentSessionDto;                                 
+  paymentSession: PaymentSessionDto;  
+
+  planName: string;
 
   constructor(private route: ActivatedRoute, private _paymentService: PaymentService, private _userService: UserService) {}
 
@@ -38,12 +41,19 @@ export class CheckoutReturnComponent implements OnInit {
       if(r.success) {
         this.paymentSucceed = r.data.paymentStatus === 'paid';
         this.paymentSession  = r.data;
+        this.setPlanName();
       } else {
         this.paymentSucceed = false;
       }
 
       this.dataReady = true;
     })
+  }
+
+  setPlanName() {
+    this.planName = cardPricing_standard.find(
+      (c) => c.id === this.plan.product
+    )!.plan;
   }
 
   
