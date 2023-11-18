@@ -1,4 +1,3 @@
-
 <mat-card class="bg-plum shadow-none">
   <mat-card-header class="justify-content-between m-b-48">
     <mat-icon class="close-icon text-white" (click)="onClose()">close</mat-icon>
@@ -7,51 +6,70 @@
     </mat-card-title>
   </mat-card-header>
 
-  <ng-container  *ngIf="!isLoading;else loading">
-  <mat-card-content>
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 bg-plum shadow-none">
+  <ng-container *ngIf="!isLoading; else loading">
+    <mat-card-content>
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="mat-elevation-z8 bg-plum shadow-none"
+      >
+        <!-- Label Column -->
+        <ng-container matColumnDef="label">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element" class="text-white">
+            <strong>{{ element.label }}:</strong>
+          </td>
+        </ng-container>
 
-      <!-- Label Column -->
-      <ng-container matColumnDef="label">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let element" class="text-white"><strong>{{element.label}}:</strong></td>
+        <!-- Value Column -->
+        <ng-container matColumnDef="value">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element" class="text-white">
+            {{ element.value }}
+          </td>
+        </ng-container>
+
+        <tr mat-row *matRowDef="let row; columns: ['label', 'value']"></tr>
+      </table>
+    </mat-card-content>
+
+    <mat-card-actions class="justify-content-end p-0 m-t-48">
+      <ng-container *ngIf="isPremiumUser">
+        <ng-container *ngIf="!isCanceling; else cancelConfirmation">
+          <button
+            mat-flat-button
+            class="border-round btn-cancel m-r-8"
+            (click)="isCanceling = true"
+          >
+            Cancel Subscription
+          </button>
+        </ng-container>
+
+        <ng-template #cancelConfirmation>
+          <button
+            mat-flat-button
+            class="border-round btn-cancel-confirmation m-r-8 bg-error text-white"
+            (click)="openOfferModal()"
+          >
+            Are you sure?
+          </button>
+        </ng-template>
       </ng-container>
 
-      <!-- Value Column -->
-      <ng-container matColumnDef="value">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let element" class="text-white">{{element.value}}</td>
-      </ng-container>
+      <button
+        mat-flat-button
+        class="border-round text-primary f-w-600"
+        cdkFocusInitial
+        (click)="onClose()"
+      >
+        Upgrade
+      </button>
+    </mat-card-actions>
+  </ng-container>
 
-      <tr mat-row *matRowDef="let row; columns: ['label', 'value'];"></tr>
-    </table>
-  </mat-card-content>
-
-  <mat-card-actions class="justify-content-end p-0 m-t-48">
-    <ng-container *ngIf="!isCanceling;else cancelConfirmation">
-        <button mat-flat-button class="border-round btn-cancel m-r-8" (click)="isCanceling = true">
-      Cancel Subscription
-    </button>
-    </ng-container>
-    
-    <ng-template #cancelConfirmation>
-        <button mat-flat-button class="border-round btn-cancel-confirmation m-r-8 bg-error text-white" (click)="openOfferModal()">
-      Are you sure?
-    </button>
-    </ng-template>
-
-    <button mat-flat-button class="border-round text-primary f-w-600" cdkFocusInitial>
-      Upgrade
-    </button>
-  </mat-card-actions>
-</ng-container>
-
-<ng-template #loading>
-  <div class="col-12 align-items-center justify-content-center w-100 d-flex">
-    <mat-spinner class="text-white"></mat-spinner>
-  </div>
+  <ng-template #loading>
+    <div class="col-12 align-items-center justify-content-center w-100 d-flex">
+      <mat-spinner class="text-white"></mat-spinner>
+    </div>
   </ng-template>
-
 </mat-card>
-
-
