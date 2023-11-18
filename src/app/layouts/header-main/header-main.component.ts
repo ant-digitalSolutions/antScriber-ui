@@ -95,7 +95,7 @@ export class HeaderMainComponent {
     private blogProjectService: BlogProjectsService,
     private _loadingService: LoadingService,
     private paymentService: PaymentService,
-    private _notificationsService: NotificationsService
+    private _notificationsService: NotificationsService,
     private coreService: CoreService
   ) {
   }
@@ -265,5 +265,27 @@ export class HeaderMainComponent {
       link: '/apps/taskboard',
     },
   ];
+}
+
+interface notifications {
+  id: number;
+  img: string;
+  title: string;
+  subtitle: string;
+}
+
+interface msgs {
+  id: number;
+  img: string;
+  title: string;
+  subtitle: string;
+}
+
+interface profiledd {
+  id: number;
+  img: string;
+  title: string;
+  subtitle: string;
+  link: string;
 }
 

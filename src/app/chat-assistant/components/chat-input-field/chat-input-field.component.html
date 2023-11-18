@@ -4,7 +4,12 @@
     [(ngModel)]="newMessage"
     (keyup.enter)="sendMessage()"
     [placeholder]="'Instruction...'"
-    [rows]="calculateRows(newMessage)"
+    cdkTextareaAutosize
+    #inputRef
+    cdkAutosizeMinRows="1"
+    cdkAutosizeMaxRows="10"
+    [rows]="2"
+    (input)="checkInputHeight()"
   >
   </textarea>
   <button class="chat-send-btn" mat-raised-button (click)="sendMessage()">
