@@ -94,6 +94,11 @@ export class SubscriptionDetailsComponent {
   }
   
   
+  public get isPremiumUser() : boolean {
+    return this.currentPlan !== `FREE`;
+  }
+  
+  
   public get currentPlan() : string {
     return this.subscription? this.planName! : 'FREE';
   }
