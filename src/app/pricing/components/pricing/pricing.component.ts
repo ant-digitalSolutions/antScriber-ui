@@ -7,7 +7,6 @@ import { SubscriptionDetailsComponent } from 'src/app/payment/components/subscri
 import { SubscriptionResponseDTO } from 'src/app/payment/dtos/subscription-response.dto';
 import { PaymentService } from 'src/app/payment/services/payment.service';
 import { UserSubscriptionDto } from 'src/app/user/dto/user-subscription-data.dto';
-import { UserService } from 'src/app/user/services/user.service';
 import { cardPricing_standard } from '../../data/card-pricing-standard.data';
 import { IPriceCardData } from '../../dto/pricing-card-data.interface';
 
@@ -34,8 +33,8 @@ export class AppPricingComponent {
   constructor(
     private _paymentService: PaymentService,
     private stripeService: StripeService,
-    private _userService: UserService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    
   ) {}
 
   ngOnInit(): void {
@@ -43,15 +42,11 @@ export class AppPricingComponent {
   }
 
   checkCurrentSubscription() {
-    this.userCurrentSubscription = this._userService.getUserSubscription();
-
-    if (this.userCurrentSubscription.mainSubscription === ProductsEnum.FREE) {
-      return;
-    }
-
-    this.currentSubscriptionCardIndex = this.pricecards.find(
-      (c) => c.id === this.userCurrentSubscription.mainSubscription
-    )!.index;
+    this._paymentService.getSubscriptionInfo().subscribe(r => {
+      if (r.success) {
+        this.handleUserSubscriptionData(r.data);
+      }
+    })
   }
 
   checkout(priceData: IPriceCardData) {
@@ -59,7 +54,7 @@ export class AppPricingComponent {
       ? priceData?.stripeYearlyPriceId
       : priceData?.stripeMonthlyPriceId;
 
-    if (this.userCurrentSubscription.mainSubscription === ProductsEnum.FREE) {
+    if (!this.userCurrentSubscription || this.userCurrentSubscription.mainSubscription === ProductsEnum.FREE) {
       this._paymentService
         .generatePaymentSession(stripePriceId!)
         .pipe(
@@ -112,6 +107,11 @@ export class AppPricingComponent {
    * @memberof AppPricingComponent
    */
   checkIfShouldUpgrade(card: IPriceCardData): number {
+    // the user has the free subscription
+    if (this.currentSubscriptionCardIndex === -1) {
+      return 1;
+    }
+
     if (card.index > this.currentSubscriptionCardIndex) {
       return 1;
     }
@@ -143,5 +143,20 @@ export class AppPricingComponent {
       maxWidth: '95vw',
       panelClass: 'subscription-details-modal',
     });
+  }
+
+  handleUserSubscriptionData(subscription: SubscriptionResponseDTO): void {
+    if (subscription.plan?.product === ProductsEnum.FREE) {
+      return;
+    }
+
+    this.userCurrentSubscription = {
+      mainSubscription: subscription.plan?.product as any,
+      stripePriceId: subscription.plan?.id!
+    }
+
+    this.currentSubscriptionCardIndex = this.pricecards.find(
+      (c) => c.id === this.userCurrentSubscription.mainSubscription
+    )!.index;
   }
 }
