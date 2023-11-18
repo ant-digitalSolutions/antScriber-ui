@@ -1,6 +1,6 @@
-<div class="row justify-content-center align-items-center bg-plum outer-container p-b-100px">
+<div class="row justify-content-center align-items-center outer-container p-b-100px">
   <div class="col-12 col-sm-8 col-lg-4 justify-content-center card-container">
-    <mat-card *ngIf="dataReady;else loading">
+    <mat-card *ngIf="dataReady;else loading" class="bg-plum border-round">
 
         <!-- SUCCESSFUL PAYMENT -->
         <ng-container *ngIf="paymentSucceed; else paymentFailed">
@@ -15,6 +15,7 @@
             
             <div class="subscription-details b-b-1">
               <h3 class="text-center">Subscription Details</h3>
+              <p><strong>Plan:</strong> {{ planName }}</p>
               <p><strong>Status:</strong> {{ subscription.status | uppercase }}</p>
               <p><strong>Billing Cycle:</strong> {{ subscription.startDate * 1000 | date }} - {{ subscription.currentPeriodEnd * 1000 | date }}</p>
               <p><strong>Plan Amount:</strong> ${{ subscription.plan!.amount / 100 }} ({{ subscription.plan!.currency | uppercase }})</p>
@@ -32,11 +33,18 @@
               <h3 class="text-center">Invoice Details</h3>
               <p><strong>Invoice ID:</strong> {{ invoice!.id }}</p>
               <p><strong>Amount Paid:</strong> ${{ invoice!.amountPaid / 100 }} ({{ invoice!.currency | uppercase }})</p>
-              <a href="{{ invoice.invoicePdf }}" target="_blank">Download Invoice</a> <br>
-                <a href="{{ invoice.hostedInvoiceUrl }}" target="_blank">Details</a>
+              <ul>
+                <li> <a href="{{ invoice.invoicePdf }}" target="_blank">Download Invoice</a> <br></li>
+                <li> <a href="{{ invoice.hostedInvoiceUrl }}" target="_blank">Details</a></li>
+              </ul>
+             
+             
             </div>
 
           </mat-card-content>
+          <mat-card-actions class="b-t-1 m-t-10 p-y-16 d-flex justify-content-center">
+            <button mat-flat-button class="got-app-btn border-round" routerLink="/">Start Now!</button>
+          </mat-card-actions>
 
         </ng-container>
 

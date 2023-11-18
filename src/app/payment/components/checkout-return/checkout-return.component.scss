@@ -1,9 +1,21 @@
+@import "src/assets/scss/_variables.scss";
+
 .card-container {
     max-width: 400px;
 }
 
 .outer-container {
-    height: calc(100dvh) !important;
+    // height: calc(100dvh) !important;
     padding-bottom: 100px;
     padding-top: 50px;
+}
+
+mat-card {
+    color: #fff !important;
+}
+
+.invoice-details {
+    a {
+        color: $light !important;
+    }
 }
