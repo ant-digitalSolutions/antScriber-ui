@@ -6,6 +6,7 @@ import { ProductsEnum } from 'src/app/common/subscriptions/products.enum';
 import { SubscriptionDetailsComponent } from 'src/app/payment/components/subscription-details/subscription-details.component';
 import { SubscriptionUpdateConfirmationComponent } from 'src/app/payment/components/subscription-update-confirmation/subscription-update-confirmation.component';
 import { SubscriptionResponseDTO } from 'src/app/payment/dtos/subscription-response.dto';
+import { SubscriptionUpdateDTO } from 'src/app/payment/dtos/subscription-update.dto';
 import { PaymentService } from 'src/app/payment/services/payment.service';
 import { UserSubscriptionDto } from 'src/app/user/dto/user-subscription-data.dto';
 import { cardPricing_standard } from '../../data/card-pricing-standard.data';
@@ -80,29 +81,35 @@ export class AppPricingComponent {
   }
 
   updateSubscription(productId: string, priceId: string) {
+    this._paymentService
+    .updateSubscription(productId, priceId)
+    .subscribe((r) => {
+      if(r.success) {
+        this.handleSubscriptionUpdateResponse(r.data!)
+      } else {
+        console.log('empty subscription update');
+      }
+    });
+ 
+   
+  }
+
+  handleSubscriptionUpdateResponse(subscriptionUpdate: SubscriptionUpdateDTO) {
     const dialog = this.dialog.open(SubscriptionUpdateConfirmationComponent, {
       width: '600px',
       maxWidth: '95vw',
       panelClass: 'subscription-details-modal',
+      data: subscriptionUpdate
     });
 
     dialog.afterClosed().subscribe(r => {
       if (r) {
-        // todo: update
-        this._paymentService
-        .updateSubscription(productId, priceId)
-        .subscribe((subscriptionUpdated) => {
-          if(subscriptionUpdated) {
-            console.log('subscription update response value');
-          } else {
-            console.log('empty subscription update');
-          }
-        });
+        
+       
       } else {
         //todo: don't update
       }
     })
-   
   }
 
   yearlyPrice(cardData: IPriceCardData) {

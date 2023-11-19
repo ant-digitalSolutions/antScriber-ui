@@ -5,11 +5,13 @@ import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
 import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 import { ICreateSubscriptionPaymentSessionDto } from '../dtos/create-suscription-payment-session.dto';
 import { InvoiceDto } from '../dtos/invoice.dto';
+import { SubscriptionUpdateDTO } from '../dtos/subscription-update.dto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PaymentService {
+  
   baseUrl = getBaseApiURL();
 
   _isPremiumUser?: boolean;
@@ -40,9 +42,7 @@ export class PaymentService {
 
   getUserSubscriptionType() {
     return this.http
-      .get<IRequestResponse<boolean>>(
-        this.baseUrl + 'user-subscription/type'
-      )
+      .get<IRequestResponse<boolean>>(this.baseUrl + 'user-subscription/type')
       .pipe(
         tap((result) => {
           this._isPremiumUser = result.data;
@@ -95,12 +95,24 @@ export class PaymentService {
   }
 
   listInvoices() {
-    return this.http.get<IRequestResponse<InvoiceDto[]>>(this.baseUrl + 'invoice/list')
+    return this.http.get<IRequestResponse<InvoiceDto[]>>(
+      this.baseUrl + 'invoice/list'
+    );
   }
 
-  updateSubscription(productId: string, priceId: string) {
-    return this.http.post(this.baseUrl + 'user-subscription/update', { productId, priceId }).pipe(tap(() => {
-      console.log("Trigerred subscription canceled event")
-    }));
+  updateSubscription(
+    productId: string,
+    priceId: string
+  ): Observable<IRequestResponse<SubscriptionUpdateDTO>> {
+    return this.http.post<IRequestResponse<SubscriptionUpdateDTO>>(this.baseUrl + 'user-subscription/update', {
+      productId,
+      priceId,
+    });
+  }
+
+  payInvoice(invoiceId: string) {
+    return this.http.post<IRequestResponse<InvoiceDto>>(this.baseUrl + 'invoice/pay', {
+      invoiceId
+    });
   }
 }
