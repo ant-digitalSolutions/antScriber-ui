@@ -104,7 +104,7 @@ export class PaymentService {
     productId: string,
     priceId: string
   ): Observable<IRequestResponse<SubscriptionUpdateDTO>> {
-    return this.http.post<IRequestResponse<SubscriptionUpdateDTO>>(this.baseUrl + 'user-subscription/update', {
+    return this.http.post<IRequestResponse<SubscriptionUpdateDTO>>(this.baseUrl + 'user-subscription/get-subscription-update-data', {
       productId,
       priceId,
     });
