@@ -1,5 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { InvoiceDto } from '../../dtos/invoice.dto';
+import { SubscriptionUpdateDTO } from '../../dtos/subscription-update.dto';
+import { PaymentService } from '../../services/payment.service';
 
 @Component({
   selector: 'app-subscription-update-confirmation',
@@ -12,15 +15,13 @@ export class SubscriptionUpdateConfirmationComponent implements OnInit {
 
   isUpgrade = true;
 
+  isLoading = false;
+
   constructor(
     public dialogRef: MatDialogRef<SubscriptionUpdateConfirmationComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: SubscriptionUpdateDTO,
+    private _paymentService: PaymentService
   ) {
-    this.data = {
-      newSubscriptionName: 'Premium Plan',
-      price: 20.99,
-      chargeAmount: 20.99
-    }
   }
 
   ngOnInit(): void {
@@ -36,10 +37,25 @@ export class SubscriptionUpdateConfirmationComponent implements OnInit {
   }
 
   onConfirm(): void {
-    this.dialogRef.close(true);
+    this.isLoading = true;
+    this._paymentService.payInvoice((this.data.invoice as InvoiceDto).id)
+    .subscribe(r => {
+      if (r.success) {
+        console.log('Invoice paid');
+      }
+    })
   }
 
   onCancel(): void {
     this.dialogRef.close(false);
   }
+
+  public get dataSource() {
+      return [
+        { label: 'New Plan Name', value: 'Flow' },
+        { label: 'Plan Pricing', value: '302' },
+        // { label: 'Plan Pricing', value: `${(this.subscription!.plan!.amount / 100).toFixed(2)} ${this.subscription?.currency?.toUpperCase()}` },
+        // { label: 'Billed', value: this.subscription?.plan?.interval === 'year' ? 'Yearly' : 'Monthly' }
+      ];
+    }
 }
