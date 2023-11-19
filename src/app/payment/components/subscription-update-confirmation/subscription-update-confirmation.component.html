@@ -1,0 +1,31 @@
+<mat-card class="bg-plum shadow-none">
+  <mat-card-header class="justify-content-between m-b-48">
+    <mat-icon class="close-icon text-white" (click)="onCancel()"
+      >close</mat-icon
+    >
+    <mat-card-title>
+      <h3 class="text-white m-0 p-0">{{isUpgrade ? 'Upgrade ' : 'Downgrade '}} Confirmation</h3>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>New Subscription: {{ data.newSubscriptionName }}</p>
+    <p>Price: {{ data.price | currency }}</p>
+    <p>You will be charged: {{ data.chargeAmount | currency }}</p>
+  </mat-card-content>
+  <mat-card-actions class="justify-content-end p-0 m-t-48">
+    <button
+      mat-button
+      (click)="onCancel()"
+      class="border-round text-primary f-w-600 btn-cancel"
+    >
+      {{secondaryBtnText}}
+    </button>
+    <button
+      mat-button
+      (click)="onConfirm()"
+      class="border-round text-primary f-w-600 bg-white"
+    >
+      {{mainBtnText}}
+    </button>
+  </mat-card-actions>
+</mat-card>

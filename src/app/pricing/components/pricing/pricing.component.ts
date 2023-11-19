@@ -4,6 +4,7 @@ import { StripeService } from 'ngx-stripe';
 import { switchMap } from 'rxjs';
 import { ProductsEnum } from 'src/app/common/subscriptions/products.enum';
 import { SubscriptionDetailsComponent } from 'src/app/payment/components/subscription-details/subscription-details.component';
+import { SubscriptionUpdateConfirmationComponent } from 'src/app/payment/components/subscription-update-confirmation/subscription-update-confirmation.component';
 import { SubscriptionResponseDTO } from 'src/app/payment/dtos/subscription-response.dto';
 import { PaymentService } from 'src/app/payment/services/payment.service';
 import { UserSubscriptionDto } from 'src/app/user/dto/user-subscription-data.dto';
@@ -73,8 +74,23 @@ export class AppPricingComponent {
           }
         });
     } else {
-      this._paymentService
-        .updateSubscription(priceData.id, stripePriceId)
+
+     this.updateSubscription(priceData.id, stripePriceId)
+    }
+  }
+
+  updateSubscription(productId: string, priceId: string) {
+    const dialog = this.dialog.open(SubscriptionUpdateConfirmationComponent, {
+      width: '600px',
+      maxWidth: '95vw',
+      panelClass: 'subscription-details-modal',
+    });
+
+    dialog.afterClosed().subscribe(r => {
+      if (r) {
+        // todo: update
+        this._paymentService
+        .updateSubscription(productId, priceId)
         .subscribe((subscriptionUpdated) => {
           if(subscriptionUpdated) {
             console.log('subscription update response value');
@@ -82,7 +98,11 @@ export class AppPricingComponent {
             console.log('empty subscription update');
           }
         });
-    }
+      } else {
+        //todo: don't update
+      }
+    })
+   
   }
 
   yearlyPrice(cardData: IPriceCardData) {
