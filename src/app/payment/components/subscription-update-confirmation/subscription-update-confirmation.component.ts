@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { InvoiceDto } from '../../dtos/invoice.dto';
 import { SubscriptionUpdateDTO } from '../../dtos/subscription-update.dto';
 import { PaymentService } from '../../services/payment.service';
 
@@ -38,10 +37,10 @@ export class SubscriptionUpdateConfirmationComponent implements OnInit {
 
   onConfirm(): void {
     this.isLoading = true;
-    this._paymentService.payInvoice((this.data.invoice as InvoiceDto).id)
+    this._paymentService.updateSubscription(this.data)
     .subscribe(r => {
       if (r.success) {
-        console.log('Invoice paid');
+        console.log('subscription updated');
       }
     })
   }

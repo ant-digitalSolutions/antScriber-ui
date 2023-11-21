@@ -76,13 +76,13 @@ export class AppPricingComponent {
         });
     } else {
 
-     this.updateSubscription(priceData.id, stripePriceId)
+     this.updateSubscription(stripePriceId)
     }
   }
 
-  updateSubscription(productId: string, priceId: string) {
+  updateSubscription(priceId: string) {
     this._paymentService
-    .updateSubscription(productId, priceId)
+    .getSubscriptionUpdateData(priceId)
     .subscribe((r) => {
       if(r.success) {
         this.handleSubscriptionUpdateResponse(r.data!)

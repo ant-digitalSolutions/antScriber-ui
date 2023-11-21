@@ -100,19 +100,15 @@ export class PaymentService {
     );
   }
 
-  updateSubscription(
-    productId: string,
+  getSubscriptionUpdateData(
     priceId: string
   ): Observable<IRequestResponse<SubscriptionUpdateDTO>> {
-    return this.http.post<IRequestResponse<SubscriptionUpdateDTO>>(this.baseUrl + 'user-subscription/get-subscription-update-data', {
-      productId,
-      priceId,
-    });
+    return this.http.get<IRequestResponse<SubscriptionUpdateDTO>>(this.baseUrl + `user-subscription/get-subscription-update-data?priceId=${priceId}`);
   }
 
-  payInvoice(invoiceId: string) {
-    return this.http.post<IRequestResponse<InvoiceDto>>(this.baseUrl + 'invoice/pay', {
-      invoiceId
+  updateSubscription(subscriptionUpdateDTO: SubscriptionUpdateDTO) {
+    return this.http.post<IRequestResponse<InvoiceDto>>(this.baseUrl + 'user-subscription/update-subscription', {
+      subscriptionUpdateDTO
     });
   }
 }
