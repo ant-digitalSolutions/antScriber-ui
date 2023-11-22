@@ -7,8 +7,10 @@
 </div> -->
 <button
   mat-menu-item
-  class="p-y-16 p-x-2"
+  class="p-y-10 p-x-2"
   *ngFor="let notification of notificationsList"
+  [ngClass]="{'un-seen': !notification.isSeen}"
+  (click)="onClick(notification)"
 >
   <div class="d-flex align-items-center noti-inner-container">
     <!-- <img [src]="notification.img" class="rounded-circle" width="48" /> -->
@@ -17,8 +19,9 @@
         {{ notification.title }}
       </h5>
       <span>{{ notification.message }}</span>
+      <span class="noti-date">{{notification.createdAt | timeago}}</span>
     </div>
-    <span class="seen-indicator" *ngIf="notification.isRead"></span>
+    <span class="un-read-indicator" *ngIf="!notification.isRead"></span>
   </div>
 </button>
 <div class="p-y-12 p-x-32">

@@ -13,3 +13,24 @@
   .update-button:hover {
     background-color: #0056b3;
   }
+
+  .notification-btn-inner-container {
+    position: relative;
+
+    .new-notis-indicators {
+      position: absolute;
+      top: -2px;
+      bottom: auto;
+      right: -2px;
+      left: auto;
+      margin: auto;
+      background-color: #aeeaea;
+      border-radius: 50%;
+      height: 6px;
+      width: 6px;
+
+      -webkit-box-shadow: 0px 0px 10px 0px #aeeaea;
+-moz-box-shadow: 0px 0px 10px 0px #aeeaea;
+box-shadow: 0px 0px 10px 0px #aeeaea;
+    }
+  }

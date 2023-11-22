@@ -1,15 +1,26 @@
 .noti-inner-container {
-position: relative;
-    .seen-indicator{
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: auto;
-        left: 0;
-        margin: auto;
-        background-color: #aeeaea;
-        border-radius: 50%;
-        height: 10px;
-        width: 10px;
-    }
+  position: relative;
+  .un-read-indicator {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: auto;
+    left: 0;
+    margin: auto;
+    background-color: #aeeaea;
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+  }
+}
+
+button.un-seen {
+  background-color: #f0f8ff;
+}
+
+.noti-date {
+  display: block;
+  font-size: 12px;
+  margin-top: 1px;
+  color: #5a595f;
 }

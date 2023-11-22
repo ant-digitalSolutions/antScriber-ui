@@ -123,14 +123,19 @@
    mat-icon-button
    [matMenuTriggerFor]="notificationMenu"
    aria-label="Notifications"
+   (click)="onNotificationsClick()"
  >
+ <div class="notification-btn-inner-container">
    <mat-icon
-     matBadge="1"
+     [matBadge]="unseenNotifications"
      matBadgeOverlap="false"
      matBadgeColor="warn"
      class="header-badge color-primary"
+     [matBadgeHidden]="unseenNotifications === 0"
      >notifications</mat-icon
    >
+   <!-- <span class="new-notis-indicators"></span> -->
+  </div>
  </button>
 
   <!-- --------------------------------------------------------------- -->
