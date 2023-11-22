@@ -12,6 +12,7 @@ import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.serv
 import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
 import { LoadingService } from 'src/app/common/services/loading.service';
 import { MaterialModule } from 'src/app/material.module';
+import { NotificationsModule } from 'src/app/notifications/notifications.module';
 import { PaymentService } from 'src/app/payment/services/payment.service';
 import { AppSearchDialogComponent } from '../full/vertical/header/header.component';
 import { BrandingComponent } from '../full/vertical/sidebar/branding.component';
@@ -22,7 +23,7 @@ import { HeaderMenuItemsComponent } from './header-menu-items/header-menu-items.
   templateUrl: './header-main.component.html',
   styleUrls: ['./header-main.component.scss'],
   standalone: true,
-  imports: [RouterModule, NgScrollbarModule, TablerIconsModule, MaterialModule, BrandingComponent, NgFor, NgIf, AppSearchDialogComponent, HeaderMenuItemsComponent],
+  imports: [RouterModule, NgScrollbarModule, TablerIconsModule, MaterialModule, BrandingComponent, NgFor, NgIf, AppSearchDialogComponent, HeaderMenuItemsComponent, NotificationsModule],
 })
 export class HeaderMainComponent {
   @Input() showToggle = true;
