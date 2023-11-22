@@ -1,0 +1,28 @@
+<!-- <div class="row">
+  <div *ngFor="let notification of notificationsList" (click)="onClick(notification)" class="col-12">
+    <h4 class="m-0">{{ notification.title }}</h4>
+    <p >{{ notification.message }}</p>
+    <p  class="date">{{ notification.createdAt | date }}</p>
+  </div>
+</div> -->
+<button
+  mat-menu-item
+  class="p-y-16 p-x-2"
+  *ngFor="let notification of notificationsList"
+>
+  <div class="d-flex align-items-center noti-inner-container">
+    <!-- <img [src]="notification.img" class="rounded-circle" width="48" /> -->
+    <div class="m-l-24">
+      <h5 class="f-s-14 f-w-600 m-0 mat-subtitle-1">
+        {{ notification.title }}
+      </h5>
+      <span>{{ notification.message }}</span>
+    </div>
+    <span class="seen-indicator" *ngIf="notification.isRead"></span>
+  </div>
+</button>
+<div class="p-y-12 p-x-32">
+  <button mat-stroked-button color="primary" class="w-100">
+    See all notifications
+  </button>
+</div>
