@@ -17,7 +17,7 @@ export class NotificationListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.getNotifications()
   }
 
   getNotifications() {
@@ -28,12 +28,16 @@ export class NotificationListComponent implements OnInit {
     });
   }
 
+
   public get notificationsList(): NotificationResponseDTO[] {
     return this._notiService.notifications;
   }
 
   onClick(noti: NotificationResponseDTO) {
     console.log(`Click on Notification with ID: ${noti.id}`);
+    
+    this._notiService.markAsRead(noti.id).subscribe();
+
     if (noti.redirectUrlAfterClick) {
       this._router.navigate([noti.redirectUrlAfterClick]);
     }

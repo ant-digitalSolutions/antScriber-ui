@@ -13,6 +13,7 @@ import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
 import { LoadingService } from 'src/app/common/services/loading.service';
 import { MaterialModule } from 'src/app/material.module';
 import { NotificationsModule } from 'src/app/notifications/notifications.module';
+import { NotificationsService } from 'src/app/notifications/services/notifications.service';
 import { PaymentService } from 'src/app/payment/services/payment.service';
 import { AppSearchDialogComponent } from '../full/vertical/header/header.component';
 import { BrandingComponent } from '../full/vertical/sidebar/branding.component';
@@ -23,7 +24,18 @@ import { HeaderMenuItemsComponent } from './header-menu-items/header-menu-items.
   templateUrl: './header-main.component.html',
   styleUrls: ['./header-main.component.scss'],
   standalone: true,
-  imports: [RouterModule, NgScrollbarModule, TablerIconsModule, MaterialModule, BrandingComponent, NgFor, NgIf, AppSearchDialogComponent, HeaderMenuItemsComponent, NotificationsModule],
+  imports: [
+    RouterModule,
+    NgScrollbarModule,
+    TablerIconsModule,
+    MaterialModule,
+    BrandingComponent,
+    NgFor,
+    NgIf,
+    AppSearchDialogComponent,
+    HeaderMenuItemsComponent,
+    NotificationsModule,
+  ],
 })
 export class HeaderMainComponent {
   @Input() showToggle = true;
@@ -34,13 +46,15 @@ export class HeaderMainComponent {
 
   permanentAdfluensProductLink: string;
 
-  componentDestroyed$: Subject<boolean> = new Subject()
+  componentDestroyed$: Subject<boolean> = new Subject();
 
   blogProjects: BlogProjectDetailsDto[] = [];
 
   selectedBlogProjectId: number;
 
   showFiller = false;
+
+  unseenNotifications = 0;
 
   selectedLanguage: any = {
     language: 'English',
@@ -82,32 +96,61 @@ export class HeaderMainComponent {
     private router: Router,
     private blogProjectService: BlogProjectsService,
     private _loadingService: LoadingService,
-    private paymentService: PaymentService
+    private paymentService: PaymentService,
+    private _notificationsService: NotificationsService
   ) {
     translate.setDefaultLang('en');
   }
 
   ngOnInit(): void {
-    this.setListeners()
+    this.setListeners();
     this.retrieveUserSubscriptionType();
+    this.getUnSeenNotifications();
   }
 
   ngOnDestroy() {
-    this.componentDestroyed$.next(true)
-    this.componentDestroyed$.complete()
+    this.componentDestroyed$.next(true);
+    this.componentDestroyed$.complete();
+  }
+
+  getUnSeenNotifications() {
+    this._notificationsService.getUnseenNotificationCount().subscribe((r) => {
+      if (r.success) {
+        this.unseenNotifications = r.data!;
+      }
+    });
+  }
+
+  /**
+   *
+   *
+   * @memberof HeaderMainComponent
+   */
+  onNotificationsClick() {
+    this._notificationsService.markMultipleAsSeen().subscribe(r => {
+      if (r.success) {
+        this.unseenNotifications = 0;
+      }
+    });
   }
 
   setListeners() {
-    this.blogProjectService.blogProjects$.pipe(takeUntil(this.componentDestroyed$)).subscribe(projects => {
-      this.blogProjects = projects;
-      if (!this.selectedBlogProjectId && projects.length > 0) {
-        this.selectedBlogProjectId = this.blogProjects.filter(p => p.isDefaultProject)[0].id;
-        this.blogProjectService.selectedProjectId = this.selectedBlogProjectId;
-      }
-    });
+    this.blogProjectService.blogProjects$
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe((projects) => {
+        this.blogProjects = projects;
+        if (!this.selectedBlogProjectId && projects.length > 0) {
+          this.selectedBlogProjectId = this.blogProjects.filter(
+            (p) => p.isDefaultProject
+          )[0].id;
+          this.blogProjectService.selectedProjectId =
+            this.selectedBlogProjectId;
+        }
+      });
 
-    this._loadingService.loadingEvent$.pipe(takeUntil(this.componentDestroyed$))
-      .subscribe(isLoading => this.isLoading = isLoading)
+    this._loadingService.loadingEvent$
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe((isLoading) => (this.isLoading = isLoading));
   }
 
   openDialog() {
@@ -119,23 +162,24 @@ export class HeaderMainComponent {
   }
 
   retrieveAdfluencePermanentProductLink() {
-    this.paymentService.getAdfluentsProductPermanentLink()
-      .subscribe((response: IRequestResponse<string>) => {
+    this.paymentService.getAdfluentsProductPermanentLink().subscribe(
+      (response: IRequestResponse<string>) => {
         if (response.success) {
           this.permanentAdfluensProductLink = response.data || '';
         }
-      }, (error) => { console.log(error); }
-      );
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   retrieveUserSubscriptionType() {
-    this.paymentService.getUserSubscriptionType().subscribe(
-      (response) => {
-        if (response) {
-          this.userPaysSubscription = response.data as boolean;
-        }
+    this.paymentService.getUserSubscriptionType().subscribe((response) => {
+      if (response) {
+        this.userPaysSubscription = response.data as boolean;
       }
-    );
+    });
   }
 
   changeLanguage(lang: any): void {
@@ -145,7 +189,7 @@ export class HeaderMainComponent {
 
   signOut() {
     this.authService.logout();
-    this.router.navigate(['/auth/login'])
+    this.router.navigate(['/auth/login']);
   }
 
   selectCurrentProject(selectedProject: number) {
