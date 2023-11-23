@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable, interval, switchMap, tap } from 'rxjs';
 import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
 import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 import { NotificationResponseDTO } from '../dtos/response-notification.dto';
@@ -11,7 +11,22 @@ export class NotificationsService {
 
   _userNotifications: NotificationResponseDTO[];
 
-  constructor(private _http: HttpClient) {}
+  private _unseenNotifications: number = 0;
+
+  constructor(private _http: HttpClient) {
+    this.checkForUnseenNotificationsRunner()
+  }
+
+  // every 30 seconds, request the unseen notifications
+  checkForUnseenNotificationsRunner() {
+    interval(30000) 
+    .pipe(
+      switchMap(() => this.getUnseenNotificationCount())
+    )
+    .subscribe({
+      complete: () => console.info('Got notification count') 
+  })
+  }
 
   getAll(): Observable<IRequestResponse<NotificationResponseDTO[]>> {
     return this._http
@@ -77,10 +92,27 @@ export class NotificationsService {
   getUnseenNotificationCount(): Observable<IRequestResponse<number>> {
     return this._http.get<IRequestResponse<number>>(
       this.baseUrl + `unseen-count`
-    );
+    )
+    .pipe(tap(r => {
+      if (r.success) {
+        this._unseenNotifications = r.data!;
+      }
+    }));
+  }
+
+  resetNotificationCount() {
+    this._unseenNotifications = 0;
   }
 
   public get notifications(): NotificationResponseDTO[] {
     return this._userNotifications;
   }
+
+  
+  public get unseenNotifications() : number {
+    return this._unseenNotifications
+  }
+
+  
+  
 }

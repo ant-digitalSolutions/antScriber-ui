@@ -22,9 +22,8 @@ export class NotificationListComponent implements OnInit {
 
   getNotifications() {
     this.isLoading = true;
-    this._notiService.getAll().subscribe((r) => {
+    this._notiService.getAll().subscribe(() => {
       this.isLoading = false;
-      console.log(`Notifications: ${JSON.stringify(r.data)}`);
     });
   }
 

@@ -5,27 +5,27 @@
     <p  class="date">{{ notification.createdAt | date }}</p>
   </div>
 </div> -->
-<button
-  mat-menu-item
-  class="p-y-10 p-x-2"
-  *ngFor="let notification of notificationsList"
-  [ngClass]="{'un-seen': !notification.isSeen}"
-  (click)="onClick(notification)"
->
-  <div class="d-flex align-items-center noti-inner-container">
-    <!-- <img [src]="notification.img" class="rounded-circle" width="48" /> -->
-    <div class="m-l-24">
-      <h5 class="f-s-14 f-w-600 m-0 mat-subtitle-1">
-        {{ notification.title }}
-      </h5>
-      <span>{{ notification.message }}</span>
-      <span class="noti-date">{{notification.createdAt | timeago}}</span>
+  <div class="notifications-outer-container">
+    <button
+      mat-menu-item
+      class="p-y-10 p-x-2"
+      *ngFor="let notification of notificationsList"
+      [ngClass]="{ 'un-seen': !notification.isSeen }"
+      (click)="onClick(notification)"
+    >
+      <div class="d-flex align-items-center noti-inner-container p-b-0">
+        <!-- <img [src]="notification.img" class="rounded-circle" width="48" /> -->
+        <div class="m-l-24">
+          <h5 class="f-s-14 f-w-600 m-0 mat-subtitle-1">
+            {{ notification.title }}
+          </h5>
+          <span>{{ notification.message }}</span>
+          <span class="noti-date">{{ notification.createdAt | timeago }}</span>
+        </div>
+        <span class="un-read-indicator" *ngIf="!notification.isRead"></span>
+      </div>
+    </button>
+    <div class="p-y-12 p-x-32 p-b-0">
+      <button mat-flat-button class="w-100 text-underline">Load More</button>
     </div>
-    <span class="un-read-indicator" *ngIf="!notification.isRead"></span>
   </div>
-</button>
-<div class="p-y-12 p-x-32">
-  <button mat-stroked-button color="primary" class="w-100">
-    See all notifications
-  </button>
-</div>
