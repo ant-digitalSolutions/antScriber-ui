@@ -25,7 +25,7 @@
         <span class="un-read-indicator" *ngIf="!notification.isRead"></span>
       </div>
     </button>
-    <div class="p-y-12 p-x-32 p-b-0">
-      <button mat-flat-button class="w-100 text-underline">Load More</button>
+    <div class="p-y-12 p-x-32 p-b-0" *ngIf="showLoadBtn">
+      <button mat-flat-button class="w-100 text-underline" (click)="loadMoreNotifications($event)">Load More</button>
     </div>
   </div>
