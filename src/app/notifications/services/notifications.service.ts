@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, interval, switchMap, tap } from 'rxjs';
 import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
@@ -9,32 +9,47 @@ import { NotificationResponseDTO } from '../dtos/response-notification.dto';
 export class NotificationsService {
   baseUrl = getBaseApiURL() + 'notifications/';
 
-  _userNotifications: NotificationResponseDTO[];
+  _userNotifications: NotificationResponseDTO[] = [];
 
   private _unseenNotifications: number = 0;
 
+  // the amount of notifications to get in each request
+  _amountOfNotificationToGet = 5;
+
+  // for the pagination of the notifications
+  _pageIndex = 0;
+
+  // indicate if the user can load more notifications from the server.
+  _canLoadMoreNotifications = true;
+
   constructor(private _http: HttpClient) {
-    this.checkForUnseenNotificationsRunner()
+    this.checkForUnseenNotificationsRunner();
   }
 
   // every 30 seconds, request the unseen notifications
   checkForUnseenNotificationsRunner() {
-    interval(30000) 
-    .pipe(
-      switchMap(() => this.getUnseenNotificationCount())
-    )
-    .subscribe({
-      complete: () => console.info('Got notification count') 
-  })
+    interval(30000)
+      .pipe(switchMap(() => this.getUnseenNotificationCount()))
+      .subscribe({
+        complete: () => console.info('Got notification count'),
+      });
   }
 
-  getAll(): Observable<IRequestResponse<NotificationResponseDTO[]>> {
+  listNotifications() {
+    let params = new HttpParams()
+      .set('amountOfNotifications', this._amountOfNotificationToGet)
+      .set('pageIndex', this._pageIndex++);
+
     return this._http
-      .get<IRequestResponse<NotificationResponseDTO[]>>(this.baseUrl + 'list')
+      .get<IRequestResponse<NotificationResponseDTO[]>>(this.baseUrl + 'list', {
+        params,
+      })
       .pipe(
         tap((r) => {
           if (r.success) {
-            this._userNotifications = r.data!;
+            this._userNotifications.push(...r.data!);
+          } else {
+            this._canLoadMoreNotifications = false;
           }
         })
       );
@@ -90,14 +105,15 @@ export class NotificationsService {
    * @memberof NotificationsService
    */
   getUnseenNotificationCount(): Observable<IRequestResponse<number>> {
-    return this._http.get<IRequestResponse<number>>(
-      this.baseUrl + `unseen-count`
-    )
-    .pipe(tap(r => {
-      if (r.success) {
-        this._unseenNotifications = r.data!;
-      }
-    }));
+    return this._http
+      .get<IRequestResponse<number>>(this.baseUrl + `unseen-count`)
+      .pipe(
+        tap((r) => {
+          if (r.success) {
+            this._unseenNotifications = r.data!;
+          }
+        })
+      );
   }
 
   resetNotificationCount() {
@@ -108,11 +124,13 @@ export class NotificationsService {
     return this._userNotifications;
   }
 
-  
-  public get unseenNotifications() : number {
-    return this._unseenNotifications
+  public get unseenNotifications(): number {
+    return this._unseenNotifications;
   }
 
   
+  public get canLoadMoreNotifications() : boolean {
+    return this._canLoadMoreNotifications;
+  }
   
 }

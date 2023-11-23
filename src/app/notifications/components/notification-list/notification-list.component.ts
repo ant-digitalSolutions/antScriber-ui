@@ -17,16 +17,15 @@ export class NotificationListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getNotifications()
+    this.getNotifications();
   }
 
   getNotifications() {
     this.isLoading = true;
-    this._notiService.getAll().subscribe(() => {
+    this._notiService.listNotifications().subscribe(() => {
       this.isLoading = false;
     });
   }
-
 
   public get notificationsList(): NotificationResponseDTO[] {
     return this._notiService.notifications;
@@ -34,11 +33,22 @@ export class NotificationListComponent implements OnInit {
 
   onClick(noti: NotificationResponseDTO) {
     console.log(`Click on Notification with ID: ${noti.id}`);
-    
+
     this._notiService.markAsRead(noti.id).subscribe();
 
     if (noti.redirectUrlAfterClick) {
       this._router.navigate([noti.redirectUrlAfterClick]);
     }
   }
+
+  loadMoreNotifications($event: MouseEvent) {
+    $event.stopPropagation();
+    this.getNotifications();
+  }
+
+  
+  public get showLoadBtn() : boolean {
+    return this._notiService.canLoadMoreNotifications;
+  }
+  
 }
