@@ -11,6 +11,7 @@ import { PaymentService } from 'src/app/payment/services/payment.service';
 import { UserSubscriptionDto } from 'src/app/user/dto/user-subscription-data.dto';
 import { cardPricing_standard } from '../../data/card-pricing-standard.data';
 import { IPriceCardData } from '../../dto/pricing-card-data.interface';
+import { DialogService } from 'src/app/dialogs/dialog.service';
 
 @Component({
   selector: 'app-pricing',
@@ -36,7 +37,7 @@ export class AppPricingComponent {
     private _paymentService: PaymentService,
     private stripeService: StripeService,
     private dialog: MatDialog,
-    
+    private dialogService: DialogService,
   ) {}
 
   ngOnInit(): void {
@@ -102,10 +103,13 @@ export class AppPricingComponent {
       data: subscriptionUpdate
     });
 
-    dialog.afterClosed().subscribe(r => {
-      if (r) {
-        
-       
+    dialog.afterClosed().subscribe(subscriptionUpdated => {
+      if (subscriptionUpdated) {
+        this.dialogService.openMessageDialog({
+          message: 'Your subscription was successfully updated.',
+          okBtnText: 'Ok'
+        });
+        this.checkCurrentSubscription();
       } else {
         //todo: don't update
       }

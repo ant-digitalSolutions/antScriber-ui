@@ -12,8 +12,8 @@ import { PaymentService } from '../../services/payment.service';
   styleUrls: ['./subscription-update-confirmation.component.scss'],
 })
 export class SubscriptionUpdateConfirmationComponent implements OnInit {
-  mainBtnText: 'Confirm' | 'Cancel';
-  secondaryBtnText: 'Confirm' | 'Cancel';
+  mainBtnText: 'Confirm' | 'Cancel' = 'Confirm';
+  secondaryBtnText: 'Confirm' | 'Cancel' = 'Cancel';
 
   isUpgrade = true;
 
@@ -22,7 +22,7 @@ export class SubscriptionUpdateConfirmationComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<SubscriptionUpdateConfirmationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: SubscriptionUpdateDTO,
-    private _paymentService: PaymentService
+    private _paymentService: PaymentService,
   ) {}
 
   ngOnInit(): void {
@@ -35,22 +35,13 @@ export class SubscriptionUpdateConfirmationComponent implements OnInit {
       this.data.currency = 'USD';
       this.data.moneyBalance = 240;
     }
-
-    if (this.isUpgrade) {
-      // todo: check if is upgrade
-      this.mainBtnText = 'Confirm';
-      this.secondaryBtnText = 'Cancel';
-    } else {
-      this.mainBtnText = 'Cancel';
-      this.secondaryBtnText = 'Confirm';
-    }
   }
 
   onConfirm(): void {
     this.isLoading = true;
     this._paymentService.updateSubscription(this.data).subscribe((r) => {
       if (r.success) {
-        console.log('subscription updated');
+        this.dialogRef.close(true);
       }
     });
   }
