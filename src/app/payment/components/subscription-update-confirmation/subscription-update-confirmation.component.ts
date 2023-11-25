@@ -29,11 +29,11 @@ export class SubscriptionUpdateConfirmationComponent implements OnInit {
     this.isUpgrade = this.data.status === SubscriptionUpdateType.Upgrade;
 
     if (this.data.newPlanName || this.data.newPlanName == '') {
-      this.data.newPlanName = 'Flow';
-      this.data.newPlanCost = 45;
-      this.data.toPayNow = 34;
-      this.data.currency = 'USD';
-      this.data.moneyBalance = 240;
+      this.data.newPlanName = this.data.newPlanName;
+      this.data.newPlanCost = this.data.newPlanCost;
+      this.data.toPayNow = this.data.toPayNow;
+      this.data.currency = this.data.currency;
+      this.data.moneyBalance = this.data.moneyBalance;
     }
   }
 
@@ -59,7 +59,7 @@ export class SubscriptionUpdateConfirmationComponent implements OnInit {
       },
       {
         label: 'Billing Interval',
-        value: this.data.billed === 'yearly' ? 'Yearly' : 'Monthly',
+        value: this.data.newPlanBilled === 'yearly' ? 'Yearly' : 'Monthly',
       },
 
       // { label: 'Plan Pricing', value: `${(this.subscription!.plan!.amount / 100).toFixed(2)} ${this.subscription?.currency?.toUpperCase()}` },
