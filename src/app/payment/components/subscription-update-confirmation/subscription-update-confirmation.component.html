@@ -73,14 +73,16 @@
     <button
       mat-button
       (click)="onCancel()"
-      class="border-round text-primary f-w-600 btn-cancel"
+      class="border-round text-primary f-w-600"
+      [ngClass]="{'btn-cancel': isUpgrade, 'bg-white': !isUpgrade  }"
     >
       {{ secondaryBtnText }}
     </button>
     <button
       mat-button
       (click)="onConfirm()"
-      class="border-round text-primary f-w-600 bg-white"
+      class="border-round text-primary f-w-600"
+      [ngClass]="{'btn-cancel': !isUpgrade, 'bg-white': isUpgrade  }"
     >
       {{ mainBtnText }}
     </button>
