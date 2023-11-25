@@ -11,15 +11,15 @@ export class SubscriptionUpdateDTO {
   subscriptionId: string;
   currentProductId: string;
   customerId: string;
-  priceId:string;
-  amount: number;
-  errorMessage: string;
 
+  newPriceId:string;
   newPlanName: string;
   newPlanCost: number;
-  billed: 'yearly' | 'monthly';
+  newPlanBilled: 'yearly' | 'monthly';
+  
+  currency: string;
 
-
+ proration: number;
   /**
    * Indicates the amount of money the user has to pay.
    * This value should be less than the plan pricing if `moneyBalance` > 0
@@ -39,6 +39,5 @@ export class SubscriptionUpdateDTO {
    */
   moneyBalance: number;
 
-  currency: string = 'USD';
+  errorMessage: string;
 }
-
