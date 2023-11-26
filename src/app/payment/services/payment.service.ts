@@ -18,28 +18,6 @@ export class PaymentService {
 
   constructor(private http: HttpClient) {}
 
-  getAdfluentsProductPermanentLink(): Observable<IRequestResponse<string>> {
-    let params = new HttpParams();
-    params = params.append(
-      'successURL',
-      window.location.protocol +
-        '//' +
-        window.location.host +
-        '/settings/billing/checkout-return?session_id={CHECKOUT_SESSION_ID}'
-    );
-    params = params.append(
-      'cancelURL',
-      window.location.protocol +
-        '//' +
-        window.location.host +
-        '/settings/billing/checkout-return?session_id={CHECKOUT_SESSION_ID}'
-    );
-    return this.http.get<IRequestResponse<string>>(
-      this.baseUrl + 'payment/create-product-permanent-link',
-      { params: params }
-    );
-  }
-
   getUserSubscriptionType() {
     return this.http
       .get<IRequestResponse<boolean>>(this.baseUrl + 'user-subscription/type')
@@ -79,7 +57,7 @@ export class PaymentService {
       prodPriceId,
     };
     return this.http.post<IRequestResponse<any>>(
-      this.baseUrl + 'payment/create-subscription-payment-session',
+      this.baseUrl + 'checkout/create-subscription-payment-session',
       data
     );
   }

@@ -8,7 +8,6 @@ import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { BlogProjectDetailsDto } from 'src/app/blogger/dto/blog-project-details.dto';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
-import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
 import { LoadingService } from 'src/app/common/services/loading.service';
 import { MaterialModule } from 'src/app/material.module';
 import { NotificationsModule } from 'src/app/notifications/notifications.module';
@@ -115,19 +114,6 @@ export class HeaderMainComponent {
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
-  }
-
-  retrieveAdfluencePermanentProductLink() {
-    this.paymentService.getAdfluentsProductPermanentLink().subscribe(
-      (response: IRequestResponse<string>) => {
-        if (response.success) {
-          this.permanentAdfluensProductLink = response.data || '';
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
   }
 
   retrieveUserSubscriptionType() {
