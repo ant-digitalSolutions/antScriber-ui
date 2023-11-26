@@ -37,7 +37,6 @@
         <tr mat-row *matRowDef="let row; columns: ['label', 'value']"></tr>
       </table>
 
-      <ng-container *ngIf="hasPositiveBalance">
         <div class="payment-details m-t-20">
         <h4 class="text-white">Payment Details</h4>
 
@@ -66,7 +65,6 @@
       </table>
       </div>
 
-      </ng-container>
     </mat-card-content>
   </mat-card-content>
   <mat-card-actions class="justify-content-end p-0 m-t-48">
