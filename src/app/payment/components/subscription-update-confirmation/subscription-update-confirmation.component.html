@@ -71,8 +71,9 @@
     <button
       mat-button
       (click)="onCancel()"
-      class="border-round text-primary f-w-600"
+      class="border-round text-primary f-w-600 m-r-10"
       [ngClass]="{'btn-cancel': isUpgrade, 'bg-white': !isUpgrade  }"
+      [disabled]="isLoading"
     >
       {{ secondaryBtnText }}
     </button>
@@ -81,8 +82,17 @@
       (click)="onConfirm()"
       class="border-round text-primary f-w-600"
       [ngClass]="{'btn-cancel': !isUpgrade, 'bg-white': isUpgrade  }"
+      [disabled]="isLoading"
+      cdkFocusInitial
     >
       {{ mainBtnText }}
     </button>
   </mat-card-actions>
 </mat-card>
+<ngx-spinner
+type="ball-scale-multiple"
+size="large"
+[fullScreen]="false"
+>
+<p class="loading-text p-t-32 text-white">Updating Subscription</p>
+</ngx-spinner>
