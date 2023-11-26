@@ -6,7 +6,10 @@ import { ProductsEnum } from 'src/app/common/subscriptions/products.enum';
 import { SubscriptionDetailsComponent } from 'src/app/payment/components/subscription-details/subscription-details.component';
 import { SubscriptionUpdateConfirmationComponent } from 'src/app/payment/components/subscription-update-confirmation/subscription-update-confirmation.component';
 import { SubscriptionResponseDTO } from 'src/app/payment/dtos/subscription-response.dto';
-import { SubscriptionUpdateDTO } from 'src/app/payment/dtos/subscription-update.dto';
+import {
+  SubscriptionUpdateDTO,
+  SubscriptionUpdateType,
+} from 'src/app/payment/dtos/subscription-update.dto';
 import { PaymentService } from 'src/app/payment/services/payment.service';
 import { UserSubscriptionDto } from 'src/app/user/dto/user-subscription-data.dto';
 import { cardPricing_standard } from '../../data/card-pricing-standard.data';
@@ -37,7 +40,7 @@ export class AppPricingComponent {
     private _paymentService: PaymentService,
     private stripeService: StripeService,
     private dialog: MatDialog,
-    private dialogService: DialogService,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit(): void {
@@ -45,11 +48,11 @@ export class AppPricingComponent {
   }
 
   checkCurrentSubscription() {
-    this._paymentService.getSubscriptionInfo().subscribe(r => {
+    this._paymentService.getSubscriptionInfo().subscribe((r) => {
       if (r.success) {
         this.handleUserSubscriptionData(r.data);
       }
-    })
+    });
   }
 
   checkout(priceData: IPriceCardData) {
@@ -57,7 +60,10 @@ export class AppPricingComponent {
       ? priceData?.stripeYearlyPriceId
       : priceData?.stripeMonthlyPriceId;
 
-    if (!this.userCurrentSubscription || this.userCurrentSubscription.mainSubscription === ProductsEnum.FREE) {
+    if (
+      !this.userCurrentSubscription ||
+      this.userCurrentSubscription.mainSubscription === ProductsEnum.FREE
+    ) {
       this._paymentService
         .generatePaymentSession(stripePriceId!)
         .pipe(
@@ -76,23 +82,23 @@ export class AppPricingComponent {
           }
         });
     } else {
-
-     this.updateSubscription(stripePriceId)
+      const updateType: SubscriptionUpdateType =
+        this.checkIfShouldUpgrade(priceData) === 1
+          ? SubscriptionUpdateType.Upgrade
+          : SubscriptionUpdateType.Downgrade;
+      this.updateSubscription(stripePriceId, updateType);
     }
   }
 
-  updateSubscription(priceId: string) {
-    this._paymentService
-    .getSubscriptionUpdateData(priceId)
-    .subscribe((r) => {
-      if(r.success) {
-        this.handleSubscriptionUpdateResponse(r.data!)
+  updateSubscription(priceId: string, updateType: SubscriptionUpdateType) {
+    this._paymentService.getSubscriptionUpdateData(priceId).subscribe((r) => {
+      if (r.success) {
+        r.data!.status = updateType;
+        this.handleSubscriptionUpdateResponse(r.data!);
       } else {
         console.log('empty subscription update');
       }
     });
- 
-   
   }
 
   handleSubscriptionUpdateResponse(subscriptionUpdate: SubscriptionUpdateDTO) {
@@ -100,20 +106,20 @@ export class AppPricingComponent {
       width: '600px',
       maxWidth: '95vw',
       panelClass: 'subscription-details-modal',
-      data: subscriptionUpdate
+      data: subscriptionUpdate,
     });
 
-    dialog.afterClosed().subscribe(subscriptionUpdated => {
+    dialog.afterClosed().subscribe((subscriptionUpdated) => {
       if (subscriptionUpdated) {
         this.dialogService.openMessageDialog({
           message: 'Your subscription was successfully updated.',
-          okBtnText: 'Ok'
+          okBtnText: 'Ok',
         });
         this.checkCurrentSubscription();
       } else {
         //todo: don't update
       }
-    })
+    });
   }
 
   yearlyPrice(cardData: IPriceCardData) {
@@ -183,8 +189,8 @@ export class AppPricingComponent {
 
     this.userCurrentSubscription = {
       mainSubscription: subscription.plan?.product as any,
-      stripePriceId: subscription.plan?.id!
-    }
+      stripePriceId: subscription.plan?.id!,
+    };
 
     this.currentSubscriptionCardIndex = this.pricecards.find(
       (c) => c.id === this.userCurrentSubscription.mainSubscription
