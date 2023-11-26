@@ -1,3 +1,4 @@
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -14,7 +15,7 @@ import { SubscriptionUpdateConfirmationComponent } from './components/subscripti
 
 @NgModule({
   declarations: [SubscriptionCheckoutComponent, CheckoutReturnComponent, ListPaymentsComponent, SubscriptionDetailsComponent, CancelSubscriptionConfirmationComponent, SubscriptionUpdateConfirmationComponent],
-  imports: [CommonModule, RouterModule.forChild(PaymentsModuleRoutes), SharedModule, AnalyticsModule],
+  imports: [CommonModule, RouterModule.forChild(PaymentsModuleRoutes), SharedModule, AnalyticsModule, NgxSpinnerModule],
   providers: [PaymentService],
 })
 export class PaymentModule {}
