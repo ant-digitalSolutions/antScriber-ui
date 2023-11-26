@@ -19,6 +19,8 @@ export class SubscriptionUpdateConfirmationComponent implements OnInit {
 
   isLoading = false;
 
+  _dataSourcePaymentDetails: {label: string, value: string;}[];
+
   constructor(
     public dialogRef: MatDialogRef<SubscriptionUpdateConfirmationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: SubscriptionUpdateDTO,
@@ -28,13 +30,7 @@ export class SubscriptionUpdateConfirmationComponent implements OnInit {
   ngOnInit(): void {
     this.isUpgrade = this.data.status === SubscriptionUpdateType.Upgrade;
 
-    if (this.data.newPlanName || this.data.newPlanName == '') {
-      this.data.newPlanName = this.data.newPlanName;
-      this.data.newPlanCost = this.data.newPlanCost;
-      this.data.toPayNow = this.data.toPayNow;
-      this.data.currency = this.data.currency;
-      this.data.moneyBalance = this.data.moneyBalance;
-    }
+    this.setPaymentDetails();
   }
 
   onConfirm(): void {
@@ -48,6 +44,26 @@ export class SubscriptionUpdateConfirmationComponent implements OnInit {
 
   onCancel(): void {
     this.dialogRef.close(false);
+  }
+
+  private setPaymentDetails() {
+    this._dataSourcePaymentDetails = [];
+    
+    if (this.data.moneyBalance < 0) {
+      this._dataSourcePaymentDetails.push( {
+        label: 'Your Balance',
+        value: `$${this.data.moneyBalance * -1 / 100} ${this.data.currency}`,
+      },)
+    }
+
+    this._dataSourcePaymentDetails.push(
+      {
+        label: 'To Pay Now',
+        value: `$${this.data.toPayNow} ${this.data.currency}`,
+      },
+    );
+
+   
   }
 
   public get dataSource() {
@@ -67,17 +83,7 @@ export class SubscriptionUpdateConfirmationComponent implements OnInit {
   }
 
   public get dataSourcePaymentDetails() {
-    return [
-      {
-        label: 'Your Balance',
-        value: `$${this.data.moneyBalance} ${this.data.currency}`,
-      },
-      {
-        label: 'To Pay Now',
-        value: `$${this.data.toPayNow} ${this.data.currency}`,
-      },
-      // { label: 'Plan Pricing', value: `${(this.subscription!.plan!.amount / 100).toFixed(2)} ${this.subscription?.currency?.toUpperCase()}` },
-    ];
+    return this._dataSourcePaymentDetails;
   }
 
   public get hasPositiveBalance(): boolean {
