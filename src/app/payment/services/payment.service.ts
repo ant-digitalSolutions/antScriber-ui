@@ -67,7 +67,7 @@ export class PaymentService {
     params = params.append('sessionId', sessionId);
 
     return this.http.get<IRequestResponse<any>>(
-      this.baseUrl + 'payment/checkout-session-result',
+      this.baseUrl + 'checkout/checkout-session-result',
       { params }
     );
   }
