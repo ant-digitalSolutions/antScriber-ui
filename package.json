@@ -47,6 +47,7 @@
     "ngx-pagination": "^6.0.1",
     "ngx-permissions": "^13.0.1",
     "ngx-scrollbar": "^11.0.0",
+    "ngx-spinner": "^16.0.2",
     "ngx-stripe": "^17.0.0",
     "ngx-timeago": "^3.0.0",
     "ngx-toastr": "^17.0.2",

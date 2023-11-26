@@ -28,20 +28,18 @@ import { RouterModule } from '@angular/router';
 import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
 import { BreadcrumbModule } from 'xng-breadcrumb';
 
-import { JwtModule } from "@auth0/angular-jwt";
+import { JwtModule } from '@auth0/angular-jwt';
 import { NgxStripeModule } from 'ngx-stripe';
 import { WalkthroughToursModule } from './walkthrough-tours/walkthrough-tours.module';
+
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 export function HttpLoaderFactory(http: HttpClient): any {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-
 @NgModule({
-  declarations: [
-    AppComponent,
-    FilterPipe,
-  ],
+  declarations: [AppComponent, FilterPipe],
   imports: [
     RouterModule,
     BrowserModule,
@@ -50,7 +48,11 @@ export function HttpLoaderFactory(http: HttpClient): any {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ['devbrain.adfluens.io', 'brain.adfluens.io', 'localhost:3000'],
+        allowedDomains: [
+          'devbrain.adfluens.io',
+          'brain.adfluens.io',
+          'localhost:3000',
+        ],
         // disallowedRoutes: ["http://example.com/examplebadroute/"],
       },
     }),
@@ -73,19 +75,22 @@ export function HttpLoaderFactory(http: HttpClient): any {
     }),
     BreadcrumbModule,
     TimeagoModule.forRoot(),
-    NgxGoogleAnalyticsModule.forRoot(window.location.href.indexOf('app.') >= 0 ? 'G-XQVZWP9SRY' : 'G-1C8PD3RDD5'),
+    NgxGoogleAnalyticsModule.forRoot(
+      window.location.href.indexOf('app.') >= 0
+        ? 'G-XQVZWP9SRY'
+        : 'G-1C8PD3RDD5'
+    ),
     WalkthroughToursModule,
-    NgxStripeModule.forRoot('pk_test_51MdfuXFXqwjYWAm8OYTaPXU4Y04Cg5WYUxGNciIDXX1yC8WzFk1uV49D1yHIcJE8BwCZlCSDkaHt3plpEzMfbNzo00o6k2JINi'),
-
-
+    NgxStripeModule.forRoot(
+      'pk_test_51MdfuXFXqwjYWAm8OYTaPXU4Y04Cg5WYUxGNciIDXX1yC8WzFk1uV49D1yHIcJE8BwCZlCSDkaHt3plpEzMfbNzo00o6k2JINi'
+    ),
+    NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
   ],
   exports: [TablerIconsModule],
   bootstrap: [AppComponent],
-  providers: [
-    httpInterceptorProviders
-  ]
+  providers: [httpInterceptorProviders],
 })
-export class AppModule { }
+export class AppModule {}
 
 function tokenGetter() {
   return localStorage.getItem('id_token');
