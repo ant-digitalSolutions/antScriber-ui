@@ -115,3 +115,22 @@ $walkthrough-user-initialization-text-secondary: #e4a1cf;
 .h-100dvh-50 {
   height: calc(100dvh - 50px);
 }
+
+*::-webkit-scrollbar {
+  width: 8px; // Adjust scrollbar width
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent; // Track background
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #888; // Scrollbar handle color
+  border-radius: 4px; // Roundness of the scrollbar handle
+  height: 10px !important;
+  max-height: 10px !important;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #555; // Scrollbar handle color when hovered
+}
