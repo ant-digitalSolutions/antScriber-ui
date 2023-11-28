@@ -55,17 +55,22 @@ export class SubscriptionUpdateConfirmationComponent implements OnInit {
   private setPaymentDetails() {
     this._dataSourcePaymentDetails = [];
 
-    if (this.data.moneyBalance < 0) {
+    if (this.data.startingBalance < 0) {
       this._dataSourcePaymentDetails.push( {
-        label: 'Your Balance',
-        value: `$${this.data.moneyBalance * -1 / 100} ${this.data.currency}`,
+        label: 'Available Balance',
+        value: `-$${this.data.startingBalance * -1} ${this.data.currency}`,
       },)
     }
 
+    this.dataSourcePaymentDetails.push({
+      label: this.data.currentSubscriptionCostingDetails.description,
+      value: `-$${this.data.currentSubscriptionCostingDetails.amount * -1} ${this.data.currency}`
+    })
+
     this._dataSourcePaymentDetails.push(
       {
-        label: 'To Pay Now',
-        value: `$${this.data.toPayNow} ${this.data.currency}`,
+        label: '<strong>To Pay Now</strong>',
+        value: `<strong>$${this.data.toPayNow} ${this.data.currency}</strong>`,
       },
     );
 
@@ -74,15 +79,12 @@ export class SubscriptionUpdateConfirmationComponent implements OnInit {
 
   public get dataSource() {
     return [
-      { label: 'New Plan Name', value: this.data.newPlanName },
+      { label: 'Name', value: this.data.newPlanName },
       {
-        label: 'Plan Pricing',
-        value: `$${this.data.newPlanCost} ${this.data.currency}`,
+        label: 'Pricing',
+        value: `$${this.data.newPlanCost} ${this.data.currency} / billed ${this.data.newPlanBilled}`,
       },
-      {
-        label: 'Billing Interval',
-        value: this.data.newPlanBilled === 'yearly' ? 'Yearly' : 'Monthly',
-      },
+   
 
       // { label: 'Plan Pricing', value: `${(this.subscription!.plan!.amount / 100).toFixed(2)} ${this.subscription?.currency?.toUpperCase()}` },
     ];
@@ -90,9 +92,5 @@ export class SubscriptionUpdateConfirmationComponent implements OnInit {
 
   public get dataSourcePaymentDetails() {
     return this._dataSourcePaymentDetails;
-  }
-
-  public get hasPositiveBalance(): boolean {
-    return this.data.moneyBalance > 0;
   }
 }

@@ -1,5 +1,5 @@
 <mat-card class="bg-plum shadow-none">
-  <mat-card-header class="justify-content-between m-b-48">
+  <mat-card-header class="justify-content-between m-b-16">
     <mat-icon class="close-icon text-white" (click)="onCancel()"
       >close</mat-icon
     >
@@ -10,8 +10,8 @@
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <mat-card-content>
-      <h4 class="text-white">Plan Details</h4>
+    <mat-card-content class="p-b-0">
+      <h4 class="text-white">New Plan Details</h4>
 
       <table
         mat-table
@@ -21,43 +21,41 @@
         <!-- Label Column -->
         <ng-container matColumnDef="label">
           <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element" class="text-white">
-            <strong>{{ element.label }}:</strong>
+          <td mat-cell *matCellDef="let element" class="text-white" [innerHTML]="element.label">
           </td>
         </ng-container>
 
         <!-- Value Column -->
         <ng-container matColumnDef="value">
           <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element" class="text-white text-right">
-            {{ element.value }}
+          <td mat-cell *matCellDef="let element" class="text-white text-right" [innerHTML]="element.value">
           </td>
         </ng-container>
 
         <tr mat-row *matRowDef="let row; columns: ['label', 'value']"></tr>
       </table>
 
-        <div class="payment-details m-t-20">
+      <!-- PAYMENT DETAILS TABLE -->
+
+        <div class="payment-details p-t-0">
         <h4 class="text-white">Payment Details</h4>
 
         <table
         mat-table
         [dataSource]="dataSourcePaymentDetails"
-        class="mat-elevation-z8 bg-plum shadow-none"
+        class="mat-elevation-z8 bg-plum shadow-none payment-details-table"
       >
         <!-- Label Column -->
         <ng-container matColumnDef="label">
           <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element" class="text-white">
-            <strong>{{ element.label }}:</strong>
+          <td mat-cell *matCellDef="let element" class="text-white payment-table-label" [innerHTML]="element.label">
           </td>
         </ng-container>
 
         <!-- Value Column -->
         <ng-container matColumnDef="value">
           <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element" class="text-white text-right">
-            {{ element.value }}
+          <td mat-cell *matCellDef="let element" class="text-white text-right" [innerHTML]="element.value">
           </td>
         </ng-container>
 
@@ -65,9 +63,21 @@
       </table>
       </div>
 
+      <div class="description-container p-t-48">
+        <p class="description text-white f-s-12 m-t-10">
+          Your current balance and the credit from your previous plan will be automatically apply to the new plan's cost. 
+
+          <ng-container *ngIf="data.endingBalance < 0">
+          Your remaining balance after the transaction is: ${{data.endingBalance * -1}} {{data.currency}}
+        </ng-container>
+          <br>
+          By selecting "Confirm", you authorize Adfluens to charge the amount listed above to your registered payment method.
+        </p>
+      </div>
+
     </mat-card-content>
   </mat-card-content>
-  <mat-card-actions class="justify-content-end p-0 m-t-48">
+  <mat-card-actions class="justify-content-end p-0">
     <button
       mat-button
       (click)="onCancel()"
