@@ -55,39 +55,33 @@ export class SubscriptionUpdateConfirmationComponent implements OnInit {
   private setPaymentDetails() {
     this._dataSourcePaymentDetails = [];
 
+    this.dataSourcePaymentDetails.push(
+      {
+        label: `Plan ${this.data.newPlanName} (${this.data.currentPlanBilled})`,
+        value: `$${this.data.newPlanCost} ${this.data.currency.toUpperCase()}`,
+      },
+    )
+
     if (this.data.startingBalance < 0) {
       this._dataSourcePaymentDetails.push( {
         label: 'Available Balance',
-        value: `-$${this.data.startingBalance * -1} ${this.data.currency}`,
+        value: `-$${this.data.startingBalance * -1} ${this.data.currency.toUpperCase()}`,
       },)
     }
 
     this.dataSourcePaymentDetails.push({
       label: this.data.currentSubscriptionCostingDetails.description,
-      value: `-$${this.data.currentSubscriptionCostingDetails.amount * -1} ${this.data.currency}`
+      value: `-$${this.data.currentSubscriptionCostingDetails.amount * -1} ${this.data.currency.toUpperCase()}`
     })
 
     this._dataSourcePaymentDetails.push(
       {
         label: '<strong>To Pay Now</strong>',
-        value: `<strong>$${this.data.toPayNow} ${this.data.currency} *</strong>`,
+        value: `<strong>$${this.data.toPayNow} ${this.data.currency.toUpperCase()} *</strong>`,
       },
     );
 
    
-  }
-
-  public get dataSource() {
-    return [
-      { label: 'Name', value: this.data.newPlanName },
-      {
-        label: 'Pricing',
-        value: `$${this.data.newPlanCost} ${this.data.currency} / billed ${this.data.newPlanBilled}`,
-      },
-   
-
-      // { label: 'Plan Pricing', value: `${(this.subscription!.plan!.amount / 100).toFixed(2)} ${this.subscription?.currency?.toUpperCase()}` },
-    ];
   }
 
   public get dataSourcePaymentDetails() {

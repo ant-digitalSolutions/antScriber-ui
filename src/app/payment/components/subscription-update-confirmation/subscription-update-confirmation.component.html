@@ -3,42 +3,10 @@
 </h1>
 
 <mat-dialog-content class="bg-plum shadow-none mat-typography m-t-20">
-  <h4 class="text-white">New Plan Details</h4>
-
-  <table
-    mat-table
-    [dataSource]="dataSource"
-    class="mat-elevation-z8 bg-plum shadow-none"
-  >
-    <!-- Label Column -->
-    <ng-container matColumnDef="label">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td
-        mat-cell
-        *matCellDef="let element"
-        class="text-white"
-        [innerHTML]="element.label"
-      ></td>
-    </ng-container>
-
-    <!-- Value Column -->
-    <ng-container matColumnDef="value">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td
-        mat-cell
-        *matCellDef="let element"
-        class="text-white text-right"
-        [innerHTML]="element.value"
-      ></td>
-    </ng-container>
-
-    <tr mat-row *matRowDef="let row; columns: ['label', 'value']"></tr>
-  </table>
-
   <!-- PAYMENT DETAILS TABLE -->
 
   <div class="payment-details p-t-0">
-    <h4 class="text-white">Payment Details</h4>
+    <h4 class="text-white">Summary</h4>
 
     <table
       mat-table
