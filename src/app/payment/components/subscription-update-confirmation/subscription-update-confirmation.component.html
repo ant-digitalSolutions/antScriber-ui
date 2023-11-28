@@ -41,10 +41,10 @@
 
   <div class="description-container p-t-24">
     <p class="description text-white f-s-12 m-t-10">
-     * Your current balance and the credit from your previous plan will be automatically applied to the new plan's cost.
+     * Your available balance and the credit from your previous plan unused time will be automatically applied to the new plan's cost.
 
       <ng-container *ngIf="data.endingBalance < 0">
-        Your remaining balance after the transaction is: ${{
+        Your available balance after the transaction is: ${{
           data.endingBalance * -1
         }}
         {{ data.currency.toUpperCase() }}, which will be used for future payments.
