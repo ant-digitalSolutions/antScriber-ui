@@ -85,8 +85,12 @@ export class PaymentService {
   }
 
   updateSubscription(subscriptionUpdateDTO: SubscriptionUpdateDTO) {
+    const data = {
+      subscriptionId: subscriptionUpdateDTO.subscriptionId,
+      newPriceId: subscriptionUpdateDTO.newPriceId
+    }
     return this.http.post<IRequestResponse<InvoiceDto>>(this.baseUrl + 'user-subscription/update-subscription', {
-      subscriptionUpdateDTO
+      data
     });
   }
 }
