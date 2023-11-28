@@ -70,7 +70,7 @@ export class SubscriptionUpdateConfirmationComponent implements OnInit {
     this._dataSourcePaymentDetails.push(
       {
         label: '<strong>To Pay Now</strong>',
-        value: `<strong>$${this.data.toPayNow} ${this.data.currency}</strong>`,
+        value: `<strong>$${this.data.toPayNow} ${this.data.currency} *</strong>`,
       },
     );
 

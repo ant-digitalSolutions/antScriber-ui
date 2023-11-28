@@ -1,108 +1,115 @@
-<mat-card class="bg-plum shadow-none">
-  <mat-card-header class="justify-content-between m-b-16">
-    <mat-icon class="close-icon text-white" (click)="onCancel()"
-      >close</mat-icon
+<h1 class="text-white m-0 p-0 mat-dialog-title" mat-dialog-title>
+  {{ isUpgrade ? "Upgrade " : "Downgrade " }} Confirmation
+</h1>
+
+<mat-dialog-content class="bg-plum shadow-none mat-typography m-t-20">
+  <h4 class="text-white">New Plan Details</h4>
+
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    class="mat-elevation-z8 bg-plum shadow-none"
+  >
+    <!-- Label Column -->
+    <ng-container matColumnDef="label">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td
+        mat-cell
+        *matCellDef="let element"
+        class="text-white"
+        [innerHTML]="element.label"
+      ></td>
+    </ng-container>
+
+    <!-- Value Column -->
+    <ng-container matColumnDef="value">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td
+        mat-cell
+        *matCellDef="let element"
+        class="text-white text-right"
+        [innerHTML]="element.value"
+      ></td>
+    </ng-container>
+
+    <tr mat-row *matRowDef="let row; columns: ['label', 'value']"></tr>
+  </table>
+
+  <!-- PAYMENT DETAILS TABLE -->
+
+  <div class="payment-details p-t-0">
+    <h4 class="text-white">Payment Details</h4>
+
+    <table
+      mat-table
+      [dataSource]="dataSourcePaymentDetails"
+      class="mat-elevation-z8 bg-plum shadow-none payment-details-table"
     >
-    <mat-card-title>
-      <h3 class="text-white m-0 p-0">
-        {{ isUpgrade ? "Upgrade " : "Downgrade " }} Confirmation
-      </h3>
-    </mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <mat-card-content class="p-b-0">
-      <h4 class="text-white">New Plan Details</h4>
+      <!-- Label Column -->
+      <ng-container matColumnDef="label">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          class="text-white payment-table-label"
+          [innerHTML]="element.label"
+        ></td>
+      </ng-container>
 
-      <table
-        mat-table
-        [dataSource]="dataSource"
-        class="mat-elevation-z8 bg-plum shadow-none"
-      >
-        <!-- Label Column -->
-        <ng-container matColumnDef="label">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element" class="text-white" [innerHTML]="element.label">
-          </td>
-        </ng-container>
+      <!-- Value Column -->
+      <ng-container matColumnDef="value">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          class="text-white text-right"
+          [innerHTML]="element.value"
+        ></td>
+      </ng-container>
 
-        <!-- Value Column -->
-        <ng-container matColumnDef="value">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element" class="text-white text-right" [innerHTML]="element.value">
-          </td>
-        </ng-container>
+      <tr mat-row *matRowDef="let row; columns: ['label', 'value']"></tr>
+    </table>
+  </div>
 
-        <tr mat-row *matRowDef="let row; columns: ['label', 'value']"></tr>
-      </table>
+  <div class="description-container p-t-24">
+    <p class="description text-white f-s-12 m-t-10">
+     * Your current balance and the credit from your previous plan will be automatically applied to the new plan's cost.
 
-      <!-- PAYMENT DETAILS TABLE -->
+      <ng-container *ngIf="data.endingBalance < 0">
+        Your remaining balance after the transaction is: ${{
+          data.endingBalance * -1
+        }}
+        {{ data.currency.toUpperCase() }}, which will be used for future payments.
+      </ng-container>
+      <br />
+      <br />
+      By selecting "Confirm", you authorize Adfluens to charge the amount listed
+      above to your registered payment method.
+    </p>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="justify-content-end p-0">
+  <button
+    mat-button
+    (click)="onCancel()"
+    class="border-round text-primary f-w-600 m-r-10"
+    [ngClass]="{ 'btn-cancel': isUpgrade, 'bg-white': !isUpgrade }"
+    [disabled]="isLoading"
+  >
+    {{ secondaryBtnText }}
+  </button>
+  <button
+    mat-button
+    (click)="onConfirm()"
+    class="border-round text-primary f-w-600"
+    [ngClass]="{ 'btn-cancel': !isUpgrade, 'bg-white': isUpgrade }"
+    [disabled]="isLoading"
+    cdkFocusInitial
+  >
+    {{ mainBtnText }}
+  </button>
+</mat-dialog-actions>
 
-        <div class="payment-details p-t-0">
-        <h4 class="text-white">Payment Details</h4>
-
-        <table
-        mat-table
-        [dataSource]="dataSourcePaymentDetails"
-        class="mat-elevation-z8 bg-plum shadow-none payment-details-table"
-      >
-        <!-- Label Column -->
-        <ng-container matColumnDef="label">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element" class="text-white payment-table-label" [innerHTML]="element.label">
-          </td>
-        </ng-container>
-
-        <!-- Value Column -->
-        <ng-container matColumnDef="value">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element" class="text-white text-right" [innerHTML]="element.value">
-          </td>
-        </ng-container>
-
-        <tr mat-row *matRowDef="let row; columns: ['label', 'value']"></tr>
-      </table>
-      </div>
-
-      <div class="description-container p-t-48">
-        <p class="description text-white f-s-12 m-t-10">
-          Your current balance and the credit from your previous plan will be automatically apply to the new plan's cost. 
-
-          <ng-container *ngIf="data.endingBalance < 0">
-          Your remaining balance after the transaction is: ${{data.endingBalance * -1}} {{data.currency}}
-        </ng-container>
-          <br>
-          By selecting "Confirm", you authorize Adfluens to charge the amount listed above to your registered payment method.
-        </p>
-      </div>
-
-    </mat-card-content>
-  </mat-card-content>
-  <mat-card-actions class="justify-content-end p-0">
-    <button
-      mat-button
-      (click)="onCancel()"
-      class="border-round text-primary f-w-600 m-r-10"
-      [ngClass]="{'btn-cancel': isUpgrade, 'bg-white': !isUpgrade  }"
-      [disabled]="isLoading"
-    >
-      {{ secondaryBtnText }}
-    </button>
-    <button
-      mat-button
-      (click)="onConfirm()"
-      class="border-round text-primary f-w-600"
-      [ngClass]="{'btn-cancel': !isUpgrade, 'bg-white': isUpgrade  }"
-      [disabled]="isLoading"
-      cdkFocusInitial
-    >
-      {{ mainBtnText }}
-    </button>
-  </mat-card-actions>
-</mat-card>
-<ngx-spinner
-type="ball-scale-multiple"
-size="large"
-[fullScreen]="false"
->
-<p class="loading-text p-t-32 text-white">Updating Subscription</p>
+<ngx-spinner type="ball-scale-multiple" size="large" [fullScreen]="false">
+  <p class="loading-text p-t-32 text-white">Updating Subscription</p>
 </ngx-spinner>
