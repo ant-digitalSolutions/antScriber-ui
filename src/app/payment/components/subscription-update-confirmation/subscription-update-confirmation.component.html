@@ -45,7 +45,7 @@
 
       <ng-container *ngIf="data.endingBalance < 0">
         Your available balance after the transaction is: ${{
-          data.endingBalance * -1
+          data.endingBalance
         }}
         {{ data.currency.toUpperCase() }}, which will be used for future payments.
       </ng-container>
