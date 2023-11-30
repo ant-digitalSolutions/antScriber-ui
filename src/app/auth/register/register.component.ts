@@ -120,6 +120,12 @@ export class RegisterComponent implements OnInit {
     window.location.href = getBaseApiURL() + 'auth/facebook'
   }
 
+  redirectToLinkedinSignIn() {
+    this._authService.logout_in_silence();
+    this.$gaService.event('user_register', 'third_party_provider', 'provider_linkedin');
+    window.location.href = getBaseApiURL() + 'auth/linkedin'
+    }
+
   continue() {
     this.router.navigate(['/']);
   }

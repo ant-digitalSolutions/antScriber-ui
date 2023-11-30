@@ -16,6 +16,7 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent implements OnInit {
 
+
   options = this.settings.getOptions();
 
   hasInvalidCredentials = false;
@@ -122,6 +123,10 @@ export class LoginComponent implements OnInit {
   redirectToFacebookSignIn() {
     window.location.href = getBaseApiURL() + 'auth/facebook'
   }
+
+  redirectToLinkedinSignIn() {
+    window.location.href = getBaseApiURL() + 'auth/linkedin'
+    }
 
   checkIfMobile() {
     this.bigScreen = (window.innerWidth > 1200);
