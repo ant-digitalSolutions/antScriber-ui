@@ -17,3 +17,9 @@ ckeditor {
     background-color: $editor-bc;
   }
 }
+
+.ck-content pre code {
+  color: #353535 !important;
+  white-space: pre-wrap !important;
+  text-shadow: none !important;
+}
