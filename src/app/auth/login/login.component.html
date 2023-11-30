@@ -60,6 +60,23 @@
                 </div>
               </button>
             </div>
+            <div class="col-12 m-t-10" *ngIf="!isLoggedIn">
+              <button
+                mat-stroked-button
+                class="w-100"
+                (click)="redirectToLinkedinSignIn()"
+              >
+                <div class="d-flex align-items-center">
+                  <img
+                    src="/assets/images/svgs/linkedin-icon.svg"
+                    alt="google"
+                    width="16"
+                    class="m-r-8"
+                  />
+                  Sign in with Linkedin
+                </div>
+              </button>
+            </div>
             <!-- <div class="col-12 m-t-16" *ngIf="!isLoggedIn">
               <button
                 mat-stroked-button
