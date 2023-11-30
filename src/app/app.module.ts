@@ -82,7 +82,7 @@ export function HttpLoaderFactory(http: HttpClient): any {
     ),
     WalkthroughToursModule,
     NgxStripeModule.forRoot(
-      'pk_test_51MdfuXFXqwjYWAm8OYTaPXU4Y04Cg5WYUxGNciIDXX1yC8WzFk1uV49D1yHIcJE8BwCZlCSDkaHt3plpEzMfbNzo00o6k2JINi'
+      'pk_test_51OGm1FHoHvOMDqa7sZQuKq137svuk6uAT5fW6AhILaKvRAbOA8zhIVLLSEsHyhdjPKfDpW7RLxNkMipJgUWc1OPm00xmtURYVf'
     ),
     NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
   ],
