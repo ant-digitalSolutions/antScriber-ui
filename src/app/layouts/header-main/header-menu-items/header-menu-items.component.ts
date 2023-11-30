@@ -8,6 +8,7 @@ import { MaterialModule } from 'src/app/material.module';
 import { UserService } from 'src/app/user/services/user.service';
 import { AppSearchDialogComponent } from '../../full/vertical/header/header.component';
 import { BrandingComponent } from '../../full/vertical/sidebar/branding.component';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 
 @Component({
   selector: 'app-header-menu-items',
@@ -21,7 +22,8 @@ export class HeaderMenuItemsComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private _userService: UserService) {
+    private _userService: UserService,
+    protected $gaService: GoogleAnalyticsService) {
 
   }
 
@@ -29,6 +31,11 @@ export class HeaderMenuItemsComponent {
   signOut() {
     this.authService.logout();
     this.router.navigate(['/auth/login'])
+  }
+
+  upgradePlan() {
+    this.$gaService.event('plans', 'click_menu_upgrade_btn');
+    this.router.navigate(['/settings/subscriptions'])
   }
 
 
