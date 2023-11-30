@@ -56,8 +56,8 @@ export const cardPricing_standard: IPriceCardData[] = [
     planOriginalPrice: 15,
     planDiscountPercentOff: 20,
     planAnnualPercentOff: 40,
-    stripeMonthlyPriceId: 'price_1OAcjdFXqwjYWAm8qXUIhbRR',
-    stripeYearlyPriceId: 'price_1OAd4JFXqwjYWAm8upr94XbE',
+    stripeMonthlyPriceId: 'price_1OGs3uHoHvOMDqa7oTpWkv8R',
+    stripeYearlyPriceId: 'price_1OGs3uHoHvOMDqa77K86Dpr8',
     id: ProductsEnum.Solo,
     rules: [
       {
@@ -103,8 +103,8 @@ export const cardPricing_standard: IPriceCardData[] = [
     planOriginalPrice: 49,
     planDiscountPercentOff: 20,
     planAnnualPercentOff: 40,
-    stripeMonthlyPriceId: 'price_1OAcl7FXqwjYWAm8s5ssMyck',
-    stripeYearlyPriceId: 'price_1OAd2lFXqwjYWAm8hjjbbEMs',
+    stripeMonthlyPriceId: 'price_1OGs2SHoHvOMDqa7VsM1C83M',
+    stripeYearlyPriceId: 'price_1OGs2SHoHvOMDqa7f1HNrVYm',
     popular: true,
     id: ProductsEnum.Flow,
     rules: [

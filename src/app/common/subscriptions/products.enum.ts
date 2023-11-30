@@ -7,8 +7,8 @@
  * @enum {number}
  */
 export enum ProductsEnum {
-  Solo = 'prod_OyZtqjmoVGB2Q7',
-  Flow = 'prod_OyZuhZGvmn8L0D',
+  Solo = 'prod_P528v7iGe1vDKM',
+  Flow = 'prod_P526bXaILzhuyA',
   Horizon = 'prod_not_created',
   FREE = 'free',
 }
