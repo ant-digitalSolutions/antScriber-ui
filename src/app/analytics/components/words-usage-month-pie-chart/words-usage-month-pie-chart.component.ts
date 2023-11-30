@@ -66,4 +66,10 @@ export class WordsUsageMonthPieChartComponent implements OnInit {
     };
   }
 
+  
+  public get wordLimitText() : string {
+    return this.wordsLimit > 0 ? `${this.wordsLimit / 1000}k` : ' ∞';
+  }
+  
+
 }
