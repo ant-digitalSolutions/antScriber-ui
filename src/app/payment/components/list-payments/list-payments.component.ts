@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { InvoiceDto } from '../../dtos/invoice.dto';
 import { PaymentService } from '../../services/payment.service';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 
 @Component({
   selector: 'app-list-payments',
@@ -17,10 +18,14 @@ export class ListPaymentsComponent implements OnInit {
 
   dataSource: MatTableDataSource<InvoiceDto>;
 
-  constructor(private _paymentService: PaymentService) {}
+  constructor(
+    private _paymentService: PaymentService,
+    protected $gaService: GoogleAnalyticsService
+  ) {}
 
   ngOnInit(): void {
     this.listInvoices();
+    this.$gaService.event('list_payments', 'load_main_page');
   }
 
   listInvoices() {

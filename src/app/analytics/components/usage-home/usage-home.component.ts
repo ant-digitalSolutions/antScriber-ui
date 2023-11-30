@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IWordsUsageDto } from '../../dtos/word-usage.dto';
 import { WordsUsageByDay } from '../../dtos/words-usage-by-day.dot';
 import { AnalyticsService } from '../../services/analytics.service';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 
 @Component({
   selector: 'app-usage-home',
@@ -22,10 +23,14 @@ export class UsageHomeComponent {
 
   loading = true;
 
-  constructor(private _analyticService: AnalyticsService) {}
+  constructor(
+    private _analyticService: AnalyticsService,
+    protected $gaService: GoogleAnalyticsService
+  ) {}
 
   ngOnInit(): void {
     this.getData();
+    this.$gaService.event('usage_area', 'load_main_page');
   }
 
   getData() {
@@ -49,7 +54,7 @@ export class UsageHomeComponent {
       .subscribe((r) => {
         if (r.success) {
           this.wordsUsageByDay = r.data!;
-          this.calculateTotalWords_gpt_3()
+          this.calculateTotalWords_gpt_3();
           this.calculateTotalWords_gpt_4();
         }
       });
@@ -88,6 +93,7 @@ export class UsageHomeComponent {
     if (this.selectedMonthIndex > 0) {
       this.selectedMonthIndex--;
       this.getWordsUsageByDay();
+      this.$gaService.event('usage_area', 'select_month', 'previous');
     }
   }
 
@@ -95,6 +101,7 @@ export class UsageHomeComponent {
     if (this.selectedMonthIndex < this.monthTimeLineString.length - 1) {
       this.selectedMonthIndex++;
       this.getWordsUsageByDay();
+      this.$gaService.event('usage_area', 'select_month', 'next');
     }
   }
 

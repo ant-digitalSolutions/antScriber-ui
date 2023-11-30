@@ -15,6 +15,7 @@ import { UserSubscriptionDto } from 'src/app/user/dto/user-subscription-data.dto
 import { cardPricing_standard } from '../../data/card-pricing-standard.data';
 import { IPriceCardData } from '../../dto/pricing-card-data.interface';
 import { DialogService } from 'src/app/dialogs/dialog.service';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 
 @Component({
   selector: 'app-pricing',
@@ -40,11 +41,13 @@ export class AppPricingComponent {
     private _paymentService: PaymentService,
     private stripeService: StripeService,
     private dialog: MatDialog,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    protected $gaService: GoogleAnalyticsService
   ) {}
 
   ngOnInit(): void {
     this.checkCurrentSubscription();
+    this.$gaService.event('plans', 'load_main_page');
   }
 
   checkCurrentSubscription() {
@@ -68,6 +71,11 @@ export class AppPricingComponent {
         .generatePaymentSession(stripePriceId!)
         .pipe(
           switchMap((result) => {
+            this.$gaService.event(
+              'plans',
+              'start_checkout_process',
+              stripePriceId
+            );
             return this.stripeService.redirectToCheckout({
               sessionId: result.data.id,
             });
@@ -91,12 +99,14 @@ export class AppPricingComponent {
   }
 
   updateSubscription(priceId: string, updateType: SubscriptionUpdateType) {
+    this.$gaService.event('plans', 'open_update_plan_modal', priceId);
+
     this._paymentService.getSubscriptionUpdateData(priceId).subscribe((r) => {
       if (r.success) {
         r.data!.status = updateType;
         this.handleSubscriptionUpdateResponse(r.data!);
       } else {
-        console.log('empty subscription update');
+        this.$gaService.event('plans', 'open_update_plan_error', r.message);
       }
     });
   }
@@ -175,6 +185,7 @@ export class AppPricingComponent {
   }
 
   renderModalWithPlanDetails() {
+    this.$gaService.event('plans', 'check_current_plan');
     return this.dialog.open(SubscriptionDetailsComponent, {
       width: '600px',
       maxWidth: '95vw',
