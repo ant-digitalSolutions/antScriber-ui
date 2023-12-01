@@ -1,154 +1,167 @@
-<form
-class="m-t-30"
-[formGroup]="form"
-(ngSubmit)="submit()"
->
-<!-- email -->
-<mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-  >Email</mat-label
->
-<mat-form-field class="w-100" color="primary">
-  <input matInput type="email" formControlName="email" />
-  <mat-hint
-    *ngIf="f['email'].touched && f['email'].invalid"
-    class="m-b-16 error-msg"
+<form class="m-t-30" [formGroup]="form" (ngSubmit)="submit()">
+  <!-- email -->
+  <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+    >Email</mat-label
   >
-    <div
-      class="text-error"
-      *ngIf="f['email'].errors && f['email'].errors['required']"
+  <mat-form-field class="w-100" color="primary">
+    <input matInput type="email" formControlName="email" />
+    <mat-hint
+      *ngIf="f['email'].touched && f['email'].invalid"
+      class="m-b-16 error-msg"
     >
-      Email is required.
-    </div>
-    <div
-      class="text-error"
-      *ngIf="f['email'].errors && f['email'].errors['email']"
-    >
-      Email is not valid.
-    </div>
-  </mat-hint>
-</mat-form-field>
+      <div
+        class="text-error"
+        *ngIf="f['email'].errors && f['email'].errors['required']"
+      >
+        Email is required.
+      </div>
+      <div
+        class="text-error"
+        *ngIf="f['email'].errors && f['email'].errors['email']"
+      >
+        Email is not valid.
+      </div>
+    </mat-hint>
+  </mat-form-field>
 
-<!-- FIRST NAME -->
-<mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-  >First Name</mat-label
->
-<mat-form-field class="w-100" color="primary">
-  <input matInput formControlName="firstName" required/>
-  <mat-hint
-    *ngIf="f['firstName'].touched && f['firstName'].invalid"
-    class="m-b-16 error-msg"
+  <!-- FIRST NAME -->
+  <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+    >First Name</mat-label
   >
-    <div
-      class="text-error"
-      *ngIf="
-        f['firstName'].errors && f['firstName'].errors['required']
-      "
+  <mat-form-field class="w-100" color="primary">
+    <input matInput formControlName="firstName" required />
+    <mat-hint
+      *ngIf="f['firstName'].touched && f['firstName'].invalid"
+      class="m-b-16 error-msg"
     >
-      First Name is required.
-    </div>
-  </mat-hint>
-</mat-form-field>
+      <div
+        class="text-error"
+        *ngIf="f['firstName'].errors && f['firstName'].errors['required']"
+      >
+        First Name is required.
+      </div>
+    </mat-hint>
+  </mat-form-field>
 
-<!-- LASTNAME -->
-<mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-  >Last Name</mat-label
->
-<mat-form-field class="w-100" color="primary">
-  <input matInput formControlName="lastName" />
-  <mat-hint
-    *ngIf="f['lastName'].touched && f['lastName'].invalid"
-    class="m-b-16 error-msg"
+  <!-- LASTNAME -->
+  <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+    >Last Name</mat-label
   >
-    <div
-      class="text-error"
-      *ngIf="
-        f['lastName'].errors && f['lastName'].errors['required']
-      "
+  <mat-form-field class="w-100" color="primary">
+    <input matInput formControlName="lastName" />
+    <mat-hint
+      *ngIf="f['lastName'].touched && f['lastName'].invalid"
+      class="m-b-16 error-msg"
     >
-      Name is required.
-    </div>
-  </mat-hint>
-</mat-form-field>
+      <div
+        class="text-error"
+        *ngIf="f['lastName'].errors && f['lastName'].errors['required']"
+      >
+        Name is required.
+      </div>
+    </mat-hint>
+  </mat-form-field>
 
-<!-- password -->
-<mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-  >Password</mat-label
->
-<mat-form-field class="w-100" color="primary">
-  <input matInput type="password" formControlName="password" required/>
-  <mat-hint
-    *ngIf="f['password'].touched && f['password'].invalid"
-    class="m-b-16 error-msg"
+  <!-- password -->
+  <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+    >Password</mat-label
   >
-    <div
-      class="text-error"
-      *ngIf="
-        f['password'].errors && f['password'].errors['required']
-      "
+  <mat-form-field class="w-100" color="primary">
+    <input
+      matInput
+      [type]="hidePassword ? 'password' : 'text'"
+      formControlName="password"
+      required
+    />
+    <button
+      mat-flat-button
+      matSuffix
+      (click)="hidePassword = !hidePassword"
+      [attr.aria-label]="'Hide password'"
+      [attr.aria-pressed]="hidePassword"
+      class="btn-pass f-w-500"
     >
-      Password is required.
-    </div>
-    <div
-      class="text-error"
-      *ngIf="
-        f['password'].errors && f['password'].errors['minlength']
-      "
+      <mat-icon class="op-5">{{
+        hidePassword ? "visibility_off" : "visibility"
+      }}</mat-icon>
+    </button>
+    <mat-hint
+      *ngIf="f['password'].touched && f['password'].invalid"
+      class="m-b-16 error-msg"
     >
-      Password should be between 8-50 chars.
-    </div>
-    <div
-      class="text-error"
-      *ngIf="
-        f['password'].errors && f['password'].errors['pattern']
-      "
-    >
-      Make sure your password has 1 number and 1 symbol.
-    </div>
-  </mat-hint>
-</mat-form-field>
+      <div
+        class="text-error"
+        *ngIf="f['password'].errors && f['password'].errors['required']"
+      >
+        Password is required.
+      </div>
+      <div
+        class="text-error"
+        *ngIf="f['password'].errors && f['password'].errors['minlength']"
+      >
+        Password should be between 8-50 chars.
+      </div>
+      <div
+        class="text-error"
+        *ngIf="f['password'].errors && f['password'].errors['pattern']"
+      >
+        Make sure your password has 1 number and 1 symbol.
+      </div>
+    </mat-hint>
+  </mat-form-field>
 
-<mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-  >Re-Type Password</mat-label
->
-<mat-form-field class="w-100" color="primary">
-  <input
-    matInput
-    type="password"
-    formControlName="passConfirmation"
-    required
-  />
-  <mat-hint
-    *ngIf="
-      f['passConfirmation'].touched &&
-      (f['passConfirmation'].invalid || form.invalid)
-    "
-    class="m-b-16 error-msg"
+  <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+    >Re-Type Password</mat-label
   >
-    <div
-      class="text-error"
-      *ngIf="
-        f['passConfirmation'].errors &&
-        f['passConfirmation'].errors['required']
-      "
+  <mat-form-field class="w-100" color="primary">
+    <input
+      matInput
+      [type]="hidePassword ? 'password' : 'text'"
+      formControlName="passConfirmation"
+      required
+    />
+    <button
+      mat-flat-button
+      matSuffix
+      (click)="hidePassword = !hidePassword"
+      [attr.aria-label]="'Hide password'"
+      [attr.aria-pressed]="hidePassword"
+      class="btn-pass f-w-500"
     >
-      Password Confirmation is required.
-    </div>
-    <div class="text-error" *ngIf="passMatchError">
-      Passwords don't match
-    </div>
-  </mat-hint>
-</mat-form-field>
+      <mat-icon class="op-5">{{
+        hidePassword ? "visibility_off" : "visibility"
+      }}</mat-icon>
+    </button>
+    <mat-hint
+      *ngIf="
+        f['passConfirmation'].touched &&
+        (f['passConfirmation'].invalid || form.invalid)
+      "
+      class="m-b-16 error-msg"
+    >
+      <div
+        class="text-error"
+        *ngIf="
+          f['passConfirmation'].errors &&
+          f['passConfirmation'].errors['required']
+        "
+      >
+        Password Confirmation is required.
+      </div>
+      <div class="text-error" *ngIf="passMatchError">Passwords don't match</div>
+    </mat-hint>
+  </mat-form-field>
 
-<button
-  mat-flat-button
-  color="primary"
-  class="w-100"
-  [disabled]="!form.valid"
->
-  <ng-container *ngIf="isLoading">
-    <mat-spinner class="btn-loading-spinner"></mat-spinner>
-  </ng-container>
-  Sign Up
-</button>
-<!-- input -->
+  <button
+    mat-flat-button
+    color="primary"
+    class="w-100"
+    [disabled]="!form.valid"
+  >
+    <ng-container *ngIf="isLoading">
+      <mat-spinner class="btn-loading-spinner"></mat-spinner>
+    </ng-container>
+    Sign Up
+  </button>
+  <!-- input -->
 </form>

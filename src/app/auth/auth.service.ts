@@ -45,6 +45,14 @@ export class AuthService {
       { email, verificationCode }
     );
   }
+
+  verifyToken(token: string): Observable<IRequestResponse<string>> {
+    return this.http.post<IRequestResponse<string>>(
+      this.baseUrl + 'auth/verify-token',
+      { token }
+    );
+  }
+
   sendEmailVerification(email: string) {
     return this.http.post<IRequestResponse<any>>(
       this.baseUrl + 'auth/send-verification-email',

@@ -88,7 +88,7 @@ export class EmailVerificationComponent
   }
 
   ngAfterViewInit(): void {
-    (document.querySelector('.email-input') as HTMLInputElement)?.focus();
+    // (document.querySelector('.email-input') as HTMLInputElement)?.focus();
   }
 
   ngOnDestroy(): void {
