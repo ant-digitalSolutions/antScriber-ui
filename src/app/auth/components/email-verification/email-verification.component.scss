@@ -1,0 +1,29 @@
+.code-input-container {
+  display: flex;
+
+  .inputs-elements {
+    justify-content: space-around;
+  }
+
+  width: 100%;
+
+  mat-form-field {
+    width: 20% !important;
+    max-width: 64px;
+    min-height: 80px;
+    border-radius: 6px;
+    font-size: 32px;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -0.32px;
+    line-height: 142%;
+    margin: 0 7px;
+  
+    text-align: center;
+  }
+
+  .code-input {
+   
+  }
+}
