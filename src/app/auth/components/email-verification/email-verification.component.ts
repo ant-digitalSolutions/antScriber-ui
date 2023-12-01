@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -8,13 +9,15 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../auth.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 
 @Component({
   selector: 'app-email-verification',
   templateUrl: './email-verification.component.html',
   styleUrls: ['./email-verification.component.scss'],
 })
-export class EmailVerificationComponent {
+export class EmailVerificationComponent implements AfterViewInit {
   emailForm: FormGroup;
   verificationCodeForm: FormGroup;
   isCodeSent = false;
@@ -31,7 +34,9 @@ export class EmailVerificationComponent {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private _snackBar: MatSnackBar, 
+    protected $gaService: GoogleAnalyticsService
   ) {
     this.emailForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -44,17 +49,28 @@ export class EmailVerificationComponent {
     this.codeInputs.push(this.input1, this.input2, this.input3, this.input4);
   }
 
+  ngAfterViewInit(): void {
+    (document.querySelector('.email-input') as HTMLInputElement)?.focus();
+  }
+
   sendEmail() {
     if (this.emailForm.valid) {
       this.isLoading = true;
       this.spinner.show();
+      this._snackBar.open('Code sent, please check your email',undefined, {
+        duration: 2000,
+        panelClass: 'snack-success'
+      })
 
       this.authService
         .sendEmailVerification(this.emailForm.value.email)
         .subscribe(() => {
           this.isCodeSent = true;
           this.isLoading = false;
-          this.spinner.hide()
+          this.spinner.hide();
+          setTimeout(() => {
+            (document.querySelector('.input1') as HTMLInputElement)?.focus();
+          }, 300);
         });
     }
   }
@@ -70,6 +86,8 @@ export class EmailVerificationComponent {
           nextInputClass
         ) as HTMLInputElement;
         nextInput?.focus();
+      } else if (index === 3) {
+        this.verifyCode();
       }
     } else {
       // Replace the content of the input if it's not a number
@@ -97,8 +115,16 @@ export class EmailVerificationComponent {
               incorrectCode: true,
             });
             this.spinner.hide();
+            for (let i = 0; i < this.code.length; i++) {
+              this.code[i] = '';
+            }
+            (document.querySelector('.input1') as HTMLInputElement)?.focus();
           },
         });
     }
+  }
+
+  public get userEmail(): string {
+    return this.emailForm.valid ? this.emailForm.value.email : '';
   }
 }
