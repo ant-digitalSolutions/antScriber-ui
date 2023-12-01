@@ -14,10 +14,9 @@ import { UserLogin } from './dtos/login.dto';
 import { UserRegisterDto } from './dtos/user-register.dto';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   baseUrl: string = getBaseApiURL();
   redirectedUser: boolean = false;
 
@@ -31,19 +30,34 @@ export class AuthService {
     protected $gaService: GoogleAnalyticsService,
     private _router: Router,
     private _jwtHelper: JwtHelperService,
-    private _userService: UserService) { 
-      if (this.isLoggedIn()) {
-        this._userService.getProfile(false).subscribe();
-      }
+    private _userService: UserService
+  ) {
+    if (this.isLoggedIn()) {
+      this._userService.getProfile(false).subscribe();
     }
+  }
+
+  verifyCode(email: string, verificationCode: string) {
+    return this.http.post<IRequestResponse<any>>(
+      this.baseUrl + 'auth/verify-code',
+      { email, verificationCode }
+    );
+  }
+  sendEmailVerification(email: string) {
+    return this.http.post<IRequestResponse<any>>(
+      this.baseUrl + 'auth/send-verification-email',
+      { email }
+    );
+  }
 
   login(userLogin: UserLogin): Observable<any> {
-    const result = this.http.post<IRequestResponse<any>>(this.baseUrl + 'auth/signin', userLogin)
+    const result = this.http
+      .post<IRequestResponse<any>>(this.baseUrl + 'auth/signin', userLogin)
       .pipe(
-        tap(res => {
+        tap((res) => {
           if (res.success) {
-            this.setSession(res.data)
-            this.registerUserActivity()
+            this.setSession(res.data);
+            this.registerUserActivity();
           } else {
             // console.error('There is an issue with the Registration')
             // console.error(res.error);
@@ -55,14 +69,15 @@ export class AuthService {
   }
 
   register(userData: UserRegisterDto): Observable<IRequestResponse<any>> {
-    return this.http.post<IRequestResponse<any>>(this.baseUrl + 'auth/register', userData)
+    return this.http
+      .post<IRequestResponse<any>>(this.baseUrl + 'auth/register', userData)
       .pipe(
-        tap(res => {
+        tap((res) => {
           if (res.success) {
-            this.setSession(res.data)
-            this.registerUserActivity()
+            this.setSession(res.data);
+            this.registerUserActivity();
           } else {
-            console.error('There is an issue with the Registration')
+            console.error('There is an issue with the Registration');
             console.error(res.error);
           }
         }),
@@ -74,7 +89,7 @@ export class AuthService {
     const expiresAt = moment(authResult.expiresAt);
 
     localStorage.setItem('id_token', authResult.access_token);
-    localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
+    localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
 
     this.decodeJwt();
 
@@ -83,10 +98,10 @@ export class AuthService {
 
   logout() {
     this._userService.cleanUserData();
-    localStorage.removeItem("id_token");
-    localStorage.removeItem("expires_at");
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('expires_at');
     this.cookieService.delete('access_token');
-    document.cookie = `access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
+    document.cookie = `access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     this.$gaService.event('user_logout', `manually_logged_out`);
     this._router.navigate(['/auth/login']);
   }
@@ -98,10 +113,10 @@ export class AuthService {
    */
   logout_in_silence() {
     this._userService.cleanUserData();
-    localStorage.removeItem("id_token");
-    localStorage.removeItem("expires_at");
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('expires_at');
     this.cookieService.delete('access_token');
-    document.cookie = `access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
+    document.cookie = `access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     this.$gaService.event('user_logout', `programmatically_logged_out`);
   }
 
@@ -115,7 +130,7 @@ export class AuthService {
   }
 
   getExpiration() {
-    const expiration = localStorage.getItem("expires_at");
+    const expiration = localStorage.getItem('expires_at');
     if (expiration) {
       const expiresAt = JSON.parse(expiration);
       return moment(expiresAt);
@@ -137,19 +152,17 @@ export class AuthService {
   }
 
   shouldRedirectUserFromRegisterPageToLoginPage() {
-    return document.referrer === 'https://adfluens.io/' &&
+    return (
+      document.referrer === 'https://adfluens.io/' &&
       this.hasUserBeenActive() &&
-      !this.redirectedUser;
+      !this.redirectedUser
+    );
   }
-
 
   public get getJwt(): string | null {
-    if (this.isLoggedIn())
-      return localStorage.getItem('id_token');
-    else
-      return null;
+    if (this.isLoggedIn()) return localStorage.getItem('id_token');
+    else return null;
   }
-
 
   decodeJwt(): void {
     const jwt = this.getJwt;
@@ -159,7 +172,7 @@ export class AuthService {
     }
 
     this._jwtData = this._jwtHelper.decodeToken(jwt);
-    localStorage.setItem(this.JWT_STORAGE_KEY, JSON.stringify(this._jwtData))
+    localStorage.setItem(this.JWT_STORAGE_KEY, JSON.stringify(this._jwtData));
   }
 
   public get userFirstName(): string | null {
@@ -172,25 +185,20 @@ export class AuthService {
     return jwtData ? jwtData.lastName : null;
   }
 
-
   public get userEmail(): string | null {
     const jwtData = this.userJwtData;
     return jwtData ? jwtData.email : null;
   }
-
 
   public get userLastLoginProvider(): string | null {
     const jwtData = this.userJwtData;
     return jwtData ? jwtData.lastLoginProvider : null;
   }
 
-
   public get isFirstSessionEver(): boolean | null {
     const jwtData = this.userJwtData;
     return jwtData ? jwtData.firstSessionEver : null;
   }
-
-
 
   public get userJwtData(): IJwtData | null {
     const data = localStorage.getItem(this.JWT_STORAGE_KEY);
@@ -201,6 +209,4 @@ export class AuthService {
 
     return null;
   }
-
-
 }

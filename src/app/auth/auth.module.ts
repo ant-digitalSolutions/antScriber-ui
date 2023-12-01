@@ -12,6 +12,8 @@ import { AuthRoutes } from './auth.routing';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import {  MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RegisterWithEmailComponent } from './components/register-with-email/register-with-email.component';
+import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
 
 
 
@@ -19,7 +21,9 @@ import {  MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   declarations: [
     RegisterComponent,
     ForgotPassComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterWithEmailComponent,
+    EmailVerificationComponent
   ],
   imports: [
     RouterModule.forChild(AuthRoutes),
