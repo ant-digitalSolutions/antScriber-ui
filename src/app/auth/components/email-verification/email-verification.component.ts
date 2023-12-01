@@ -74,8 +74,8 @@ export class EmailVerificationComponent
             this._router.navigate([], {
               relativeTo: this._routes,
               queryParams: {
-                step: 'email-verification'
-              }
+                step: 'email-verification',
+              },
             });
           }
           this.isCodeSent = true;
@@ -104,7 +104,11 @@ export class EmailVerificationComponent
         duration: 2000,
         panelClass: 'snack-success',
       });
-      this.$gaService.event('register_intent', 'email_verification', 'send_email');
+      this.$gaService.event(
+        'register_intent',
+        'email_verification',
+        'send_email'
+      );
 
       this.authService
         .sendEmailVerification(this.emailForm.value.email)
@@ -112,13 +116,14 @@ export class EmailVerificationComponent
           this.isCodeSent = true;
           this.isLoading = false;
           this.spinner.hide();
+          this.authService.setRegistrationEmail(this.emailForm.value.email);
+
           this._router.navigate([], {
             relativeTo: this._routes,
             queryParams: {
-              step: 'code-verification'
-            }
+              step: 'code-verification',
+            },
           });
-        
         });
     }
   }
@@ -150,17 +155,20 @@ export class EmailVerificationComponent
     if (isValid) {
       this.spinner.show();
       this.authService
-        .verifyCode(this.emailForm.value.email, verificationCode)
+        .verifyCode(this.userEmail!, verificationCode)
         .subscribe({
           next: (response) => {
             if (response.success === true) {
-              this.$gaService.event('register_intent', 'email_verification', 'code_verified');
+              this.$gaService.event(
+                'register_intent',
+                'email_verification',
+                'code_verified'
+              );
 
               this._router.navigate(['../profile'], {
                 relativeTo: this._routes,
-                queryParams: { }
+                queryParams: {},
               });
-            
             }
             this.spinner.hide();
           },
@@ -174,13 +182,17 @@ export class EmailVerificationComponent
               this.code[i] = '';
             }
             (document.querySelector('.input1') as HTMLInputElement)?.focus();
-            this.$gaService.event('register_intent', 'email_verification', 'code_incorrect');
+            this.$gaService.event(
+              'register_intent',
+              'email_verification',
+              'code_incorrect'
+            );
           },
         });
     }
   }
 
-  public get userEmail(): string {
-    return this.emailForm.valid ? this.emailForm.value.email : '';
+  public get userEmail(): string | null {
+    return this.authService.registrationUserEmail ? this.authService.registrationUserEmail : '';
   }
 }

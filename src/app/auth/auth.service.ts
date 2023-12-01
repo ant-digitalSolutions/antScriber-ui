@@ -24,6 +24,8 @@ export class AuthService {
 
   JWT_STORAGE_KEY = 'user_jwt_data';
 
+  _registration_userEmail = '';
+
   constructor(
     private http: HttpClient,
     private cookieService: CookieService,
@@ -175,6 +177,10 @@ export class AuthService {
     localStorage.setItem(this.JWT_STORAGE_KEY, JSON.stringify(this._jwtData));
   }
 
+  setRegistrationEmail(email: string): void {
+    this._registration_userEmail = email;
+  }
+
   public get userFirstName(): string | null {
     const jwtData = this.userJwtData;
     return jwtData ? jwtData.firstName : null;
@@ -209,4 +215,10 @@ export class AuthService {
 
     return null;
   }
+
+  
+  public get registrationUserEmail() : string | null {
+    return this._registration_userEmail;
+  }
+  
 }

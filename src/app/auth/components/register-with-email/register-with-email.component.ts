@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { AuthService } from '../../auth.service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-with-email',
@@ -20,17 +25,30 @@ export class RegisterWithEmailComponent implements OnInit {
     protected $gaService: GoogleAnalyticsService,
     private _projectService: BlogProjectsService,
     private router: Router,
+    private _routes: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.initForm();
+    if (!this._authService.registrationUserEmail) {
+      this.router.navigate(['../email-verification'], {
+        relativeTo: this._routes,
+        queryParams: {
+          step: 'email-verification',
+        },
+      });
+    }
   }
 
   initForm() {
     const regex = RegExp('(?=.*?[0-9])(?=.*?[#?!@$%^&*-])');
     this.form = new FormGroup({
       firstName: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      lastName: new FormControl(''),
+      email: new FormControl(
+        { value: this._authService.registrationUserEmail, disabled: true },
+         [Validators.required, Validators.email] 
+      ),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
@@ -47,8 +65,6 @@ export class RegisterWithEmailComponent implements OnInit {
       )
     );
   }
-
-
 
   get f() {
     return this.form.controls;
