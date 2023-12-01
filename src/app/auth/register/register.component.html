@@ -130,9 +130,11 @@
           <div class="form-container m-t-48" *ngIf="registerWithPass">
             <router-outlet></router-outlet>
           </div>
+
+
           <div
             class="d-flex justify-content-center w-300 d-block m-t-48"
-            *ngIf="showForm"
+           *ngIf="!registerWithPass"
           >
             Already have an Account?
 
