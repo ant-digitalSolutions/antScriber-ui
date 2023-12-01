@@ -1,0 +1,20 @@
+<div>
+  <form class="d-flex flex-col" [formGroup]="emailForm" *ngIf="!isCodeSent">
+    <mat-form-field>
+      <input matInput placeholder="Enter your email" formControlName="email" />
+    </mat-form-field>
+    <button mat-raised-button (click)="sendEmail()" class="bg-plum text-white f-w-500">
+      Send Verification Code
+    </button>
+  </form>
+
+  <form class="d-flex flex-col" [formGroup]="verificationCodeForm" *ngIf="isCodeSent">
+    <mat-form-field>
+      <input matInput placeholder="Enter verification code" formControlName="verificationCode">
+      <mat-error *ngIf="verificationCodeForm.controls['verificationCode'].hasError('incorrectCode')">
+        Incorrect verification code.
+      </mat-error>
+    </mat-form-field>
+    <button mat-raised-button (click)="verifyCode()" class="bg-plum text-white f-w-500">Verify Code</button>
+  </form>
+</div>
