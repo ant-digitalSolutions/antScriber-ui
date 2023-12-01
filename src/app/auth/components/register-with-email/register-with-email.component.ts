@@ -9,6 +9,7 @@ import { AuthService } from '../../auth.service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-register-with-email',
@@ -27,7 +28,8 @@ export class RegisterWithEmailComponent implements OnInit {
     protected $gaService: GoogleAnalyticsService,
     private _projectService: BlogProjectsService,
     private router: Router,
-    private _routes: ActivatedRoute
+    private _routes: ActivatedRoute,
+    private spinner: NgxSpinnerService,
   ) {}
 
   ngOnInit(): void {
@@ -76,6 +78,7 @@ export class RegisterWithEmailComponent implements OnInit {
     const userData = this.form.value;
     userData.email = this.form.get('email')?.value;
     if (this.form.valid) {
+      this.spinner.show();
       this.isLoading = true;
       this._authService.logout_in_silence();
       this._authService.register(userData).subscribe((r) => {
@@ -97,6 +100,7 @@ export class RegisterWithEmailComponent implements OnInit {
             r.error
           );
         }
+        this.spinner.hide()
       });
     }
   }
