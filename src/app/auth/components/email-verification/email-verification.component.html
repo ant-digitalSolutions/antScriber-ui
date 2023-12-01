@@ -3,18 +3,77 @@
     <mat-form-field>
       <input matInput placeholder="Enter your email" formControlName="email" />
     </mat-form-field>
-    <button mat-raised-button (click)="sendEmail()" class="bg-plum text-white f-w-500">
+    <button
+      mat-raised-button
+      (click)="sendEmail()"
+      class="bg-plum text-white f-w-500"
+    >
       Send Verification Code
     </button>
   </form>
 
-  <form class="d-flex flex-col" [formGroup]="verificationCodeForm" *ngIf="isCodeSent">
+  <div class="code-input-container d-flex flex-col m-t-20" *ngIf="isCodeSent">
+    <div class="inputs-elements d-flex align-content-center">
     <mat-form-field>
-      <input matInput placeholder="Enter verification code" formControlName="verificationCode">
-      <mat-error *ngIf="verificationCodeForm.controls['verificationCode'].hasError('incorrectCode')">
-        Incorrect verification code.
-      </mat-error>
+      <input
+        matInput
+        class="code-input input1"
+        #input1
+        [(ngModel)]="code[0]"
+        (keyup)="onCodeChange(0, $event)"
+        maxlength="1"
+      />
     </mat-form-field>
-    <button mat-raised-button (click)="verifyCode()" class="bg-plum text-white f-w-500">Verify Code</button>
-  </form>
+    <mat-form-field>
+      <input
+        matInput
+        class="code-input input2"
+        #input2
+        [(ngModel)]="code[1]"
+        (keyup)="onCodeChange(1, $event)"
+        maxlength="1"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        class="code-input input3"
+        #input3
+        [(ngModel)]="code[2]"
+        (keyup)="onCodeChange(2, $event)"
+        maxlength="1"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        class="code-input input4"
+        #input4
+        [(ngModel)]="code[3]"
+        (keyup)="onCodeChange(3, $event)"
+        maxlength="1"
+      />
+    </mat-form-field>
 </div>
+    <mat-error
+      *ngIf="
+        verificationCodeForm.controls['verificationCode'].hasError(
+          'incorrectCode'
+        )
+      "
+    >
+      Incorrect verification code.
+    </mat-error>
+    <button
+      mat-raised-button
+      (click)="verifyCode()"
+      class="bg-plum text-white f-w-500 m-t-24"
+    >
+      Verify Code
+    </button>
+  </div>
+</div>
+
+<ngx-spinner type="ball-scale-multiple" size="large" [fullScreen]="false">
+  <p class="loading-text p-t-32 text-white">Checking Code</p>
+</ngx-spinner>

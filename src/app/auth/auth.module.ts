@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import {  MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RegisterWithEmailComponent } from './components/register-with-email/register-with-email.component';
 import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
@@ -35,7 +36,8 @@ import { EmailVerificationComponent } from './components/email-verification/emai
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    NgxSpinnerModule
   ]
 })
 export class AuthModule { }
