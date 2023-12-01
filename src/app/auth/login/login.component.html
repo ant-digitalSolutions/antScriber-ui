@@ -180,7 +180,7 @@
           <span class="d-block f-w-300 text-center m-t-24" *ngIf="!isLoggedIn"
             >New to Adfluens?
             <a
-              [routerLink]="['/auth/register']"
+              [routerLink]="['/auth/signup']"
               class="text-decoration-none text-primary f-w-500 f-s-14"
             >
               Create an account</a
@@ -189,7 +189,7 @@
           <span class="d-block f-w-300 text-center m-t-24" *ngIf="isLoggedIn"
             >Sign Up as a different Person?
             <a
-              [routerLink]="['/auth/register']"
+              [routerLink]="['/auth/signup']"
               [queryParams]="{ loginForceDisplayForm: 'true' }"
               class="text-decoration-none text-primary f-w-500 f-s-14"
             >

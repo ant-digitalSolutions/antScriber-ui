@@ -97,9 +97,10 @@
                 </div>
               </button> -->
             </div>
+          <div class="text-center m-t-16" >OR</div>
+
           </div>
 
-          <div class="text-center m-t-16" *ngIf="showForm && !registerWithPass">OR</div>
 
           <ng-container *ngIf="hasInvalidCredentials">
             <div class="error-message-container">
@@ -117,7 +118,7 @@
             <button
               mat-stroked-button
               class="w-100 m-t-16"
-              (click)="registerWithPass = true"
+              (click)="onRegisterWithPass()"
               *ngIf="!registerWithPass"
             >
               <div class="d-flex align-items-center">
@@ -127,14 +128,7 @@
           </div>
 
           <div class="form-container m-t-48" *ngIf="registerWithPass">
-            <ng-container *ngIf="!emailVerified; else registerComponent">
-              <app-email-verification
-                (codeVerifiedEvent)="emailVerified = true"
-              ></app-email-verification>
-            </ng-container>
-            <ng-template #registerComponent>
-              <app-register-with-email></app-register-with-email>
-            </ng-template>
+            <app-email-verification></app-email-verification>
           </div>
           <div
             class="d-flex justify-content-center w-300 d-block m-t-48"

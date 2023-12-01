@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
   showForm = true;
 
   registerWithPass = false;
-  
+
   emailVerified = false;
 
   constructor(
@@ -41,6 +41,14 @@ export class RegisterComponent implements OnInit {
     this.$gaService.event('register_intent', 'page_on_init', 'register_page');
 
     this.checkUserStatus();
+
+    this.route.queryParamMap.subscribe(p => {
+      if (p.keys.length === 0) {
+        this.registerWithPass = false;
+      } else {
+        this.registerWithPass = true;
+      }
+    })
   }
 
   public get bigScreen(): boolean {
@@ -99,6 +107,16 @@ export class RegisterComponent implements OnInit {
     if (loginForceDisplayForm) {
       this.showForm = true;
     }
+  }
+
+  onRegisterWithPass() {
+    this.registerWithPass = true;
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        step: 'email-verification'
+      }
+    });
   }
 
   public get isLoggedIn(): boolean {
