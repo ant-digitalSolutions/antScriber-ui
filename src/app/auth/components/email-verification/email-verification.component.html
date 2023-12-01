@@ -1,7 +1,7 @@
 <div>
   <form class="d-flex flex-col" [formGroup]="emailForm" *ngIf="!isCodeSent">
     <mat-form-field>
-      <input matInput placeholder="Enter your email" formControlName="email" />
+      <input matInput placeholder="Enter your email" formControlName="email" class="email-input"/>
     </mat-form-field>
     <button
       mat-raised-button
@@ -13,6 +13,9 @@
   </form>
 
   <div class="code-input-container d-flex flex-col m-t-20" *ngIf="isCodeSent">
+    <p class="text-center m-b-48">
+      We sent you a 4-digit code to {{userEmail}}, please enter the code below to confirm your email address.
+    </p>
     <div class="inputs-elements d-flex align-content-center">
     <mat-form-field>
       <input
@@ -64,13 +67,14 @@
     >
       Incorrect verification code.
     </mat-error>
-    <button
+    <!-- <button
       mat-raised-button
       (click)="verifyCode()"
       class="bg-plum text-white f-w-500 m-t-24"
     >
       Verify Code
-    </button>
+    </button> -->
+    <a [routerLink]="" (click)="sendEmail()" class="text-center resend-email-btn">Resend Code</a>
   </div>
 </div>
 
