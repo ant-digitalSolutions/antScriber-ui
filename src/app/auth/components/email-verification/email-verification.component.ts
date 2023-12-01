@@ -104,6 +104,7 @@ export class EmailVerificationComponent
         duration: 2000,
         panelClass: 'snack-success',
       });
+      this.$gaService.event('register_intent', 'email_verification', 'send_email');
 
       this.authService
         .sendEmailVerification(this.emailForm.value.email)
@@ -145,6 +146,7 @@ export class EmailVerificationComponent
   verifyCode() {
     const verificationCode = this.code.join('');
     let isValid = verificationCode.length === 4;
+
     if (isValid) {
       this.spinner.show();
       this.authService
@@ -152,7 +154,9 @@ export class EmailVerificationComponent
         .subscribe({
           next: (response) => {
             if (response.success === true) {
-              this._router.navigate(['profile'], {
+              this.$gaService.event('register_intent', 'email_verification', 'code_verified');
+
+              this._router.navigate(['../profile'], {
                 relativeTo: this._routes,
                 queryParams: { }
               });
@@ -170,6 +174,7 @@ export class EmailVerificationComponent
               this.code[i] = '';
             }
             (document.querySelector('.input1') as HTMLInputElement)?.focus();
+            this.$gaService.event('register_intent', 'email_verification', 'code_incorrect');
           },
         });
     }
