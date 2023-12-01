@@ -1,7 +1,7 @@
 <div>
   <form class="d-flex flex-col" [formGroup]="emailForm" *ngIf="!isCodeSent">
     <mat-form-field>
-      <input matInput placeholder="Enter your email" formControlName="email" class="email-input"/>
+      <input matInput placeholder="Enter your email" formControlName="email" class="email-input" cdkFocusInitial/>
     </mat-form-field>
     <button
       mat-raised-button

@@ -20,6 +20,8 @@ export class RegisterWithEmailComponent implements OnInit {
   form: FormGroup;
   isLoading: boolean = false;
 
+  hidePassword = true;
+
   constructor(
     private _authService: AuthService,
     protected $gaService: GoogleAnalyticsService,
@@ -71,10 +73,12 @@ export class RegisterWithEmailComponent implements OnInit {
   }
 
   submit() {
+    const userData = this.form.value;
+    userData.email = this.form.get('email')?.value;
     if (this.form.valid) {
       this.isLoading = true;
       this._authService.logout_in_silence();
-      this._authService.register(this.form.value).subscribe((r) => {
+      this._authService.register(userData).subscribe((r) => {
         this.isLoading = false;
         if (r.success) {
           this._projectService.refreshProjects().then(() => {

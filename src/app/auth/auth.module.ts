@@ -15,6 +15,7 @@ import {  MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RegisterWithEmailComponent } from './components/register-with-email/register-with-email.component';
 import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { TokenVerificationComponent } from './components/token-verification/token-verification.component';
 
 
 
@@ -24,7 +25,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ForgotPassComponent,
     LoginComponent,
     RegisterWithEmailComponent,
-    EmailVerificationComponent
+    EmailVerificationComponent,
+    TokenVerificationComponent
   ],
   imports: [
     RouterModule.forChild(AuthRoutes),
