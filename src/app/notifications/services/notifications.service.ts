@@ -1,9 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, interval, switchMap, tap } from 'rxjs';
+import { Observable, catchError, interval, switchMap, tap, throwError } from 'rxjs';
 import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
 import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 import { NotificationResponseDTO } from '../dtos/response-notification.dto';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class NotificationsService {
@@ -22,7 +23,7 @@ export class NotificationsService {
   // indicate if the user can load more notifications from the server.
   _canLoadMoreNotifications = true;
 
-  constructor(private _http: HttpClient) {
+  constructor(private _http: HttpClient, private _snackBar: MatSnackBar) {
     this.checkForUnseenNotificationsRunner();
   }
 
@@ -48,6 +49,9 @@ export class NotificationsService {
         tap((r) => {
           if (r.success) {
             this._userNotifications.push(...r.data!);
+            if (r.data!.length < this._amountOfNotificationToGet ) {
+              this._canLoadMoreNotifications = false;
+            }
           } else {
             this._canLoadMoreNotifications = false;
           }
@@ -112,6 +116,27 @@ export class NotificationsService {
           if (r.success) {
             this._unseenNotifications = r.data!;
           }
+        })
+      );
+  }
+
+  deleteNotification(notificationId: number): Observable<IRequestResponse<boolean>> {
+    return this._http.delete<IRequestResponse<boolean>>(this.baseUrl + notificationId)
+      .pipe(
+        tap(response => {
+          if (response && response.success) {
+            // Remove the notification from the local array
+            this._userNotifications = this._userNotifications.filter(notification => notification.id !== notificationId);
+            this._snackBar.open(`Notification Deleted.`, undefined, {
+              duration: 2500,
+              panelClass: 'snack-success'
+            });
+          }
+        }),
+        catchError(error => {
+          // Handle the error appropriately
+          console.error('Error occurred while deleting notification:', error);
+          return throwError(() => new Error('Error occurred while deleting notification'));
         })
       );
   }

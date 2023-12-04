@@ -6,26 +6,35 @@
   </div>
 </div> -->
   <div class="notifications-outer-container">
-    <button
+    <div
       mat-menu-item
-      class="p-y-10 p-x-2"
+      class="p-y-10 p-x-2 w-100"
       *ngFor="let notification of notificationsList"
       [ngClass]="{ 'un-seen': !notification.isSeen }"
       (click)="onClick(notification)"
     >
-      <div class="d-flex align-items-center noti-inner-container p-b-0">
+      <div class="d-flex align-items-center noti-inner-container p-b-0 w-100">
         <!-- <img [src]="notification.img" class="rounded-circle" width="48" /> -->
         <div class="m-l-24">
           <h5 class="f-s-14 f-w-600 m-0 mat-subtitle-1">
             {{ notification.title }}
           </h5>
-          <span>{{ notification.message }}</span>
+          <p class="p-r-10">{{ notification.message }}</p>
           <span class="noti-date">{{ notification.createdAt | timeago }}</span>
         </div>
         <span class="un-read-indicator" *ngIf="!notification.isRead"></span>
+        <button mat-icon-button class="notification-options" (click)="openNotificationMenu($event, notification.id)" [matMenuTriggerFor]="notificationOptions"
+        >
+          <mat-icon>more_vert</mat-icon>
+        </button>
       </div>
-    </button>
+    </div>
     <div class="p-y-12 p-x-32 p-b-0" *ngIf="showLoadBtn">
       <button mat-flat-button class="w-100 text-underline" (click)="loadMoreNotifications($event)">Load More</button>
     </div>
   </div>
+
+
+  <mat-menu #notificationOptions="matMenu" class="notification-menu">
+    <app-notification-options [notificationId]="selectedNotificationId"></app-notification-options>
+  </mat-menu>

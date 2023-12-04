@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificationResponseDTO } from '../../dtos/response-notification.dto';
 import { NotificationsService } from '../../services/notifications.service';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
   selector: 'app-notification-list',
@@ -10,6 +11,9 @@ import { NotificationsService } from '../../services/notifications.service';
 })
 export class NotificationListComponent implements OnInit {
   isLoading = false;
+
+  @ViewChild('notificationOptions') menuTrigger: MatMenuTrigger;
+  selectedNotificationId: number;
 
   constructor(
     private _notiService: NotificationsService,
@@ -44,6 +48,12 @@ export class NotificationListComponent implements OnInit {
   loadMoreNotifications($event: MouseEvent) {
     $event.stopPropagation();
     this.getNotifications();
+  }
+
+  openNotificationMenu($event:MouseEvent, notificationId: number) {
+    $event.stopPropagation()
+    this.selectedNotificationId = notificationId;
+    this.menuTrigger.openMenu();
   }
 
   
