@@ -8,6 +8,8 @@ import { UserService } from 'src/app/user/services/user.service';
 import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -38,7 +40,8 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     protected $gaService: GoogleAnalyticsService,
     private _projectService: BlogProjectsService,
-    private _userService: UserService
+    private _userService: UserService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -108,20 +111,34 @@ export class LoginComponent implements OnInit {
       email: this.form.value.email!,
       password: this.form.value.password!,
     };
-    this.authService.login(userLogin).subscribe((r) => {
-      this.isLoading = false;
-      if (r.success) {
-        this._projectService.refreshProjects().then(() => {
-          this.router.navigateByUrl('/');
-        });
-        this.$gaService.event(
-          'user_login',
-          'user_logged_in',
-          'provider_password'
-        );
-      } else {
-        this.hasInvalidCredentials = true;
-        this.$gaService.event('user_login', 'credential_error', r.error);
+  
+    this.authService.login(userLogin).subscribe({
+      next: (r) => {
+        this.isLoading = false;
+        if (r.success) {
+          this._projectService.refreshProjects().then(() => {
+            this.router.navigateByUrl('/');
+          });
+          this.$gaService.event('user_login', 'user_logged_in', 'provider_password');
+        } 
+      },
+      error: (error: HttpErrorResponse) => {
+        this.isLoading = false;
+        this.$gaService.event('user_login', 'credential_error');
+
+        if (error.status === 401) {
+          this._snackBar.open('Invalid credentials. Please try again.', undefined, {
+            duration: 3000,
+            panelClass: 'snack-error'
+          });
+          this.hasInvalidCredentials = true;
+        } else {
+          // Handle other errors
+          this._snackBar.open('An error occurred', undefined, {
+            duration: 3000,
+            panelClass: 'snack-error'
+          });
+        }
       }
     });
   }
