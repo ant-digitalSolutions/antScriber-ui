@@ -27,7 +27,7 @@
           </div>
 
           <div
-            class="row m-y-48 custom-row align-items-center justify-content-center"
+            class="row m-t-48 custom-row align-items-center justify-content-center"
           >
             <div class="logged-in-message-container" *ngIf="isLoggedIn">
               <p class="text-center">
@@ -95,13 +95,27 @@
             </div> -->
           </div>
 
-          <div class="m-y-48 text-center" *ngIf="!isLoggedIn">OR</div>
+          <div class="m-y-16 text-center" *ngIf="!isLoggedIn">OR</div>
 
+          <div class="col-12">
+            <button
+              mat-stroked-button
+              class="w-100 "
+              (click)="loginWithPass = true"
+              *ngIf="!loginWithPass"
+            >
+              <div class="d-flex align-items-center">
+                Log in with Email and Password
+              </div>
+            </button>
+          </div>
+
+          <!-- LOGIN PASS START -->
           <form
             class="m-t-30"
             [formGroup]="form"
             (ngSubmit)="submit()"
-            *ngIf="!isLoggedIn"
+            *ngIf="!isLoggedIn && loginWithPass"
           >
             <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
               >Email</mat-label
@@ -177,7 +191,10 @@
             </button>
             <!-- input -->
           </form>
-          <span class="d-block f-w-300 text-center m-t-24" *ngIf="!isLoggedIn"
+
+
+
+          <span class="d-block f-w-300 text-center m-t-48" *ngIf="!isLoggedIn"
             >New to Adfluens?
             <a
               [routerLink]="['/auth/signup']"
@@ -186,7 +203,7 @@
               Create an account</a
             >
           </span>
-          <span class="d-block f-w-300 text-center m-t-24" *ngIf="isLoggedIn"
+          <span class="d-block f-w-300 text-center m-t-48" *ngIf="isLoggedIn"
             >Sign Up as a different Person?
             <a
               [routerLink]="['/auth/signup']"

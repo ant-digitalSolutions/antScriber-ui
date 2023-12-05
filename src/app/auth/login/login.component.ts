@@ -29,6 +29,8 @@ export class LoginComponent implements OnInit {
 
   renderContent = false;
 
+  loginWithPass = false;
+
   constructor(
     private settings: CoreService,
     private router: Router,
