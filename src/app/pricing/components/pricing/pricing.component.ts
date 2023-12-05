@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { StripeService } from 'ngx-stripe';
 import { switchMap } from 'rxjs';
 import { ProductsEnum } from 'src/app/common/subscriptions/products.enum';
+import { DialogService } from 'src/app/dialogs/dialog.service';
 import { SubscriptionDetailsComponent } from 'src/app/payment/components/subscription-details/subscription-details.component';
 import { SubscriptionUpdateConfirmationComponent } from 'src/app/payment/components/subscription-update-confirmation/subscription-update-confirmation.component';
 import { SubscriptionResponseDTO } from 'src/app/payment/dtos/subscription-response.dto';
@@ -12,10 +14,8 @@ import {
 } from 'src/app/payment/dtos/subscription-update.dto';
 import { PaymentService } from 'src/app/payment/services/payment.service';
 import { UserSubscriptionDto } from 'src/app/user/dto/user-subscription-data.dto';
-import { cardPricing_standard } from '../../data/card-pricing-standard.data';
+import { getCardPricingStandard } from '../../data/card-pricing-standard.data';
 import { IPriceCardData } from '../../dto/pricing-card-data.interface';
-import { DialogService } from 'src/app/dialogs/dialog.service';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
 
 @Component({
   selector: 'app-pricing',
@@ -28,7 +28,7 @@ export class AppPricingComponent {
   // yearlyPrice: any = (a: any, b: number) => ;
 
   // card 1
-  pricecards: IPriceCardData[] = cardPricing_standard;
+  pricecards: IPriceCardData[] = getCardPricingStandard();
 
   userCurrentSubscription: UserSubscriptionDto;
 

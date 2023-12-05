@@ -33,6 +33,7 @@ import { NgxStripeModule } from 'ngx-stripe';
 import { WalkthroughToursModule } from './walkthrough-tours/walkthrough-tours.module';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { determinePublishableKey } from 'src/environments/enviroment.dynamic';
 
 export function HttpLoaderFactory(http: HttpClient): any {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -82,7 +83,7 @@ export function HttpLoaderFactory(http: HttpClient): any {
     ),
     WalkthroughToursModule,
     NgxStripeModule.forRoot(
-      'pk_test_51OGm1FHoHvOMDqa7sZQuKq137svuk6uAT5fW6AhILaKvRAbOA8zhIVLLSEsHyhdjPKfDpW7RLxNkMipJgUWc1OPm00xmtURYVf'
+      determinePublishableKey()
     ),
     NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
   ],
