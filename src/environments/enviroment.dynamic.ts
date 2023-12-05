@@ -51,8 +51,8 @@ export function getBaseApiURL(): string {
   if (localStorage.getItem('apiUrl')) {
     return localStorage.getItem('apiUrl') || defaultApiURL;
   }
-  localStorage.setItem('apiUrl', apiURL);
-  return apiURL;
+  localStorage.setItem('apiUrl', determineApiUrl());
+  return determineApiUrl();
 }
 
 
