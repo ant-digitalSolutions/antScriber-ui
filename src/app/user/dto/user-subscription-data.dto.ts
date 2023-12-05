@@ -1,7 +1,7 @@
 import { ProductsEnum } from "src/app/common/subscriptions/products.enum";
 
 export class UserSubscriptionDto {
-  mainSubscription: ProductsEnum;
+  mainSubscription: string;
 
   stripePriceId: string;
 

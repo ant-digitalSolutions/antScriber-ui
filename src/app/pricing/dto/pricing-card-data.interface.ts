@@ -1,4 +1,3 @@
-import { ProductsEnum } from 'src/app/common/subscriptions/products.enum';
 import { IPricingCardRule } from './pricing-card-rules.interface';
 
 export interface IPriceCardData {
@@ -20,5 +19,5 @@ export interface IPriceCardData {
   stripeYearlyPriceId: string;
 
   // the ProductId in stripe
-  id: ProductsEnum;
+  id: string;
 }

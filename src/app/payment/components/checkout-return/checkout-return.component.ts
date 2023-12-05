@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { cardPricing_standard } from 'src/app/pricing/data/card-pricing-standard.data';
+import { getCardPricingStandard } from 'src/app/pricing/data/card-pricing-standard.data';
 import { UserService } from 'src/app/user/services/user.service';
 import { InvoiceDto } from '../../dtos/invoice.dto';
 import { PaymentSessionDto } from '../../dtos/payment-session.dto';
@@ -51,7 +51,7 @@ export class CheckoutReturnComponent implements OnInit {
   }
 
   setPlanName() {
-    this.planName = cardPricing_standard.find(
+    this.planName = getCardPricingStandard().find(
       (c) => c.id === this.plan.product
     )!.plan;
   }
