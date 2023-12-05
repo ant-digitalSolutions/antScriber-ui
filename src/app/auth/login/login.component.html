@@ -100,7 +100,7 @@
           <div class="col-12">
             <button
               mat-stroked-button
-              class="w-100 "
+              class="w-100"
               (click)="loginWithPass = true"
               *ngIf="!loginWithPass"
             >
@@ -114,7 +114,6 @@
           <form
             class="m-t-30"
             [formGroup]="form"
-            (ngSubmit)="submit()"
             *ngIf="!isLoggedIn && loginWithPass"
           >
             <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
@@ -152,7 +151,23 @@
               >Password</mat-label
             >
             <mat-form-field class="w-100" color="primary">
-              <input matInput type="password" formControlName="password" />
+              <input
+                matInput
+                [type]="hidePassword ? 'password' : 'text'"
+                formControlName="password"
+              />
+              <button
+                mat-flat-button
+                matSuffix
+                (click)="onHidePassword($event)"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hidePassword"
+                class="btn-pass f-w-500"
+              >
+                <mat-icon class="op-5">{{
+                  hidePassword ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </button>
               <mat-hint
                 *ngIf="f['password'].touched && f['password'].invalid"
                 class="m-b-16 error-msg"
@@ -183,6 +198,7 @@
               color="primary"
               class="w-100 m-t-30"
               [disabled]="!form.valid"
+              (click)="submit()"
             >
               <ng-container *ngIf="isLoading">
                 <mat-spinner class="btn-loading-spinner"></mat-spinner>
@@ -191,8 +207,6 @@
             </button>
             <!-- input -->
           </form>
-
-
 
           <span class="d-block f-w-300 text-center m-t-48" *ngIf="!isLoggedIn"
             >New to Adfluens?
