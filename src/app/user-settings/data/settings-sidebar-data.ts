@@ -13,12 +13,14 @@ export const userSettingsNavItems: NavItem[] = [
     iconName: 'workspace_premium',
     route: 'subscriptions',
     relativeRoute: true,
+    prodReady: true,
   },
   {
     displayName: 'Payments',
     iconName: 'credit_card',
     route: 'payments',
     relativeRoute: true,
+    prodReady: true,
   },
   {
     displayName: 'Tasks',
@@ -31,5 +33,6 @@ export const userSettingsNavItems: NavItem[] = [
     iconName: 'analytics',
     route: 'usage',
     relativeRoute: true,
+    prodReady: true,
   },
 ];
