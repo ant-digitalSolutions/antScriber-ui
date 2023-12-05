@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { AuthService } from '../../auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-token-verification',
@@ -22,7 +23,7 @@ export class TokenVerificationComponent implements OnInit {
     const token = this._routes.snapshot.paramMap.get('token');
 
     if (!token) {
-      this.tokenVerificationError();
+      this.handleNotFoundError();
     } else {
       this.verifyToken(token);
     }
@@ -46,15 +47,28 @@ export class TokenVerificationComponent implements OnInit {
           });
         }
       },
-      error: () => {
-        // Set the error on the form control
-        this.tokenVerificationError()
-        
+      error: (error: HttpErrorResponse) => {
+        switch (error.status) {
+          case 403: // Forbidden
+          this._snackBar.open(`It seem this use has already been verified.`, undefined, {
+            duration: 2500,
+            panelClass: 'snack-error',
+          });
+            this.router.navigate(['/auth/login']);
+            break;
+          case 404: // Not Found
+            // Handle Not Found error accordingly
+            this.handleNotFoundError();
+            break;
+          default:
+            // Set the error on the form control for generic errors
+            this.handleNotFoundError();
+        }
       },
     });
   }
 
-  tokenVerificationError() {
+  handleNotFoundError() {
     this._snackBar.open(`Oops, we can't verify the token.`, undefined, {
       duration: 2500,
       panelClass: 'snack-error',
