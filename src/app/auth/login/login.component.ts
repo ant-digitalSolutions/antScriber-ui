@@ -106,6 +106,10 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
+    if (!this.form.valid) {
+      return;
+    }
+    
     this.isLoading = true;
     const userLogin = {
       email: this.form.value.email!,
