@@ -20,10 +20,8 @@ export class ErrorHandlingInterceptor implements HttpInterceptor {
     return next.handle(request)
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          let errorMsg = '';
           if (error.error instanceof ErrorEvent) {
-            errorMsg = `Error: ${error.error.message}`;
-            this._snackBar.open(`Oops, please try gain.`, undefined, {
+            this._snackBar.open(`Oops, please try again.`, undefined, {
               duration: 4000,
               panelClass: 'snack-error'
             });
@@ -39,7 +37,6 @@ export class ErrorHandlingInterceptor implements HttpInterceptor {
             }
 
             // other type of error in the server.
-            errorMsg = `Error Code: ${error.status},  Message: ${error.message}`;
 
             this._snackBar.open(
               `Oops, we have an error. Please try again.`,
@@ -61,7 +58,7 @@ export class ErrorHandlingInterceptor implements HttpInterceptor {
               }
             );
           }
-          return throwError(() => new Error(errorMsg));
+          return throwError(() => error);
         })
       )
   }
