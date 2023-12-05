@@ -34,6 +34,7 @@ import { WalkthroughToursModule } from './walkthrough-tours/walkthrough-tours.mo
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { determinePublishableKey } from 'src/environments/enviroment.dynamic';
+import { SocketGatewayModule } from './socket-gateway/socket-gateway.module';
 
 export function HttpLoaderFactory(http: HttpClient): any {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -86,6 +87,7 @@ export function HttpLoaderFactory(http: HttpClient): any {
       determinePublishableKey()
     ),
     NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
+    SocketGatewayModule
   ],
   exports: [TablerIconsModule],
   bootstrap: [AppComponent],
