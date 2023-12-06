@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { getBaseServerDomain } from 'src/environments/enviroment.dynamic';
 import { StorageObjectNamesEnum } from '../common/enum/storage-objects-name.enum';
+import { EventsHubService } from '../events-hub/events-hub.service';
+import { EventType } from '../events-hub/enums/event-type.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +13,7 @@ export class SocketGatewayService {
 
   private _serverDomain = getBaseServerDomain();
 
-  constructor() {
+  constructor(private _eventsHub: EventsHubService) {
    
     this.registerWithServer();
 
@@ -26,6 +28,7 @@ export class SocketGatewayService {
 
     this.socket.on('newNotification', (data) => {
       console.log('New notification received:', data);
+      this._eventsHub.emit(EventType.NotificationNew, data)
       // Handle the received notification
     });
 
