@@ -20,7 +20,7 @@
             {{ notification.title }}
           </h5>
           <p class="p-r-10">{{ notification.message }}</p>
-          <span class="noti-date">{{ notification.createdAt | timeago }}</span>
+          <span class="noti-date">{{ createdAt(notification) | timeago }}</span>
         </div>
         <span class="un-read-indicator" *ngIf="!notification.isRead"></span>
         <button mat-icon-button class="notification-options" (click)="openNotificationMenu($event, notification.id)" [matMenuTriggerFor]="notificationOptions"

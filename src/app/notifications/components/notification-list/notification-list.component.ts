@@ -60,5 +60,9 @@ export class NotificationListComponent implements OnInit {
   public get showLoadBtn() : boolean {
     return this._notiService.canLoadMoreNotifications;
   }
+
+  public createdAt(notification: NotificationResponseDTO): Date {
+    return notification.createdAt ? notification.createdAt : new Date();
+  }
   
 }
