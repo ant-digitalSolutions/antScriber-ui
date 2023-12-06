@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterModule } from '@angular/router';
 import { TablerIconsModule } from 'angular-tabler-icons';
@@ -17,6 +17,7 @@ import { CoreService } from 'src/app/services/core.service';
 import { AppSearchDialogComponent } from '../full/vertical/header/header.component';
 import { BrandingComponent } from '../full/vertical/sidebar/branding.component';
 import { HeaderMenuItemsComponent } from './header-menu-items/header-menu-items.component';
+import {  MatMenu } from '@angular/material/menu';
 
 @Component({
   selector: 'app-header-main',
@@ -54,6 +55,8 @@ export class HeaderMainComponent {
   showFiller = false;
 
   coreOptions = this.coreService.getOptions();
+
+  @ViewChild('notificationMenu') notificationTrigger: MatMenu;
 
   selectedLanguage: any = {
     language: 'English',
@@ -115,7 +118,13 @@ export class HeaderMainComponent {
    *
    * @memberof HeaderMainComponent
    */
-  onNotificationsClick() {
+  onNotificationsClick(_event: MouseEvent) {
+
+    if (this._notificationsService.hasNotifications) {
+      const notificationTrigger = document.getElementById('notification-menu-trigger');
+      notificationTrigger?.click();
+    }
+
     this._notificationsService.markMultipleAsSeen().subscribe(r => {
       if (r.success) {
         this._notificationsService.resetNotificationCount()

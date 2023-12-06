@@ -14,18 +14,18 @@ import { EventType } from 'src/app/events-hub/enums/event-type.enum';
 export class NotificationsService {
   baseUrl = getBaseApiURL() + 'notifications/';
 
-  _userNotifications: NotificationResponseDTO[] = [];
+  private _userNotifications: NotificationResponseDTO[] = [];
 
   private _unseenNotifications: number = 0;
 
   // the amount of notifications to get in each request
-  _amountOfNotificationToGet = 5;
+  private _amountOfNotificationToGet = 5;
 
   // for the pagination of the notifications
-  _pageIndex = 0;
+  private _pageIndex = 0;
 
   // indicate if the user can load more notifications from the server.
-  _canLoadMoreNotifications = true;
+  private _canLoadMoreNotifications = true;
 
   constructor(private _http: HttpClient, private _snackBar: MatSnackBar, private _eventsHub: EventsHubService) {
     this.getUnseenNotificationCount();
@@ -161,5 +161,9 @@ export class NotificationsService {
   public get canLoadMoreNotifications() : boolean {
     return this._canLoadMoreNotifications;
   }
+
   
+  public get hasNotifications() : boolean {
+    return this._userNotifications.length > 0;
+  }
 }
