@@ -12,6 +12,7 @@ import { IRequestResponse } from '../common/dto/request-response.dto';
 import { UserService } from '../user/services/user.service';
 import { UserLogin } from './dtos/login.dto';
 import { UserRegisterDto } from './dtos/user-register.dto';
+import { SocketGatewayService } from '../socket-gateway/socket-gateway.service';
 
 @Injectable({
   providedIn: 'root',
@@ -32,10 +33,12 @@ export class AuthService {
     protected $gaService: GoogleAnalyticsService,
     private _router: Router,
     private _jwtHelper: JwtHelperService,
-    private _userService: UserService
+    private _userService: UserService,
+    private _socketService: SocketGatewayService
   ) {
     if (this.isLoggedIn()) {
       this._userService.getProfile(false).subscribe();
+
     }
   }
 
@@ -104,6 +107,8 @@ export class AuthService {
     this.decodeJwt();
 
     this._userService.getProfile(false).subscribe();
+
+    this._socketService.registerWithServer();
   }
 
   logout() {
@@ -224,9 +229,7 @@ export class AuthService {
     return null;
   }
 
-  
-  public get registrationUserEmail() : string | null {
+  public get registrationUserEmail(): string | null {
     return this._registration_userEmail;
   }
-  
 }

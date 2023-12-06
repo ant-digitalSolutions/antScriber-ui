@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { getBaseServerDomain } from 'src/environments/enviroment.dynamic';
+import { StorageObjectNamesEnum } from '../common/enum/storage-objects-name.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,8 @@ export class SocketGatewayService {
   private _serverDomain = getBaseServerDomain();
 
   constructor() {
-    this.socket = io(this._serverDomain); // Replace with your server URL
+   
+    this.registerWithServer();
 
     this.socket.on('connect', () => {
       console.log('Connected to WebSocket server');
@@ -30,8 +32,11 @@ export class SocketGatewayService {
     // Additional event listeners can be added here
   }
 
-  registerWithServer(clientId: string) {
-    this.socket.emit('registerClient', { clientId });
+  registerWithServer() {
+    const token = localStorage.getItem(StorageObjectNamesEnum.JwtToken);
+    this.socket = io(this._serverDomain, {
+      auth: { token }
+    });
   }
 
   ngOnDestroy() {

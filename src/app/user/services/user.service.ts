@@ -16,7 +16,6 @@ import { environment } from 'src/environments/environment';
 import { IUserChangePasswordDto } from '../dto/user-change-password.dto';
 import { IUserProfileDto } from '../dto/user-profile.dto';
 import { UserSubscriptionDto } from './../dto/user-subscription-data.dto';
-import { SocketGatewayService } from 'src/app/socket-gateway/socket-gateway.service';
 
 
 @Injectable({
@@ -35,15 +34,12 @@ export class UserService {
     private _httpClient: HttpClient,
     private _snackBar: MatSnackBar,
     private _router: Router,
-    private _socketService: SocketGatewayService
   ) {
     subscriptionLimitReachedObserver.subscribe((r) => {
       if (r) this.subscriptionLimitReached(r);
     });
 
-    const userUUID = this.userJwtData?.user_uuid;
-    if (userUUID)
-     this._socketService.registerWithServer(userUUID)
+   
 
   }
 
