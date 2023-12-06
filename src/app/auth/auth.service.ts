@@ -119,6 +119,8 @@ export class AuthService {
     document.cookie = `access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     this.$gaService.event('user_logout', `manually_logged_out`);
     this._router.navigate(['/auth/login']);
+
+    this._socketService.ngOnDestroy();
   }
 
   /**
@@ -133,6 +135,9 @@ export class AuthService {
     this.cookieService.delete('access_token');
     document.cookie = `access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     this.$gaService.event('user_logout', `programmatically_logged_out`);
+
+    this._socketService.ngOnDestroy();
+
   }
 
   public isLoggedIn() {
