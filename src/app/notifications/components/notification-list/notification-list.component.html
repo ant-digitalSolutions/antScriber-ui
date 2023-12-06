@@ -36,5 +36,5 @@
 
 
   <mat-menu #notificationOptions="matMenu" class="notification-menu">
-    <app-notification-options [notificationId]="selectedNotificationId"></app-notification-options>
+    <app-notification-options [notificationId]="selectedNotificationId" (close)="closeMenu()"></app-notification-options>
   </mat-menu>

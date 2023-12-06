@@ -36,12 +36,14 @@ export class NotificationListComponent implements OnInit {
   }
 
   onClick(noti: NotificationResponseDTO) {
-    console.log(`Click on Notification with ID: ${noti.id}`);
-
     this._notiService.markAsRead(noti.id).subscribe();
 
     if (noti.redirectUrlAfterClick) {
-      this._router.navigate([noti.redirectUrlAfterClick]);
+      if (noti.redirectUrlAfterClick.indexOf('http') > 0) {
+        window.open(noti.redirectUrlAfterClick, "_blank");
+      } else {
+        this._router.navigate([noti.redirectUrlAfterClick]);
+      }
     }
   }
 
@@ -50,19 +52,21 @@ export class NotificationListComponent implements OnInit {
     this.getNotifications();
   }
 
-  openNotificationMenu($event:MouseEvent, notificationId: number) {
-    $event.stopPropagation()
+  openNotificationMenu($event: MouseEvent, notificationId: number) {
+    $event.stopPropagation();
     this.selectedNotificationId = notificationId;
     this.menuTrigger.openMenu();
   }
 
-  
-  public get showLoadBtn() : boolean {
+  closeMenu() {
+    this.menuTrigger.closeMenu();
+  }
+
+  public get showLoadBtn(): boolean {
     return this._notiService.canLoadMoreNotifications;
   }
 
   public createdAt(notification: NotificationResponseDTO): Date {
     return notification.createdAt ? notification.createdAt : new Date();
   }
-  
 }
