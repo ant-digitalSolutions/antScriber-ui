@@ -1,12 +1,16 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, interval, switchMap, tap, throwError } from 'rxjs';
+import { Observable, catchError, tap, throwError } from 'rxjs';
 import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
 import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 import { NotificationResponseDTO } from '../dtos/response-notification.dto';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { EventsHubService } from 'src/app/events-hub/events-hub.service';
+import { EventType } from 'src/app/events-hub/enums/event-type.enum';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class NotificationsService {
   baseUrl = getBaseApiURL() + 'notifications/';
 
@@ -23,18 +27,18 @@ export class NotificationsService {
   // indicate if the user can load more notifications from the server.
   _canLoadMoreNotifications = true;
 
-  constructor(private _http: HttpClient, private _snackBar: MatSnackBar) {
-    this.checkForUnseenNotificationsRunner();
+  constructor(private _http: HttpClient, private _snackBar: MatSnackBar, private _eventsHub: EventsHubService) {
+    this.getUnseenNotificationCount();
+
+    this._eventsHub.EventEmitter.subscribe(e => {
+      if (e.type === EventType.NotificationNew) {
+        this._unseenNotifications++;
+        this._userNotifications.unshift(e.data)
+      }
+    })
   }
 
-  // every 30 seconds, request the unseen notifications
-  checkForUnseenNotificationsRunner() {
-    interval(30000)
-      .pipe(switchMap(() => this.getUnseenNotificationCount()))
-      .subscribe({
-        complete: () => console.info('Got notification count'),
-      });
-  }
+
 
   listNotifications() {
     let params = new HttpParams()
