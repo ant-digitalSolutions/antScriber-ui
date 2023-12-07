@@ -2,17 +2,21 @@ const defaultServerDomain = 'https://brain.adfluens.io';
 const defaultApiURL = 'https://brain.adfluens.io/api/';
 
 export function getBaseServerDomain() {
-    switch (window.location.host) {
-        case 'localhost:4200':
+  const env = determineEnvironment();
+    switch (env) {
+        case 'local':
             return 'http://localhost:3000';
-        case 'dev.adfluens.io':
+        case 'staging':
             return 'https://devbrain.adfluens.io';
         default:
             return defaultServerDomain;
     }
 }
 
-export function determineEnvironment(): string {
+export function determineEnvironment(): 'local' | 'staging' | 'production' {
+  if (window.location.href.indexOf('ngrok')) {
+    return 'local';
+  }
     switch (window.location.host) {
       case 'localhost:4200':
         return 'local';
@@ -37,14 +41,6 @@ export function determineEnvironment(): string {
 
 function determineApiUrl(): string {
     return getBaseServerDomain() + '/api/'
-    switch (window.location.host) {
-        case 'localhost:4200':
-            return 'http://localhost:3000/api/';
-        case 'dev.adfluens.io':
-            return 'https://devbrain.adfluens.io/api/';
-        default:
-            return defaultApiURL;
-    }
 }
 
 export function getBaseApiURL(): string {
