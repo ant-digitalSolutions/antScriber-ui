@@ -142,3 +142,7 @@ $walkthrough-user-initialization-text-secondary: #e4a1cf;
     }
   }
 }
+
+.border-round {
+  border-radius: $border-radius !important;
+}
