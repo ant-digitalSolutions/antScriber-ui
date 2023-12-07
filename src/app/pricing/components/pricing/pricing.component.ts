@@ -132,14 +132,24 @@ export class AppPricingComponent {
     });
   }
 
+  priceToShow(cardData: IPriceCardData): number {
+    return this.annualPricing ? cardData.planAnnualPrice : cardData.planMonthlyPrice;
+  }
+
   yearlyPrice(cardData: IPriceCardData) {
+    return cardData.planAnnualPrice;
     return Math.round(
-      (cardData.planOriginalPrice * 12 -
-        cardData.planOriginalPrice *
+      (cardData.planMonthlyPrice * 12 -
+        cardData.planMonthlyPrice *
           12 *
           (cardData.planAnnualPercentOff! / 100)) /
         12
     );
+  }
+
+  annualSaveText(cardData: IPriceCardData): string {
+    const savedPercent = Math.floor(((cardData.planMonthlyPrice - cardData.planAnnualPrice) / cardData.planMonthlyPrice) * 100)
+    return `<span class="text-decoration-line">$${cardData.planMonthlyPrice}</span>, SAVE ${savedPercent}%`
   }
 
   /**
@@ -207,4 +217,12 @@ export class AppPricingComponent {
       (c) => c.id === this.userCurrentSubscription.mainSubscription
     )!.index;
   }
+
+  
+
+  
+  public get billedInterval() : string {
+    return this.annualPricing ? 'annually' : 'monthly'
+  }
+  
 }

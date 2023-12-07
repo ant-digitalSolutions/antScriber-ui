@@ -13,7 +13,7 @@ if (env === 'local') {
     //     description: 'Discover the power of Adfluens',
     //     btnText: '',
     //     free: true,
-    //     planOriginalPrice: 0,
+    //     planMonthlyPrice: 0,
     //     planAnnualPercentOff: 1,
     //     planDiscountPercentOff: 1,
     //     rules: [
@@ -58,7 +58,8 @@ if (env === 'local') {
       btnText: 'Upgrade',
       free: false,
 
-      planOriginalPrice: 15,
+      planMonthlyPrice: 15,
+      planAnnualPrice: 9.99,
       planDiscountPercentOff: 20,
       planAnnualPercentOff: 40,
       stripeMonthlyPriceId: 'price_1OAcjdFXqwjYWAm8qXUIhbRR',
@@ -105,7 +106,8 @@ if (env === 'local') {
       description: `Designed for creators who need more room to grow, it offers an expanded set of tools to keep your content flowing and your audience engaged.`,
       btnText: 'Upgrade',
       free: false,
-      planOriginalPrice: 49,
+      planMonthlyPrice: 29.99,
+      planAnnualPrice: 19.99,
       planDiscountPercentOff: 20,
       planAnnualPercentOff: 40,
       stripeMonthlyPriceId: 'price_1OAcl7FXqwjYWAm8s5ssMyck',
@@ -153,7 +155,8 @@ if (env === 'local') {
       description: `ultimate tier for serious content professionals who want no limits on their creative output, with premium features that cater to expansive projects and diverse needs.`,
       btnText: 'Upgrade',
       free: false,
-      planOriginalPrice: 99,
+      planMonthlyPrice: 99,
+      planAnnualPrice: 90.99,
       planDiscountPercentOff: 50,
       planAnnualPercentOff: 51,
       stripeMonthlyPriceId: 'price_1O5JFcFXqwjYWAm81cDrag3G',
@@ -205,50 +208,6 @@ if (env === 'local') {
   ];
 } else if (env === 'staging') {
   cardPricing_standard = [
-    // {
-    //     id: 1,
-    //     plan: 'Free',
-    //     description: 'Discover the power of Adfluens',
-    //     btnText: '',
-    //     free: true,
-    //     planOriginalPrice: 0,
-    //     planAnnualPercentOff: 1,
-    //     planDiscountPercentOff: 1,
-    //     rules: [
-    //         {
-    //             title: '10k words per month',
-    //             limit: true,
-    //         },
-    //         {
-    //             title: 'Single Project',
-    //             limit: true,
-    //         },
-    //         {
-    //             title: 'Advance Editor',
-    //             limit: true,
-    //         },
-    //         {
-    //             title: '25+ languages',
-    //             limit: true,
-    //         },
-    //         {
-    //             title: `20+ assistant's tasks`,
-    //             limit: true,
-    //         },
-    //         {
-    //             title: `15+ voice tones`,
-    //             limit: true,
-    //         },
-    //         {
-    //             title: 'Chat',
-    //             limit: false,
-    //         },
-    //         {
-    //             title: 'Create Images',
-    //             limit: false,
-    //         },
-    //     ],
-    // },
     {
       index: 2,
       plan: 'Solo',
@@ -256,7 +215,8 @@ if (env === 'local') {
       btnText: 'Upgrade',
       free: false,
 
-      planOriginalPrice: 15,
+      planMonthlyPrice: 15,
+      planAnnualPrice: 9.99,
       planDiscountPercentOff: 20,
       planAnnualPercentOff: 40,
       stripeMonthlyPriceId: 'price_1OGs3uHoHvOMDqa7oTpWkv8R',
@@ -303,7 +263,8 @@ if (env === 'local') {
       description: `Designed for creators who need more room to grow, it offers an expanded set of tools to keep your content flowing and your audience engaged.`,
       btnText: 'Upgrade',
       free: false,
-      planOriginalPrice: 49,
+      planMonthlyPrice: 29,
+      planAnnualPrice: 19.99,
       planDiscountPercentOff: 20,
       planAnnualPercentOff: 40,
       stripeMonthlyPriceId: 'price_1OGs2SHoHvOMDqa7VsM1C83M',
@@ -351,7 +312,8 @@ if (env === 'local') {
       description: `ultimate tier for serious content professionals who want no limits on their creative output, with premium features that cater to expansive projects and diverse needs.`,
       btnText: 'Upgrade',
       free: false,
-      planOriginalPrice: 99,
+      planMonthlyPrice: 99,
+      planAnnualPrice: 19.99,
       planDiscountPercentOff: 50,
       planAnnualPercentOff: 51,
       stripeMonthlyPriceId: 'price_1O5JFcFXqwjYWAm81cDrag3G',
@@ -409,7 +371,7 @@ if (env === 'local') {
     //     description: 'Discover the power of Adfluens',
     //     btnText: '',
     //     free: true,
-    //     planOriginalPrice: 0,
+    //     planMonthlyPrice: 0,
     //     planAnnualPercentOff: 1,
     //     planDiscountPercentOff: 1,
     //     rules: [
@@ -454,7 +416,8 @@ if (env === 'local') {
       btnText: 'Upgrade',
       free: false,
 
-      planOriginalPrice: 15,
+      planMonthlyPrice: 15,
+      planAnnualPrice: 9.99,
       planDiscountPercentOff: 20,
       planAnnualPercentOff: 40,
       stripeMonthlyPriceId: 'price_1OGs3uHoHvOMDqa7oTpWkv8R',
@@ -501,7 +464,8 @@ if (env === 'local') {
       description: `Designed for creators who need more room to grow, it offers an expanded set of tools to keep your content flowing and your audience engaged.`,
       btnText: 'Upgrade',
       free: false,
-      planOriginalPrice: 49,
+      planMonthlyPrice: 29,
+      planAnnualPrice: 19.99,
       planDiscountPercentOff: 20,
       planAnnualPercentOff: 40,
       stripeMonthlyPriceId: 'price_1OGs2SHoHvOMDqa7VsM1C83M',
@@ -549,7 +513,8 @@ if (env === 'local') {
       description: `ultimate tier for serious content professionals who want no limits on their creative output, with premium features that cater to expansive projects and diverse needs.`,
       btnText: 'Upgrade',
       free: false,
-      planOriginalPrice: 99,
+      planMonthlyPrice: 99,
+      planAnnualPrice: 19.99,
       planDiscountPercentOff: 50,
       planAnnualPercentOff: 51,
       stripeMonthlyPriceId: 'price_1O5JFcFXqwjYWAm81cDrag3G',
