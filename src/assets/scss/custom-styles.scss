@@ -147,6 +147,7 @@ $walkthrough-user-initialization-text-secondary: #e4a1cf;
 
 // pricing area
 .plan-interval-selector {
+  height: 35px !important;
   .mat-button-toggle-checked {
     .mat-button-toggle-button {
       background-color: $plum;
@@ -157,6 +158,8 @@ $walkthrough-user-initialization-text-secondary: #e4a1cf;
 
   .mat-button-toggle-button {
     font-weight: 500;
+  height: 35px !important;
+
   }
 
   &.btn-width-150 {
