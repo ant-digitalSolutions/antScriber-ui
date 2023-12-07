@@ -26,7 +26,7 @@ export const UserSettingsRoutes: Routes = [
       //     component: UserSettingsBillingComponent,
       //   },
       {
-        path: 'subscriptions',
+        path: 'plans',
         children: [
           {
             path: '',

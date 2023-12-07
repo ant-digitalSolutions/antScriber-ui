@@ -70,8 +70,28 @@
       class="w-100 align-items-center justify-content-start h-40px"
       [routerLink]="['/settings/profile']"
     >
-      <mat-icon fontSet="material-icons-outlined">settings</mat-icon>
-      Settings
+      <mat-icon fontSet="material-icons-outlined">manage_accounts</mat-icon>
+      Profile
+    </button>
+
+    <!-- Plans -->
+    <button
+      mat-flat-button
+      class="w-100 align-items-center justify-content-start h-40px"
+      [routerLink]="['/settings/plans']"
+    >
+      <mat-icon fontSet="material-icons-outlined">sell</mat-icon>
+      Plans
+    </button>
+
+    <!-- Usage -->
+    <button
+      mat-flat-button
+      class="w-100 align-items-center justify-content-start h-40px"
+      [routerLink]="['/settings/usage']"
+    >
+      <mat-icon fontSet="material-icons-outlined">data_usage</mat-icon>
+      Usage
     </button>
       
     <!-- LogOut -->
