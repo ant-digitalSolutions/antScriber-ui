@@ -1,4 +1,4 @@
-<mat-card class="bg-plum shadow-none">
+<mat-card class="bg-plum shadow-none card-container">
   <mat-card-header class="justify-content-between m-b-48">
     <mat-icon class="close-icon text-white" (click)="onClose()">close</mat-icon>
     <mat-card-title>
@@ -6,7 +6,7 @@
     </mat-card-title>
   </mat-card-header>
 
-  <ng-container *ngIf="!isLoading; else loading">
+  <ng-container *ngIf="!isLoading">
     <mat-card-content>
       <table
         mat-table
@@ -66,10 +66,8 @@
       </button>
     </mat-card-actions>
   </ng-container>
-
-  <ng-template #loading>
-    <div class="col-12 align-items-center justify-content-center w-100 d-flex">
-      <mat-spinner class="text-white"></mat-spinner>
-    </div>
-  </ng-template>
 </mat-card>
+
+<ngx-spinner type="ball-scale-multiple" size="large" [fullScreen]="false">
+  <p class="loading-text p-t-32 text-white">Loading...</p>
+</ngx-spinner>
