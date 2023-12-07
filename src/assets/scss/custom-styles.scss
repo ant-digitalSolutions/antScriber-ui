@@ -125,13 +125,11 @@ $walkthrough-user-initialization-text-secondary: #e4a1cf;
     }
   }
   .chat-send-btn {
-
     background-color: #00000014 !important;
     box-shadow: none !important;
     min-width: 40px !important;
     padding: 10px !important;
 
-    
     mat-icon {
       font-size: 18px;
       height: 18px;
@@ -145,4 +143,25 @@ $walkthrough-user-initialization-text-secondary: #e4a1cf;
 
 .border-round {
   border-radius: $border-radius !important;
+}
+
+// pricing area
+.plan-interval-selector {
+  .mat-button-toggle-checked {
+    .mat-button-toggle-button {
+      background-color: $plum;
+      color: white;
+      font-weight: 400;
+    }
+  }
+
+  .mat-button-toggle-button {
+    font-weight: 500;
+  }
+
+  &.btn-width-150 {
+    .mat-button-toggle-button {
+      min-width: 150px;
+    }
+  }
 }

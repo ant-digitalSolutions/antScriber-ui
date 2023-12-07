@@ -1,0 +1,21 @@
+.save-text {
+    font-weight: 500;
+    font-size: 0.8rem;
+    padding-left: 10px;
+}
+
+.selector-outer-container-floating {
+
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    top: auto;
+    left: 0;
+    z-index: 999;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 90px;
+    background-color: #f1f1f1;
+}

@@ -1,0 +1,14 @@
+<div class="selector-outer-container-floating mat-elevation-z10">
+    <mat-button-toggle-group
+      name="planInterval"
+      aria-label="Plan Interval"
+      (valueChange)="setIntervalValue($event)"
+      [value]="'annual'"
+      class="plan-interval-selector"
+    >
+      <mat-button-toggle value="monthly">Monthly</mat-button-toggle>
+      <mat-button-toggle value="annual">Annual</mat-button-toggle>
+    </mat-button-toggle-group>
+    <span class="save-text">Save up to 33%</span>
+  </div>
+
