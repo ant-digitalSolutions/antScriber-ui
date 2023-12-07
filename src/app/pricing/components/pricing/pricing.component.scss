@@ -53,8 +53,14 @@
 
 @media screen and (max-width: 600px) {
 .card-outer-container {
-  flex-direction: column !important;
-  align-items: center;
+  // flex-direction: column !important;
+  // align-items: center;
+  display: block !important;
+
+  .card-container {
+    margin: auto;
+    height: auto;
+  }
 }
 }
 
