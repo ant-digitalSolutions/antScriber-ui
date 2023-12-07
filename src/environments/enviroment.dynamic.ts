@@ -14,7 +14,7 @@ export function getBaseServerDomain() {
 }
 
 export function determineEnvironment(): 'local' | 'staging' | 'production' {
-  if (window.location.href.indexOf('ngrok')) {
+  if (window.location.href.indexOf('ngrok') > 0) {
     return 'local';
   }
     switch (window.location.host) {
