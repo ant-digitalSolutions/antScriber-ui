@@ -6,6 +6,7 @@ import { getPlanDetailsFromStripeProductId } from 'src/app/pricing/data/card-pri
 import { SubscriptionResponseDTO } from '../../dtos/subscription-response.dto';
 import { PaymentService } from '../../services/payment.service';
 import { CancelSubscriptionConfirmationComponent } from '../cancel-subscription-confirmation/cancel-subscription-confirmation.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-subscription-details',
@@ -30,10 +31,12 @@ export class SubscriptionDetailsComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _analyticsService: AnalyticsService,
     private dialog: MatDialog,
-    private _paymentService: PaymentService
+    private _paymentService: PaymentService,
+    private spinner: NgxSpinnerService,
   ) {}
 
   ngOnInit(): void {
+    this.spinner.show();
     this.getSubscriptionData()
     this.getWordsUsage();
 
@@ -67,6 +70,7 @@ export class SubscriptionDetailsComponent {
 
   onClose(): void {
     this.dialogRef.close();
+    this.spinner.show()
   }
 
   openOfferModal(): void {
@@ -90,7 +94,13 @@ export class SubscriptionDetailsComponent {
 
   
   public get isLoading() : boolean {
-    return this.isLoadingSubscription || this.isLoadingWordUsage;
+    const loading = this.isLoadingSubscription || this.isLoadingWordUsage;
+
+    if (!loading) {
+      this.spinner.hide();
+    } 
+
+    return loading;
   }
   
   
