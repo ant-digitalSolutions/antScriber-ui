@@ -9,9 +9,9 @@ export const userSettingsNavItems: NavItem[] = [
     prodReady: true,
   },
   {
-    displayName: 'Subscriptions',
+    displayName: 'Plans',
     iconName: 'workspace_premium',
-    route: 'subscriptions',
+    route: 'plans',
     relativeRoute: true,
     prodReady: true,
   },

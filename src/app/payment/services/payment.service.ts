@@ -48,12 +48,12 @@ export class PaymentService {
         window.location.protocol +
         '//' +
         window.location.host +
-        '/settings/subscriptions/checkout-return?session_id={CHECKOUT_SESSION_ID}',
+        '/settings/plans/checkout-return?session_id={CHECKOUT_SESSION_ID}',
       cancelURL:
         window.location.protocol +
         '//' +
         window.location.host +
-        '/settings/subscriptions/checkout-return?session_id={CHECKOUT_SESSION_ID}',
+        '/settings/plans/checkout-return?session_id={CHECKOUT_SESSION_ID}',
       prodPriceId,
     };
     return this.http.post<IRequestResponse<any>>(
