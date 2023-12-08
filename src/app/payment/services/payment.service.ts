@@ -11,6 +11,7 @@ import { SubscriptionUpdateDTO } from '../dtos/subscription-update.dto';
   providedIn: 'root',
 })
 export class PaymentService {
+
   
   baseUrl = getBaseApiURL();
 
@@ -92,5 +93,10 @@ export class PaymentService {
     return this.http.post<IRequestResponse<InvoiceDto>>(this.baseUrl + 'user-subscription/update-subscription', {
       data
     });
+  }
+
+  createCustomerPortalSession() {
+    return this.http
+    .get<IRequestResponse<any>>(this.baseUrl + 'user-subscription/customer-portal-session');
   }
 }
