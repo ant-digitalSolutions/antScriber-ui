@@ -1,6 +1,11 @@
 <div
-  class="d-flex justify-content-center align-items-start payment-list-container p-4 p-b-100px"
+  class="d-flex justify-content-center align-items-start payment-list-container p-4 p-b-100px flex-col"
 >
+  <div class="payment-settings-container d-flex justify-content-end col-12 p-b-32">
+    <button mat-flat-button (click)="goToStripeCustomerPortal()" class="bg-plum border-round text-white f-w-400 mat-elevation-z8">
+      Payment Settings
+    </button>
+  </div>
   <!-- <div class="col-10 m-t-48 inner-container"> -->
   <mat-card class="border-round col-12 user-settings-card-max-width p-4 p-b-20">
     <mat-card-header>
@@ -9,7 +14,7 @@
       </mat-card-title>
     </mat-card-header>
 
-    <ng-container *ngIf="!loading;">
+    <ng-container *ngIf="!loading">
       <mat-card-content class="p-0">
         <mat-table [dataSource]="dataSource" class="">
           <!-- Status Column -->
@@ -70,5 +75,3 @@
   </mat-card>
   <!-- </div> -->
 </div>
-
-

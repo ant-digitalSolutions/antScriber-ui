@@ -42,4 +42,13 @@ export class ListPaymentsComponent implements OnInit {
       this.spinner.hide()
     });
   }
+
+  goToStripeCustomerPortal() {
+    const session = this._paymentService.createCustomerPortalSession().subscribe(r => {
+      if (r.success) {
+        window.open(r.data, "_blank");
+      }
+    });
+    console.log(JSON.stringify(session));
+  }
 }
