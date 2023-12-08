@@ -3,6 +3,7 @@ import { IWordsUsageDto } from '../../dtos/word-usage.dto';
 import { WordsUsageByDay } from '../../dtos/words-usage-by-day.dot';
 import { AnalyticsService } from '../../services/analytics.service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-usage-home',
@@ -21,11 +22,12 @@ export class UsageHomeComponent {
   totalWords_gpt_3: number;
   totalWords_gpt_4: number;
 
-  loading = true;
+  loading = false;
 
   constructor(
     private _analyticService: AnalyticsService,
-    protected $gaService: GoogleAnalyticsService
+    protected $gaService: GoogleAnalyticsService,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
@@ -34,9 +36,12 @@ export class UsageHomeComponent {
   }
 
   getData() {
+    this.spinner.show('pieCharts');
+    this.spinner.show('mainGraph');
     this._analyticService.getWordsUsage().subscribe((r) => {
       if (r.success) {
         this.wordsUsage = r.data!;
+        this.spinner.hide('pieCharts')
       }
     });
 
@@ -56,6 +61,7 @@ export class UsageHomeComponent {
           this.wordsUsageByDay = r.data!;
           this.calculateTotalWords_gpt_3();
           this.calculateTotalWords_gpt_4();
+          this.spinner.hide('mainGraph');
         }
       });
   }

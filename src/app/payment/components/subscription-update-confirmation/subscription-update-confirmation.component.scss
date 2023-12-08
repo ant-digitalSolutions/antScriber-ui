@@ -13,3 +13,10 @@
     min-height: 400px;
   }
 }
+
+@media screen and (max-width: 600px) {
+    .update-subscription-modal-interval-selector-container {
+        padding-bottom: 20px;
+        justify-content: center;
+    }
+}

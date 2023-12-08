@@ -31,6 +31,8 @@ export class SubscriptionUpdateConfirmationComponent implements OnInit {
 
   dataSource: MatTableDataSource<{ label: string; value: string }>;
 
+  updateSubscriptionLoading = false;
+
   constructor(
     public dialogRef: MatDialogRef<SubscriptionUpdateConfirmationComponent>,
     @Inject(MAT_DIALOG_DATA)
@@ -70,6 +72,7 @@ export class SubscriptionUpdateConfirmationComponent implements OnInit {
 
   onConfirm(): void {
     this.isLoading = true;
+    this.updateSubscriptionLoading = true;
     this.spinner.show();
     this.$gaService.event('plans', 'update', 'start_process');
 
@@ -88,6 +91,7 @@ export class SubscriptionUpdateConfirmationComponent implements OnInit {
           });
           this.$gaService.event('plans', 'update_error', r.error);
         }
+        this.updateSubscriptionLoading = false;
       });
   }
 
@@ -134,7 +138,9 @@ export class SubscriptionUpdateConfirmationComponent implements OnInit {
       } ${this._subscriptionUpdateDto.currency.toUpperCase()} *</strong>`,
     });
 
-    this.dataSource = new  MatTableDataSource<{ label: string; value: string }>(paymentDetails)
+    this.dataSource = new MatTableDataSource<{ label: string; value: string }>(
+      paymentDetails
+    );
 
     this.spinner.hide();
     this.isLoading = false;
