@@ -1,9 +1,15 @@
 .btn-cancel {
-    background-color: transparent;
-    color: #d4d4d4 !important;
+  background-color: transparent;
+  color: #d4d4d4 !important;
 }
 
 .payment-details {
-    border-color: #ce9ebe !important;
-    padding-top: 10px;
+  border-color: #ce9ebe !important;
+  padding-top: 10px;
+}
+
+.subscription-update-container {
+  .main-content {
+    min-height: 400px;
+  }
 }

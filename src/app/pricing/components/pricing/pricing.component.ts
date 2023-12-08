@@ -94,21 +94,40 @@ export class AppPricingComponent {
         this.checkIfShouldUpgrade(priceData) === 1
           ? SubscriptionUpdateType.Upgrade
           : SubscriptionUpdateType.Downgrade;
-      this.updateSubscription(stripePriceId, updateType);
+      this.updateSubscription(stripePriceId, updateType, priceData);
     }
   }
 
-  updateSubscription(priceId: string, updateType: SubscriptionUpdateType) {
+  updateSubscription(priceId: string, updateType: SubscriptionUpdateType, priceCard: IPriceCardData) {
     this.$gaService.event('plans', 'open_update_plan_modal', priceId);
 
-    this._paymentService.getSubscriptionUpdateData(priceId).subscribe((r) => {
-      if (r.success) {
-        r.data!.status = updateType;
-        this.handleSubscriptionUpdateResponse(r.data!);
+    const dialog = this.dialog.open(SubscriptionUpdateConfirmationComponent, {
+      width: '600px',
+      maxWidth: '95vw',
+      panelClass: 'subscription-details-modal',
+      data: {priceCard, updateType, isAnnualPricing: this.annualPricing },
+    });
+
+    dialog.afterClosed().subscribe((subscriptionUpdated) => {
+      if (subscriptionUpdated) {
+        this.dialogService.openMessageDialog({
+          message: 'Your subscription was successfully updated.',
+          okBtnText: 'Ok',
+        });
+        this.checkCurrentSubscription();
       } else {
-        this.$gaService.event('plans', 'open_update_plan_error', r.message);
+        //todo: don't update
       }
     });
+
+    // this._paymentService.getSubscriptionUpdateData(priceId).subscribe((r) => {
+    //   if (r.success) {
+    //     r.data!.status = updateType;
+    //     this.handleSubscriptionUpdateResponse(r.data!);
+    //   } else {
+    //     this.$gaService.event('plans', 'open_update_plan_error', r.message);
+    //   }
+    // });
   }
 
   handleSubscriptionUpdateResponse(subscriptionUpdate: SubscriptionUpdateDTO) {
@@ -140,13 +159,6 @@ export class AppPricingComponent {
 
   yearlyPrice(cardData: IPriceCardData) {
     return cardData.planAnnualPrice;
-    return Math.round(
-      (cardData.planMonthlyPrice * 12 -
-        cardData.planMonthlyPrice *
-          12 *
-          (cardData.planAnnualPercentOff! / 100)) /
-        12
-    );
   }
 
   annualSaveText(cardData: IPriceCardData): string {

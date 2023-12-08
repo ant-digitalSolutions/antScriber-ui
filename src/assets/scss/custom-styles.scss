@@ -168,3 +168,20 @@ $walkthrough-user-initialization-text-secondary: #e4a1cf;
     }
   }
 }
+
+// yearly r monthly selector, plan update modal
+
+.subscription-update-container {
+  .update-subscription-modal-interval-selector-container{
+    .mdc-label {
+      color: white;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .mdc-radio__inner-circle, .mdc-radio__outer-circle {
+      border-color: white !important;
+    }
+  }
+}
+
