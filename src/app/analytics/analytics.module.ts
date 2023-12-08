@@ -10,6 +10,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { MaterialModule } from '../material.module';
 import { UsageHomeComponent } from './components/usage-home/usage-home.component';
 import { WordUsageByDateStackedColumnsComponent } from './components/word-usage-by-date-stacked-columns/word-usage-by-date-stacked-columns.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
@@ -23,7 +24,8 @@ import { WordUsageByDateStackedColumnsComponent } from './components/word-usage-
     CommonModule,
     NgApexchartsModule,
     TablerIconsModule.pick(TablerIcons),
-    MaterialModule
+    MaterialModule,
+    NgxSpinnerModule
   ],
   providers: [AnalyticsService]
 })

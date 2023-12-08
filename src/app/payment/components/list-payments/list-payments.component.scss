@@ -6,4 +6,8 @@
     .inner-container {
         max-width: 800px;
     }
+
+    mat-card {
+        min-height: 300px !important;
+    }
 }

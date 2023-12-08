@@ -9,7 +9,7 @@
       </mat-card-title>
     </mat-card-header>
 
-    <ng-container *ngIf="!loading; else loadingData">
+    <ng-container *ngIf="!loading;">
       <mat-card-content class="p-0">
         <mat-table [dataSource]="dataSource" class="">
           <!-- Status Column -->
@@ -64,12 +64,11 @@
         </mat-table>
       </mat-card-content>
     </ng-container>
-
-    <ng-template #loadingData>
-      <div class="col-12 justify-content-center d-flex">
-        <mat-spinner></mat-spinner>
-      </div>
-    </ng-template>
+    <ngx-spinner type="ball-scale-multiple" size="large" [fullScreen]="false">
+      <p class="loading-text p-t-32 text-white">Loading...</p>
+    </ngx-spinner>
   </mat-card>
   <!-- </div> -->
 </div>
+
+

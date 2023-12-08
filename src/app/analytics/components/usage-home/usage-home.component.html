@@ -21,12 +21,15 @@
         [data]="wordsUsageByDay"
         *ngIf="wordsUsageByDay"
       ></app-word-usage-by-date-stacked-columns>
+      <ngx-spinner type="ball-scale-multiple" size="large" [fullScreen]="false" name="mainGraph">
+        <p class="loading-text p-t-32 text-white">Loading...</p>
+      </ngx-spinner>
     </div>
 
     <!-- right column with charts -->
     <div
       class="col-12 col-sm-12 col-md-4 d-flex flex-wrap justify-content-end p-0 usage-month-pie-chart-container"
-      *ngIf="wordsUsageByDay"
+      
     >
       <!-- Words Usage GPT-3.5 -->
       <app-words-usage-month-pie-chart
@@ -34,6 +37,7 @@
         [consumedWords]="totalWords_gpt_3"
         [wordsLimit]="wordsUsage.wordsMonthlyLimit_GPT_3"
         [title]="'GPT-3.5'"
+        *ngIf="wordsUsageByDay"
       >
       </app-words-usage-month-pie-chart>
 
@@ -43,8 +47,12 @@
         [consumedWords]="totalWords_gpt_4"
         [wordsLimit]="wordsUsage.wordsMonthlyLimit_GPT_4"
         [title]="'GPT-4'"
+        *ngIf="wordsUsageByDay"
       >
       </app-words-usage-month-pie-chart>
+      <ngx-spinner type="ball-scale-multiple" size="large" [fullScreen]="false" name="pieCharts">
+        <p class="loading-text p-t-32 text-white">Loading...</p>
+      </ngx-spinner>
     </div>
   </div>
 </div>

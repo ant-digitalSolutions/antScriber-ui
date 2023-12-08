@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { InvoiceDto } from '../../dtos/invoice.dto';
 import { PaymentService } from '../../services/payment.service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-list-payments',
@@ -20,7 +21,8 @@ export class ListPaymentsComponent implements OnInit {
 
   constructor(
     private _paymentService: PaymentService,
-    protected $gaService: GoogleAnalyticsService
+    protected $gaService: GoogleAnalyticsService,
+    private spinner: NgxSpinnerService,
   ) {}
 
   ngOnInit(): void {
@@ -29,6 +31,7 @@ export class ListPaymentsComponent implements OnInit {
   }
 
   listInvoices() {
+    this.spinner.show();
     this._paymentService.listInvoices().subscribe((r) => {
       if (r.success) {
         this.invoiceList = r.data;
@@ -36,6 +39,7 @@ export class ListPaymentsComponent implements OnInit {
       }
 
       this.loading = false;
+      this.spinner.hide()
     });
   }
 }
