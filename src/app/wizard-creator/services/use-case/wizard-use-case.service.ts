@@ -63,20 +63,10 @@ export class WizardUseCaseService {
     this.setWizardUseCaseGroup(this.useCaseGroupOpened);
     this._wizardUseCaseSubject.next(v);
     this._wizardUseCase = v;
-    // this.updateWizardFormFields();
-    this.updateQueryParamsWithUseCase(v);
+    this.updateRouteParams(v);
     this._wizardFormService.updateAdditionalData('useCase', v);
 
-
-    // log GA
-    // this.$gaService.pageView(`/wizard/${this._wizardUseCaseGroup}/${v}`,
-    //   'Wizard_Creator',
-    //   window.location.href
-    // );
-
     this.$gaService.event('wizard_use_case_selection', this._wizardUseCaseGroup, v, 1, true);
-
-    // this._cacheService.setUseCaseData(v, this._wizardUseCaseGroup);
   }
 
   setWizardUseCaseGroup(v: string) {
@@ -86,22 +76,12 @@ export class WizardUseCaseService {
 
   }
 
-  updateQueryParamsWithUseCase(useCase: string) {
-    const queryParams = {
-      ...this._activeRoute.snapshot.queryParams
-    };
-
-    queryParams[QueryParamNames.UseCase] = useCase;
-    queryParams[QueryParamNames.UseCageGroup] = this._wizardUseCaseGroup;
-
-    this.handleUseCaseCache(useCase, this._wizardUseCaseGroup)
-
-    this._router.navigate([], {
+  updateRouteParams(useCase: string) {
+    this._router.navigate([`/wizard/creator/ucg/${this._wizardUseCaseGroup}/uc/${useCase}`], {
       relativeTo: this._activeRoute,
-      queryParams,
-      replaceUrl: true,
-    });
-  }
+      queryParams: this._activeRoute.snapshot.queryParams
+    })
+  } 
 
   handleUseCaseCache(useCase: string, useCaseGroup: string) {
     this._cacheService.setUseCaseData(useCase, this._wizardUseCaseGroup)

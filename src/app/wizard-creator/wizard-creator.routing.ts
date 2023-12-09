@@ -4,18 +4,11 @@ import { WizardCreatorHomeComponent } from './components/wizard-creator-home/wiz
 export const WizardCreatorRoutes: Routes = [
     {
         path: 'creator',
-        children: [
-            {
-                path: '',
-                component: WizardCreatorHomeComponent,
-                data: { breadcrumb: { skip: true } }
-                
-            },
-            {
-                path: 'doc/:docId',
-                component: WizardCreatorHomeComponent,
-                data: { breadcrumb: { skip: true } }
-            }
-        ],
+        component: WizardCreatorHomeComponent,
+        pathMatch: 'full',
+    },
+    {
+        path: 'creator/ucg/:ucg/uc/:uc',
+        component: WizardCreatorHomeComponent,
     }
 ];

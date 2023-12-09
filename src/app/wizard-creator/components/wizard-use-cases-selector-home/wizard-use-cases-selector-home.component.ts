@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { QueryParamNames } from 'src/app/common/enum/query-params-names.enum';
 import { CacheService } from 'src/app/common/services/cache/cache.service';
@@ -51,7 +51,6 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.setListeners()
-    this.setUseCaseFromParams();
     this.setInitialGroupOptions(true);
   }
 
@@ -85,6 +84,9 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
           this.selectUseCaseGroup(WizardCreatorUseCaseGroup.SocialMedia);
         }
       })
+
+      this._activeRoute.paramMap.pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(params => this.setUseCaseFromParams(params))
   }
 
   setUseCases(initialElements: boolean = true) {
@@ -116,25 +118,24 @@ export class WizardUseCasesSelectorHomeComponent implements OnInit, OnDestroy {
  * It also retrieves the latest form data from the cache if both use case and use case group are present in the query parameters,
  * otherwise it retrieves the wizard data from the storage.
  */
-  setUseCaseFromParams() {
-    const queryParams = this._activeRoute.snapshot.queryParams;
+  setUseCaseFromParams(params: ParamMap) {
     let hasUseCase = false;
     let hasUseCaseGroup = false;
 
-    if (queryParams[QueryParamNames.UseCageGroup]) {
+    if (params.has(QueryParamNames.UseCageGroup)) {
       // Select the use case group from the query parameters
-      this.selectUseCaseGroup(queryParams[QueryParamNames.UseCageGroup])
+      this.selectUseCaseGroup(params.get(QueryParamNames.UseCageGroup)!)
       hasUseCaseGroup = true;
     }
-    if (queryParams[QueryParamNames.UseCase]) {
+    if (params.has(QueryParamNames.UseCase)) {
       // Set the wizard use case from the query parameters
-      this._useCaseService.setWizardUseCase(queryParams[QueryParamNames.UseCase])
+      this._useCaseService.setWizardUseCase(params.get(QueryParamNames.UseCase)!)
       hasUseCase = true;
     }
 
     if (hasUseCase && hasUseCaseGroup) {
       // Get the latest form data from the cache and set it in the wizard form
-      const latestFormData = this._cacheService.getWizardDataByUseCase(queryParams[QueryParamNames.UseCase], queryParams[QueryParamNames.UseCageGroup]);
+      const latestFormData = this._cacheService.getWizardDataByUseCase(params.get(QueryParamNames.UseCase)!, params.get(QueryParamNames.UseCageGroup)!);
       if (latestFormData) {
         this._wizardForm.setWizardFormData(latestFormData);
       }
