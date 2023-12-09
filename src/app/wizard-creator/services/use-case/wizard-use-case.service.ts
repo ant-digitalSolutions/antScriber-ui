@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { ReplaySubject, Subject } from 'rxjs';
 import { WizardFormService } from '../wizard-form.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { QueryParamNames } from 'src/app/common/enum/query-params-names.enum';
 import { CacheService } from 'src/app/common/services/cache/cache.service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { UseCaseMetaAbstract } from '../../use-case-meta/use-case-meta.abastract';
