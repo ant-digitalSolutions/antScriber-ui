@@ -185,3 +185,30 @@ $walkthrough-user-initialization-text-secondary: #e4a1cf;
   }
 }
 
+
+// documents
+.ck-content pre {
+  background-color: #424141 !important;
+}
+.ck-content pre code {
+  white-space: pre-wrap !important;
+  text-shadow: none !important;
+}
+
+ckeditor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: $editor-outer-container-bc;
+  overflow-y: auto;
+
+  .ck-content {
+    max-width: 1200px;
+    width: 100%;
+    padding: 25px 5% !important;
+    min-height: calc(100dvh - $header-height - $inner-navbar-height);
+        border: none !important;
+    box-shadow: none;
+    background-color: $editor-bc;
+  }
+}
