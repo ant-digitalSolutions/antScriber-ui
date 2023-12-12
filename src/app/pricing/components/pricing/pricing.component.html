@@ -16,28 +16,21 @@
       Flexible Plans Tailored to Fit Your Creative's Unique Needs!
     </h4>
     <div class="d-flex align-items-center justify-content-center">
-      <!-- <span class="f-s-16 m-r-8 f-w-600 p-x-12">Monthly</span>
-      <mat-slide-toggle
-        (click)="annualPricing = !annualPricing"
-        color="primary"
-        [checked]="annualPricing"
-      >
-        <span class="f-s-16 m-r-8 f-w-600 p-x-12">Annual</span>
-      </mat-slide-toggle> -->
-      <ng-container *ngIf="!mobileView;else mobileSelector">
-      <app-plan-interval-selector
-        (intervaleSelected)="setPlanInterval($event)"
-      ></app-plan-interval-selector>
-    </ng-container>
+      <ng-container *ngIf="!mobileView; else mobileSelector">
+        <app-plan-interval-selector
+          (intervaleSelected)="setPlanInterval($event)"
+        ></app-plan-interval-selector>
+      </ng-container>
 
       <ng-template #mobileSelector>
-        <app-plan-interval-selector-floating (intervaleSelected)="setPlanInterval($event)"></app-plan-interval-selector-floating
+        <app-plan-interval-selector-floating
+          (intervaleSelected)="setPlanInterval($event)"
+        ></app-plan-interval-selector-floating
       ></ng-template>
     </div>
-    <!-- <div class="text-center m-t-6">Save UP to 33% on annual plans</div> -->
   </div>
 
-  <div class=" p-t-32 d-flex card-outer-container">
+  <div class="p-t-32 d-flex card-outer-container">
     <div
       class="col-sm-4 col-lg-4 col-10 card-container m-b-10"
       *ngFor="let pricecard of pricecards"
@@ -53,12 +46,6 @@
         <mat-card-content
           class="p-y-24 p-t-48 d-flex flex-col justify-content-around h-100 pricing-card-content"
         >
-          <!-- <span
-            *ngIf="userCurrentSubscription === pricecard.id"
-            class="popular-badge text-uppercase bg-light-warning text-warning p-x-8 p-y-4 f-s-12 f-w-500 rounded"
-            >Current</span
-          > -->
-
           <div class="d-flex flex-col h-100">
             <div class="popular-indicator-container" *ngIf="pricecard.popular">
               <h4>Popular</h4>
@@ -68,59 +55,36 @@
             <div
               class="pricing-title-container d-flex align-items-center justify-content-center flex-col"
             >
-              <h3 class="pricing-title">{{ pricecard.plan }}</h3>
+              <h3 class="pricing-title">
+                <ng-container *ngIf="!pricecard.free">
+                  {{ pricecard.plan }}</ng-container
+                >
+              </h3>
             </div>
-
-            <!-- <span class="d-block text-uppercase f-s-12 m-b-16">{{
-          pricecard.plan
-        }}</span> -->
-
-            <!-- <div *ngIf="pricecard.free; else pricingContent">
-          <h2 class="mat-headline-6 plan-title m-b-24">Free</h2>
-        </div> -->
 
             <div
               class="align-items-center d-flex flex-col justify-content-center m-y-16 ng-star-inserted pricing-area-container"
             >
               <ng-container *ngIf="pricecard.free; else pricingContent">
-                <h2 class="mat-headline-6 plan-title">Free</h2>
+                <h2 class="mat-headline-6 plan-title free-title">Free</h2>
               </ng-container>
-              <!-- <ng-template #pricingContent>
-                <ng-container *ngIf="annualPricing && false; else monthlyPricing">
-                  <div
-                    class="pricing-area-inner-container d-flex justify-content-around align-items-center"
-                  >
-                    <div class="original-price-container">
-                      {{ pricecard.planMonthlyPrice }}
-                    </div>
-                    <h2 class="mat-headline-6 plan-title">
-                      ${{ yearlyPrice(pricecard) }}
-                    </h2>
-                    <span
-                      *ngIf="annualPricing"
-                      class="text-uppercase bg-light-warning text-warning p-x-8 p-y-4 f-s-12 f-w-500 rounded"
-                      >{{ pricecard.planAnnualPercentOff }}%</span
-                    >
-                  </div>
-                </ng-container>
-              </ng-template> -->
+
               <ng-template #pricingContent>
                 <div class="d-flex justify-content-center align-items-center">
                   <h2 class="mat-headline-6 plan-title">
                     ${{ priceToShow(pricecard) }}
                   </h2>
                 </div>
+                <p class="per-month-text text-center m-b-0">
+                  /month, billed {{ billedInterval }}
+                </p>
+                <ng-container *ngIf="annualPricing">
+                  <p
+                    class="m-t-0 f-s-10 f-w-500"
+                    [innerHTML]="annualSaveText(pricecard)"
+                  ></p>
+                </ng-container>
               </ng-template>
-              <p class="per-month-text text-center m-b-0">
-                /month, billed {{ billedInterval }}
-              </p>
-
-              <ng-container *ngIf="annualPricing">
-                <p
-                  class="m-t-0 f-s-10 f-w-500"
-                  [innerHTML]="annualSaveText(pricecard)"
-                ></p>
-              </ng-container>
             </div>
 
             <div class="plan-description-container b-b-1">
@@ -154,7 +118,10 @@
           </div>
 
           <!-- BTN if the card subs is a higher TIER that the current subscription -->
-          <ng-container [ngSwitch]="checkIfShouldUpgrade(pricecard)">
+          <ng-container
+            [ngSwitch]="checkIfShouldUpgrade(pricecard)"
+            *ngIf="!pricecard.free"
+          >
             <!-- upgrade -->
             <button
               mat-raised-button
