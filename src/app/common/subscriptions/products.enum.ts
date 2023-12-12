@@ -19,8 +19,8 @@ if (env === 'local') {
   };
 } else {
   enumValues = {
-    Solo: 'prod_P528v7iGe1vDKM',
-    Flow: 'prod_P526bXaILzhuyA',
+    Solo: 'prod_PAxHLREDKDDbPb',
+    Flow: 'prod_PAxJEjQ4fGQGIk',
     Horizon: 'prod_Horizon_ID',
     FREE: 'prod_FREE_ID',
   };
