@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
       const queryParams = this.route.snapshot.queryParams;
       this.router.navigate(['/auth/login'], { queryParams });
     }
-    this.$gaService.event('register_intent', 'page_on_init');
+    this.$gaService.event('signup_page_init', 'page_on_init');
 
     this.checkUserStatus();
 
@@ -46,7 +46,7 @@ export class RegisterComponent implements OnInit {
 
     this.route.params.subscribe(() => {
       const urlSegments = location.href.split('/');
-      if (urlSegments[urlSegments.length - 1] === 'signup') {
+      if (urlSegments[urlSegments.length - 1].indexOf('signup') >= 0) {
         this.registerWithPass = false;
       } else {
         this.registerWithPass = true;
