@@ -44,10 +44,6 @@ if (env === 'local') {
           {
             title: `15+ voice tones`,
             limit: true,
-          },
-          {
-            title: `Brand Voice (Coming Soon)`,
-            limit: true,
           }
         ],
     },
@@ -219,10 +215,6 @@ if (env === 'local') {
           {
             title: `15+ voice tones`,
             limit: true,
-          },
-          {
-            title: `Brand Voice (Coming Soon)`,
-            limit: true,
           }
         ],
     },
@@ -355,10 +347,6 @@ if (env === 'local') {
           },
           {
             title: `15+ voice tones`,
-            limit: true,
-          },
-          {
-            title: `Brand Voice (Coming Soon)`,
             limit: true,
           }
         ],
