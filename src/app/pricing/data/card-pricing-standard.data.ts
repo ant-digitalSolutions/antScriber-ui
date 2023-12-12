@@ -7,57 +7,57 @@ let env = determineEnvironment();
 let cardPricing_standard: IPriceCardData[];
 if (env === 'local') {
   cardPricing_standard = [
-    // {
-    //     id: 1,
-    //     plan: 'Free',
-    //     description: 'Discover the power of Adfluens',
-    //     btnText: '',
-    //     free: true,
-    //     planMonthlyPrice: 0,
-    //     planAnnualPercentOff: 1,
-    //     planDiscountPercentOff: 1,
-    //     rules: [
-    //         {
-    //             title: '10k words per month',
-    //             limit: true,
-    //         },
-    //         {
-    //             title: 'Single Project',
-    //             limit: true,
-    //         },
-    //         {
-    //             title: 'Advance Editor',
-    //             limit: true,
-    //         },
-    //         {
-    //             title: '25+ languages',
-    //             limit: true,
-    //         },
-    //         {
-    //             title: `20+ assistant's tasks`,
-    //             limit: true,
-    //         },
-    //         {
-    //             title: `15+ voice tones`,
-    //             limit: true,
-    //         },
-    //         {
-    //             title: 'Chat',
-    //             limit: false,
-    //         },
-    //         {
-    //             title: 'Create Images',
-    //             limit: false,
-    //         },
-    //     ],
-    // },
+    {
+      id: ProductsEnum.FREE,
+        index: 1,
+        plan: 'Free',
+        description: 'A great starting point for exploring Adfluens',
+        btnText: '',
+        free: true,
+        planMonthlyPrice: 0,
+        planAnnualPercentOff: 1,
+        planDiscountPercentOff: 1,
+        planAnnualPrice: -1,
+        stripeYearlyPriceId: 'free',
+        stripeMonthlyPriceId:'free',
+        rules: [
+          {
+            title: '5k words per month (GPT-3.5)',
+            limit: true,
+          },
+          {
+            title: '1 Project',
+            limit: true,
+          },
+          {
+            title: 'Advance Editor',
+            limit: true,
+          },
+          {
+            title: '25+ languages',
+            limit: true,
+          },
+          {
+            title: `20+ content templates`,
+            limit: true,
+          },
+          {
+            title: `15+ voice tones`,
+            limit: true,
+          },
+          {
+            title: `Brand Voice (Coming Soon)`,
+            limit: true,
+          }
+        ],
+    },
     {
       index: 2,
       plan: 'Solo',
-      description: `Perfect for solo adventurers looking to create impactful content, it provides a robust foundation to start building your presence with essential tools and support.`,
+      description: `Tailored for solo entrepreneurs, bloggers, and content creators focusing on one brand.`,
       btnText: 'Upgrade',
       free: false,
-
+      popular: true,
       planMonthlyPrice: 15,
       planAnnualPrice: 9.99,
       planDiscountPercentOff: 20,
@@ -67,11 +67,11 @@ if (env === 'local') {
       id: ProductsEnum.Solo,
       rules: [
         {
-          title: '100k words per month',
+          title: '100k words per month (GPT-3.5)',
           limit: true,
         },
         {
-          title: 'Up to 3 Projects',
+          title: '1 Project',
           limit: true,
         },
         {
@@ -83,7 +83,7 @@ if (env === 'local') {
           limit: true,
         },
         {
-          title: `20+ assistant's tasks`,
+          title: `20+ content templates`,
           limit: true,
         },
         {
@@ -91,19 +91,15 @@ if (env === 'local') {
           limit: true,
         },
         {
-          title: 'Chat',
+          title: `Brand Voice (Coming Soon)`,
           limit: true,
-        },
-        {
-          title: 'Create 50 Images per month',
-          limit: true,
-        },
+        }
       ],
     },
     {
       index: 3,
       plan: 'Flow',
-      description: `Designed for creators who need more room to grow, it offers an expanded set of tools to keep your content flowing and your audience engaged.`,
+      description: `Designed for freelancers and small businesses juggling various projects like blogs, social media, and vBlogs.`,
       btnText: 'Upgrade',
       free: false,
       planMonthlyPrice: 29.99,
@@ -112,123 +108,145 @@ if (env === 'local') {
       planAnnualPercentOff: 40,
       stripeMonthlyPriceId: 'price_1OAcl7FXqwjYWAm8s5ssMyck',
       stripeYearlyPriceId: 'price_1OAd2lFXqwjYWAm8hjjbbEMs',
-      popular: true,
+      popular: false,
       id: ProductsEnum.Flow,
       rules: [
         {
-          title: '500k words per month',
+          title: 'ALL in Solo, plus:',
           limit: true,
         },
         {
-          title: 'Up to 10 Projects',
+          title: 'Unlimited words (GPT-3.5)',
           limit: true,
         },
         {
-          title: 'Advance Editor',
+          title: 'Unblock GPT-4, up to 10k words',
           limit: true,
         },
         {
-          title: '25+ languages',
+          title: 'Multiple Projects (Coming Soon)',
           limit: true,
         },
         {
-          title: `20+ assistant's tasks`,
+          title: `Multiple Brand Voice (1 per project)`,
           limit: true,
         },
         {
-          title: `15+ voice tones`,
+          title: 'Chat Assistant (Coming Soon)',
           limit: true,
         },
         {
-          title: 'Chat',
+          title: '1-Click WordPress Export',
           limit: true,
-        },
-        {
-          title: 'Create 100 Images per month',
-          limit: true,
-        },
+        }
       ],
     },
-    {
-      index: 4,
-      plan: 'Horizon',
-      description: `ultimate tier for serious content professionals who want no limits on their creative output, with premium features that cater to expansive projects and diverse needs.`,
-      btnText: 'Upgrade',
-      free: false,
-      planMonthlyPrice: 99,
-      planAnnualPrice: 90.99,
-      planDiscountPercentOff: 50,
-      planAnnualPercentOff: 51,
-      stripeMonthlyPriceId: 'price_1O5JFcFXqwjYWAm81cDrag3G',
-      stripeYearlyPriceId: 'price_1O5JFcFXqwjYWAm81cDrag3G',
-      id: ProductsEnum.Horizon,
-      rules: [
-        {
-          title: 'Unlimited words per month',
-          limit: true,
-        },
-        {
-          title: 'Up to 25 Projects',
-          limit: true,
-        },
-        {
-          title: 'Advance Editor',
-          limit: true,
-        },
-        {
-          title: '25+ languages',
-          limit: true,
-        },
-        {
-          title: `20+ assistant's tasks`,
-          limit: true,
-        },
-        {
-          title: `15+ voice tones`,
-          limit: true,
-        },
-        {
-          title: 'Chat',
-          limit: true,
-        },
-        {
-          title: 'Create 100 Images per month',
-          limit: true,
-        },
-        {
-          title: 'Create 100 Images per month',
-          limit: true,
-        },
-        {
-          title: 'Create 100 Images per month',
-          limit: true,
-        },
-      ],
-    },
+    // {
+    //   index: 4,
+    //   plan: 'Horizon',
+    //   description: ` Ideal for larger businesses and enterprises aiming to scale their operations and outreach.`,
+    //   btnText: 'Contact Us',
+    //   free: false,
+    //   planMonthlyPrice: 99,
+    //   planAnnualPrice: 90.99,
+    //   planDiscountPercentOff: 50,
+    //   planAnnualPercentOff: 51,
+    //   stripeMonthlyPriceId: 'price_1O5JFcFXqwjYWAm81cDrag3G',
+    //   stripeYearlyPriceId: 'price_1O5JFcFXqwjYWAm81cDrag3G',
+    //   id: ProductsEnum.Horizon,
+    //   isEnterprise: true,
+    //   rules: [
+    //     {
+    //       title: 'API Access',
+    //       limit: true,
+    //     },
+    //     {
+    //       title: 'Custom content generation templates',
+    //       limit: true,
+    //     },
+    //     {
+    //       title: 'Premium Support',
+    //       limit: true,
+    //     },
+    //     {
+    //       title: 'Un-Limited Projects',
+    //       limit: true,
+    //     },
+    //     {
+    //       title: 'Un-Limited Brand Voices',
+    //       limit: true,
+    //     },
+    
+    //   ],
+    // },
   ];
 } else if (env === 'staging') {
   cardPricing_standard = [
     {
+      id: ProductsEnum.FREE,
+        index: 1,
+        plan: 'Free',
+        description: 'A great starting point for exploring Adfluens',
+        btnText: '',
+        free: true,
+        planMonthlyPrice: 0,
+        planAnnualPercentOff: 1,
+        planDiscountPercentOff: 1,
+        planAnnualPrice: -1,
+        stripeYearlyPriceId: 'free',
+        stripeMonthlyPriceId:'free',
+        rules: [
+          {
+            title: '5k words per month (GPT-3.5)',
+            limit: true,
+          },
+          {
+            title: '1 Project',
+            limit: true,
+          },
+          {
+            title: 'Advance Editor',
+            limit: true,
+          },
+          {
+            title: '25+ languages',
+            limit: true,
+          },
+          {
+            title: `20+ content templates`,
+            limit: true,
+          },
+          {
+            title: `15+ voice tones`,
+            limit: true,
+          },
+          {
+            title: `Brand Voice (Coming Soon)`,
+            limit: true,
+          }
+        ],
+    },
+    {
       index: 2,
       plan: 'Solo',
-      description: `Perfect for solo adventurers looking to create impactful content, it provides a robust foundation to start building your presence with essential tools and support.`,
+      description: `Tailored for solo entrepreneurs, bloggers, and content creators focusing on one brand.`,
       btnText: 'Upgrade',
       free: false,
-
+      popular: true,
       planMonthlyPrice: 15,
       planAnnualPrice: 9.99,
       planDiscountPercentOff: 20,
       planAnnualPercentOff: 40,
-      stripeMonthlyPriceId: 'price_1OGs3uHoHvOMDqa7oTpWkv8R',
-      stripeYearlyPriceId: 'price_1OGs3uHoHvOMDqa77K86Dpr8',
+      stripeMonthlyPriceId: 'price_1OMbMsHoHvOMDqa7GsVI0y3z',
+      stripeYearlyPriceId: 'price_1OMbKyHoHvOMDqa71cWRm7co',
       id: ProductsEnum.Solo,
       rules: [
         {
-          title: '100k words per month',
+          title: '100k words per month (GPT-3.5)',
           limit: true,
         },
         {
-          title: 'Up to 3 Projects',
+          title: '1 Project',
           limit: true,
         },
         {
@@ -240,7 +258,7 @@ if (env === 'local') {
           limit: true,
         },
         {
-          title: `20+ assistant's tasks`,
+          title: `20+ content templates`,
           limit: true,
         },
         {
@@ -248,188 +266,124 @@ if (env === 'local') {
           limit: true,
         },
         {
-          title: 'Chat',
+          title: `Brand Voice (Coming Soon)`,
           limit: true,
-        },
-        {
-          title: 'Create 50 Images per month',
-          limit: true,
-        },
+        }
       ],
     },
     {
       index: 3,
       plan: 'Flow',
-      description: `Designed for creators who need more room to grow, it offers an expanded set of tools to keep your content flowing and your audience engaged.`,
+      description: `Designed for freelancers and small businesses juggling various projects like blogs, social media, and vBlogs.`,
       btnText: 'Upgrade',
       free: false,
-      planMonthlyPrice: 29,
+      planMonthlyPrice: 29.99,
       planAnnualPrice: 19.99,
       planDiscountPercentOff: 20,
       planAnnualPercentOff: 40,
-      stripeMonthlyPriceId: 'price_1OGs2SHoHvOMDqa7VsM1C83M',
-      stripeYearlyPriceId: 'price_1OGs2SHoHvOMDqa7f1HNrVYm',
-      popular: true,
+      stripeMonthlyPriceId: 'price_1OMbNsHoHvOMDqa7qN737QeK',
+      stripeYearlyPriceId: 'price_1OMbOoHoHvOMDqa7AFjgg5Dz',
+      popular: false,
       id: ProductsEnum.Flow,
       rules: [
         {
-          title: '500k words per month',
+          title: 'ALL in Solo, plus:',
           limit: true,
         },
         {
-          title: 'Up to 10 Projects',
+          title: 'Unlimited words (GPT-3.5)',
           limit: true,
         },
         {
-          title: 'Advance Editor',
+          title: 'Unblock GPT-4, up to 10k words',
           limit: true,
         },
         {
-          title: '25+ languages',
+          title: 'Multiple Projects (Coming Soon)',
           limit: true,
         },
         {
-          title: `20+ assistant's tasks`,
+          title: `Multiple Brand Voice (1 per project)`,
           limit: true,
         },
         {
-          title: `15+ voice tones`,
+          title: 'Chat Assistant (Coming Soon)',
           limit: true,
         },
         {
-          title: 'Chat',
+          title: '1-Click WordPress Export',
           limit: true,
-        },
-        {
-          title: 'Create 100 Images per month',
-          limit: true,
-        },
-      ],
-    },
-    {
-      index: 4,
-      plan: 'Horizon',
-      description: `ultimate tier for serious content professionals who want no limits on their creative output, with premium features that cater to expansive projects and diverse needs.`,
-      btnText: 'Upgrade',
-      free: false,
-      planMonthlyPrice: 99,
-      planAnnualPrice: 19.99,
-      planDiscountPercentOff: 50,
-      planAnnualPercentOff: 51,
-      stripeMonthlyPriceId: 'price_1O5JFcFXqwjYWAm81cDrag3G',
-      stripeYearlyPriceId: 'price_1O5JFcFXqwjYWAm81cDrag3G',
-      id: ProductsEnum.Horizon,
-      rules: [
-        {
-          title: 'Unlimited words per month',
-          limit: true,
-        },
-        {
-          title: 'Up to 25 Projects',
-          limit: true,
-        },
-        {
-          title: 'Advance Editor',
-          limit: true,
-        },
-        {
-          title: '25+ languages',
-          limit: true,
-        },
-        {
-          title: `20+ assistant's tasks`,
-          limit: true,
-        },
-        {
-          title: `15+ voice tones`,
-          limit: true,
-        },
-        {
-          title: 'Chat',
-          limit: true,
-        },
-        {
-          title: 'Create 100 Images per month',
-          limit: true,
-        },
-        {
-          title: 'Create 100 Images per month',
-          limit: true,
-        },
-        {
-          title: 'Create 100 Images per month',
-          limit: true,
-        },
+        }
       ],
     },
   ];
 } else {
   cardPricing_standard = [
-    // {
-    //     id: 1,
-    //     plan: 'Free',
-    //     description: 'Discover the power of Adfluens',
-    //     btnText: '',
-    //     free: true,
-    //     planMonthlyPrice: 0,
-    //     planAnnualPercentOff: 1,
-    //     planDiscountPercentOff: 1,
-    //     rules: [
-    //         {
-    //             title: '10k words per month',
-    //             limit: true,
-    //         },
-    //         {
-    //             title: 'Single Project',
-    //             limit: true,
-    //         },
-    //         {
-    //             title: 'Advance Editor',
-    //             limit: true,
-    //         },
-    //         {
-    //             title: '25+ languages',
-    //             limit: true,
-    //         },
-    //         {
-    //             title: `20+ assistant's tasks`,
-    //             limit: true,
-    //         },
-    //         {
-    //             title: `15+ voice tones`,
-    //             limit: true,
-    //         },
-    //         {
-    //             title: 'Chat',
-    //             limit: false,
-    //         },
-    //         {
-    //             title: 'Create Images',
-    //             limit: false,
-    //         },
-    //     ],
-    // },
+    {
+      id: ProductsEnum.FREE,
+        index: 1,
+        plan: 'Free',
+        description: 'A great starting point for exploring Adfluens',
+        btnText: '',
+        free: true,
+        planMonthlyPrice: 0,
+        planAnnualPercentOff: 1,
+        planDiscountPercentOff: 1,
+        planAnnualPrice: -1,
+        stripeYearlyPriceId: 'free',
+        stripeMonthlyPriceId:'free',
+        rules: [
+          {
+            title: '5k words per month (GPT-3.5)',
+            limit: true,
+          },
+          {
+            title: '1 Project',
+            limit: true,
+          },
+          {
+            title: 'Advance Editor',
+            limit: true,
+          },
+          {
+            title: '25+ languages',
+            limit: true,
+          },
+          {
+            title: `20+ content templates`,
+            limit: true,
+          },
+          {
+            title: `15+ voice tones`,
+            limit: true,
+          },
+          {
+            title: `Brand Voice (Coming Soon)`,
+            limit: true,
+          }
+        ],
+    },
     {
       index: 2,
       plan: 'Solo',
-      description: `Perfect for solo adventurers looking to create impactful content, it provides a robust foundation to start building your presence with essential tools and support.`,
+      description: `Tailored for solo entrepreneurs, bloggers, and content creators focusing on one brand.`,
       btnText: 'Upgrade',
       free: false,
-
+      popular: true,
       planMonthlyPrice: 15,
       planAnnualPrice: 9.99,
       planDiscountPercentOff: 20,
       planAnnualPercentOff: 40,
-      stripeMonthlyPriceId: 'price_1OGs3uHoHvOMDqa7oTpWkv8R',
-      stripeYearlyPriceId: 'price_1OGs3uHoHvOMDqa77K86Dpr8',
+      stripeMonthlyPriceId: 'price_1OMbNKHoHvOMDqa7ENYGvlf0',
+      stripeYearlyPriceId: 'price_1OMbNKHoHvOMDqa7jqbuW7lR',
       id: ProductsEnum.Solo,
       rules: [
         {
-          title: '100k words per month',
+          title: '100k words per month (GPT-3.5)',
           limit: true,
         },
         {
-          title: 'Up to 3 Projects',
+          title: '1 Project',
           limit: true,
         },
         {
@@ -441,7 +395,7 @@ if (env === 'local') {
           limit: true,
         },
         {
-          title: `20+ assistant's tasks`,
+          title: `20+ content templates`,
           limit: true,
         },
         {
@@ -449,120 +403,94 @@ if (env === 'local') {
           limit: true,
         },
         {
-          title: 'Chat',
+          title: `Brand Voice (Coming Soon)`,
           limit: true,
-        },
-        {
-          title: 'Create 50 Images per month',
-          limit: true,
-        },
+        }
       ],
     },
     {
       index: 3,
       plan: 'Flow',
-      description: `Designed for creators who need more room to grow, it offers an expanded set of tools to keep your content flowing and your audience engaged.`,
+      description: `Designed for freelancers and small businesses juggling various projects like blogs, social media, and vBlogs.`,
       btnText: 'Upgrade',
       free: false,
-      planMonthlyPrice: 29,
+      planMonthlyPrice: 29.99,
       planAnnualPrice: 19.99,
       planDiscountPercentOff: 20,
       planAnnualPercentOff: 40,
-      stripeMonthlyPriceId: 'price_1OGs2SHoHvOMDqa7VsM1C83M',
-      stripeYearlyPriceId: 'price_1OGs2SHoHvOMDqa7f1HNrVYm',
-      popular: true,
+      stripeMonthlyPriceId: 'price_1OMbOtHoHvOMDqa7K45eQHNQ',
+      stripeYearlyPriceId: 'price_1OMbOtHoHvOMDqa7IUMlEoaT',
+      popular: false,
       id: ProductsEnum.Flow,
       rules: [
         {
-          title: '500k words per month',
+          title: 'ALL in Solo, plus:',
           limit: true,
         },
         {
-          title: 'Up to 10 Projects',
+          title: 'Unlimited words (GPT-3.5)',
           limit: true,
         },
         {
-          title: 'Advance Editor',
+          title: 'Unblock GPT-4, up to 10k words',
           limit: true,
         },
         {
-          title: '25+ languages',
+          title: 'Multiple Projects (Coming Soon)',
           limit: true,
         },
         {
-          title: `20+ assistant's tasks`,
+          title: `Multiple Brand Voice (1 per project)`,
           limit: true,
         },
         {
-          title: `15+ voice tones`,
+          title: 'Chat Assistant (Coming Soon)',
           limit: true,
         },
         {
-          title: 'Chat',
+          title: '1-Click WordPress Export',
           limit: true,
-        },
-        {
-          title: 'Create 100 Images per month',
-          limit: true,
-        },
+        }
       ],
     },
-    {
-      index: 4,
-      plan: 'Horizon',
-      description: `ultimate tier for serious content professionals who want no limits on their creative output, with premium features that cater to expansive projects and diverse needs.`,
-      btnText: 'Upgrade',
-      free: false,
-      planMonthlyPrice: 99,
-      planAnnualPrice: 19.99,
-      planDiscountPercentOff: 50,
-      planAnnualPercentOff: 51,
-      stripeMonthlyPriceId: 'price_1O5JFcFXqwjYWAm81cDrag3G',
-      stripeYearlyPriceId: 'price_1O5JFcFXqwjYWAm81cDrag3G',
-      id: ProductsEnum.Horizon,
-      rules: [
-        {
-          title: 'Unlimited words per month',
-          limit: true,
-        },
-        {
-          title: 'Up to 25 Projects',
-          limit: true,
-        },
-        {
-          title: 'Advance Editor',
-          limit: true,
-        },
-        {
-          title: '25+ languages',
-          limit: true,
-        },
-        {
-          title: `20+ assistant's tasks`,
-          limit: true,
-        },
-        {
-          title: `15+ voice tones`,
-          limit: true,
-        },
-        {
-          title: 'Chat',
-          limit: true,
-        },
-        {
-          title: 'Create 100 Images per month',
-          limit: true,
-        },
-        {
-          title: 'Create 100 Images per month',
-          limit: true,
-        },
-        {
-          title: 'Create 100 Images per month',
-          limit: true,
-        },
-      ],
-    },
+    // {
+    //   index: 4,
+    //   plan: 'Horizon',
+    //   description: ` Ideal for larger businesses and enterprises aiming to scale their operations and outreach.`,
+    //   btnText: 'Contact Us',
+    //   free: false,
+    //   planMonthlyPrice: 99,
+    //   planAnnualPrice: 90.99,
+    //   planDiscountPercentOff: 50,
+    //   planAnnualPercentOff: 51,
+    //   stripeMonthlyPriceId: 'price_1O5JFcFXqwjYWAm81cDrag3G',
+    //   stripeYearlyPriceId: 'price_1O5JFcFXqwjYWAm81cDrag3G',
+    //   id: ProductsEnum.Horizon,
+    //   isEnterprise: true,
+    //   rules: [
+    //     {
+    //       title: 'API Access',
+    //       limit: true,
+    //     },
+    //     {
+    //       title: 'Custom content generation templates',
+    //       limit: true,
+    //     },
+    //     {
+    //       title: 'Premium Support',
+    //       limit: true,
+    //     },
+    //     {
+    //       title: 'Un-Limited Projects',
+    //       limit: true,
+    //     },
+    //     {
+    //       title: 'Un-Limited Brand Voices',
+    //       limit: true,
+    //     },
+    
+    //   ],
+    // },
   ];
 }
 
