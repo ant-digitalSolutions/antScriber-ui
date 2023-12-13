@@ -124,11 +124,17 @@ export class SubscriptionDetailsComponent {
   }
 
   
+  public get showCancelBtn() : boolean | undefined {
+    return !this.subscription?.cancelAtEndOfPeriod;
+  }
+  
+
+  
   public get dataSource() {
     if (this.subscription && this.wordsUsage) {
-      return [
+      const output = [
         { label: 'Current Plan', value: this.currentPlan },
-        { label: 'Status', value: this.subscriptionStatus.toUpperCase() },
+        { label: 'Status', value: this.subscriptionStatus },
         { label: 'Words per Month (GPT 4)', value: this.wordsUsage.wordsMonthlyLimit_GPT_4 },
         { label: 'Used Words (GPT-4)', value: this.wordsUsage.usageCurrentMonth_GPT_4 },
         { label: 'Words per Month (GPT-3.5)', value: this.wordsUsage.wordsMonthlyLimit_GPT_3 },
@@ -137,6 +143,12 @@ export class SubscriptionDetailsComponent {
         { label: 'Billing Cycle', value: `${new Date(this.subscription?.currentPeriodStart * 1000).toLocaleDateString()} - ${new Date(this.subscription?.currentPeriodEnd * 1000).toLocaleDateString()}` },
         { label: 'Billed', value: this.subscription?.plan?.interval === 'year' ? 'Yearly' : 'Monthly' }
       ];
+      if (this.subscription.cancelAtEndOfPeriod) {
+        output.push(
+          { label: 'Will cancel at', value: new Date(this.subscription?.currentPeriodEnd * 1000).toLocaleDateString() }
+        )
+      }
+      return output;
     } else if (this.wordsUsage) {
       return [
         { label: 'Current Plan', value: 'FREE' },

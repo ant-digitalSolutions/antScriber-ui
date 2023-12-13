@@ -10,4 +10,6 @@ export class SubscriptionResponseDTO {
   currentPeriodStart: number;
   currentPeriodEnd: number;
   plan?: PlanDto;
+
+  cancelAtEndOfPeriod: boolean;
 }
