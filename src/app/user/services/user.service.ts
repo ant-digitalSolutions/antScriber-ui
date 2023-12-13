@@ -164,7 +164,7 @@ export class UserService {
     );
 
     stack.onAction().subscribe(() => {
-      this._router.navigate(['/settings/subscriptions']);
+      this._router.navigate(['/settings/plans']);
     });
   }
 

@@ -35,7 +35,7 @@ export class HeaderMenuItemsComponent {
 
   upgradePlan() {
     this.$gaService.event('plans', 'click_menu_upgrade_btn');
-    this.router.navigate(['/settings/subscriptions'])
+    this.router.navigate(['/settings/plans'])
   }
 
 
