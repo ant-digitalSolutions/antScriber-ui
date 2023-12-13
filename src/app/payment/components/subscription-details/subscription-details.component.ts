@@ -135,9 +135,9 @@ export class SubscriptionDetailsComponent {
       const output = [
         { label: 'Current Plan', value: this.currentPlan },
         { label: 'Status', value: this.subscriptionStatus },
-        { label: 'Words per Month (GPT 4)', value: this.wordsUsage.wordsMonthlyLimit_GPT_4 },
+        { label: 'Words per Month (GPT 4)', value: `${this.wordsUsage.wordsMonthlyLimit_GPT_4/1000}k` },
         { label: 'Used Words (GPT-4)', value: this.wordsUsage.usageCurrentMonth_GPT_4 },
-        { label: 'Words per Month (GPT-3.5)', value: this.wordsUsage.wordsMonthlyLimit_GPT_3 },
+        { label: 'Words per Month (GPT-3.5)', value: this.wordsUsage.wordsMonthlyLimit_GPT_3 === -1 ? '∞' : `${this.wordsUsage.wordsMonthlyLimit_GPT_3/1000}k` },
         { label: 'Used Words (GPT-3.5)', value: this.wordsUsage.usageCurrentMonth_GPT_3 },
         { label: 'Plan Pricing', value: `${(this.subscription!.plan!.amount / 100).toFixed(2)} ${this.subscription?.currency?.toUpperCase()}` },
         { label: 'Billing Cycle', value: `${new Date(this.subscription?.currentPeriodStart * 1000).toLocaleDateString()} - ${new Date(this.subscription?.currentPeriodEnd * 1000).toLocaleDateString()}` },
@@ -153,9 +153,9 @@ export class SubscriptionDetailsComponent {
       return [
         { label: 'Current Plan', value: 'FREE' },
         { label: 'Status', value: 'Active' },
-        { label: 'Words per Month (GPT 4)', value: this.wordsUsage.wordsMonthlyLimit_GPT_4 },
+        { label: 'Words per Month (GPT 4)', value: `${this.wordsUsage.usageCurrentMonth_GPT_4/1000}k` },
         { label: 'Used Words (GPT-4)', value: this.wordsUsage.usageCurrentMonth_GPT_4 },
-        { label: 'Words per Month (GPT-3.5)', value: this.wordsUsage.wordsMonthlyLimit_GPT_3 },
+        { label: 'Words per Month (GPT-3.5)', value: this.wordsUsage.wordsMonthlyLimit_GPT_3 === -1 ? '∞' : `${this.wordsUsage.wordsMonthlyLimit_GPT_3/1000}k` },
         { label: 'Used Words (GPT-3.5)', value: this.wordsUsage.usageCurrentMonth_GPT_3 },
       ]
     }
