@@ -34,7 +34,7 @@
     </mat-card-content>
 
     <mat-card-actions class="justify-content-end p-0 m-t-48">
-      <ng-container *ngIf="isPremiumUser">
+      <ng-container *ngIf="isPremiumUser && showCancelBtn">
         <ng-container *ngIf="!isCanceling; else cancelConfirmation">
           <button
             mat-flat-button
