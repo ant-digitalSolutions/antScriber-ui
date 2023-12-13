@@ -117,7 +117,6 @@ export class UserService {
     );
 
     if (!localProfileString) {
-      console.error('The user profile is not set on LocalStorage');
       return false;
     }
 
@@ -135,7 +134,6 @@ export class UserService {
     );
 
     if (!localProfileString) {
-      console.error('The user profile is not set on LocalStorage');
       return UserSubscriptionDto.createFreeSubscription();
     }
 
