@@ -40,18 +40,19 @@ export class SubscriptionDetailsComponent {
     this.getSubscriptionData()
     this.getWordsUsage();
 
-    const plan = getPlanDetailsFromStripeProductId(
-      this.subscription?.plan?.product!
-    );
-    if (plan) {
-      this.planName = plan.plan;
-    }
+  
   }
 
   getSubscriptionData() {
     this._paymentService.getSubscriptionInfo().subscribe(r => {
       if (r.success) {
         this.subscription = r.data;
+        const plan = getPlanDetailsFromStripeProductId(
+          this.subscription?.plan?.product!
+        );
+        if (plan) {
+          this.planName = plan.plan;
+        }
       }
 
       this.isLoadingSubscription = false;
