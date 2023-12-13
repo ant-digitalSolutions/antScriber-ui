@@ -104,6 +104,9 @@ export class AuthService {
     localStorage.setItem('id_token', authResult.access_token);
     localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
 
+    const showInitialTour = authResult.firstSignInEver;
+    this._userService.showInitialTour = showInitialTour
+
     this.decodeJwt();
 
     this._userService.getProfile(false).subscribe();
