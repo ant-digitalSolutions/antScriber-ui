@@ -12,7 +12,7 @@
   margin: 0;
 
   &.free-title {
-    height: 70px;
+    height: 115px;
   }
 }
 
@@ -77,6 +77,10 @@
     .plan-description-container {
       min-height: auto !important;
     }
+
+    .plan-title.free-title {
+        height: 50px;
+      }
   }
 }
 
