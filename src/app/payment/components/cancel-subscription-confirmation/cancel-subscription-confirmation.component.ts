@@ -26,7 +26,7 @@ export class CancelSubscriptionConfirmationComponent {
         this._dialogService.openMessageDialog({
           okBtnText: 'OK',
           message:
-            'Your subscription has been canceled. You can continue enyoing your premium features until the end of the period',
+            'Your subscription has been canceled. You can continue enjoying your premium features until the end of the period',
         });
       }
 
