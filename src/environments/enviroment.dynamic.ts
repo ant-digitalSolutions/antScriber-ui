@@ -35,7 +35,7 @@ export function determineEnvironment(): 'local' | 'staging' | 'production' {
       case 'staging':
         return 'pk_test_51OGm1FHoHvOMDqa7sZQuKq137svuk6uAT5fW6AhILaKvRAbOA8zhIVLLSEsHyhdjPKfDpW7RLxNkMipJgUWc1OPm00xmtURYVf';
       default:
-        return 'pk_test_51OGm1FHoHvOMDqa7sZQuKq137svuk6uAT5fW6AhILaKvRAbOA8zhIVLLSEsHyhdjPKfDpW7RLxNkMipJgUWc1OPm00xmtURYVf';
+        return 'pk_live_51OGm1FHoHvOMDqa7rlVd5DOEzblxYChCqSUBnSbTXZYoDbhSiCcyb5J6HtVbfcqdN5reOeUphsm9nOkclJ3r6I3j00VKtXNHek';
     }
   }
 
