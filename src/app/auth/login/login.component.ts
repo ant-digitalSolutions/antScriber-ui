@@ -77,8 +77,17 @@ export class LoginComponent implements OnInit {
       expiresAt,
     };
 
+    // means this is the first time the user enter the app,
+    // so this happens after the user register with 3rd party provider
     if (showInitialTour) {
       this._userService.showInitialTour = true;
+
+      // log that a new was registered
+      this.$gaService.event(
+        'user_register_done',
+        'user_created',
+        'third_party_provider'
+      );
     }
 
     if (access_token && expiresAt) {
