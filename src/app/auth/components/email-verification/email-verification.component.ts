@@ -105,9 +105,9 @@ export class EmailVerificationComponent
         panelClass: 'snack-success',
       });
       this.$gaService.event(
-        'register_intent',
-        'email_verification',
-        'send_email'
+        'user_register_init',
+        'password',
+        'provider_password'
       );
 
       this.authService
@@ -160,7 +160,7 @@ export class EmailVerificationComponent
           next: (response) => {
             if (response.success === true) {
               this.$gaService.event(
-                'register_intent',
+                'user_registration_password',
                 'email_verification',
                 'code_verified'
               );
@@ -183,9 +183,9 @@ export class EmailVerificationComponent
             }
             (document.querySelector('.input1') as HTMLInputElement)?.focus();
             this.$gaService.event(
-              'register_intent',
+              'user_registration_password',
               'email_verification',
-              'code_incorrect'
+              'wrong_code'
             );
           },
         });

@@ -87,8 +87,10 @@ export class RegisterWithEmailComponent implements OnInit {
           this._projectService.refreshProjects().then(() => {
             this.router.navigateByUrl('/');
           });
+
+          // log that a new was registered
           this.$gaService.event(
-            'user_register',
+            'user_register_done',
             'user_created',
             'provider_pass'
           );

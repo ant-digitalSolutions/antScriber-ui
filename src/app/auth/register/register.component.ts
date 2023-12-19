@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit {
     this._authService.logout_in_silence();
 
     this.$gaService.event(
-      'user_register',
+      'user_register_init',
       'third_party_provider',
       'provider_google'
     );
@@ -73,7 +73,7 @@ export class RegisterComponent implements OnInit {
     this._authService.logout_in_silence();
 
     this.$gaService.event(
-      'user_register',
+      'user_register_init',
       'third_party_provider',
       'provider_facebook'
     );
@@ -83,7 +83,7 @@ export class RegisterComponent implements OnInit {
   redirectToLinkedinSignIn() {
     this._authService.logout_in_silence();
     this.$gaService.event(
-      'user_register',
+      'user_register_init',
       'third_party_provider',
       'provider_linkedin'
     );
@@ -114,6 +114,7 @@ export class RegisterComponent implements OnInit {
 
   onRegisterWithPass() {
     this.registerWithPass = true;
+
     this.router.navigate(['email-verification'], {
       relativeTo: this.route,
       queryParams: {
