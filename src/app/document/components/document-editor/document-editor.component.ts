@@ -1,4 +1,13 @@
-import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Validators } from 'ngx-editor';
@@ -15,19 +24,17 @@ import { DocumentDetailsDto } from '../../dtos/document-details.dto';
 import { EventsHubService } from 'src/app/events-hub/events-hub.service';
 import { EventType } from 'src/app/events-hub/enums/event-type.enum';
 
-
-
-
 @Component({
   selector: 'app-document-editor',
   templateUrl: './document-editor.component.html',
-  styleUrls: ['./document-editor.component.scss']
+  styleUrls: ['./document-editor.component.scss'],
 })
-export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit {
-
+export class DocumentEditorComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
   /**
    * The amount of new content added to the document.
-   * 
+   *
    * When the user see the new content, reset it to 0.
    *
    * @type {number}
@@ -50,14 +57,14 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
 
   _editor: Editor;
 
-  newContentSeparatorElement = '<div class="new-content"><span>New</span></div>';
+  newContentSeparatorElement =
+    '<div class="new-content"><span>New</span></div>';
 
   editorContentSeparatorElement = '<div class="content-separator"></div>';
 
   docName: string;
 
   documentInEditionDetails: DocumentDetailsDto;
-
 
   _documentContent: string;
 
@@ -72,8 +79,8 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
     private _userInitTour: UserInitTourService,
     protected $gaService: GoogleAnalyticsService,
     private _dialogService: DialogService,
-    private _eventHub: EventsHubService,) { }
-
+    private _eventHub: EventsHubService
+  ) {}
 
   ngOnInit(): void {
     this.setListerners();
@@ -81,7 +88,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   ngOnDestroy(): void {
-    this.componentDestroyed$.next(true)
+    this.componentDestroyed$.next(true);
     this.componentDestroyed$.complete();
 
     this._docService.cleanData();
@@ -93,56 +100,61 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
 
   initEditor() {
     if (this.documentEditorRef.nativeElement) {
-      Editor.create(this.documentEditorRef.nativeElement, defaultConfig)
-        .then(editor => {
-          editor.setData(this._documentContent ? this._documentContent : '')
+      Editor.create(this.documentEditorRef.nativeElement, defaultConfig).then(
+        (editor) => {
+          editor.setData(this._documentContent ? this._documentContent : '');
           this._editor = editor;
           editor.on('changed', this.saveEditorChanges);
           this._editor = editor;
-        });
+        }
+      );
     }
   }
 
   setListerners() {
-    this._docService.documentInEdition$.pipe(takeUntil(this.componentDestroyed$))
-      .subscribe(doc => {
-
+    this._docService.documentInEdition$
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe((doc) => {
         if (doc) {
-          this.docNameForm = new FormControl(doc.name, [Validators.required(), Validators.maxLength(200)])
+          this.docNameForm = new FormControl(doc.name, [
+            Validators.required(),
+            Validators.maxLength(200),
+          ]);
         }
-      })
+      });
 
-     this._eventHub.EventEmitter.pipe(takeUntil(this.componentDestroyed$))
-      .subscribe((e) => {
-        if (e.type === EventType.wizardResponseChunk)
+    this._eventHub.EventEmitter.pipe(
+      takeUntil(this.componentDestroyed$)
+    ).subscribe((e) => {
+      if (e.type === EventType.wizardResponseChunk)
         this.handleNewContent(e.data.responseText);
-      }) 
+    });
 
-    // this._docService.newDocUpdate$.pipe(takeUntil(this.componentDestroyed$))
-    //   .subscribe((newContent) => {
-    //     this.handleNewContent(newContent);
-    //   })
-
-    this._docService.documentInEdition$.pipe(takeUntil(this.componentDestroyed$))
-      .subscribe(d => {
+    this._docService.documentInEdition$
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe((d) => {
         if (d) {
-          if (this._editor)
-            this._editor.setData(d.content);
-          else
-            this._documentContent = d.content
+          if (this._editor) this._editor.setData(d.content);
+          else this._documentContent = d.content;
 
           this.docName = d.name;
           this.documentInEditionDetails = d;
         }
-      })
+      });
 
-
-    this._userInitTour.walkthroughTouStepHideEvent$.pipe(takeUntil(this.componentDestroyed$), takeUntil(this._userInitTour.walkthroughTourEnded$))
-      .subscribe(stepId => {
-        if (stepId === UserInitializationWalkthroughTourStepsEnum.RenderAssistantResults) {
+    this._userInitTour.walkthroughTouStepHideEvent$
+      .pipe(
+        takeUntil(this.componentDestroyed$),
+        takeUntil(this._userInitTour.walkthroughTourEnded$)
+      )
+      .subscribe((stepId) => {
+        if (
+          stepId ===
+          UserInitializationWalkthroughTourStepsEnum.RenderAssistantResults
+        ) {
           this.goback();
         }
-      })
+      });
   }
 
   documentEditorFocusEvent() {
@@ -157,22 +169,25 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
   saveEditorChanges() {
     let editorData = this._editor.getData() as string;
     editorData = editorData.replace(this.newContentSeparatorElement, '');
-    this._docService.update(this.documentId, { content: editorData }).subscribe();
+    this._docService
+      .update(this.documentId, { content: editorData })
+      .subscribe();
   }
 
   updateDocName() {
     if (this.docNameForm.valid)
-      this._docService.update(this.documentId, { name: this.docNameForm.value }).subscribe();
-    console.log('After blur')
+      this._docService
+        .update(this.documentId, { name: this.docNameForm.value })
+        .subscribe();
+    console.log('After blur');
   }
-
 
   goback() {
     this.saveEditorChanges();
     const queryParams = this._route.snapshot.queryParams;
 
     const newQueryParams = {
-      ...queryParams
+      ...queryParams,
     };
     newQueryParams['docId'] = null;
 
@@ -188,9 +203,13 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
     this.setEditorHeight();
   }
 
-
   setEditorHeight() {
-    this.editorHeight = `${window.innerHeight - this._docMarginTopNumber - configs_UI.main_navbar_height - configs_UI.internal_navbar_height}px`;
+    this.editorHeight = `${
+      window.innerHeight -
+      this._docMarginTopNumber -
+      configs_UI.main_navbar_height -
+      configs_UI.internal_navbar_height
+    }px`;
   }
 
   newContentNotificationClick() {
@@ -199,7 +218,9 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   scrollToBottom() {
-    const newContentElement = document.querySelector('#document-editor .new-content');
+    const newContentElement = document.querySelector(
+      '#document-editor .new-content'
+    );
     if (newContentElement) {
       // newContentElement.scrollIntoView()
       // this.documentEditorRef.nativeElement.scrollTop = newContentElement.offsetTop;
@@ -207,7 +228,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
       const newContentElement = parentElement.querySelector('.new-content');
       parentElement.scrollTo({
         top: newContentElement.offsetTop,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
 
       this.removeNewContentIndicator();
@@ -215,9 +236,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
 
     // const parentElement = this.documentEditorRef.nativeElement;
     // // const newContentElement = parentElement.querySelector('.new-content');
-    // parentElement.scrollTop = 
-
-
+    // parentElement.scrollTop =
   }
 
   dismissNewContentNoti() {
@@ -229,7 +248,6 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
     const editor = document.querySelector('#document-editor')!;
     const newContentSeparator = editor.querySelector('.new-content');
     let currentData = this._editor.getData();
-
 
     if (!newContentSeparator) {
       currentData += this.newContentSeparatorElement;
@@ -249,16 +267,23 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
   setEditorScrollEvent() {
     const editorRef = document.getElementById('document-editor');
     if (editorRef)
-      editorRef.addEventListener('scroll', () => this.listenScrollToRemoveNewContentIndicator());
+      editorRef.addEventListener('scroll', () =>
+        this.listenScrollToRemoveNewContentIndicator()
+      );
   }
 
   listenScrollToRemoveNewContentIndicator() {
     const newContentElement = document.querySelector('.new-content');
     if (newContentElement) {
       const elementRect = newContentElement.getBoundingClientRect();
-      const toRemove = elementRect.top <= (configs_UI.internal_navbar_height + configs_UI.main_navbar_height + 40 + 100);
+      const toRemove =
+        elementRect.top <=
+        configs_UI.internal_navbar_height +
+          configs_UI.main_navbar_height +
+          40 +
+          100;
       if (toRemove) {
-        this.removeNewContentIndicator()
+        this.removeNewContentIndicator();
       }
     }
   }
@@ -267,9 +292,12 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
     this.newContentAmount = 0;
     setTimeout(() => {
       let editorData = this._editor.getData() as string;
-      editorData = editorData.replace(this.newContentSeparatorElement, this.editorContentSeparatorElement)
+      editorData = editorData.replace(
+        this.newContentSeparatorElement,
+        this.editorContentSeparatorElement
+      );
       this._editor.setData(editorData);
-    }, 5000)
+    }, 5000);
   }
 
   newContentWrapper(newContent: string): string {
@@ -277,65 +305,88 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
     <div class="editor-generated-content">
     ${newContent}
     </div>
-    `
+    `;
   }
 
   openDeleteDialog() {
-    this.$gaService.event('doc_edition_options', 'delete_element', 'open_dialog');
+    this.$gaService.event(
+      'doc_edition_options',
+      'delete_element',
+      'open_dialog'
+    );
     const dialogMessage =
       'Are you sure you want to permanently delete this document?';
 
-    this._dialogService.openConfirmationDialog({
-      okBtnText: 'Yes',
-      cancelBtnText: 'No',
-      message: dialogMessage
-    })
-      .afterClosed()
-      .subscribe(r => {
-        if (r) {
-          this.$gaService.event('doc_edition_options', 'delete_element', 'confirm');
-
-          this._docService.deleteDoc(this.documentInEditionDetails.uuid).subscribe(r => {
-            if (r.success) {
-              this.goback()
-            }
-          });
-
-        }
-        this.$gaService.event('doc_edition_options', 'delete_element', 'cancel');
+    this._dialogService
+      .openConfirmationDialog({
+        okBtnText: 'Yes',
+        cancelBtnText: 'No',
+        message: dialogMessage,
       })
+      .afterClosed()
+      .subscribe((r) => {
+        if (r) {
+          this.$gaService.event(
+            'doc_edition_options',
+            'delete_element',
+            'confirm'
+          );
+
+          this._docService
+            .deleteDoc(this.documentInEditionDetails.uuid)
+            .subscribe((r) => {
+              if (r.success) {
+                this.goback();
+              }
+            });
+        }
+        this.$gaService.event(
+          'doc_edition_options',
+          'delete_element',
+          'cancel'
+        );
+      });
   }
 
   openRenameDialog() {
-    this.$gaService.event('doc_edition_options', 'rename_element', 'open_dialog');
+    this.$gaService.event(
+      'doc_edition_options',
+      'rename_element',
+      'open_dialog'
+    );
 
-    this._dialogService.openDialogWithSingleInput_v2(
-      {
+    this._dialogService
+      .openDialogWithSingleInput_v2({
         title: 'Rename Document',
         labelText: 'Document Name',
         value: this.documentInEditionDetails.name,
         okBtnText: 'Rename',
-        placeholder: 'The name for your doc'
+        placeholder: 'The name for your doc',
       })
       .afterClosed()
-      .subscribe(result => {
+      .subscribe((result) => {
         if (result) {
-          this.$gaService.event('doc_edition_options', 'rename_element', 'confirm');
-          this._docService.update(this.documentInEditionDetails.uuid, { name: result }).subscribe(r => {
-            if (r) {
-              this.docName = result;
-            }
-          });
+          this.$gaService.event(
+            'doc_edition_options',
+            'rename_element',
+            'confirm'
+          );
+          this._docService
+            .update(this.documentInEditionDetails.uuid, { name: result })
+            .subscribe((r) => {
+              if (r) {
+                this.docName = result;
+              }
+            });
         }
-        this.$gaService.event('doc_edition_options', 'rename_element', 'cancel');
-
-
+        this.$gaService.event(
+          'doc_edition_options',
+          'rename_element',
+          'cancel'
+        );
       });
   }
-
 }
-
-
 
 const defaultConfig = {
   toolbar: {
@@ -355,33 +406,35 @@ const defaultConfig = {
       // 'insertTable',
       // 'htmlEmbed',
       'undo',
-      'redo'
-    ]
+      'redo',
+    ],
   },
   language: 'en',
   table: {
-    contentToolbar: [
-      'tableColumn',
-      'tableRow',
-      'mergeTableCells'
-    ]
+    contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'],
   },
   htmlSupport: {
     allow: [
       {
         name: 'div',
-        classes: ['new-content', 'not-seen', 'content-separator', 'editor-generated-content']
-      }, {
-        name: 'span',
-        classes: ['new-content', 'not-seen']
+        classes: [
+          'new-content',
+          'not-seen',
+          'content-separator',
+          'editor-generated-content',
+        ],
       },
-    ]
+      {
+        name: 'span',
+        classes: ['new-content', 'not-seen'],
+      },
+    ],
   },
   autosave: {
     waitingTime: 500, // in ms
     save(editor: any) {
       return saveData(editor.getData());
-    }
+    },
   },
 };
 
@@ -389,7 +442,6 @@ function saveData(data: any) {
   return new Promise(() => {
     setTimeout(() => {
       console.log('Saved', data);
-
     });
   });
 }
