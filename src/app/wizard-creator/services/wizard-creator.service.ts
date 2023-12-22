@@ -4,11 +4,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { ReplaySubject, catchError, of, tap } from 'rxjs';
 import { IRequestResponse } from 'src/app/common/dto/request-response.dto';
-import { DocumentService } from 'src/app/document/services/document.service';
 import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 import { WizardCreatorCreateDto } from '../dtos/wizard-creator-create-dto';
 import { WizardUseCaseService } from './use-case/wizard-use-case.service';
 import { WizardFormService } from './wizard-form.service';
+import { EventsHubService } from 'src/app/events-hub/events-hub.service';
+import { EventType } from 'src/app/events-hub/enums/event-type.enum';
 
 @Injectable()
 export class WizardCreatorService {
@@ -19,11 +20,11 @@ export class WizardCreatorService {
 
   constructor(
     private http: HttpClient,
-    private _docService: DocumentService,
     private _wizardForm: WizardFormService,
     private _snackBar: MatSnackBar,
     protected $gaService: GoogleAnalyticsService,
-    private _useCaseService: WizardUseCaseService
+    private _useCaseService: WizardUseCaseService,
+    private _eventHub: EventsHubService
   ) {}
 
   generateContent() {
@@ -46,6 +47,7 @@ export class WizardCreatorService {
     // log event in GA
     // this.$gaService.event('wizard_create_request','request_to_server', `${this._useCaseService._wizardUseCaseGroup}<->${this._useCaseService._wizardUseCase}`, 100);
     const wizardRequestStart = new Date().getTime();
+    this.setUpDocumentForResponse(formData);
 
     return this.http
       .post<IRequestResponse<string>>(this.baseUrl + '/generate', formData)
@@ -56,12 +58,6 @@ export class WizardCreatorService {
 
           if (r.success) {
             this._wizardCreatedContent.next(r.data!);
-
-            const newDocName = formData.data.description
-              ? formData.data.description.substring(0, 50)
-              : `${formData.data.useCaseGroup} - ${formData.data.useCase}`;
-
-            this._docService.handleNewContent(newDocName, r.data!);
           } else {
             this.$gaService.event(
               'wizard_create_request_error',
@@ -92,6 +88,13 @@ export class WizardCreatorService {
         }),
         catchError((error: any) => this.handleRequestHttpError(error))
       );
+  }
+
+  setUpDocumentForResponse(formData: any) {
+    const newDocName = formData.data.description
+      ? formData.data.description.substring(0, 50)
+      : `${formData.data.useCaseGroup} - ${formData.data.useCase}`;
+    this._eventHub.emit(EventType.documentSetUpForResponse, newDocName);
   }
 
   handleRequestHttpError(error: any) {

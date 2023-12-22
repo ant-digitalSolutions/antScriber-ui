@@ -12,6 +12,8 @@ import { DialogService } from 'src/app/dialogs/dialog.service';
 import { UserInitializationWalkthroughTourStepsEnum } from 'src/app/walkthrough-tours/enums/walkthrough-tour-user-initialization-steps-id.enum';
 import { UserInitTourService } from 'src/app/walkthrough-tours/user-init-tour.service';
 import { DocumentDetailsDto } from '../../dtos/document-details.dto';
+import { EventsHubService } from 'src/app/events-hub/events-hub.service';
+import { EventType } from 'src/app/events-hub/enums/event-type.enum';
 
 
 
@@ -69,7 +71,8 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
     private _route: ActivatedRoute,
     private _userInitTour: UserInitTourService,
     protected $gaService: GoogleAnalyticsService,
-    private _dialogService: DialogService,) { }
+    private _dialogService: DialogService,
+    private _eventHub: EventsHubService,) { }
 
 
   ngOnInit(): void {
@@ -109,10 +112,16 @@ export class DocumentEditorComponent implements OnInit, OnDestroy, AfterViewInit
         }
       })
 
-    this._docService.newDocUpdate$.pipe(takeUntil(this.componentDestroyed$))
-      .subscribe((newContent) => {
-        this.handleNewContent(newContent);
-      })
+     this._eventHub.EventEmitter.pipe(takeUntil(this.componentDestroyed$))
+      .subscribe((e) => {
+        if (e.type === EventType.wizardResponseChunk)
+        this.handleNewContent(e.data.responseText);
+      }) 
+
+    // this._docService.newDocUpdate$.pipe(takeUntil(this.componentDestroyed$))
+    //   .subscribe((newContent) => {
+    //     this.handleNewContent(newContent);
+    //   })
 
     this._docService.documentInEdition$.pipe(takeUntil(this.componentDestroyed$))
       .subscribe(d => {

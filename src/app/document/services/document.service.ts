@@ -13,6 +13,8 @@ import { FolderUpdateDto } from '../dtos/folder-update.dto';
 import { WizardTableElement } from '../dtos/wizard-table-element.dto';
 import { WizardTableElements } from '../dtos/wizard-table-elements.dto';
 import { DocumentUpdateDto } from './../dtos/document-update.dto';
+import { EventsHubService } from 'src/app/events-hub/events-hub.service';
+import { EventType } from 'src/app/events-hub/enums/event-type.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -73,10 +75,17 @@ export class DocumentService {
     private blogProjectService: BlogProjectsService,
     private _route: ActivatedRoute,
     private _router: Router,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private _eventHubService: EventsHubService
   ) {
     this.blogProjectService.selectedProjectId$.subscribe(r => {
       this.selectedProjectId = r;
+    })
+
+    this._eventHubService.EventEmitter.subscribe(e => {
+      if (e.type === EventType.documentSetUpForResponse) {
+        this.setUpDocumentForContent(e.data);
+      }
     })
   }
 
@@ -249,6 +258,12 @@ export class DocumentService {
         });
       }
     }))
+  }
+
+  setUpDocumentForContent(docNameIfNotOpen: string) {
+    if (!this.documentInEditionId) {
+      this.create(docNameIfNotOpen, '').subscribe();
+    }
   }
 
   handleNewContent(creatorDescription: string, newContent: string) {

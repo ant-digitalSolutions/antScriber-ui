@@ -3,7 +3,6 @@ import { io, Socket } from 'socket.io-client';
 import { getBaseServerDomain } from 'src/environments/enviroment.dynamic';
 import { StorageObjectNamesEnum } from '../common/enum/storage-objects-name.enum';
 import { EventsHubService } from '../events-hub/events-hub.service';
-import { EventType } from '../events-hub/enums/event-type.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +13,6 @@ export class SocketGatewayService {
   private _serverDomain = getBaseServerDomain();
 
   constructor(private _eventsHub: EventsHubService) {
-   
     this.registerWithServer();
 
     this.socket.on('connect', () => {
@@ -26,11 +24,7 @@ export class SocketGatewayService {
       console.log('Disconnected from WebSocket server');
     });
 
-    this.socket.on('newNotification', (data) => {
-      console.log('New notification received:', data);
-      this._eventsHub.emit(EventType.NotificationNew, data)
-      // Handle the received notification
-    });
+    this.registerListeners()
 
     // Additional event listeners can be added here
   }
@@ -38,7 +32,7 @@ export class SocketGatewayService {
   registerWithServer() {
     const token = localStorage.getItem(StorageObjectNamesEnum.JwtToken);
     this.socket = io(this._serverDomain, {
-      auth: { token }
+      auth: { token },
     });
   }
 
@@ -46,5 +40,10 @@ export class SocketGatewayService {
     this.socket.disconnect();
   }
 
+  registerListeners() {
+    this.socket.onAny((event, args) => {
+      this._eventsHub.emit(event, args);
+    });
+  }
   // Additional methods to interact with the socket
 }

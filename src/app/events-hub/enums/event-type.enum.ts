@@ -16,13 +16,20 @@ export enum EventType {
   // authentication
   VerificationCode_Send = 'authentication.send_code',
 
-  // stripe
-  StripeIncomingWebhookError = 'stripe.incoming_webhook.error',
-  StripeEventHandleError = 'stripe.event_handle.error',
-
   // Registration
   SignUp = 'signup',
 
   // notifications
   NotificationNew = 'notifications.new',
+
+  // Wizard content generation
+  wizardResponseChunk = 'wizard.response.chunk',
+  wizardResponseEnd = 'wizard.response.end',
+
+  // socket configs
+  connect = 'connect',
+  disconnect = 'disconnect',
+
+  // documents
+  documentSetUpForResponse = 'document.setup_for_response'
 }
