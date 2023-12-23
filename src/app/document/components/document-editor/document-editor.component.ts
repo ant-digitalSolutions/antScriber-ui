@@ -106,6 +106,39 @@ export class DocumentEditorComponent
           this._editor = editor;
           editor.on('changed', this.saveEditorChanges);
           this._editor = editor;
+
+          editor.model.schema.extend('paragraph', {
+            allowAttributes: ['class'],
+          });
+
+          editor.model.schema.register('div', {
+            allowAttributes: ['class'],
+            allowIn: '$root',
+            isBlock: true,
+          });
+          
+          editor.model.schema.register('span', {
+            allowAttributes: ['class'],
+            allowIn: '$root',
+            isBlock: false,
+          });
+
+          editor.conversion.attributeToAttribute({
+            model: 'class',
+            view: 'class',
+          });
+
+          editor.conversion.elementToElement({
+            model: 'div',
+            view: 'div'
+          })
+
+          editor.conversion.elementToElement({
+            model: 'span',
+            view: 'span'
+          })
+
+          console.log(JSON.stringify(editor.model.schema.getDefinitions()))
         }
       );
     }
@@ -127,7 +160,9 @@ export class DocumentEditorComponent
       takeUntil(this.componentDestroyed$)
     ).subscribe((e) => {
       if (e.type === EventType.wizardResponseChunk)
-        this.handleNewContent(e.data.responseText);
+        this.addChunkResponse(e.data.responseText);
+      if (e.type === EventType.documentSetUpForResponse)
+        this.setUpForNewContent();
     });
 
     this._docService.documentInEdition$
@@ -243,25 +278,77 @@ export class DocumentEditorComponent
     this.newContentAmount = 0;
   }
 
-  handleNewContent(newContent: string): void {
+  /**
+   * Append the text response at the end of the last paragraph.
+   * 
+   * 
+   *
+   * @param {string} chunkText
+   * @memberof DocumentEditorComponent
+   */
+  addChunkResponse(chunkText: string) {
+    this._editor.model.change((writer) => {
+      const root = this._editor.model.document.getRoot()!;
+      const lastElement = root.getChild(root.childCount - 1);
+      const position = this._editor.model.createPositionAt(lastElement!, 'end');
+
+      writer.insertText(chunkText, position);
+    });
+  }
+
+  /**
+   * Insert a separator element at the end of the document
+   * 
+   *
+   * @memberof DocumentEditorComponent
+   */
+  setUpForNewContent(): void {
     // separator logic
-    const editor = document.querySelector('#document-editor')!;
-    const newContentSeparator = editor.querySelector('.new-content');
-    let currentData = this._editor.getData();
+    // TODO: if the doc has data, add the separator. Otherwise don't do nothing
 
-    if (!newContentSeparator) {
-      currentData += this.newContentSeparatorElement;
-    } else {
-      currentData += this.editorContentSeparatorElement;
-    }
+    this._editor.model.change((writer) => {
+      const root = this._editor.model.document.getRoot();
 
-    //  this._docService.documentInEdition!.content += newContent;
-    currentData += this.newContentWrapper(newContent);
-    this._editor.setData(currentData);
+      const separator = writer.createElement('div');
+
+      if (this.checkIfDocumentContainsNewContentIndicator()) {
+        separator._setAttribute('class', 'content-separator');
+      } else  {
+        separator._setAttribute('class', 'new-content');
+        const newSpan = writer.createElement('span');
+        const newText = writer.createText('New');
+        writer.append(newText, newSpan);
+        writer.append(newSpan, separator);
+      }
+      
+      const paragraph = writer.createElement('paragraph', {
+        class: 'editor-generated-content',
+      });
+      paragraph._setAttribute('class', 'editor-generated-content');
+      
+      writer.append(separator, root!);
+      writer.append(paragraph, root!);
+    });
+
     this.newContentAmount++;
 
     this.setEditorScrollEvent();
     this.saveEditorChanges();
+  }
+
+  checkIfDocumentContainsNewContentIndicator(): boolean {
+    const model = this._editor.model;
+    const root = model.document.getRoot()!;
+    let containsClass = false;
+
+    for (const node of root.getChildren()) {
+      if (node.is('element') && node.hasAttribute('class') && (node.getAttribute('class') as string).split(' ').includes('new-content')) {
+        containsClass = true;
+        break;
+      }
+    }
+  
+    return containsClass;
   }
 
   setEditorScrollEvent() {
