@@ -286,15 +286,6 @@ export class DocumentEditorComponent
    * @param {string} chunkText
    * @memberof DocumentEditorComponent
    */
-  // addChunkResponse(chunkText: string) {
-  //   this._editor.model.change((writer) => {
-  //     const root = this._editor.model.document.getRoot()!;
-  //     const lastElement = root.getChild(root.childCount - 1);
-  //     const position = this._editor.model.createPositionAt(lastElement!, 'end');
-
-  //     writer.insertText(chunkText, position);
-  //   });
-  // }
   addChunkResponse(chunkText: string) {
     if (!chunkText) return;
     this._editor.model.change((writer) => {
@@ -302,27 +293,34 @@ export class DocumentEditorComponent
       const lastElement = root.getChild(root.childCount - 1);
       let position = this._editor.model.createPositionAt(lastElement!, 'end');
 
-      // Split the chunkText by <br> and process each part
-      const parts = chunkText.split('...');
-      parts.forEach((part, index) => {
-        // Insert text part
-        writer.insertText(part, position);
+      // check if the chunk is the end of the variant (or response)
+      if (chunkText.indexOf('...') >= 0) {
+        this._insertParagraphNewVariant(writer, position);
+        return;
+      }
 
-        // Update position to the end of the last inserted text
-        position = this._editor.model.createPositionAt(lastElement!, 'end');
+      if (chunkText.indexOf('\n') >= 0) {
+        // Insert a softBreak
+        writer.insertElement('softBreak', position);
+      }
 
-        // Insert <br> element if it's not the last part
-        if (index < parts.length - 1) {
-          const breakElement = writer.createElement('paragraph', {
-            class: 'wizard-variant variant-1',
-          });
-          writer.insert(breakElement, position);
+      // Insert text part
+      writer.insertText(chunkText, position);
 
-          // Update position after the <br> element
-          position = writer.createPositionAfter(breakElement);
-        }
-      });
+      // Update position to the end of the last inserted text
+      position = this._editor.model.createPositionAt(lastElement!, 'end');
+
     });
+  }
+
+  _insertParagraphNewVariant(writer: any, position: any) {
+    const breakElement = writer.createElement('paragraph', {
+      class: 'wizard-variant',
+    });
+    writer.insert(breakElement, position);
+
+    // Update position after the <br> element
+    position = writer.createPositionAfter(breakElement);
   }
 
   /**
