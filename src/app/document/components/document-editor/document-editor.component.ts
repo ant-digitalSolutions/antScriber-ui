@@ -116,7 +116,7 @@ export class DocumentEditorComponent
             allowIn: '$root',
             isBlock: true,
           });
-          
+
           editor.model.schema.register('span', {
             allowAttributes: ['class'],
             allowIn: '$root',
@@ -130,15 +130,15 @@ export class DocumentEditorComponent
 
           editor.conversion.elementToElement({
             model: 'div',
-            view: 'div'
-          })
+            view: 'div',
+          });
 
           editor.conversion.elementToElement({
             model: 'span',
-            view: 'span'
-          })
+            view: 'span',
+          });
 
-          console.log(JSON.stringify(editor.model.schema.getDefinitions()))
+          console.log(JSON.stringify(editor.model.schema.getDefinitions()));
         }
       );
     }
@@ -280,25 +280,54 @@ export class DocumentEditorComponent
 
   /**
    * Append the text response at the end of the last paragraph.
-   * 
-   * 
+   *
+   *
    *
    * @param {string} chunkText
    * @memberof DocumentEditorComponent
    */
+  // addChunkResponse(chunkText: string) {
+  //   this._editor.model.change((writer) => {
+  //     const root = this._editor.model.document.getRoot()!;
+  //     const lastElement = root.getChild(root.childCount - 1);
+  //     const position = this._editor.model.createPositionAt(lastElement!, 'end');
+
+  //     writer.insertText(chunkText, position);
+  //   });
+  // }
   addChunkResponse(chunkText: string) {
+    if (!chunkText) return;
     this._editor.model.change((writer) => {
       const root = this._editor.model.document.getRoot()!;
       const lastElement = root.getChild(root.childCount - 1);
-      const position = this._editor.model.createPositionAt(lastElement!, 'end');
+      let position = this._editor.model.createPositionAt(lastElement!, 'end');
 
-      writer.insertText(chunkText, position);
+      // Split the chunkText by <br> and process each part
+      const parts = chunkText.split('...');
+      parts.forEach((part, index) => {
+        // Insert text part
+        writer.insertText(part, position);
+
+        // Update position to the end of the last inserted text
+        position = this._editor.model.createPositionAt(lastElement!, 'end');
+
+        // Insert <br> element if it's not the last part
+        if (index < parts.length - 1) {
+          const breakElement = writer.createElement('paragraph', {
+            class: 'wizard-variant variant-1',
+          });
+          writer.insert(breakElement, position);
+
+          // Update position after the <br> element
+          position = writer.createPositionAfter(breakElement);
+        }
+      });
     });
   }
 
   /**
    * Insert a separator element at the end of the document
-   * 
+   *
    *
    * @memberof DocumentEditorComponent
    */
@@ -313,19 +342,19 @@ export class DocumentEditorComponent
 
       if (this.checkIfDocumentContainsNewContentIndicator()) {
         separator._setAttribute('class', 'content-separator');
-      } else  {
+      } else {
         separator._setAttribute('class', 'new-content');
         const newSpan = writer.createElement('span');
         const newText = writer.createText('New');
         writer.append(newText, newSpan);
         writer.append(newSpan, separator);
       }
-      
+
       const paragraph = writer.createElement('paragraph', {
-        class: 'editor-generated-content',
+        class: 'wizard-variant variant-1',
       });
-      paragraph._setAttribute('class', 'editor-generated-content');
-      
+      // paragraph._setAttribute('class', 'editor-generated-content');
+
       writer.append(separator, root!);
       writer.append(paragraph, root!);
     });
@@ -342,12 +371,18 @@ export class DocumentEditorComponent
     let containsClass = false;
 
     for (const node of root.getChildren()) {
-      if (node.is('element') && node.hasAttribute('class') && (node.getAttribute('class') as string).split(' ').includes('new-content')) {
+      if (
+        node.is('element') &&
+        node.hasAttribute('class') &&
+        (node.getAttribute('class') as string)
+          .split(' ')
+          .includes('new-content')
+      ) {
         containsClass = true;
         break;
       }
     }
-  
+
     return containsClass;
   }
 
