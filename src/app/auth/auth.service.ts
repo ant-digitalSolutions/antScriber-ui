@@ -13,6 +13,8 @@ import { UserService } from '../user/services/user.service';
 import { UserLogin } from './dtos/login.dto';
 import { UserRegisterDto } from './dtos/user-register.dto';
 import { SocketGatewayService } from '../socket-gateway/socket-gateway.service';
+import { EventsHubService } from '../events-hub/events-hub.service';
+import { EventType } from '../events-hub/enums/event-type.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -34,7 +36,8 @@ export class AuthService {
     private _router: Router,
     private _jwtHelper: JwtHelperService,
     private _userService: UserService,
-    private _socketService: SocketGatewayService
+    private _socketService: SocketGatewayService,
+    private _eventHub: EventsHubService
   ) {
     if (this.isLoggedIn()) {
       this._userService.getProfile(false).subscribe();
@@ -104,8 +107,15 @@ export class AuthService {
     localStorage.setItem('id_token', authResult.access_token);
     localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
 
-    const showInitialTour = authResult.firstSignInEver;
-    this._userService.showInitialTour = showInitialTour
+    if (authResult.firstSignInEver === 'true') {
+      this._eventHub.emit(EventType.UserFirstSessionEver);
+      this.$gaService.event(
+        'user_register_done',
+        'user_created',
+        'third_party_provider'
+      );
+    }
+    
 
     this.decodeJwt();
 

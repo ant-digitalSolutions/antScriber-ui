@@ -24,8 +24,6 @@ import { UserSubscriptionDto } from './../dto/user-subscription-data.dto';
 export class UserService {
   _jwtData: IJwtData | null;
 
-  showInitialTour: boolean;
-
   baseUrl = getBaseApiURL() + 'users';
 
   _userProfile: IUserProfileDto;
@@ -45,7 +43,6 @@ export class UserService {
 
   initialWalkthroughCompleted() {
     localStorage.setItem('walkthrough_initial_tour', 'completed');
-    this.showInitialTour = false;
   }
 
   updatePassword(

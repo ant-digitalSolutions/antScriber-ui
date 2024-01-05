@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { BlogProjectsService } from 'src/app/blogger/services/blog-projects.service';
 import { CoreService } from 'src/app/services/core.service';
-import { UserService } from 'src/app/user/services/user.service';
 import { getBaseApiURL } from 'src/environments/enviroment.dynamic';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth.service';
@@ -40,8 +39,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     protected $gaService: GoogleAnalyticsService,
     private _projectService: BlogProjectsService,
-    private _userService: UserService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
@@ -70,25 +68,13 @@ export class LoginComponent implements OnInit {
     const access_token = qParams['access_token'];
     const expiresAt = qParams['expires_at'];
     const provider = qParams['provider'];
-    const showInitialTour = qParams['showInitialTour'];
+    const firstSignInEver = qParams['firstSignInEver'];
 
     const session = {
       access_token,
       expiresAt,
+      firstSignInEver
     };
-
-    // means this is the first time the user enter the app,
-    // so this happens after the user register with 3rd party provider
-    if (showInitialTour) {
-      this._userService.showInitialTour = true;
-
-      // log that a new was registered
-      this.$gaService.event(
-        'user_register_done',
-        'user_created',
-        'third_party_provider'
-      );
-    }
 
     if (access_token && expiresAt) {
       // const access_token = JSON.parse(access_token_raw.replace('j:', ''));
