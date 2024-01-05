@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WalkthroughTourComponent } from './walktrhough-tour/walkthrough-tour.component';
+import { EventsHubModule } from '../events-hub/events-hub.module';
 
 
 
@@ -9,7 +10,8 @@ import { WalkthroughTourComponent } from './walktrhough-tour/walkthrough-tour.co
     WalkthroughTourComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    EventsHubModule
   ],
   exports: [
     WalkthroughTourComponent
