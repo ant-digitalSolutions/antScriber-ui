@@ -137,8 +137,6 @@ export class DocumentEditorComponent
             model: 'span',
             view: 'span',
           });
-
-          console.log(JSON.stringify(editor.model.schema.getDefinitions()));
         }
       );
     }
@@ -282,7 +280,6 @@ export class DocumentEditorComponent
    * Append the text response at the end of the last paragraph.
    *
    *
-   *
    * @param {string} chunkText
    * @memberof DocumentEditorComponent
    */
@@ -313,7 +310,16 @@ export class DocumentEditorComponent
     });
   }
 
-  _insertParagraphNewVariant(writer: any, position: any) {
+  /**
+   * if the user requests multiple variants of responses,
+   * Render each one into a paragraph
+   *
+   * @private
+   * @param {*} writer
+   * @param {*} position
+   * @memberof DocumentEditorComponent
+   */
+  private _insertParagraphNewVariant(writer: any, position: any) {
     const breakElement = writer.createElement('paragraph', {
       class: 'wizard-variant',
     });
