@@ -25,4 +25,7 @@ export enum EventType {
 
   // notifications
   NotificationNew = 'notifications.new',
+
+  // Register
+  UserFirstSessionEver = 'session.first_ever',
 }
