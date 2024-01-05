@@ -107,7 +107,7 @@ export class AuthService {
     localStorage.setItem('id_token', authResult.access_token);
     localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
 
-    if (authResult.firstSignInEver === 'true') {
+    if (authResult.firstSignInEver === 'true' || authResult.firstSignInEver === true) {
       this._eventHub.emit(EventType.UserFirstSessionEver);
       this.$gaService.event(
         'user_register_done',
